@@ -1,4 +1,4 @@
-package com.jinwei.widget
+package com.yyxnb.widget
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

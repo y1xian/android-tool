@@ -1,4 +1,4 @@
-package com.jinwei.widget
+package com.yyxnb.widget
 
 import org.junit.Test
 
