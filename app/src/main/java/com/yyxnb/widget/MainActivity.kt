@@ -1,13 +1,13 @@
 package com.yyxnb.widget
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import com.yyxnb.arch.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun initLayoutResId(): Int = R.layout.activity_main
+
+    override fun initView(savedInstanceState: Bundle?) {
 
     }
 }

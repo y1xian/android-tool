@@ -22,5 +22,9 @@ android {
 }
 
 dependencies {
-    addComponent 'titlebar'
+
+    implementation project(':arch')
+    implementation project(':http')
+    implementation project(':titlebar')
+
 }

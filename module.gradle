@@ -87,6 +87,7 @@ ext.addComponent = { dependencyName, realDependency = null ->
         //local.properties中配置为true代表该module以application方式编译
         app = 'true' == localProperties.getProperty(dependencyName)
     }
+    //非运行主app
     if (!app) {
         def dependencyMode = 'api'
         if (realDependency) {
@@ -113,16 +114,11 @@ ext.addComponent = { dependencyName, realDependency = null ->
     }
 }
 
-//repositories {
-//    maven { url rootProject.file("repo-local") }
-//    jcenter()
-//}
-
 //默认配置了AndroidManifest.xml在library模式和application模式下的文件路径
 android {
     //版本配置
     compileSdkVersion build_version.compileSdkVersion
-//    buildToolsVersion build_version.buildToolsVersion
+    buildToolsVersion build_version.buildToolsVersion
     defaultConfig {
         minSdkVersion build_version.minSdkVersion
         targetSdkVersion build_version.targetSdkVersion
@@ -253,9 +249,8 @@ dependencies {
     androidTestImplementation libs.test_runner
     androidTestImplementation libs.test_espresso
 
-    api(libs.support_v7) {
-        exclude group: 'com.android.support'
-    }
+    // 避免65K限制       https://developer.android.com/tools/building/multidex.html
+    api libs.multidex
 
     if (isKt){
         api libs.kotlin_stdlib

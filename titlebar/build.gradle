@@ -1,6 +1,6 @@
-//ext.isKt = true
 apply from: rootProject.file('module.gradle')
 
 dependencies {
+    api libs.support_v7
 
 }
