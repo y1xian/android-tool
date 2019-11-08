@@ -249,9 +249,6 @@ dependencies {
     androidTestImplementation libs.test_runner
     androidTestImplementation libs.test_espresso
 
-    // 避免65K限制       https://developer.android.com/tools/building/multidex.html
-    api libs.multidex
-
     if (isKt){
         api libs.kotlin_stdlib
         api libs.kotlin_coroutines
