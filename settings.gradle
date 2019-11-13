@@ -1,2 +1,2 @@
-include ':app', ':titlebar', ':arch', ':http'
+include ':app', ':arch', ':http', ':view'
 rootProject.name='Widget'

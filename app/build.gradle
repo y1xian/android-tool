@@ -25,6 +25,6 @@ dependencies {
 
     implementation project(':arch')
     implementation project(':http')
-    implementation project(':titlebar')
+    implementation project(':view')
 
 }
