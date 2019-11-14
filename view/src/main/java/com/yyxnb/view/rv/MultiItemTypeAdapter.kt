@@ -1,12 +1,14 @@
 package com.yyxnb.view.rv
 
+import android.arch.paging.PagedListAdapter
 import android.support.v4.util.SparseArrayCompat
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import java.util.ArrayList
 
-open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
+open class MultiItemTypeAdapter<T> constructor(diffCallback: DiffUtil.ItemCallback<T>) : PagedListAdapter<T, ViewHolder>(diffCallback) {
 
     private var data: MutableList<T> = ArrayList()
     private val mHeaderViews = SparseArrayCompat<View>()
@@ -78,7 +80,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
     }
 
     @JvmOverloads
-    fun addDataItem(position: Int = data.size,list: List<T>?) {
+    fun addDataItem(position: Int = data.size, list: List<T>?) {
         if (list != null && list.isNotEmpty()) {
             data.addAll(list)
             notifyItemRangeInserted(headersCount + position, list.size)

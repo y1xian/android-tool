@@ -28,7 +28,6 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
 
     override fun initViewData() {
         initObservable()
-        mViewModel.msg.observe(this, Observer { it?.let { initMsg(it) } })
     }
 
     /**

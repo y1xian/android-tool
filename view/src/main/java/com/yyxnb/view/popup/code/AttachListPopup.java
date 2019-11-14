@@ -2,6 +2,7 @@ package com.yyxnb.view.popup.code;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -59,7 +60,18 @@ public class AttachListPopup extends AttachPopup {
         super.initPopupContent();
         recyclerView = findViewById(R.id.recyclerView);
 //        recyclerView.setupDivider();
-        final BaseAdapter<String> adapter = new BaseAdapter<String>(bindItemLayoutId == 0 ? R.layout._popup_adapter_text : bindItemLayoutId) {
+        final BaseAdapter<String> adapter = new BaseAdapter<String>(bindItemLayoutId == 0 ? R.layout._popup_adapter_text : bindItemLayoutId,
+                new DiffUtil.ItemCallback<String>() {
+                    @Override
+                    public boolean areItemsTheSame(@NonNull String oldItem, @NonNull String newItem) {
+                        return oldItem.equals(newItem);
+                    }
+
+                    @Override
+                    public boolean areContentsTheSame(@NonNull String oldItem, @NonNull String newItem) {
+                        return oldItem.equals(newItem);
+                    }
+                }) {
             @Override
             protected void bind(@NonNull ViewHolder holder, @NonNull String s, int position) {
                 holder.setText(R.id.tv_text, s);

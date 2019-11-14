@@ -19,8 +19,6 @@ import kotlinx.coroutines.*
  */
 abstract class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
 
-    val msg: MutableLiveData<String> = MutableLiveData()
-
     open val mScope: CoroutineScope by lazy {
         CoroutineScope(SupervisorJob() + Dispatchers.Main)
     }
