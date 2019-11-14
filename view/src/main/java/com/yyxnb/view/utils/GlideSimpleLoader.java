@@ -11,7 +11,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.yyxnb.view.image.ImageWatcher;
 
-class GlideSimpleLoader implements ImageWatcher.Loader {
+public class GlideSimpleLoader implements ImageWatcher.Loader {
     @Override
     public void load(Context context, Uri uri, final ImageWatcher.LoadCallback lc) {
         Glide.with(context).load(uri)

@@ -13,7 +13,7 @@ import com.yyxnb.view.R;
 import com.yyxnb.view.popup.CheckView;
 import com.yyxnb.view.popup.interfaces.OnSelectListener;
 import com.yyxnb.view.popup.Popup;
-import com.yyxnb.view.rv.AbsAdapter;
+import com.yyxnb.view.rv.BaseAdapter;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.view.rv.ViewHolder;
 
@@ -73,7 +73,7 @@ public class BottomListPopup extends BottomPopup {
             }
         }
 
-        final AbsAdapter<String> adapter = new AbsAdapter<String>(Arrays.asList(data), bindItemLayoutId == 0 ? R.layout._popup_adapter_text : bindItemLayoutId) {
+        final BaseAdapter<String> adapter = new BaseAdapter<String>(bindItemLayoutId == 0 ? R.layout._popup_adapter_text : bindItemLayoutId) {
             @Override
             protected void bind(@NonNull ViewHolder holder, @NonNull String s, int position) {
                 holder.setText(R.id.tv_text, s);
@@ -108,17 +108,16 @@ public class BottomListPopup extends BottomPopup {
                     checkedPosition = position;
                     adapter.notifyDataSetChanged();
                 }
-                postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (popupInfo.autoDismiss) {
-                            dismiss();
-                        }
+                postDelayed(() -> {
+                    if (popupInfo.autoDismiss) {
+                        dismiss();
                     }
                 }, 100);
             }
         });
         recyclerView.setAdapter(adapter);
+
+        adapter.setDataItems(Arrays.asList(data));
     }
 
     String title;

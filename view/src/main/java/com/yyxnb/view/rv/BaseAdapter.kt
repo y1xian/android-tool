@@ -1,6 +1,6 @@
 package com.yyxnb.view.rv
 
-abstract class AbsAdapter<T>(data: MutableList<T>, protected var mLayoutId: Int) : MultiItemTypeAdapter<T>(data) {
+abstract class BaseAdapter<T>(protected var mLayoutId: Int) : MultiItemTypeAdapter<T>() {
 
     init {
         addItemDelegate(object : ItemDelegate<T> {
@@ -12,7 +12,7 @@ abstract class AbsAdapter<T>(data: MutableList<T>, protected var mLayoutId: Int)
             }
 
             override fun bind(holder: ViewHolder, t: T, position: Int) {
-                this@AbsAdapter.bind(holder, t, position)
+                this@BaseAdapter.bind(holder, t, position)
             }
         })
     }

@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 class ViewHolder(val convertView: View) : RecyclerView.ViewHolder(convertView) {
+
     private val mViews: SparseArray<View> = SparseArray()
 
     fun <T : View> getView(viewId: Int): T {

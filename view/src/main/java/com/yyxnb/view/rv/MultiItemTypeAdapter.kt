@@ -6,15 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import java.util.ArrayList
 
-open class MultiItemTypeAdapter<T>(var data: MutableList<T>) : RecyclerView.Adapter<ViewHolder>() {
-    
+open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
+
+    private var data: MutableList<T> = ArrayList()
     private val mHeaderViews = SparseArrayCompat<View>()
     private val mFootViews = SparseArrayCompat<View>()
 
     protected var mItemDelegateManager: ItemDelegateManager<T> = ItemDelegateManager()
     protected var mOnItemClickListener: OnItemClickListener? = null
 
-    private var mRecyclerView : RecyclerView? = null
+    val dataCount: Int
+        get() = data.size
 
     private val realItemCount: Int
         get() = itemCount - headersCount - footersCount
@@ -24,7 +26,13 @@ open class MultiItemTypeAdapter<T>(var data: MutableList<T>) : RecyclerView.Adap
 
     val footersCount: Int
         get() = mFootViews.size()
-    
+
+    fun getData() = data
+
+    fun getHeaderItems() = mHeaderViews
+
+    fun getFooterItems() = mFootViews
+
     override fun getItemViewType(position: Int): Int {
         if (isHeaderViewPos(position)) {
             return mHeaderViews.keyAt(position)
@@ -51,7 +59,7 @@ open class MultiItemTypeAdapter<T>(var data: MutableList<T>) : RecyclerView.Adap
         return holder
     }
 
-    fun onViewHolderCreated(holder: ViewHolder, itemView: View) { }
+    fun onViewHolderCreated(holder: ViewHolder, itemView: View) {}
 
     fun convert(holder: ViewHolder, t: T) {
         mItemDelegateManager.convert(holder, t, holder.adapterPosition - headersCount)
@@ -61,33 +69,40 @@ open class MultiItemTypeAdapter<T>(var data: MutableList<T>) : RecyclerView.Adap
         return true
     }
 
-    fun setNewList(list: List<T>) {
-        data.clear()
-        data.addAll(list)
-    }
-
-    fun refreshData(list: List<T>?) {
-        if (mRecyclerView != null && list != null) {
+    fun setDataItems(list: List<T>?) {
+        if (list != null) {
             data.clear()
             data.addAll(list)
             notifyDataSetChanged()
         }
     }
 
-    fun insertList(list: List<T>?) {
-        if (mRecyclerView != null && list != null && list.isNotEmpty()) {
-            val p = data.size
+    @JvmOverloads
+    fun addDataItem(position: Int = data.size,list: List<T>?) {
+        if (list != null && list.isNotEmpty()) {
             data.addAll(list)
-            notifyItemRangeInserted(p, list.size)
-//            mRecyclerView?.scrollBy(0, 50)
+            notifyItemRangeInserted(headersCount + position, list.size)
         }
     }
 
-    fun clearData() {
-        if (mRecyclerView != null) {
-            data.clear()
-            notifyDataSetChanged()
+    @JvmOverloads
+    fun removeDataItem(position: Int, itemCount: Int = 1) {
+        for (i in 0 until itemCount) {
+            data.removeAt(position)
         }
+        notifyItemRangeRemoved(headersCount + position, itemCount)
+    }
+
+    fun clearData() = data.clear()
+
+    fun clearHeader() = mHeaderViews.clear()
+
+    fun clearFooter() = mFootViews.clear()
+
+    fun clearAllData() {
+        clearData()
+        clearHeader()
+        clearFooter()
     }
 
     protected fun setListener(parent: ViewGroup, viewHolder: ViewHolder, viewType: Int) {
@@ -120,7 +135,6 @@ open class MultiItemTypeAdapter<T>(var data: MutableList<T>) : RecyclerView.Adap
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        mRecyclerView = recyclerView
         WrapperUtils.onAttachedToRecyclerView(
                 recyclerView
         ) { layoutManager, oldLookup, position ->
@@ -198,5 +212,5 @@ open class MultiItemTypeAdapter<T>(var data: MutableList<T>) : RecyclerView.Adap
         private const val BASE_ITEM_TYPE_HEADER = 100000
         private const val BASE_ITEM_TYPE_FOOTER = 200000
     }
-    
+
 }

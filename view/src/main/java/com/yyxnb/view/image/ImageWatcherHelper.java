@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.yyxnb.view.R;
+import com.yyxnb.view.utils.GlideSimpleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,13 @@ public class ImageWatcherHelper {
     private final List<ImageWatcher.OnStateChangedListener> onStateChangedListeners = new ArrayList<>();
     private View otherView;
 
-
     private ImageWatcherHelper(FragmentActivity activity) {
         holder = activity;
         activityDecorView = (ViewGroup) activity.getWindow().getDecorView();
+    }
+
+    public static ImageWatcherHelper with(FragmentActivity activity) { // attach
+        return with(activity, new GlideSimpleLoader());
     }
 
     public static ImageWatcherHelper with(FragmentActivity activity, ImageWatcher.Loader l) { // attach
