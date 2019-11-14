@@ -1,6 +1,5 @@
 package com.yyxnb.view.rv
 
-import android.annotation.SuppressLint
 import android.support.v7.util.DiffUtil
 
 abstract class BaseAdapter<T>(
