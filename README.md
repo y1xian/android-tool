@@ -18,5 +18,7 @@ dependencies {
     implementation 'com.github.y1xian.Widget:arch:+'
     //网络框架
     implementation 'com.github.y1xian.Widget:http:+'
+    //view
+    implementation 'com.github.y1xian.Widget:view:+'
 }
 ```

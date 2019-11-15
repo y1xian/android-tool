@@ -14,6 +14,7 @@ import android.view.View;
 public class CheckView extends View {
     Paint paint;
     int color = Color.TRANSPARENT;
+
     public CheckView(Context context) {
         this(context, null);
     }
@@ -31,24 +32,28 @@ public class CheckView extends View {
 
     /**
      * 设置对勾View
+     *
      * @param color
      */
-    public void setColor(int color){
+    public void setColor(int color) {
         this.color = color;
         paint.setColor(color);
         postInvalidate();
     }
 
     Path path = new Path();
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(color==Color.TRANSPARENT)return;
+        if (color == Color.TRANSPARENT) {
+            return;
+        }
         // first part
-        path.moveTo(getMeasuredWidth()/4, getMeasuredHeight()/2);
-        path.lineTo(getMeasuredWidth()/2 , getMeasuredHeight()*3/4);
+        path.moveTo(getMeasuredWidth() / 4, getMeasuredHeight() / 2);
+        path.lineTo(getMeasuredWidth() / 2, getMeasuredHeight() * 3 / 4);
         // second part
-        path.lineTo(getMeasuredWidth(), getMeasuredHeight()/4);
+        path.lineTo(getMeasuredWidth(), getMeasuredHeight() / 4);
         canvas.drawPath(path, paint);
     }
 }

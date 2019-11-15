@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tvTitle"
         android:textColor="#111111"
         android:paddingTop="14dp"
         android:paddingLeft="18dp"
@@ -20,13 +20,13 @@
 
     <View
         android:layout_width="match_parent"
-        android:id="@+id/xpopup_divider"
+        android:id="@+id/mDivider"
         android:background="#EEEEEE"
         android:layout_height=".45dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:orientation="vertical"
-        android:id="@+id/recyclerView"
+        android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never" />

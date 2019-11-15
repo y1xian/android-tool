@@ -37,7 +37,7 @@ public class LoadingPopup extends CenterPopup {
     @Override
     protected void initPopupContent() {
         super.initPopupContent();
-        tvTitle = findViewById(R.id.tv_title);
+        tvTitle = findViewById(R.id.tvTitle);
         setup();
     }
 

@@ -3,7 +3,6 @@ package com.yyxnb.view.popup.code;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 
 import com.yyxnb.view.R;
-import com.yyxnb.view.popup.CheckView;
 import com.yyxnb.view.popup.interfaces.OnSelectListener;
 import com.yyxnb.view.popup.Popup;
 import com.yyxnb.view.rv.BaseAdapter;
@@ -37,7 +35,7 @@ public class BottomListPopup extends BottomPopup {
     /**
      * 传入自定义的布局，对布局中的id有要求
      *
-     * @param layoutId 要求layoutId中必须有一个id为recyclerView的RecyclerView，如果你需要显示标题，则必须有一个id为tv_title的TextView
+     * @param layoutId 要求layoutId中必须有一个id为mRecyclerView的RecyclerView，如果你需要显示标题，则必须有一个id为tvTitle的TextView
      */
     public BottomListPopup bindLayout(int layoutId) {
         this.bindLayoutId = layoutId;
@@ -47,7 +45,7 @@ public class BottomListPopup extends BottomPopup {
     /**
      * 传入自定义的 item布局
      *
-     * @param itemLayoutId 条目的布局id，要求布局中必须有id为iv_image的ImageView，和id为tv_text的TextView
+     * @param itemLayoutId 条目的布局id，要求布局中必须有id为ivCheck的ImageView，和id为tvText的TextView
      */
     public BottomListPopup bindItemLayout(int itemLayoutId) {
         this.bindItemLayoutId = itemLayoutId;
@@ -62,13 +60,13 @@ public class BottomListPopup extends BottomPopup {
     @Override
     protected void initPopupContent() {
         super.initPopupContent();
-        recyclerView = findViewById(R.id.recyclerView);
-        tvTitle = findViewById(R.id.tv_title);
+        recyclerView = findViewById(R.id.mRecyclerView);
+        tvTitle = findViewById(R.id.tvTitle);
 
         if (tvTitle != null) {
             if (TextUtils.isEmpty(title)) {
                 tvTitle.setVisibility(GONE);
-                findViewById(R.id.xpopup_divider).setVisibility(GONE);
+                findViewById(R.id.mDivider).setVisibility(GONE);
             } else {
                 tvTitle.setText(title);
             }
@@ -77,25 +75,25 @@ public class BottomListPopup extends BottomPopup {
         final BaseAdapter<String> adapter = new BaseAdapter<String>(bindItemLayoutId == 0 ? R.layout._popup_adapter_text : bindItemLayoutId) {
             @Override
             protected void bind(@NonNull ViewHolder holder, @NonNull String s, int position) {
-                holder.setText(R.id.tv_text, s);
+                holder.setText(R.id.tvText, s);
                 if (iconIds != null && iconIds.length > position) {
-                    holder.getView(R.id.iv_image).setVisibility(VISIBLE);
-                    holder.getView(R.id.iv_image).setBackgroundResource(iconIds[position]);
+                    holder.getView(R.id.ivIcon).setVisibility(VISIBLE);
+                    holder.getView(R.id.ivIcon).setBackgroundResource(iconIds[position]);
                 } else {
-                    holder.getView(R.id.iv_image).setVisibility(GONE);
+                    holder.getView(R.id.ivIcon).setVisibility(GONE);
                 }
 
                 // 对勾View
-                if (checkedPosition != -1) {
-                    if (holder.getView(R.id.check_view) != null) {
-                        holder.getView(R.id.check_view).setVisibility(position == checkedPosition ? VISIBLE : GONE);
-                        holder.<CheckView>getView(R.id.check_view).setColor(Popup.getPrimaryColor());
+                if (checkedPosition != -1 && iconCheckId != -1) {
+                    if (holder.getView(R.id.ivCheck) != null) {
+                        holder.getView(R.id.ivCheck).setVisibility(position == checkedPosition ? VISIBLE : GONE);
+                        holder.getView(R.id.ivCheck).setBackgroundResource(iconCheckId);
                     }
-                    holder.<TextView>getView(R.id.tv_text).setTextColor(position == checkedPosition ?
-                            Popup.getPrimaryColor() : Color.parseColor("#111111"));
+                    holder.<TextView>getView(R.id.tvText).setTextColor(position == checkedPosition ?
+                            Popup.getPrimaryColor() : getResources().getColor(R.color.title_color));
                 }
                 if (position == (data.length - 1)) {
-                    holder.getView(R.id.xpopup_divider).setVisibility(INVISIBLE);
+                    holder.getView(R.id.mDivider).setVisibility(INVISIBLE);
                 }
             }
         };
@@ -124,11 +122,13 @@ public class BottomListPopup extends BottomPopup {
     String title;
     String[] data;
     int[] iconIds;
+    int iconCheckId;
 
-    public BottomListPopup setStringData(String title, String[] data, int[] iconIds) {
+    public BottomListPopup setStringData(String title, String[] data, int[] iconIds, int iconCheckId) {
         this.title = title;
         this.data = data;
         this.iconIds = iconIds;
+        this.iconCheckId = iconCheckId;
         return this;
     }
 

@@ -415,10 +415,10 @@ public class Popup {
          * @param selectListener 选中条目的监听器
          * @return
          */
-        public CenterListPopup asCenterList(String title, String[] data, int[] iconIds, int checkedPosition, OnSelectListener selectListener) {
+        public CenterListPopup asCenterList(String title, String[] data, int[] iconIds, int checkedPosition, int iconCheckId, OnSelectListener selectListener) {
             popupType(PopupType.Center);
             CenterListPopup popupView = new CenterListPopup(this.context)
-                    .setStringData(title, data, iconIds)
+                    .setStringData(title, data, iconIds, iconCheckId)
                     .setCheckedPosition(checkedPosition)
                     .setOnSelectListener(selectListener);
             popupView.popupInfo = this.popupInfo;
@@ -426,11 +426,11 @@ public class Popup {
         }
 
         public CenterListPopup asCenterList(String title, String[] data, OnSelectListener selectListener) {
-            return asCenterList(title, data, null, -1, selectListener);
+            return asCenterList(title, data, null, -1, -1, selectListener);
         }
 
         public CenterListPopup asCenterList(String title, String[] data, int[] iconIds, OnSelectListener selectListener) {
-            return asCenterList(title, data, iconIds, -1, selectListener);
+            return asCenterList(title, data, iconIds, -1, -1, selectListener);
         }
 
         /**
@@ -460,10 +460,10 @@ public class Popup {
          * @param selectListener  选中条目的监听器
          * @return
          */
-        public BottomListPopup asBottomList(String title, String[] data, int[] iconIds, int checkedPosition, boolean enableDrag, OnSelectListener selectListener) {
+        public BottomListPopup asBottomList(String title, String[] data, int[] iconIds, int checkedPosition, int iconCheckId, OnSelectListener selectListener) {
             popupType(PopupType.Bottom);
             BottomListPopup popupView = new BottomListPopup(this.context)
-                    .setStringData(title, data, iconIds)
+                    .setStringData(title, data, iconIds, iconCheckId)
                     .setCheckedPosition(checkedPosition)
                     .setOnSelectListener(selectListener);
             popupView.popupInfo = this.popupInfo;
@@ -471,20 +471,20 @@ public class Popup {
         }
 
         public BottomListPopup asBottomList(String title, String[] data, OnSelectListener selectListener) {
-            return asBottomList(title, data, null, -1, true, selectListener);
+            return asBottomList(title, data, null, -1, -1, selectListener);
         }
 
         public BottomListPopup asBottomList(String title, String[] data, int[] iconIds, OnSelectListener selectListener) {
-            return asBottomList(title, data, iconIds, -1, true, selectListener);
+            return asBottomList(title, data, iconIds, -1, -1, selectListener);
         }
 
-        public BottomListPopup asBottomList(String title, String[] data, int[] iconIds, int checkedPosition, OnSelectListener selectListener) {
-            return asBottomList(title, data, iconIds, checkedPosition, true, selectListener);
-        }
-
-        public BottomListPopup asBottomList(String title, String[] data, int[] iconIds, boolean enableDrag, OnSelectListener selectListener) {
-            return asBottomList(title, data, iconIds, -1, enableDrag, selectListener);
-        }
+//        public BottomListPopup asBottomList(String title, String[] data, int[] iconIds, int checkedPosition, int iconCheckId, OnSelectListener selectListener) {
+//            return asBottomList(title, data, iconIds, checkedPosition, -1, selectListener);
+//        }
+//
+//        public BottomListPopup asBottomList(String title, String[] data, int[] iconIds, boolean enableDrag, OnSelectListener selectListener) {
+//            return asBottomList(title, data, iconIds, -1, -1, selectListener);
+//        }
 
 
         /**

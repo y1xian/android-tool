@@ -45,10 +45,10 @@ public class ConfirmPopup extends CenterPopup implements View.OnClickListener {
     @Override
     protected void initPopupContent() {
         super.initPopupContent();
-        tvTitle = findViewById(R.id.tv_title);
-        tvContent = findViewById(R.id.tv_content);
-        tvCancel = findViewById(R.id.tv_cancel);
-        tvConfirm = findViewById(R.id.tv_confirm);
+        tvTitle = findViewById(R.id.tvTitle);
+        tvContent = findViewById(R.id.tvContent);
+        tvCancel = findViewById(R.id.tvCancel);
+        tvConfirm = findViewById(R.id.tvConfirm);
 
         if (bindLayoutId == 0) {
             applyPrimaryColor();

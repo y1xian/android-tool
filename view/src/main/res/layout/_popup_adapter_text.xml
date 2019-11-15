@@ -16,13 +16,13 @@
         android:paddingBottom="12dp">
 
         <ImageView
-            android:id="@+id/iv_image"
+            android:id="@+id/ivIcon"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_marginRight="6dp" />
 
         <TextView
-            android:id="@+id/tv_text"
+            android:id="@+id/tvText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -39,8 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-            <com.lxj.xpopup.widget.CheckView
-                android:id="@+id/check_view"
+            <ImageView
+                android:id="@+id/ivCheck"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
@@ -49,8 +49,9 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/xpopup_divider"
+        android:id="@+id/mDivider"
         android:layout_width="match_parent"
         android:layout_height=".45dp"
         android:background="#eeeeee" />
+
 </LinearLayout>
