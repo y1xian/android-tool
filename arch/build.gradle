@@ -86,5 +86,6 @@ dependencies {
     api libs.kotlin_stdlib
     api libs.kotlin_coroutines
     api libs.kotlin_coroutines_core
-
+    //
+    api libs.arch_comp_paging
 }

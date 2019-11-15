@@ -39,7 +39,7 @@ public class NetWorkDataSource extends PageKeyedDataSource<Integer,TestData> {
     @Override
     public void loadBefore(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, TestData> callback) {
         LogUtils.INSTANCE.w("----------loadBefore");
-        callback.onResult(fetchItems(params.key),params.key - 1);
+//        callback.onResult(fetchItems(params.key),params.key - 1);
     }
 
     /*往下滑加载的数据 每次传递的第二个参数 就是 你加载数据依赖的key*/

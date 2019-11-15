@@ -74,18 +74,7 @@ public class CenterListPopup extends CenterPopup {
             }
         }
 
-        final BaseAdapter<String> adapter = new BaseAdapter<String>(bindItemLayoutId == 0 ? R.layout._popup_adapter_text : bindItemLayoutId,
-                new DiffUtil.ItemCallback<String>() {
-                    @Override
-                    public boolean areItemsTheSame(@NonNull String oldItem, @NonNull String newItem) {
-                        return oldItem.equals(newItem);
-                    }
-
-                    @Override
-                    public boolean areContentsTheSame(@NonNull String oldItem, @NonNull String newItem) {
-                        return oldItem.equals(newItem);
-                    }
-                }) {
+        final BaseAdapter<String> adapter = new BaseAdapter<String>(bindItemLayoutId == 0 ? R.layout._popup_adapter_text : bindItemLayoutId) {
             @Override
             protected void bind(@NonNull ViewHolder holder, @NonNull String s, int position) {
                 holder.setText(R.id.tv_text, s);

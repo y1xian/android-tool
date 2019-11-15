@@ -14,6 +14,6 @@ public class NetWorkFactory extends DataSource.Factory<Integer, TestData> {
     public DataSource<Integer, TestData> create() {
         NetWorkDataSource concertDataSource = new NetWorkDataSource();
         mSourceLiveData.postValue(concertDataSource);
-        return concertDataSource;
+        return new NetWorkDataSource();
     }
 }

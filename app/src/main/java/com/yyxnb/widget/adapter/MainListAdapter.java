@@ -12,17 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class MainListAdapter extends BaseAdapter<String> {
 
     public MainListAdapter() {
-        super(R.layout.item_main_list_layout, new DiffUtil.ItemCallback<String>() {
-            @Override
-            public boolean areItemsTheSame(@NonNull String oldItem, @NonNull String newItem) {
-                return oldItem.equals(newItem);
-            }
-
-            @Override
-            public boolean areContentsTheSame(@NonNull String oldItem, @NonNull String newItem) {
-                return oldItem.equals(newItem);
-            }
-        });
+        super(R.layout.item_main_list_layout);
     }
 
     @Override

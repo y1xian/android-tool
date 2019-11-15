@@ -1,14 +1,12 @@
 package com.yyxnb.view.rv
 
-import android.arch.paging.PagedListAdapter
 import android.support.v4.util.SparseArrayCompat
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import java.util.ArrayList
 
-open class MultiItemTypeAdapter<T> constructor(diffCallback: DiffUtil.ItemCallback<T>) : PagedListAdapter<T, ViewHolder>(diffCallback) {
+open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
 
     private var data: MutableList<T> = ArrayList()
     private val mHeaderViews = SparseArrayCompat<View>()

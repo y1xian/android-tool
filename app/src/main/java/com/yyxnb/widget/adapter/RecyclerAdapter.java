@@ -1,5 +1,6 @@
 package com.yyxnb.widget.adapter;
 
+import android.annotation.SuppressLint;
 import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
@@ -52,6 +53,7 @@ public class RecyclerAdapter extends PagedListAdapter<TestData, RecyclerAdapter.
                     return oldConcert.getId() == newConcert.getId();
                 }
 
+                @SuppressLint("DiffUtilEquals")
                 @Override
                 public boolean areContentsTheSame(TestData oldConcert,
                                                   TestData newConcert) {

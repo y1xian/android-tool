@@ -23,6 +23,8 @@ public class NetWorkViewModel extends BaseViewModel {
                 .setPageSize(20)
                 //初始化加载的数量
                 .setInitialLoadSizeHint(20 * 2)
+                //距离底部还有多少条数据时开始预加载
+                .setPrefetchDistance(5)
                 //配置是否启动PlaceHolders
                 .setEnablePlaceholders(false)
                 .build();
