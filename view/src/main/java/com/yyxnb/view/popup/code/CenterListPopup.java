@@ -3,6 +3,7 @@ package com.yyxnb.view.popup.code;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -63,6 +64,9 @@ public class CenterListPopup extends CenterPopup {
         recyclerView = findViewById(R.id.mRecyclerView);
         tv_title = findViewById(R.id.tvTitle);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+
         if (tv_title != null) {
             if (TextUtils.isEmpty(title)) {
                 tv_title.setVisibility(GONE);
@@ -78,7 +82,7 @@ public class CenterListPopup extends CenterPopup {
                 holder.setText(R.id.tvText, s);
                 if (iconIds != null && iconIds.length > position) {
                     holder.getView(R.id.ivIcon).setVisibility(VISIBLE);
-                    holder.getView(R.id.ivIcon).setBackgroundResource(iconIds[position]);
+                    holder.setImageResource(R.id.ivIcon, iconIds[position]);
                 } else {
                     holder.getView(R.id.ivIcon).setVisibility(GONE);
                 }
@@ -87,7 +91,7 @@ public class CenterListPopup extends CenterPopup {
                 if (checkedPosition != -1 && iconCheckId != -1) {
                     if (holder.getView(R.id.ivCheck) != null) {
                         holder.getView(R.id.ivCheck).setVisibility(position == checkedPosition ? VISIBLE : GONE);
-                        holder.getView(R.id.ivCheck).setBackgroundResource(iconCheckId);
+                        holder.setImageResource(R.id.ivCheck, iconCheckId);
                     }
                     holder.<TextView>getView(R.id.tvText).setTextColor(position == checkedPosition ?
                             Popup.getPrimaryColor() : getResources().getColor(R.color.title_color));

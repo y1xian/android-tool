@@ -7,27 +7,27 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        android:textColor="#111111"
-        android:paddingTop="14dp"
-        android:paddingLeft="18dp"
-        android:paddingBottom="14dp"
-        android:paddingRight="18dp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="16sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingLeft="18dp"
+        android:paddingTop="14dp"
+        android:paddingRight="18dp"
+        android:paddingBottom="14dp"
+        android:textColor="#111111"
+        android:textSize="16sp" />
 
     <View
-        android:layout_width="match_parent"
         android:id="@+id/mDivider"
-        android:background="#EEEEEE"
-        android:layout_height=".45dp"/>
+        android:layout_width="match_parent"
+        android:layout_height=".45dp"
+        android:background="#EEEEEE" />
 
     <android.support.v7.widget.RecyclerView
-        android:orientation="vertical"
         android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:overScrollMode="never" />
 </LinearLayout>

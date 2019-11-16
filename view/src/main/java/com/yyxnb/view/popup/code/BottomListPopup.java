@@ -3,6 +3,7 @@ package com.yyxnb.view.popup.code;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -63,6 +64,9 @@ public class BottomListPopup extends BottomPopup {
         recyclerView = findViewById(R.id.mRecyclerView);
         tvTitle = findViewById(R.id.tvTitle);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+
         if (tvTitle != null) {
             if (TextUtils.isEmpty(title)) {
                 tvTitle.setVisibility(GONE);
@@ -78,7 +82,7 @@ public class BottomListPopup extends BottomPopup {
                 holder.setText(R.id.tvText, s);
                 if (iconIds != null && iconIds.length > position) {
                     holder.getView(R.id.ivIcon).setVisibility(VISIBLE);
-                    holder.getView(R.id.ivIcon).setBackgroundResource(iconIds[position]);
+                    holder.setImageResource(R.id.ivIcon, iconIds[position]);
                 } else {
                     holder.getView(R.id.ivIcon).setVisibility(GONE);
                 }

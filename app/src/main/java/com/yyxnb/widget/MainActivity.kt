@@ -13,7 +13,8 @@ import com.yyxnb.widget.fragments.NetWorkFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.yyxnb.view.permission.FanPermissionUtils
 import com.yyxnb.view.permission.FanPermissionListener
-
+import com.yyxnb.view.popup.Popup
+import com.yyxnb.view.popup.interfaces.OnSelectListener
 
 
 class MainActivity : BaseActivity() {
@@ -32,9 +33,20 @@ class MainActivity : BaseActivity() {
 
         mAdapter.setDataItems(DataConfig.data)
 
-        mAdapter.setOnItemClickListener(object : MultiItemTypeAdapter.OnItemClickListener{
+        mAdapter.setOnItemClickListener(object : MultiItemTypeAdapter.OnItemClickListener {
             override fun onItemClick(view: View, holder: RecyclerView.ViewHolder, position: Int) {
-                startFragment(NetWorkFragment.newInstance())
+//                startFragment(NetWorkFragment.newInstance())
+
+//                val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
+//                loadingPopup.show()
+
+                Popup.Builder(this@MainActivity)
+                        .asBottomList("", arrayOf("条目1", "条目2", "条目3", "条目4", "条目5"), null
+                                //                                null, 0,R.mipmap.icon_pay_check,
+                        ) { position, text ->
+                            //                                        ToastUtil.show("click " + text);
+                        }
+                        .show()
             }
 
             override fun onItemLongClick(view: View, holder: RecyclerView.ViewHolder, position: Int): Boolean {

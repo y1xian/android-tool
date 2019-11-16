@@ -42,7 +42,7 @@ import static com.yyxnb.view.animator.PopupAnimation.NoAnimation;
  */
 public abstract class BasePopup extends FrameLayout implements OnNavigationBarListener {
     private static Stack<BasePopup> stack = new Stack<>(); //静态存储所有弹窗对象
-    public PopupInfo popupInfo;
+    public PopupInfo popupInfo = new PopupInfo();
     protected PopupAnimator popupContentAnimator;
     protected ShadowBgAnimator shadowBgAnimator;
     private int touchSlop;
