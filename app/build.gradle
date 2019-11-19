@@ -27,4 +27,8 @@ dependencies {
     implementation project(':http')
     implementation project(':view')
 
+    //glide
+    api libs.glide
+    kapt libs.glide_compiler
+
 }

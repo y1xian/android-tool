@@ -1,6 +1,8 @@
-package com.yyxnb.view.utils;
+package com.yyxnb.widget.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -14,6 +16,7 @@ import com.yyxnb.view.image.ImageWatcher;
 public class GlideSimpleLoader implements ImageWatcher.Loader {
     @Override
     public void load(Context context, Uri uri, final ImageWatcher.LoadCallback lc) {
+
         Glide.with(context).load(uri)
                 .into(new SimpleTarget<Drawable>() {
                     @Override
@@ -32,4 +35,11 @@ public class GlideSimpleLoader implements ImageWatcher.Loader {
                     }
                 });
     }
+
+    public static Drawable BitmapToDrawable(Bitmap bitmap, Context context) {
+        BitmapDrawable drawbale = new BitmapDrawable(context.getResources(),
+                bitmap);
+        return drawbale;
+    }
+
 }

@@ -126,7 +126,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             leftDrawable = array.getResourceId(R.styleable.TitleBar_leftDrawable, 0);
             leftDrawablePadding = array.getDimension(R.styleable.TitleBar_leftDrawablePadding, 5);
         } else if (leftType == TYPE_LEFT_IMAGEBUTTON) {
-            leftImageResource = array.getResourceId(R.styleable.TitleBar_leftImageResource, R.mipmap.icon_titlebar_back);
+            leftImageResource = array.getResourceId(R.styleable.TitleBar_leftImageResource, R.mipmap.ic_titlebar_back);
         } else if (leftType == TYPE_LEFT_CUSTOM_VIEW) {
             leftCustomViewRes = array.getResourceId(R.styleable.TitleBar_leftCustomView, 0);
         }
@@ -371,7 +371,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
 
             // 初始化进度条, 显示于标题栏左边
             progressCenter = new ProgressBar(context);
-            progressCenter.setIndeterminateDrawable(getResources().getDrawable(R.mipmap.icon_titlebar_progress_circular));
+            progressCenter.setIndeterminateDrawable(getResources().getDrawable(R.mipmap.ic_titlebar_progress));
             progressCenter.setVisibility(View.GONE);
             int progressWidth = BarUtils.dp2PxInt(context, 18);
             LayoutParams progressParams = new LayoutParams(progressWidth, progressWidth);

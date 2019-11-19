@@ -6,6 +6,8 @@ import android.support.multidex.MultiDex;
 
 import com.yyxnb.http.RetrofitManager;
 import com.yyxnb.http.config.OkHttpConfig;
+import com.yyxnb.view.proxy.imageloader.ImageHelper;
+import com.yyxnb.widget.utils.GlideLoader;
 
 import okhttp3.OkHttpClient;
 
@@ -19,6 +21,9 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         initRxHttp();
+
+        ImageHelper.INSTANCE.setGlobalImageLoader(new GlideLoader());
+
     }
 
     private void initRxHttp() {

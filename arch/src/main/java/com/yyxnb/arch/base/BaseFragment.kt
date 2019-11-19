@@ -35,7 +35,7 @@ import java.util.*
  * @author : yyx
  * @date ：2016/10
  */
-abstract class BaseFragment : Fragment(), ILazyOwner, CoroutineScope by MainScope() {
+abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScope() {
 
     protected lateinit var mActivity: AppCompatActivity
     protected lateinit var mContext: Context

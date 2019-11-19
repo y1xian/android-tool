@@ -2,6 +2,7 @@ package com.yyxnb.view.popup.code;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -58,7 +59,9 @@ public class AttachListPopup extends AttachPopup {
     protected void initPopupContent() {
         super.initPopupContent();
         recyclerView = findViewById(R.id.mRecyclerView);
-//        recyclerView.setupDivider();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+
         final BaseAdapter<String> adapter = new BaseAdapter<String>(bindItemLayoutId == 0 ? R.layout._popup_adapter_text : bindItemLayoutId) {
             @Override
             protected void bind(@NonNull ViewHolder holder, @NonNull String s, int position) {

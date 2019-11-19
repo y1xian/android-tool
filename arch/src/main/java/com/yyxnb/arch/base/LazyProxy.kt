@@ -3,7 +3,7 @@ package com.yyxnb.arch.base
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import com.yyxnb.arch.interfaces.ILazyOwner
+import com.yyxnb.arch.interfaces.ILazyProxy
 
 /**
  * Fragment快速实现懒加载的代理类
@@ -18,7 +18,7 @@ class LazyProxy(
     /**
      * 沉浸式实现接口
      */
-    private var mILazyOwner: ILazyOwner? = null
+    private var mILazyProxy: ILazyProxy? = null
     /**
      * 是否第一次加载
      */
@@ -34,8 +34,8 @@ class LazyProxy(
 
 
     init {
-        if (mFragment is ILazyOwner) {
-            this.mILazyOwner = mFragment as ILazyOwner
+        if (mFragment is ILazyProxy) {
+            this.mILazyProxy = mFragment as ILazyProxy
         } else {
             throw IllegalArgumentException("Fragment请实现LazyOwner接口")
         }
@@ -63,7 +63,7 @@ class LazyProxy(
 
     fun onActivityCreated(savedInstanceState: Bundle?) {
         isViewCreated = true
-        mILazyOwner?.initView(savedInstanceState)
+        mILazyProxy?.initView(savedInstanceState)
         // !isHidden() 默认为 true  在调用 hide show 的时候可以使用
         if (!mFragment!!.isHidden && mFragment!!.userVisibleHint) {
             // 这里的限制只能限制 A - > B 两层嵌套
@@ -90,14 +90,14 @@ class LazyProxy(
 
     fun onDestroy() {
         mFragment = null
-        mILazyOwner = null
+        mILazyProxy = null
         mIsFirstVisible = true
         isViewCreated = false
     }
 
     fun onConfigurationChanged(newConfig: Configuration) {
         if (mFragment!!.userVisibleHint) {
-            mILazyOwner!!.onVisible()
+            mILazyProxy!!.onVisible()
         }
     }
 
@@ -132,15 +132,15 @@ class LazyProxy(
         if (visible) {
             if (mIsFirstVisible) {
                 mIsFirstVisible = false
-                mILazyOwner!!.initViewData()
+                mILazyProxy!!.initViewData()
             }
             if (isFragmentVisible(mFragment!!)) {
-                mILazyOwner?.onVisible()
+                mILazyProxy?.onVisible()
                 dispatchChildVisibleState(true)
             }
         } else {
             dispatchChildVisibleState(false)
-            mILazyOwner?.onInVisible()
+            mILazyProxy?.onInVisible()
         }
     }
 

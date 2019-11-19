@@ -71,11 +71,11 @@ dependencies {
     api libs.support_v7
     api libs.support_v4
     api libs.recyclerview
-    //glide
-    api libs.glide
-    kapt libs.glide_compiler
     //kt
     api libs.kotlin_stdlib
     api libs.kotlin_coroutines
     api libs.kotlin_coroutines_core
+    //
+    api libs.gson
+    api libs.okhttp3
 }

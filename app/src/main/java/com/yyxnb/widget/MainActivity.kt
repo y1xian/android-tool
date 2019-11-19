@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.yyxnb.arch.base.BaseActivity
+import com.yyxnb.view.image.ImageWatcher
+import com.yyxnb.view.image.ImageWatcherHelper
 import com.yyxnb.view.rv.MultiItemTypeAdapter
 import com.yyxnb.widget.adapter.MainListAdapter
 import com.yyxnb.widget.config.DataConfig
@@ -15,11 +17,14 @@ import com.yyxnb.view.permission.FanPermissionUtils
 import com.yyxnb.view.permission.FanPermissionListener
 import com.yyxnb.view.popup.Popup
 import com.yyxnb.view.popup.interfaces.OnSelectListener
+import com.yyxnb.widget.utils.GlideSimpleLoader
 
 
 class MainActivity : BaseActivity() {
 
     private val mAdapter by lazy { MainListAdapter() }
+
+    private var iwHelper: ImageWatcherHelper? = null
 
     override fun initLayoutResId(): Int = R.layout.activity_main
 
@@ -31,7 +36,9 @@ class MainActivity : BaseActivity() {
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.adapter = mAdapter
 
-        mAdapter.setDataItems(DataConfig.data)
+        mAdapter.setDataItems(DataConfig.dataUrl)
+
+        iwHelper = ImageWatcherHelper.with(this@MainActivity, GlideSimpleLoader());
 
         mAdapter.setOnItemClickListener(object : MultiItemTypeAdapter.OnItemClickListener {
             override fun onItemClick(view: View, holder: RecyclerView.ViewHolder, position: Int) {
@@ -40,13 +47,17 @@ class MainActivity : BaseActivity() {
 //                val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
 //                loadingPopup.show()
 
-                Popup.Builder(this@MainActivity)
-                        .asBottomList("", arrayOf("条目1", "条目2", "条目3", "条目4", "条目5"), null
-                                //                                null, 0,R.mipmap.icon_pay_check,
-                        ) { position, text ->
-                            //                                        ToastUtil.show("click " + text);
-                        }
-                        .show()
+//                Popup.Builder(this@MainActivity)
+//                        .asBottomList("", arrayOf("条目1", "条目2", "条目3", "条目4", "条目5"), null
+//                                //                                null, 0,R.mipmap.icon_pay_check,
+//                        ) { position, text ->
+//                            //                                        ToastUtil.show("click " + text);
+//                        }
+//                        .show()
+
+
+                iwHelper?.showString(DataConfig.dataUrl,0)
+
             }
 
             override fun onItemLongClick(view: View, holder: RecyclerView.ViewHolder, position: Int): Boolean {

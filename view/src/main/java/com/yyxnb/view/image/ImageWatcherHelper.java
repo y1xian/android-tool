@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.yyxnb.view.R;
-import com.yyxnb.view.utils.GlideSimpleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +48,9 @@ public class ImageWatcherHelper {
         activityDecorView = (ViewGroup) activity.getWindow().getDecorView();
     }
 
-    public static ImageWatcherHelper with(FragmentActivity activity) { // attach
-        return with(activity, new GlideSimpleLoader());
-    }
+//    public static ImageWatcherHelper with(FragmentActivity activity) { // attach
+//        return with(activity, new GlideSimpleLoader());
+//    }
 
     public static ImageWatcherHelper with(FragmentActivity activity, ImageWatcher.Loader l) { // attach
         if (activity == null) {
@@ -144,6 +143,7 @@ public class ImageWatcherHelper {
 
     public List<Uri> convert(List<String> data) {
         List<Uri> list = new ArrayList<>();
+        list.clear();
         for (String d : data) {
             list.add(Uri.parse(d));
         }

@@ -62,7 +62,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
 
     private ImageView iSource;
 
-    protected int mErrorImageRes = R.mipmap.error_picture; // 图片加载失败站位图
+    protected int mErrorImageRes = R.mipmap.ic_error_picture; // 图片加载失败站位图
     protected int mStatusBarHeight; // 状态栏高度
     private int mWidth, mHeight;
     private int mBackgroundColor = 0x00000000;

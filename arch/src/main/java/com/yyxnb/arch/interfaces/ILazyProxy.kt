@@ -6,7 +6,7 @@ import android.os.Bundle
  * 懒加载接口
  * @author yyx
  */
-interface ILazyOwner {
+interface ILazyProxy {
 
     /**
      * 初始化控件
