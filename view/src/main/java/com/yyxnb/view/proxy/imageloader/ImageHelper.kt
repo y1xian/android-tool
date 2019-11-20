@@ -6,61 +6,61 @@ import java.io.File
 
 /**
  * 图片加载类
- * 策略或者静态代理模式，开发者只需要关心ImageLoader + LoaderOptions
+ * 策略或者静态代理模式，开发者只需要关心ImageHelper + ImageOptions
  */
 object ImageHelper {
 
-    private var sLoader: ILoaderProxy? = null
+    private var imageProxy: IImageProxy? = null
 
     /**
      * 提供全局替换图片加载框架的接口，若切换其它框架，可以实现一键全局替换
      */
-    fun setGlobalImageLoader(loader: ILoaderProxy) {
-        sLoader = loader
+    fun init(image: IImageProxy) {
+        imageProxy = image
     }
 
-    fun load(url: String): LoaderOptions {
-        return LoaderOptions(url)
+    fun load(url: String): ImageOptions {
+        return ImageOptions(url)
     }
 
-    fun load(drawable: Int): LoaderOptions {
-        return LoaderOptions(drawable)
+    fun load(drawable: Int): ImageOptions {
+        return ImageOptions(drawable)
     }
 
-    fun load(file: File): LoaderOptions {
-        return LoaderOptions(file)
+    fun load(file: File): ImageOptions {
+        return ImageOptions(file)
     }
 
-    fun load(uri: Uri): LoaderOptions {
-        return LoaderOptions(uri)
+    fun load(uri: Uri): ImageOptions {
+        return ImageOptions(uri)
     }
 
     /**
      * 优先使用实时设置的图片loader，其次使用全局设置的图片loader
      * @param options
      */
-    fun loadOptions(options: LoaderOptions) {
-        if (options.loader != null) {
-            options.loader!!.loadImage(options)
+    fun loadOptions(options: ImageOptions) {
+        if (options.imageProxy != null) {
+            options.imageProxy!!.loadImage(options)
         } else {
             checkNotNull()
-            sLoader!!.loadImage(options)
+            imageProxy!!.loadImage(options)
         }
     }
 
     fun clearMemoryCache() {
         checkNotNull()
-        sLoader!!.clearMemoryCache()
+        imageProxy!!.clearMemoryCache()
     }
 
     fun clearDiskCache() {
         checkNotNull()
-        sLoader!!.clearDiskCache()
+        imageProxy!!.clearDiskCache()
     }
 
     private fun checkNotNull() {
-        if (sLoader == null) {
-            throw NullPointerException("you must be set your imageLoader at first!")
+        if (imageProxy == null) {
+            throw NullPointerException("you must be set your imageProxy at first!")
         }
     }
 

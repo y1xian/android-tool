@@ -17,5 +17,5 @@ public class BaseAPI {
 
     // 列表 http://www.mocky.io/v2/5dcd089d2e00006a00729a09
 
-    public static final String HEAD_MOCKY = BASE_URL_NAME_HEADER + URL_KEY_1;
+    public final static String HEAD_MOCKY = BASE_URL_NAME_HEADER + URL_KEY_1;
 }

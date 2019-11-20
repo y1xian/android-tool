@@ -6,14 +6,14 @@ import android.support.annotation.Nullable;
 
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.yyxnb.view.proxy.imageloader.ILoaderProxy;
-import com.yyxnb.view.proxy.imageloader.LoaderOptions;
+import com.yyxnb.view.proxy.imageloader.IImageProxy;
+import com.yyxnb.view.proxy.imageloader.ImageOptions;
 
 
-public class GlideLoader implements ILoaderProxy {
+public class GlideImageProxy implements IImageProxy {
 
     @Override
-    public void loadImage(LoaderOptions options) {
+    public void loadImage(ImageOptions options) {
 
         if (options.getUrl() != null){
             GlideApp.with(options.getTargetView())

@@ -11,7 +11,7 @@ import java.io.File
 /**
  * 该类为图片加载框架的通用属性封装，不能耦合任何一方的框架
  */
-class LoaderOptions {
+class ImageOptions {
     var placeholderResId: Int = 0
     var errorResId: Int = 0
     var isCenterCrop: Boolean = false
@@ -30,7 +30,7 @@ class LoaderOptions {
     var file: File? = null
     var drawableResId: Int = 0
     var uri: Uri? = null
-    var loader: ILoaderProxy? = null//实时切换图片加载库
+    var imageProxy: IImageProxy? = null//实时切换图片加载库
 
     constructor(url: String) {
         this.url = url
@@ -58,42 +58,42 @@ class LoaderOptions {
         ImageHelper.loadOptions(this)
     }
 
-    fun loader(imageLoader: ILoaderProxy): LoaderOptions {
-        this.loader = imageLoader
+    fun loader(imageImage: IImageProxy): ImageOptions {
+        this.imageProxy = imageImage
         return this
     }
 
-    fun placeholder(@DrawableRes placeholderResId: Int): LoaderOptions {
+    fun placeholder(placeholderResId: Int): ImageOptions {
         this.placeholderResId = placeholderResId
         return this
     }
 
-    fun placeholder(placeholder: Drawable): LoaderOptions {
+    fun placeholder(placeholder: Drawable): ImageOptions {
         this.placeholder = placeholder
         return this
     }
 
-    fun error(@DrawableRes errorResId: Int): LoaderOptions {
+    fun error(errorResId: Int): ImageOptions {
         this.errorResId = errorResId
         return this
     }
 
-    fun centerCrop(): LoaderOptions {
+    fun centerCrop(): ImageOptions {
         isCenterCrop = true
         return this
     }
 
-    fun centerInside(): LoaderOptions {
+    fun centerInside(): ImageOptions {
         isCenterInside = true
         return this
     }
 
-    fun config(config: Bitmap.Config): LoaderOptions {
+    fun config(config: Bitmap.Config): ImageOptions {
         this.config = config
         return this
     }
 
-    fun resize(targetWidth: Int, targetHeight: Int): LoaderOptions {
+    fun resize(targetWidth: Int, targetHeight: Int): ImageOptions {
         this.targetWidth = targetWidth
         this.targetHeight = targetHeight
         return this
@@ -104,22 +104,22 @@ class LoaderOptions {
      * @param bitmapAngle   度数
      * @return
      */
-    fun angle(bitmapAngle: Int): LoaderOptions {
+    fun angle(bitmapAngle: Int): ImageOptions {
         this.bitmapAngle = bitmapAngle
         return this
     }
 
-    fun skipLocalCache(skipLocalCache: Boolean): LoaderOptions {
+    fun skipLocalCache(skipLocalCache: Boolean): ImageOptions {
         this.skipLocalCache = skipLocalCache
         return this
     }
 
-    fun skipNetCache(skipNetCache: Boolean): LoaderOptions {
+    fun skipNetCache(skipNetCache: Boolean): ImageOptions {
         this.skipNetCache = skipNetCache
         return this
     }
 
-    fun rotate(degrees: Float): LoaderOptions {
+    fun rotate(degrees: Float): ImageOptions {
         this.degrees = degrees
         return this
     }

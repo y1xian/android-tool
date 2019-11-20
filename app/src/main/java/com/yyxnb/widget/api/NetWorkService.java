@@ -13,6 +13,7 @@ import retrofit2.http.Headers;
 
 import static com.yyxnb.widget.config.BaseAPI.HEAD_MOCKY;
 
+
 public interface NetWorkService {
 
     @Headers(HEAD_MOCKY)
