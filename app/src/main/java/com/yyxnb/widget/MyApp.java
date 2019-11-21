@@ -25,7 +25,7 @@ public class MyApp extends Application {
         initRxHttp();
 
         ImageHelper.INSTANCE.init(new GlideImageProxy());
-        HttpHelper.INSTANCE.init(new OkHttpProxy()).setBaseUrl("");
+//        HttpHelper.INSTANCE.init(new OkHttpProxy()).setBaseUrl("");
 
     }
 

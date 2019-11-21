@@ -5,13 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.yyxnb.arch.base.mvvm.BaseFragmentVM;
-import com.yyxnb.arch.utils.log.LogUtils;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.NetWorkListAdapter;
-import com.yyxnb.widget.adapter.RecyclerAdapter;
 import com.yyxnb.widget.vm.NetWorkViewModel;
 
 import org.jetbrains.annotations.Nullable;
@@ -21,8 +18,8 @@ import org.jetbrains.annotations.Nullable;
  */
 public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
 
-//    private NetWorkListAdapter mAdapter;
-    private RecyclerAdapter mAdapter;
+    private NetWorkListAdapter mAdapter;
+//    private RecyclerAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
     @Override
@@ -37,8 +34,8 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setHasFixedSize(true);
 
-//        mAdapter = new NetWorkListAdapter();
-        mAdapter = new RecyclerAdapter();
+        mAdapter = new NetWorkListAdapter();
+//        mAdapter = new RecyclerAdapter();
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -46,13 +43,16 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
     public void initViewData() {
         super.initViewData();
 
+        mViewModel.reqTeam();
 
-
-        mViewModel.getConvertList().observe(this,data -> {
-            LogUtils.INSTANCE.e("----mViewModel---"  + data.size());
-//            mAdapter.setDataItems(data);
-            mAdapter.submitList(data);
-//            mAdapter.notifyDataSetChanged();
+        mViewModel.getTestList().observe(this,t -> {
+//            LogUtils.INSTANCE.e("----mViewModel---"  + data.size());
+            switch (t.getStatus()){
+                case SUCCESS:
+                    mAdapter.setDataItems(t.getData().getData());
+                    break;
+            }
+//            mAdapter.submitList(data);
         });
 
     }

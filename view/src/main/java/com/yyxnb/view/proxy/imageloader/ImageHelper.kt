@@ -10,6 +10,7 @@ import java.io.File
  */
 object ImageHelper {
 
+    @Volatile
     private var imageProxy: IImageProxy? = null
 
     /**
@@ -39,6 +40,7 @@ object ImageHelper {
      * 优先使用实时设置的图片loader，其次使用全局设置的图片loader
      * @param options
      */
+    @Synchronized
     fun loadOptions(options: ImageOptions) {
         if (options.imageProxy != null) {
             options.imageProxy!!.loadImage(options)

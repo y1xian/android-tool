@@ -18,6 +18,6 @@ public class MainListAdapter extends BaseAdapter<String> {
         String url = "http://img0.imgtn.bdimg.com/it/u=4073821464,3431246218&fm=26&gp=0.jpg";
 
         holder.setText(R.id.tvText, s);
-        ImageHelper.INSTANCE.load(s).into(holder.getView(R.id.ivPic));
+        ImageHelper.INSTANCE.load(url).into(holder.getView(R.id.ivPic));
     }
 }

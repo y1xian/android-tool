@@ -77,5 +77,4 @@ dependencies {
     api libs.kotlin_coroutines_core
     //
     api libs.gson
-    api libs.okhttp3
 }

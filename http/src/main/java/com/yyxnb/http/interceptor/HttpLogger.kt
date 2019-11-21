@@ -11,7 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
  * @author : yyx
  * @date ：2018/6/16
  */
-class RxHttpLogger : HttpLoggingInterceptor.Logger {
+class HttpLogger : HttpLoggingInterceptor.Logger {
     private val mMessage = StringBuilder()
 
     override fun log(message: String) {

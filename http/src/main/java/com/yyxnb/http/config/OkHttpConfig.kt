@@ -184,7 +184,7 @@ object OkHttpConfig {
          */
         private fun setDebugConfig() {
             if (logEnable) {
-                val logInterceptor = HttpLoggingInterceptor(RxHttpLogger())
+                val logInterceptor = HttpLoggingInterceptor(HttpLogger())
                 logInterceptor.level = HttpLoggingInterceptor.Level.BODY
                 okHttpClientBuilder.addInterceptor(logInterceptor)
             }

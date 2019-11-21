@@ -94,7 +94,7 @@ abstract class NetworkBoundResource<R>
     @MainThread
     private fun setValue(newValue: Resource<R>) {
         if (result.value != newValue) {
-            result.value = newValue
+            result.postValue(newValue)
         }
     }
 

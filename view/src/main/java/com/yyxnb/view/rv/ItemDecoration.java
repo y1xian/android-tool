@@ -22,7 +22,7 @@ import android.view.View;
         mRefreshView.setLayoutManager(new GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false));
         ItemDecoration decoration = new ItemDecoration(mContext, 0x00000000, 2, 2);
         decoration.setOnlySetItemOffsetsButNoDraw(true);
-        mRefreshView.setItemDecoration(decoration);
+        mRefreshView.addItemDecoration(decoration);
 */
 
 /**

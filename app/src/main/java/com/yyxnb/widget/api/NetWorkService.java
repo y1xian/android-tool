@@ -21,7 +21,7 @@ public interface NetWorkService {
     LiveData<BaseDatas<TestData>> getTest();
 
     @Headers(HEAD_MOCKY)
-    @GET("v2/5dcd089d2e00006a00729a09")
+    @GET("v2/5dd6271933000041d5f38453")
     LiveData<ApiResponse<BaseDatas<List<TestData>>>> getTestList();
 
 }

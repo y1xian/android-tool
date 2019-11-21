@@ -1,6 +1,5 @@
 package com.yyxnb.widget.adapter;
 
-import android.support.v7.util.DiffUtil;
 
 import com.yyxnb.view.rv.BaseAdapter;
 import com.yyxnb.view.rv.ViewHolder;

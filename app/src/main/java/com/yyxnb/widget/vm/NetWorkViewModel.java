@@ -1,42 +1,30 @@
 package com.yyxnb.widget.vm;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.paging.DataSource;
-import android.arch.paging.LivePagedListBuilder;
-import android.arch.paging.PagedList;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 
 import com.yyxnb.arch.base.mvvm.BaseViewModel;
+import com.yyxnb.http.network.Resource;
+import com.yyxnb.widget.bean.BaseDatas;
 import com.yyxnb.widget.bean.TestData;
-import com.yyxnb.widget.paging.NetWorkFactory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class NetWorkViewModel extends BaseViewModel {
 
-    private LiveData<PagedList<TestData>> convertList;
-    private DataSource<Integer, TestData> concertDataSource;
+    private NetWorkRespository mRepository = new NetWorkRespository();
 
-    public NetWorkViewModel() {
-        NetWorkFactory concertFactory = new NetWorkFactory();
-        concertDataSource = concertFactory.create();
+    private MutableLiveData<Map<String, String>> reqTeam = new MutableLiveData();
 
-        PagedList.Config config = new PagedList.Config.Builder()
-                //配置分页加载的数量
-                .setPageSize(20)
-                //初始化加载的数量
-                .setInitialLoadSizeHint(20 * 2)
-                //距离底部还有多少条数据时开始预加载
-                .setPrefetchDistance(5)
-                //配置是否启动PlaceHolders
-                .setEnablePlaceholders(false)
-                .build();
-
-        convertList = new LivePagedListBuilder<>(concertFactory, config).build();
+    public LiveData<Resource<BaseDatas<List<TestData>>>> getTestList(){
+        return Transformations.switchMap(reqTeam, input -> mRepository.getTestList());
     }
 
-    public void invalidateDataSource() {
-        concertDataSource.invalidate();
+    public void reqTeam(){
+        reqTeam.setValue(new HashMap<>());
     }
 
-    public LiveData<PagedList<TestData>> getConvertList() {
-        return convertList;
-    }
 }

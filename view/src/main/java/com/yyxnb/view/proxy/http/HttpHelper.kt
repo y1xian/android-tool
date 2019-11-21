@@ -5,23 +5,26 @@ package com.yyxnb.view.proxy.http
  */
 object HttpHelper {
 
-    private var httpProxy :IHttpProxy? = null
-    private var baseUrl :String? = null
+    @Volatile
+    private var httpProxy: IHttpProxy? = null
+    @Volatile
+    private var baseUrl: String? = null
 
     /**
-    * 提供全局替换网络加载框架的接口，若切换其它框架，可以实现一键全局替换
-    */
-    fun init(http: IHttpProxy) : HttpHelper {
+     * 提供全局替换网络加载框架的接口，若切换其它框架，可以实现一键全局替换
+     */
+    fun init(http: IHttpProxy): HttpHelper {
         httpProxy = http
         return this
     }
 
-    fun setBaseUrl(url : String) {
+    fun setBaseUrl(url: String) {
         baseUrl = url
     }
 
-    fun getBaserUrl():String = baseUrl.toString()
+    fun getBaserUrl(): String = baseUrl.toString()
 
+    @Synchronized
     fun loadOptions(options: HttpOptions) {
         if (options.httpProxy != null) {
             options.httpProxy!!.loadHttp(options)
@@ -31,7 +34,8 @@ object HttpHelper {
         }
     }
 
-    fun cancel(tag :String) {
+    @Synchronized
+    fun cancel(tag: String) {
         checkNotNull()
         httpProxy!!.cancel(tag)
     }

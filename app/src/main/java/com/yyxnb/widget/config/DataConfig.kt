@@ -10,6 +10,13 @@ object DataConfig {
             return field
         }
 
+    val dataMain = ArrayList<String>()
+        get() {
+            field.add("----- 网络数据 -----")
+            field.add("----- 弹框 -----")
+            return field
+        }
+
     val dataUrl = ArrayList<String>()
         get() {
             for (i in 0..19) {
