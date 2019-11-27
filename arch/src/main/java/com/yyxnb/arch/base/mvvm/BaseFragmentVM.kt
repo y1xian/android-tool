@@ -5,6 +5,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.yyxnb.arch.Arch
 import com.yyxnb.arch.base.BaseFragment
+import com.yyxnb.arch.common.Message
+import com.yyxnb.arch.utils.ToastUtils
 
 
 /**
@@ -27,7 +29,20 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
     }
 
     override fun initViewData() {
+        registerDefUIChange()
         initObservable()
+    }
+
+    /**
+     * 注册 UI 事件
+     */
+    private fun registerDefUIChange() {
+        mViewModel.defUI.toastEvent.observe(viewLifecycleOwner, Observer {
+            ToastUtils.normal(it.toString())
+        })
+        mViewModel.defUI.msgEvent.observe(viewLifecycleOwner, Observer {
+            handleEvent(it)
+        })
     }
 
     /**
@@ -37,9 +52,9 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
     open fun initObservable() {}
 
     /**
-     * 返回错误消息
+     * 返回消息
      */
-    open fun initMsg(msg: String) {}
+    open fun handleEvent(msg: Message?) {}
 
     /**
      * 初始化ViewModel
@@ -57,4 +72,5 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
         lifecycle.removeObserver(mViewModel)
         this.mViewModel to null
     }
+
 }

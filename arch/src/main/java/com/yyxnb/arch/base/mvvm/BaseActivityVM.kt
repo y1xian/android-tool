@@ -1,10 +1,13 @@
 package com.yyxnb.arch.base.mvvm
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.yyxnb.arch.Arch
 import com.yyxnb.arch.base.BaseActivity
+import com.yyxnb.arch.common.Message
+import com.yyxnb.arch.utils.ToastUtils
 
 abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {
 
@@ -16,7 +19,20 @@ abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         mViewModel = initViewModel(this, Arch.getInstance(this, 0)!!)
         lifecycle.addObserver(mViewModel)
+        registerDefUIChange()
         initObservable()
+    }
+
+    /**
+     * 注册 UI 事件
+     */
+    private fun registerDefUIChange() {
+        mViewModel.defUI.toastEvent.observe(this, Observer {
+            ToastUtils.normal(it.toString())
+        })
+        mViewModel.defUI.msgEvent.observe(this, Observer {
+            handleEvent(it)
+        })
     }
 
     /**
@@ -24,6 +40,11 @@ abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {
      * 接收数据结果
      */
     open fun initObservable() {}
+
+    /**
+     * 返回消息
+     */
+    open fun handleEvent(msg: Message?) {}
 
     /**
      * 初始化ViewModel
@@ -41,4 +62,5 @@ abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {
         lifecycle.removeObserver(mViewModel)
         this.mViewModel to null
     }
+
 }

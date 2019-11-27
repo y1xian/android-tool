@@ -2,11 +2,14 @@ package com.yyxnb.arch.base.mvvm
 
 import android.arch.lifecycle.DefaultLifecycleObserver
 import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper
+import com.yyxnb.arch.common.Message
 import com.yyxnb.arch.ext.tryCatch
+import com.yyxnb.arch.jetpack.SingleLiveEvent
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 
 /**
@@ -19,10 +22,16 @@ import kotlinx.coroutines.*
  */
 abstract class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
 
+    val defUI: UIChange by lazy { UIChange() }
+
     open val mScope: CoroutineScope by lazy {
         CoroutineScope(SupervisorJob() + Dispatchers.Main)
     }
 
+    /**
+     * 所有网络请求都在 viewModelScope 域中启动，当页面销毁时会自动
+     * 调用ViewModel的  #onCleared 方法取消所有协程
+     */
     fun launchUI(block: suspend CoroutineScope.() -> Unit) {
         mScope.launch {
             tryCatch({
@@ -33,10 +42,32 @@ abstract class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
         }
     }
 
+    /**
+     * 用流的方式进行网络请求
+     */
+    fun <T> launchFlow(block: suspend () -> T): Flow<T> {
+        return flow {
+            emit(block())
+        }
+    }
+
+    /**
+     * IO
+     */
     suspend fun <T> launchOnIO(block: suspend CoroutineScope.() -> T) {
         withContext(Dispatchers.IO) {
             block
         }
+    }
+
+    /**
+     * UI事件
+     */
+    inner class UIChange {
+        val showDialog by lazy { SingleLiveEvent<String>() }
+        val dismissDialog by lazy { SingleLiveEvent<Void>() }
+        val toastEvent by lazy { SingleLiveEvent<String>() }
+        val msgEvent by lazy { SingleLiveEvent<Message>() }
     }
 
     override fun onCreate(owner: LifecycleOwner) {

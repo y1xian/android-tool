@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.yyxnb.view.R;
-import com.yyxnb.view.animator.PopupAnimator;
-import com.yyxnb.view.animator.ScaleAlphaAnimator;
+import com.yyxnb.view.popup.animator.PopupAnimator;
+import com.yyxnb.view.popup.animator.ScaleAlphaAnimator;
 import com.yyxnb.view.popup.PopupUtils;
 
-import static com.yyxnb.view.animator.PopupAnimation.ScaleAlphaFromCenter;
+import static com.yyxnb.view.popup.animator.PopupAnimation.ScaleAlphaFromCenter;
 
 
 /**

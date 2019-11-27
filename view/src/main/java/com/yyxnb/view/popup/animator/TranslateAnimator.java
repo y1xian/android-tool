@@ -1,4 +1,4 @@
-package com.yyxnb.view.animator;
+package com.yyxnb.view.popup.animator;
 
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.View;

@@ -12,7 +12,7 @@ import android.view.ViewConfiguration;
 import android.widget.FrameLayout;
 import android.widget.OverScroller;
 
-import com.yyxnb.view.animator.ShadowBgAnimator;
+import com.yyxnb.view.popup.animator.ShadowBgAnimator;
 import com.yyxnb.view.popup.interfaces.LayoutStatus;
 
 

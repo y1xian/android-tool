@@ -1,4 +1,4 @@
-package com.yyxnb.view.animator;
+package com.yyxnb.view.popup.animator;
 
 /**
  * Description: 没有动画效果的动画器

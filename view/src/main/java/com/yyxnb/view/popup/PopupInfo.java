@@ -4,8 +4,8 @@ import android.graphics.PointF;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yyxnb.view.animator.PopupAnimation;
-import com.yyxnb.view.animator.PopupAnimator;
+import com.yyxnb.view.popup.animator.PopupAnimation;
+import com.yyxnb.view.popup.animator.PopupAnimator;
 import com.yyxnb.view.popup.interfaces.PopupPosition;
 import com.yyxnb.view.popup.interfaces.PopupType;
 import com.yyxnb.view.popup.interfaces.PopupCallback;

@@ -16,13 +16,13 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
-import com.yyxnb.view.animator.EmptyAnimator;
-import com.yyxnb.view.animator.PopupAnimator;
-import com.yyxnb.view.animator.ScaleAlphaAnimator;
-import com.yyxnb.view.animator.ScrollScaleAnimator;
-import com.yyxnb.view.animator.ShadowBgAnimator;
-import com.yyxnb.view.animator.TranslateAlphaAnimator;
-import com.yyxnb.view.animator.TranslateAnimator;
+import com.yyxnb.view.popup.animator.EmptyAnimator;
+import com.yyxnb.view.popup.animator.PopupAnimator;
+import com.yyxnb.view.popup.animator.ScaleAlphaAnimator;
+import com.yyxnb.view.popup.animator.ScrollScaleAnimator;
+import com.yyxnb.view.popup.animator.ShadowBgAnimator;
+import com.yyxnb.view.popup.animator.TranslateAlphaAnimator;
+import com.yyxnb.view.popup.animator.TranslateAnimator;
 import com.yyxnb.view.utils.KeyboardUtils;
 import com.yyxnb.view.popup.NavigationBarObserver;
 import com.yyxnb.view.popup.interfaces.OnNavigationBarListener;
@@ -34,7 +34,7 @@ import com.yyxnb.view.popup.PopupUtils;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import static com.yyxnb.view.animator.PopupAnimation.NoAnimation;
+import static com.yyxnb.view.popup.animator.PopupAnimation.NoAnimation;
 
 
 /**

@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yyxnb.view.R;
-import com.yyxnb.view.animator.PopupAnimation;
-import com.yyxnb.view.animator.PopupAnimator;
-import com.yyxnb.view.animator.ScrollScaleAnimator;
+import com.yyxnb.view.popup.animator.PopupAnimation;
+import com.yyxnb.view.popup.animator.PopupAnimator;
+import com.yyxnb.view.popup.animator.ScrollScaleAnimator;
 import com.yyxnb.view.popup.PartShadowContainer;
 import com.yyxnb.view.popup.interfaces.PopupPosition;
 import com.yyxnb.view.popup.PopupUtils;

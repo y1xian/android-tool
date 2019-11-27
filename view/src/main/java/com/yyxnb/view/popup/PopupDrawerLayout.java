@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 
-import com.yyxnb.view.animator.ShadowBgAnimator;
+import com.yyxnb.view.popup.animator.ShadowBgAnimator;
 import com.yyxnb.view.popup.interfaces.LayoutStatus;
 import com.yyxnb.view.popup.interfaces.PopupPosition;
 

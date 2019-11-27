@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.yyxnb.view.animator.PopupAnimation;
-import com.yyxnb.view.animator.PopupAnimator;
-import com.yyxnb.view.animator.TranslateAnimator;
+import com.yyxnb.view.popup.animator.PopupAnimation;
+import com.yyxnb.view.popup.animator.PopupAnimator;
+import com.yyxnb.view.popup.animator.TranslateAnimator;
 import com.yyxnb.view.popup.interfaces.OnClickOutsideListener;
 import com.yyxnb.view.popup.interfaces.PopupPosition;
 import com.yyxnb.view.popup.PopupUtils;

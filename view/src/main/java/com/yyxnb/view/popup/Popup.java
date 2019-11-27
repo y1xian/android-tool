@@ -7,8 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 
-import com.yyxnb.view.animator.PopupAnimation;
-import com.yyxnb.view.animator.PopupAnimator;
+import com.yyxnb.view.popup.animator.PopupAnimation;
+import com.yyxnb.view.popup.animator.PopupAnimator;
 import com.yyxnb.view.popup.code.AttachListPopup;
 import com.yyxnb.view.popup.code.AttachPopup;
 import com.yyxnb.view.popup.code.BasePopup;

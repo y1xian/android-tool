@@ -1,4 +1,4 @@
-package com.yyxnb.view.animator;
+package com.yyxnb.view.popup.animator;
 
 import android.view.View;
 

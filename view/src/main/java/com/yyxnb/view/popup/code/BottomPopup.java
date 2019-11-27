@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yyxnb.view.R;
-import com.yyxnb.view.animator.PopupAnimator;
+import com.yyxnb.view.popup.animator.PopupAnimator;
 import com.yyxnb.view.utils.KeyboardUtils;
 import com.yyxnb.view.popup.interfaces.PopupStatus;
 import com.yyxnb.view.popup.SmartDragLayout;

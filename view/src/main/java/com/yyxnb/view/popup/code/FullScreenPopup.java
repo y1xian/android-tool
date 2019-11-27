@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.yyxnb.view.animator.PopupAnimation;
-import com.yyxnb.view.animator.PopupAnimator;
-import com.yyxnb.view.animator.TranslateAnimator;
+import com.yyxnb.view.popup.animator.PopupAnimation;
+import com.yyxnb.view.popup.animator.PopupAnimator;
+import com.yyxnb.view.popup.animator.TranslateAnimator;
 import com.yyxnb.view.popup.Popup;
 import com.yyxnb.view.popup.PopupUtils;
 
