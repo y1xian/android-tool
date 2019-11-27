@@ -1,5 +1,6 @@
 package com.yyxnb.http.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
@@ -17,7 +18,7 @@ object SPUtils : Serializable{
 
     private var preferences: SharedPreferences? = null
     private var editor: SharedPreferences.Editor? = null
-    private var `object`: Any? = null
+    private var value: Any? = null
 
     /**
      * Whether to use for the first time
@@ -44,37 +45,38 @@ object SPUtils : Serializable{
      * 保存数据 , 所有的类型都适用
      *
      * @param key
-     * @param object
+     * @param value
      */
+    @SuppressLint("ApplySharedPref", "CommitPrefEdits")
     @Synchronized
-    fun saveParam(key: String, `object`: Any?) {
+    fun saveParam(key: String, value: Any?) {
         if (editor == null)
             editor = preferences!!.edit()
         // 得到object的类型
-        val type = `object`!!.javaClass.simpleName
+        val type = value!!.javaClass.simpleName
         if ("String" == type) {
             // 保存String 类型
-            editor!!.putString(key, `object` as String?)
+            editor!!.putString(key, value as String?)
         } else if ("Integer" == type) {
             // 保存integer 类型
-            editor!!.putInt(key, (`object` as Int?)!!)
+            editor!!.putInt(key, (value as Int?)!!)
         } else if ("Boolean" == type) {
             // 保存 boolean 类型
-            editor!!.putBoolean(key, (`object` as Boolean?)!!)
+            editor!!.putBoolean(key, (value as Boolean?)!!)
         } else if ("Float" == type) {
             // 保存float类型
-            editor!!.putFloat(key, (`object` as Float?)!!)
+            editor!!.putFloat(key, (value as Float?)!!)
         } else if ("Long" == type) {
             // 保存long类型
-            editor!!.putLong(key, (`object` as Long?)!!)
+            editor!!.putLong(key, (value as Long?)!!)
         } else {
-            require(`object` is Serializable) { `object`.javaClass.name + " 必须实现Serializable接口!" }
+            require(value is Serializable) { value.javaClass.name + " 必须实现Serializable接口!" }
 
             // 不是基本类型则是保存对象
             val baos = ByteArrayOutputStream()
             try {
                 val oos = ObjectOutputStream(baos)
-                oos.writeObject(`object`)
+                oos.writeObject(value)
                 val productBase64 = Base64.encodeToString(
                         baos.toByteArray(), Base64.DEFAULT)
                 editor!!.putString(key, productBase64)
@@ -91,6 +93,7 @@ object SPUtils : Serializable{
     /**
      * 移除信息
      */
+    @SuppressLint("CommitPrefEdits", "ApplySharedPref")
     @Synchronized
     fun remove(key: String) {
         if (editor == null)
@@ -150,9 +153,9 @@ object SPUtils : Serializable{
         val bais = ByteArrayInputStream(base64)
         try {
             val bis = ObjectInputStream(bais)
-            `object` = bis.readObject()
+            value = bis.readObject()
             Log.d(this.javaClass.simpleName, "Get object success")
-            return `object`
+            return value
         } catch (e: Exception) {
 
         }

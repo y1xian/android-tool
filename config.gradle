@@ -34,6 +34,8 @@ ext {
 
             gson                : '2.8.6',
 
+            mmkv                : '1.0.13',
+
             butterknife         : '9.0.0',
 
             leakcanary          : '1.6.3',
@@ -170,7 +172,8 @@ ext {
             espresso_test_rules            : [group: 'com.android.support.test.espresso', name: 'rules', version: '1.1.0'],
 
             //https://github.com/Tencent/MMKV
-            mmkv                           : [group: 'com.tencent', name: 'mmkv', version: '1.0.23'],
+            mmkv                           : [group: 'com.tencent', name: 'mmkv', version: versions.mmkv],
+            mmkv_static                    : [group: 'com.tencent', name: 'mmkv-static', version: versions.mmkv],
 
             //https://github.com/ethanhua/Skeleton
             skeleton                       : [group: 'com.ethanhua', name: 'skeleton', version: '1.1.2'],
@@ -187,6 +190,6 @@ ext {
             swipe_support                  : [group: 'com.billy.android', name: 'smart-swipe-support', version: '1.0.0'],
 
             //https://github.com/JessYanCoding/AndroidAutoSize
-            autosize                  : [group: 'me.jessyan', name: 'autosize', version: '1.1.2']
+            autosize                       : [group: 'me.jessyan', name: 'autosize', version: '1.1.2']
     ]
 }

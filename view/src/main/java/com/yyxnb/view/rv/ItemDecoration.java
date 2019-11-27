@@ -18,6 +18,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.yyxnb.view.R;
+
 /*
         mRefreshView.setLayoutManager(new GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false));
         ItemDecoration decoration = new ItemDecoration(mContext, 0x00000000, 2, 2);
@@ -35,7 +37,8 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
     private int dividerHeight;
     private int dividerWidth;
-    private int dividerColor;
+    private int paddingTop = 0, paddingBottom = 0, paddingLeft = 0, paddingRight = 0;
+    private int dividerColor = R.color.item_div_bg;
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     private static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
     private static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
@@ -63,9 +66,10 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
     private int orientation = VERTICAL_LIST;
 
     public ItemDecoration(Context context) {
-        final TypedArray a = context.obtainStyledAttributes(ATTRS);
-        mDivider = a.getDrawable(0);
-        a.recycle();
+//        final TypedArray a = context.obtainStyledAttributes(ATTRS);
+//        mDivider = a.getDrawable(0);
+//        a.recycle();
+        mDivider = new ColorDrawable(context.getResources().getColor(dividerColor));
         this.dividerHeight = mDivider.getIntrinsicHeight();
         this.dividerWidth = mDivider.getIntrinsicWidth();
     }
@@ -80,6 +84,21 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
         mDivider = ContextCompat.getDrawable(context, drawableId);
         this.dividerHeight = mDivider.getIntrinsicHeight();
         this.dividerWidth = mDivider.getIntrinsicWidth();
+    }
+
+    /**
+     * 自定义分割线
+     * 也可以使用{@link Canvas#drawRect(float, float, float, float, Paint)}或者{@link Canvas#drawText(String, float, float, Paint)}等等
+     * 结合{@link Paint}去绘制各式各样的分割线
+     *
+     * @param context
+     * @param dividerWidth  单位为dp
+     * @param dividerHeight 单位为dp
+     */
+    public ItemDecoration(Context context, @Dimension float dividerWidth, @Dimension float dividerHeight) {
+        mDivider = new ColorDrawable(context.getResources().getColor(dividerColor));
+        this.dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, context.getResources().getDisplayMetrics());
+        this.dividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerHeight, context.getResources().getDisplayMetrics());
     }
 
     /**
@@ -123,16 +142,21 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
 
     }
 
+    //线性
     private void drawLinearItemDivider(Canvas c, RecyclerView parent) {
         int spanCount = getSpanCount(parent);
         int allChildCount = parent.getAdapter().getItemCount();
-        int top = 0, bottom = 0, left = 0, right = 0;
+        int top = paddingTop, bottom = paddingBottom, left = paddingLeft, right = paddingRight;
         for (int i = 0; i < parent.getChildCount(); i++) {
             final View child = parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             if (orientation == VERTICAL_LIST) {//画横线
-                left = child.getLeft() - params.leftMargin;
-                right = child.getRight() + params.rightMargin;
+                if (left == 0) {
+                    left = child.getLeft() - params.leftMargin;
+                }
+                if (right == 0) {
+                    right = child.getRight() + params.rightMargin;
+                }
                 if (drawBorderTopAndBottom) {
                     //加上第一条
                     if (isFirstRaw(parent, params.getViewLayoutPosition(), spanCount)) {
@@ -151,8 +175,12 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
                 mDivider.setBounds(left, top, right, bottom);
                 mDivider.draw(c);
             } else {//画竖线
-                top = child.getTop() - params.topMargin;
-                bottom = child.getBottom() + params.bottomMargin;
+                if (top == 0) {
+                    top = child.getTop() - params.topMargin;
+                }
+                if (bottom == 0) {
+                    bottom = child.getBottom() + params.bottomMargin;
+                }
                 if (drawBorderLeftAndRight) {
                     //加上第一条
                     if (isFirstColumn(parent, params.getViewLayoutPosition(), spanCount)) {
@@ -205,6 +233,8 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
             }
         }
     }
+
+    //网格
 
     /**
      * 画水平分割线
@@ -604,5 +634,21 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
 
     public void setOnlySetItemOffsetsButNoDraw(boolean onlySetItemOffsetsButNoDraw) {
         this.onlySetItemOffsetsButNoDraw = onlySetItemOffsetsButNoDraw;
+    }
+
+    public void setPaddingTop(int paddingTop) {
+        this.paddingTop = paddingTop;
+    }
+
+    public void setPaddingBottom(int paddingBottom) {
+        this.paddingBottom = paddingBottom;
+    }
+
+    public void setPaddingLeft(int paddingLeft) {
+        this.paddingLeft = paddingLeft;
+    }
+
+    public void setPaddingRight(int paddingRight) {
+        this.paddingRight = paddingRight;
     }
 }

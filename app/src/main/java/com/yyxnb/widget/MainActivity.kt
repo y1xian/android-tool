@@ -7,12 +7,15 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.yyxnb.arch.base.BaseActivity
+import com.yyxnb.arch.utils.log.LogUtils
 import com.yyxnb.view.rv.MultiItemTypeAdapter
 import com.yyxnb.widget.adapter.MainListAdapter
 import com.yyxnb.widget.config.DataConfig
 import kotlinx.android.synthetic.main.activity_main.*
 import com.yyxnb.view.permission.FanPermissionUtils
 import com.yyxnb.view.permission.FanPermissionListener
+import com.yyxnb.view.proxy.http.HttpHelper
+import com.yyxnb.view.proxy.http.ICallBack
 import com.yyxnb.view.rv.ItemDecoration
 import com.yyxnb.widget.fragments.NetWorkFragment
 
@@ -30,14 +33,16 @@ class MainActivity : BaseActivity() {
 
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         mRecyclerView.setHasFixedSize(true)
-        val decoration = ItemDecoration(mContext, Color.BLACK, 2f, 2f)
+        val decoration = ItemDecoration(mContext/*, resources.getColor(R.color.item_div_bg), 10f, 10f*/)
+//        decoration.isDrawBorderLeftAndRight = true
+        decoration.setPaddingLeft(20)
         mRecyclerView.addItemDecoration(decoration)
         mRecyclerView.adapter = mAdapter
 
         mAdapter.setDataItems(DataConfig.dataMain)
 
 
-        mAdapter.setOnItemClickListener(object : MultiItemTypeAdapter.OnItemClickListener {
+        mAdapter.setOnItemClickListener(object : MultiItemTypeAdapter.SimpleOnItemClickListener() {
             override fun onItemClick(view: View, holder: RecyclerView.ViewHolder, position: Int) {
 
                 setMenu(position)
@@ -57,10 +62,6 @@ class MainActivity : BaseActivity() {
 
             }
 
-            override fun onItemLongClick(view: View, holder: RecyclerView.ViewHolder, position: Int): Boolean {
-                return false
-            }
-
         })
 
     }
@@ -69,6 +70,29 @@ class MainActivity : BaseActivity() {
 
         when(position){
             0-> startFragment(NetWorkFragment.newInstance())
+            1->{
+//                HttpHelper.get().url("http://www.mocky.io/v2/5dd6271933000041d5f38453").execute(object :ICallBack{
+//                    override fun onSuccess(result: String) {
+//                        LogUtils.w(result)
+//                    }
+//
+//                    override fun onFailure(result: String) {
+//                        LogUtils.e(result)
+//                    }
+//
+//                })
+                val map = hashMapOf("service" to "Video.getVideo","uid" to "298463" ,"videoid" to "134")
+                HttpHelper.post().url("http://ce27p.cn/api/public/").params(map).execute(object :ICallBack{
+                    override fun onSuccess(result: String) {
+                        LogUtils.w(result)
+                    }
+
+                    override fun onFailure(result: String) {
+                        LogUtils.e(result)
+                    }
+
+                })
+            }
         }
 
     }

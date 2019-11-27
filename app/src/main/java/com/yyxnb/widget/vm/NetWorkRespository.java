@@ -3,7 +3,6 @@ package com.yyxnb.widget.vm;
 
 import android.arch.lifecycle.LiveData;
 
-import com.yyxnb.http.RetrofitManager;
 import com.yyxnb.http.network.ApiResponse;
 import com.yyxnb.http.network.BaseRepository;
 import com.yyxnb.http.network.NetworkBoundResource;

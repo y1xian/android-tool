@@ -4,7 +4,7 @@ import java.io.File
 
 
 class HttpOptions {
-    var url: String = HttpHelper.getBaserUrl()
+    var url: String = ""
     var file: File? = null
     var tag: String = "tag"
     var connectTimeout: Int = 10
@@ -18,7 +18,12 @@ class HttpOptions {
     var callBack: ICallBack? = null
 
     fun url(url: String): HttpOptions {
-        this.url = url
+        if (url.startsWith("http") || url.startsWith("https")){
+            this.url = url
+        }else{
+            this.url = HttpHelper.getBaserUrl() + url
+        }
+
         return this
     }
 

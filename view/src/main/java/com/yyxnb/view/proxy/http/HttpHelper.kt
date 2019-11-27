@@ -22,6 +22,14 @@ object HttpHelper {
         baseUrl = url
     }
 
+    fun get(): HttpOptions {
+        return HttpOptions().get()
+    }
+
+    fun post(): HttpOptions {
+        return HttpOptions().post()
+    }
+
     fun getBaserUrl(): String = baseUrl.toString()
 
     @Synchronized
@@ -45,17 +53,5 @@ object HttpHelper {
             throw NullPointerException("you must be set your httpProxy at first!")
         }
     }
-
-
-//    override fun get(url: String, callback: ICallBack) {
-//        // 运行时，调用真实对象方法
-//        httpProxyImpl!!.get(url,callback)
-//    }
-//
-//    override fun post(url: String, params: Map<String, Any>, callback: ICallBack) {
-//        // 运行时，调用真实对象方法
-//        httpProxyImpl!!.post(url,params,callback)
-//    }
-
 
 }
