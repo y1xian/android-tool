@@ -29,6 +29,7 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
     }
 
     override fun initViewData() {
+        super.initViewData()
         registerDefUIChange()
         initObservable()
     }

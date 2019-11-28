@@ -31,4 +31,7 @@ dependencies {
     api libs.glide
     kapt libs.glide_compiler
 
+    //https://github.com/hackware1993/MagicIndicator
+    implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
+
 }

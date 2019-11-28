@@ -108,9 +108,9 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        mLazyProxy.onActivityCreated(savedInstanceState)
         //当设备旋转时，fragment会随托管activity一起销毁并重建。
 //        retainInstance = true
-        mLazyProxy.onActivityCreated(savedInstanceState)
     }
 
     /**
@@ -212,6 +212,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
         Arch.debugLog("--- 懒加载 initViewData $TAG")
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> findViewById(@IdRes resId: Int): T {
         return mRootView!!.findViewById<View>(resId) as T
     }
@@ -242,6 +243,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
      * @param T           [BaseFragment].
      * @return new instance.
      */
+    @Suppress("UNCHECKED_CAST")
     @JvmOverloads
     fun <T : BaseFragment> fragment(targetFragment: T, bundle: Bundle? = null): T {
         return instantiate(context, targetFragment.javaClass.canonicalName, bundle) as T

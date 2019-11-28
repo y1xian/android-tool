@@ -1,24 +1,21 @@
 package com.yyxnb.view.rv;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
-import android.support.annotation.Dimension;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.TypedValue;
 import android.view.View;
 
 import com.yyxnb.view.R;
+import com.yyxnb.view.utils.DpUtils;
 
 /*
         mRefreshView.setLayoutManager(new GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false));
@@ -34,12 +31,12 @@ import com.yyxnb.view.R;
 
 public class ItemDecoration extends RecyclerView.ItemDecoration {
     private static final String TAG = "ItemDecoration";
+    private Context mContext;
     private Drawable mDivider;
     private int dividerHeight;
     private int dividerWidth;
     private int paddingTop = 0, paddingBottom = 0, paddingLeft = 0, paddingRight = 0;
     private int dividerColor = R.color.item_div_bg;
-    private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     private static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
     private static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
     /**
@@ -66,56 +63,54 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
     private int orientation = VERTICAL_LIST;
 
     public ItemDecoration(Context context) {
-//        final TypedArray a = context.obtainStyledAttributes(ATTRS);
-//        mDivider = a.getDrawable(0);
-//        a.recycle();
+        mContext = context.getApplicationContext();
         mDivider = new ColorDrawable(context.getResources().getColor(dividerColor));
         this.dividerHeight = mDivider.getIntrinsicHeight();
         this.dividerWidth = mDivider.getIntrinsicWidth();
     }
 
-    /**
-     * 自定义分割线
-     *
-     * @param context
-     * @param drawableId 分割线图片
-     */
-    public ItemDecoration(Context context, @DrawableRes int drawableId) {
-        mDivider = ContextCompat.getDrawable(context, drawableId);
-        this.dividerHeight = mDivider.getIntrinsicHeight();
-        this.dividerWidth = mDivider.getIntrinsicWidth();
-    }
-
-    /**
-     * 自定义分割线
-     * 也可以使用{@link Canvas#drawRect(float, float, float, float, Paint)}或者{@link Canvas#drawText(String, float, float, Paint)}等等
-     * 结合{@link Paint}去绘制各式各样的分割线
-     *
-     * @param context
-     * @param dividerWidth  单位为dp
-     * @param dividerHeight 单位为dp
-     */
-    public ItemDecoration(Context context, @Dimension float dividerWidth, @Dimension float dividerHeight) {
-        mDivider = new ColorDrawable(context.getResources().getColor(dividerColor));
-        this.dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, context.getResources().getDisplayMetrics());
-        this.dividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerHeight, context.getResources().getDisplayMetrics());
-    }
-
-    /**
-     * 自定义分割线
-     * 也可以使用{@link Canvas#drawRect(float, float, float, float, Paint)}或者{@link Canvas#drawText(String, float, float, Paint)}等等
-     * 结合{@link Paint}去绘制各式各样的分割线
-     *
-     * @param context
-     * @param color         整型颜色值，非资源id
-     * @param dividerWidth  单位为dp
-     * @param dividerHeight 单位为dp
-     */
-    public ItemDecoration(Context context, @ColorInt int color, @Dimension float dividerWidth, @Dimension float dividerHeight) {
-        mDivider = new ColorDrawable(color);
-        this.dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, context.getResources().getDisplayMetrics());
-        this.dividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerHeight, context.getResources().getDisplayMetrics());
-    }
+//    /**
+//     * 自定义分割线
+//     *
+//     * @param context
+//     * @param drawableId 分割线图片
+//     */
+//    public ItemDecoration(Context context, @DrawableRes int drawableId) {
+//        mDivider = ContextCompat.getDrawable(context, drawableId);
+//        this.dividerHeight = mDivider.getIntrinsicHeight();
+//        this.dividerWidth = mDivider.getIntrinsicWidth();
+//    }
+//
+//    /**
+//     * 自定义分割线
+//     * 也可以使用{@link Canvas#drawRect(float, float, float, float, Paint)}或者{@link Canvas#drawText(String, float, float, Paint)}等等
+//     * 结合{@link Paint}去绘制各式各样的分割线
+//     *
+//     * @param context
+//     * @param dividerWidth  单位为dp
+//     * @param dividerHeight 单位为dp
+//     */
+//    public ItemDecoration(Context context, @Dimension float dividerWidth, @Dimension float dividerHeight) {
+//        mDivider = new ColorDrawable(context.getResources().getColor(dividerColor));
+//        this.dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, context.getResources().getDisplayMetrics());
+//        this.dividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerHeight, context.getResources().getDisplayMetrics());
+//    }
+//
+//    /**
+//     * 自定义分割线
+//     * 也可以使用{@link Canvas#drawRect(float, float, float, float, Paint)}或者{@link Canvas#drawText(String, float, float, Paint)}等等
+//     * 结合{@link Paint}去绘制各式各样的分割线
+//     *
+//     * @param context
+//     * @param color         整型颜色值，非资源id
+//     * @param dividerWidth  单位为dp
+//     * @param dividerHeight 单位为dp
+//     */
+//    public ItemDecoration(Context context, @ColorInt int color, @Dimension float dividerWidth, @Dimension float dividerHeight) {
+//        mDivider = new ColorDrawable(color);
+//        this.dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, context.getResources().getDisplayMetrics());
+//        this.dividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerHeight, context.getResources().getDisplayMetrics());
+//    }
 
 
     /**
@@ -637,18 +632,36 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     public void setPaddingTop(int paddingTop) {
-        this.paddingTop = paddingTop;
+        this.paddingTop = DpUtils.dp2px(mContext, paddingTop);
     }
 
     public void setPaddingBottom(int paddingBottom) {
-        this.paddingBottom = paddingBottom;
+        this.paddingBottom = DpUtils.dp2px(mContext, paddingBottom);
     }
 
     public void setPaddingLeft(int paddingLeft) {
-        this.paddingLeft = paddingLeft;
+        this.paddingLeft = DpUtils.dp2px(mContext, paddingLeft);
     }
 
     public void setPaddingRight(int paddingRight) {
-        this.paddingRight = paddingRight;
+        this.paddingRight = DpUtils.dp2px(mContext, paddingRight);
     }
+
+    public void setDividerDrawable(@DrawableRes int drawableId) {
+        this.mDivider = ContextCompat.getDrawable(mContext, drawableId);
+    }
+
+    public void setDividerHeight(int dividerHeight) {
+        this.dividerHeight = DpUtils.dp2px(mContext, dividerHeight);
+    }
+
+    public void setDividerWidth(int dividerWidth) {
+        this.dividerWidth = DpUtils.dp2px(mContext, dividerWidth);
+    }
+
+    public void setDividerColor(@ColorInt int dividerColor) {
+        this.dividerColor = dividerColor;
+        this.mDivider = new ColorDrawable(dividerColor);
+    }
+
 }

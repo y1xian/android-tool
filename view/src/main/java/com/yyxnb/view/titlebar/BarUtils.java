@@ -12,22 +12,6 @@ import java.util.UUID;
 
 public class BarUtils {
 
-
-    public static int dp2PxInt(Context context, float dp) {
-        return (int) (dp2Px(context, dp) + 0.5f);
-    }
-
-    public static float dp2Px(Context context, float dp) {
-        if (context == null) {
-            return -1;
-        }
-        return dp * density(context);
-    }
-
-    public static float density(Context context) {
-        return context.getResources().getDisplayMetrics().density;
-    }
-
     /**
      * 获取屏幕大小
      *

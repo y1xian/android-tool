@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yyxnb.view.R;
+import com.yyxnb.view.utils.DpUtils;
 
 
 /**
@@ -103,7 +104,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     }
 
     private void loadAttributes(Context context, AttributeSet attrs) {
-        PADDING_12 = BarUtils.dp2PxInt(context, 12);
+        PADDING_12 = DpUtils.dp2px(context, 12);
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TitleBar);
 
@@ -113,7 +114,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         }
 
         titleBarColor = array.getColor(R.styleable.TitleBar_titleBarColor, getResources().getColor(R.color.titleBar));
-        titleBarHeight = (int) array.getDimension(R.styleable.TitleBar_titleBarHeight, BarUtils.dp2PxInt(context, 48));
+        titleBarHeight = (int) array.getDimension(R.styleable.TitleBar_titleBarHeight, DpUtils.dp2px(context, 48));
 
         showBottomLine = array.getBoolean(R.styleable.TitleBar_showBottomLine, true);
         bottomLineColor = array.getColor(R.styleable.TitleBar_bottomLineColor, getResources().getColor(R.color.item_div_bg));
@@ -122,7 +123,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         if (leftType == TYPE_LEFT_TEXTVIEW) {
             leftText = array.getString(R.styleable.TitleBar_leftText);
             leftTextColor = array.getColor(R.styleable.TitleBar_leftTextColor, getResources().getColor(R.color.title_color));
-            leftTextSize = array.getDimension(R.styleable.TitleBar_leftTextSize, BarUtils.dp2PxInt(context, 16));
+            leftTextSize = array.getDimension(R.styleable.TitleBar_leftTextSize, DpUtils.dp2px(context, 16));
             leftDrawable = array.getResourceId(R.styleable.TitleBar_leftDrawable, 0);
             leftDrawablePadding = array.getDimension(R.styleable.TitleBar_leftDrawablePadding, 5);
         } else if (leftType == TYPE_LEFT_IMAGEBUTTON) {
@@ -135,7 +136,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         if (rightType == TYPE_RIGHT_TEXTVIEW) {
             rightText = array.getString(R.styleable.TitleBar_rightText);
             rightTextColor = array.getColor(R.styleable.TitleBar_rightTextColor, getResources().getColor(R.color.title_color));
-            rightTextSize = array.getDimension(R.styleable.TitleBar_rightTextSize, BarUtils.dp2PxInt(context, 16));
+            rightTextSize = array.getDimension(R.styleable.TitleBar_rightTextSize, DpUtils.dp2px(context, 16));
         } else if (rightType == TYPE_RIGHT_IMAGEBUTTON) {
             rightImageResource = array.getResourceId(R.styleable.TitleBar_rightImageResource, 0);
         } else if (rightType == TYPE_RIGHT_CUSTOM_VIEW) {
@@ -146,11 +147,11 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         if (centerType == TYPE_CENTER_TEXTVIEW) {
             centerText = array.getString(R.styleable.TitleBar_centerText);
             centerTextColor = array.getColor(R.styleable.TitleBar_centerTextColor, getResources().getColor(R.color.title_color));
-            centerTextSize = array.getDimension(R.styleable.TitleBar_centerTextSize, BarUtils.dp2PxInt(context, 20));
+            centerTextSize = array.getDimension(R.styleable.TitleBar_centerTextSize, DpUtils.dp2px(context, 20));
             centerTextMarquee = array.getBoolean(R.styleable.TitleBar_centerTextMarquee, true);
             centerSubText = array.getString(R.styleable.TitleBar_centerSubText);
             centerSubTextColor = array.getColor(R.styleable.TitleBar_centerSubTextColor, getResources().getColor(R.color.auxiliary_color));
-            centerSubTextSize = array.getDimension(R.styleable.TitleBar_centerSubTextSize, BarUtils.dp2PxInt(context, 12));
+            centerSubTextSize = array.getDimension(R.styleable.TitleBar_centerSubTextSize, DpUtils.dp2px(context, 12));
         } else if (centerType == TYPE_CENTER_CUSTOM_VIEW) {
             centerCustomViewRes = array.getResourceId(R.styleable.TitleBar_centerCustomView, 0);
         }
@@ -195,7 +196,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
 
         // 计算主布局高度
         if (showBottomLine) {
-            mainParams.height = titleBarHeight - Math.max(1, BarUtils.dp2PxInt(context, 0.1f));
+            mainParams.height = titleBarHeight - Math.max(1, DpUtils.dp2px(context, 0.1f));
         } else {
             mainParams.height = titleBarHeight;
         }
@@ -206,7 +207,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             // 已设置显示标题栏分隔线,5.0以下机型,显示分隔线
             viewBottomLine = new View(context);
             viewBottomLine.setBackgroundColor(bottomLineColor);
-            LayoutParams bottomLineParams = new LayoutParams(MATCH_PARENT, Math.max(1, BarUtils.dp2PxInt(context, 0.1f)));
+            LayoutParams bottomLineParams = new LayoutParams(MATCH_PARENT, Math.max(1, DpUtils.dp2px(context, 0.1f)));
             bottomLineParams.addRule(RelativeLayout.BELOW, rlMain.getId());
 
             addView(viewBottomLine, bottomLineParams);
@@ -373,7 +374,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             progressCenter = new ProgressBar(context);
             progressCenter.setIndeterminateDrawable(getResources().getDrawable(R.mipmap.ic_titlebar_progress));
             progressCenter.setVisibility(View.GONE);
-            int progressWidth = BarUtils.dp2PxInt(context, 18);
+            int progressWidth = DpUtils.dp2px(context, 18);
             LayoutParams progressParams = new LayoutParams(progressWidth, progressWidth);
             progressParams.addRule(RelativeLayout.CENTER_VERTICAL);
             progressParams.addRule(RelativeLayout.START_OF, llMainCenter.getId());

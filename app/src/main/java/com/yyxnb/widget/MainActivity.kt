@@ -1,7 +1,6 @@
 package com.yyxnb.widget
 
 import android.Manifest
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,6 +16,8 @@ import com.yyxnb.view.permission.FanPermissionListener
 import com.yyxnb.view.proxy.http.HttpHelper
 import com.yyxnb.view.proxy.http.ICallBack
 import com.yyxnb.view.rv.ItemDecoration
+import com.yyxnb.widget.fragments.LazyFragment
+import com.yyxnb.widget.fragments.LazyVpFragment
 import com.yyxnb.widget.fragments.NetWorkFragment
 
 
@@ -33,9 +34,9 @@ class MainActivity : BaseActivity() {
 
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         mRecyclerView.setHasFixedSize(true)
-        val decoration = ItemDecoration(mContext/*, resources.getColor(R.color.item_div_bg), 10f, 10f*/)
-//        decoration.isDrawBorderLeftAndRight = true
-        decoration.setPaddingLeft(20)
+        val decoration = ItemDecoration(mContext)
+        decoration.setDividerColor(resources.getColor(R.color.red))
+        decoration.setPaddingLeft(16)
         mRecyclerView.addItemDecoration(decoration)
         mRecyclerView.adapter = mAdapter
 
@@ -59,7 +60,6 @@ class MainActivity : BaseActivity() {
 //                        .show()
 
 
-
             }
 
         })
@@ -68,9 +68,11 @@ class MainActivity : BaseActivity() {
 
     private fun setMenu(position: Int) {
 
-        when(position){
-            0-> startFragment(NetWorkFragment.newInstance())
-            1->{
+        when (position) {
+            0 -> startFragment(NetWorkFragment.newInstance())
+            1 -> startFragment(LazyFragment.newInstance())
+            2 -> startFragment(LazyVpFragment.newInstance())
+            else -> {
 //                HttpHelper.get().url("http://www.mocky.io/v2/5dd6271933000041d5f38453").execute(object :ICallBack{
 //                    override fun onSuccess(result: String) {
 //                        LogUtils.w(result)
@@ -81,8 +83,8 @@ class MainActivity : BaseActivity() {
 //                    }
 //
 //                })
-                val map = hashMapOf("service" to "Video.getVideo","uid" to "298463" ,"videoid" to "134")
-                HttpHelper.post().url("http://ce27p.cn/api/public/").params(map).execute(object :ICallBack{
+                val map = hashMapOf("service" to "Video.getVideo", "uid" to "298463", "videoid" to "134")
+                HttpHelper.post().url("http://ce27p.cn/api/public/").params(map).execute(object : ICallBack {
                     override fun onSuccess(result: String) {
                         LogUtils.w(result)
                     }
