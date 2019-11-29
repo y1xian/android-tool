@@ -53,14 +53,14 @@ public class LazyFragment extends BaseFragment{
     public void initViewData() {
         super.initViewData();
 
-        fragments.add(LazyPageFragment.newInstance());
-        fragments.add(LazyPageFragment.newInstance());
-        fragments.add(LazyPageFragment.newInstance());
-        fragments.add(LazyPageFragment.newInstance());
+        fragments.add(LazyPageFragment.newInstance(1));
+        fragments.add(LazyPageFragment.newInstance(2));
+        fragments.add(LazyPageFragment.newInstance(3));
+        fragments.add(LazyPageFragment.newInstance(4));
 
         changeView(0);
 
-        LogUtils.INSTANCE.w("---initViewData");
+        LogUtils.INSTANCE.w("--- LazyFragment");
     }
 
     private void getCheckedId(int checkedId) {

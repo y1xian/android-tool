@@ -32,6 +32,11 @@ class LazyProxy(
      */
     private var mCurrentVisibleState = false
 
+    /**
+     * 可见状态
+     */
+    private var mIsSubPage = false
+
 
     init {
         if (mFragment is ILazyProxy) {
@@ -57,8 +62,9 @@ class LazyProxy(
         }
     }
 
-    fun onCreate(savedInstanceState: Bundle?) {
+    fun onCreate(savedInstanceState: Bundle?, subPage: Boolean) {
         mIsFirstVisible = true
+        mIsSubPage = subPage
     }
 
     fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -119,7 +125,7 @@ class LazyProxy(
         //但当父 fragment 不可见所以 mCurrentVisibleState = false 直接 return 掉
         //        LogUtils.e(getClass().getSimpleName() + "  dispatchUserVisibleHint isParentInvisible() " + isParentInvisible());
         // 这里限制则可以限制多层嵌套的时候子 Fragment 的分发
-        if (visible && isParentInvisible()) return
+        if (visible && isParentInvisible() && !mIsSubPage) return
 
         //此处是对子 Fragment 不可见的限制，因为 子 Fragment 先于父 Fragment回调本方法 mCurrentVisibleState 置位 false
         // 当父 dispatchChildVisibleState 的时候第二次回调本方法 visible = false 所以此处 visible 将直接返回

@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.base.BaseFragmentPagerAdapter;
+import com.yyxnb.arch.utils.log.LogUtils;
 import com.yyxnb.view.utils.DpUtils;
 import com.yyxnb.widget.R;
 
@@ -60,10 +61,12 @@ public class LazyVpFragment extends BaseFragment {
     public void initViewData() {
         super.initViewData();
 
-        fragments.add(LazyPageFragment.newInstance());
-        fragments.add(LazyPageFragment.newInstance());
-        fragments.add(LazyPageFragment.newInstance());
-        fragments.add(LazyPageFragment.newInstance());
+        LogUtils.INSTANCE.w("--- LazyVpFragment");
+
+        fragments.add(LazyPageFragment.newInstance(11));
+        fragments.add(LazyPageFragment.newInstance(22));
+        fragments.add(LazyPageFragment.newInstance(33));
+        fragments.add(LazyPageFragment.newInstance(44));
 
         CommonNavigator commonNavigator = new CommonNavigator(mContext);
         //ture 即标题平分屏幕宽度的模式

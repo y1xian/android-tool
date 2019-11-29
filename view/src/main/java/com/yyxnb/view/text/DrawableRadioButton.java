@@ -47,6 +47,7 @@ public class DrawableRadioButton extends RadioButton {
     private Drawable mRightDrawable;
     private Drawable mBottomDrawable;
     private float mScale;
+    private boolean isFirst = true;
 
     public DrawableRadioButton(Context context) {
         this(context, null);
@@ -92,7 +93,10 @@ public class DrawableRadioButton extends RadioButton {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        setCompoundDrawablesWithIntrinsicBounds(mLeftDrawable, mTopDrawable, mRightDrawable, mBottomDrawable);
+        if (isFirst){
+            isFirst = false;
+            setCompoundDrawablesWithIntrinsicBounds(mLeftDrawable, mTopDrawable, mRightDrawable, mBottomDrawable);
+        }
     }
 
     @Override
@@ -117,7 +121,6 @@ public class DrawableRadioButton extends RadioButton {
         return (int) (dpVal * mScale + 0.5f);
     }
 
-
     @Override
     public void toggle() {
         // super.toggle();
@@ -125,5 +128,6 @@ public class DrawableRadioButton extends RadioButton {
 
     public void doToggle() {
         super.toggle();
+        isFirst = true;
     }
 }

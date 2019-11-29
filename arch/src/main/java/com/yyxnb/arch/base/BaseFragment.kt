@@ -73,7 +73,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mLazyProxy.onCreate(savedInstanceState)
+        mLazyProxy.onCreate(savedInstanceState, isSubPage())
         val bundle = initArguments()
         if (bundle.size() > 0) {
             initVariables(bundle)
@@ -166,6 +166,13 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
         super.onDestroyView()
         cancel() // 关闭页面后，结束所有协程任务
         mRootView = null
+    }
+
+    /**
+     * 是否子页面
+     */
+    open fun isSubPage(): Boolean {
+        return false
     }
 
     /**

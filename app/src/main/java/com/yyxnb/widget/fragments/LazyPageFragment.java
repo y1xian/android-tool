@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.yyxnb.arch.base.mvvm.BaseFragmentVM;
+import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.utils.ToastUtils;
 import com.yyxnb.arch.utils.log.LogUtils;
 import com.yyxnb.view.rv.ItemDecoration;
@@ -15,7 +15,6 @@ import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.StringListAdapter;
 import com.yyxnb.widget.config.DataConfig;
-import com.yyxnb.widget.vm.NetWorkViewModel;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,15 +22,16 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 懒加载分页.
  */
-public class LazyPageFragment extends BaseFragmentVM<NetWorkViewModel> {
+public class LazyPageFragment extends BaseFragment {
 
     private StringListAdapter mAdapter;
     private RecyclerView mRecyclerView;
+    private int page;
 
-    public static LazyPageFragment newInstance() {
+    public static LazyPageFragment newInstance(int page) {
 
         Bundle args = new Bundle();
-
+        args.putInt("page",page);
         LazyPageFragment fragment = new LazyPageFragment();
         fragment.setArguments(args);
         return fragment;
@@ -44,6 +44,9 @@ public class LazyPageFragment extends BaseFragmentVM<NetWorkViewModel> {
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
+
+        page = getArguments().getInt("page",0);
+
         mRecyclerView = findViewById(R.id.mRecyclerView);
         mAdapter = new StringListAdapter();
 
@@ -62,7 +65,7 @@ public class LazyPageFragment extends BaseFragmentVM<NetWorkViewModel> {
             }
         });
 
-        mAdapter.setDataItems(DataConfig.INSTANCE.getData());
+//        mAdapter.setDataItems(DataConfig.INSTANCE.getData());
     }
 
     @Override
@@ -71,18 +74,23 @@ public class LazyPageFragment extends BaseFragmentVM<NetWorkViewModel> {
 
         mAdapter.setDataItems(DataConfig.INSTANCE.getData());
 
-        LogUtils.INSTANCE.w("-pg--initViewData");
+        LogUtils.INSTANCE.w("-pg--initViewData      " + page);
     }
 
     @Override
     public void onVisible() {
         super.onVisible();
-
+        LogUtils.INSTANCE.e("-pg--onVisible     " + page);
     }
 
     @Override
     public void onInVisible() {
         super.onInVisible();
+        LogUtils.INSTANCE.e("-pg--onInVisible   " + page);
+    }
 
+    @Override
+    public boolean isSubPage() {
+        return true;
     }
 }
