@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.yyxnb.arch.annotations.SubPage;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.utils.ToastUtils;
 import com.yyxnb.arch.utils.log.LogUtils;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 懒加载分页.
  */
+@SubPage
 public class LazyPageFragment extends BaseFragment {
 
     private StringListAdapter mAdapter;
@@ -89,8 +91,4 @@ public class LazyPageFragment extends BaseFragment {
         LogUtils.INSTANCE.e("-pg--onInVisible   " + page);
     }
 
-    @Override
-    public boolean isSubPage() {
-        return true;
-    }
 }

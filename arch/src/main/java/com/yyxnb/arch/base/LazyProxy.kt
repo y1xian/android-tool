@@ -62,12 +62,13 @@ class LazyProxy(
         }
     }
 
-    fun onCreate(savedInstanceState: Bundle?, subPage: Boolean) {
+    fun onCreate(savedInstanceState: Bundle?) {
         mIsFirstVisible = true
-        mIsSubPage = subPage
+
     }
 
-    fun onActivityCreated(savedInstanceState: Bundle?) {
+    fun onActivityCreated(savedInstanceState: Bundle?, subPage: Boolean) {
+        mIsSubPage = subPage
         isViewCreated = true
         mILazyProxy?.initView(savedInstanceState)
         // !isHidden() 默认为 true  在调用 hide show 的时候可以使用

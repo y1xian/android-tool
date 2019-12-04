@@ -34,4 +34,7 @@ dependencies {
     //https://github.com/hackware1993/MagicIndicator
     implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
 
+    api libs.arch_comp_room
+    kapt libs.arch_comp_room_compiler
+
 }

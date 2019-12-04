@@ -20,7 +20,7 @@
     <!--主题颜色-->
     <color name="colorTheme">#00C6FF</color>
     <!--所有界面的状态栏的背景颜色-->
-    <color name="statusBar">@color/transparent</color>
+    <color name="statusBar">@color/titleBar</color>
     <!--所有界面的标题栏的背景颜色-->
     <color name="titleBar">@color/white</color>
     <!--所有界面的分割线颜色-->

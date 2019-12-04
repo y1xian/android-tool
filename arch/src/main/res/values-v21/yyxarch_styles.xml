@@ -18,6 +18,8 @@
         <item name="android:screenOrientation">portrait</item>
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:windowAnimationStyle">@style/ActivityOutInAnimation</item>
+        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <!--actvity进出动画-->

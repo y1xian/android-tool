@@ -17,6 +17,7 @@ object DataConfig {
             field.add("----- 网络数据 -----")
             field.add("----- fragment 懒加载 s/h -----")
             field.add("----- fragment 懒加载 vp -----")
+            field.add("----- 自定义 behavior -----")
             field.add("----- 弹框 -----")
             return field
         }

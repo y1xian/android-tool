@@ -5,9 +5,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
+import com.yyxnb.arch.annotations.BarStyle;
+import com.yyxnb.arch.annotations.StatusBarDarkTheme;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.base.BaseFragmentPagerAdapter;
+import com.yyxnb.arch.utils.StatusBarUtils;
 import com.yyxnb.arch.utils.log.LogUtils;
 import com.yyxnb.view.utils.DpUtils;
 import com.yyxnb.widget.R;
@@ -29,8 +33,10 @@ import java.util.List;
 /**
  * 懒加载.vp
  */
+//@StatusBarDarkTheme(value = BarStyle.LightContent)
 public class LazyVpFragment extends BaseFragment {
 
+    private Toolbar mToolbar;
     private MagicIndicator mIndicator;
     private ViewPager mViewPager;
     private String[] title = new String[]{"11","2222","333","44444"};
@@ -45,7 +51,6 @@ public class LazyVpFragment extends BaseFragment {
         return fragment;
     }
 
-
     @Override
     public int initLayoutResId() {
         return R.layout.fragment_lazy_vp;
@@ -55,12 +60,23 @@ public class LazyVpFragment extends BaseFragment {
     public void initView(@Nullable Bundle savedInstanceState) {
         mIndicator = findViewById(R.id.mIndicator);
         mViewPager = findViewById(R.id.mViewPager);
+        mToolbar = findViewById(R.id.mToolbar);
+
+//        StatusBarUtils.INSTANCE.appendStatusBarPadding(mToolbar,100);
+
+
+        LogUtils.INSTANCE.e("， " + StatusBarUtils.INSTANCE.isStatusBarLightMode(getWindow()));
+
+        mToolbar.post(() -> {
+            LogUtils.INSTANCE.e(mToolbar.getHeight() +"， " + mToolbar.getMeasuredHeight());
+            StatusBarUtils.INSTANCE.appendStatusBarPadding(mToolbar,mToolbar.getHeight());
+        });
     }
 
     @Override
     public void initViewData() {
         super.initViewData();
-
+        StatusBarUtils.INSTANCE.setStatusBarStyle(getWindow(), false);
         LogUtils.INSTANCE.w("--- LazyVpFragment");
 
         fragments.add(LazyPageFragment.newInstance(11));

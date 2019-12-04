@@ -10,9 +10,11 @@ import android.os.Build
 import android.support.v4.view.ViewCompat
 import android.util.TypedValue
 import android.view.*
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.widget.FrameLayout
 import java.io.Serializable
 import java.util.*
+
 
 /**
  * 状态栏
@@ -195,6 +197,19 @@ object StatusBarUtils : Serializable {
             }
             decorView.systemUiVisibility = systemUi
         }
+    }
+
+    /**
+     * 判断状态栏是否为浅色模式
+     */
+    @Suppress("DEPRECATED_IDENTITY_EQUALS")
+    fun isStatusBarLightMode(window: Window): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val decorView = window.decorView
+            val vis = decorView.systemUiVisibility
+            return vis and SYSTEM_UI_FLAG_LIGHT_STATUS_BAR !== 0
+        }
+        return false
     }
 
     /**

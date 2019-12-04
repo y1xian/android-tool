@@ -1,7 +1,12 @@
 package com.yyxnb.widget.bean;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity(tableName = "test")
 public class TestData {
 
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String content;
 

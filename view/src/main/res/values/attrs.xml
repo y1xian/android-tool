@@ -3,6 +3,8 @@
 
     <!--标题栏-->
     <declare-styleable name="TitleBar">
+        <!-- 状态栏背景 颜色 -->
+        <attr name="statusBarColor" format="color" />
         <!-- 标题栏背景 图片或颜色 -->
         <attr name="titleBarColor" format="color" />
         <!-- 填充状态栏 -->

@@ -45,6 +45,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     private View centerCustomView;                      // 中间自定义视图
 
     private boolean fillStatusBar;                      // 是否撑起状态栏, true时,标题栏浸入状态栏
+    private int statusBarColor;                         // 状态栏背景颜色
     private int titleBarColor;                          // 标题栏背景颜色
     private int titleBarHeight;                         // 标题栏高度
 
@@ -111,6 +112,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // notice 未引入沉浸式标题栏之前,隐藏标题栏撑起布局
             fillStatusBar = array.getBoolean(R.styleable.TitleBar_fillStatusBar, true);
+            statusBarColor = array.getColor(R.styleable.TitleBar_statusBarColor, getResources().getColor(R.color.statusBar));
         }
 
         titleBarColor = array.getColor(R.styleable.TitleBar_titleBarColor, getResources().getColor(R.color.titleBar));
@@ -177,7 +179,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             viewStatusBarFill = new View(context);
             viewStatusBarFill.setId(BarUtils.generateViewId());
             //状态栏颜色与标题栏颜色一致 非渐变
-            viewStatusBarFill.setBackgroundColor(titleBarColor);
+            viewStatusBarFill.setBackgroundColor(statusBarColor);
             LayoutParams statusBarParams = new LayoutParams(MATCH_PARENT, statusBarHeight);
             statusBarParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
             addView(viewStatusBarFill, statusBarParams);

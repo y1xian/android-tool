@@ -49,6 +49,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
     private var statusBarHidden = AppConfig.statusBarHidden
     private var statusBarDarkTheme = AppConfig.statusBarStyle
     private var swipeBack = AppConfig.swipeBack
+    private var subPage = false
 
     private val lifecycleDelegate by lazy { LifecycleDelegate(this) }
 
@@ -73,7 +74,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mLazyProxy.onCreate(savedInstanceState, isSubPage())
+        mLazyProxy.onCreate(savedInstanceState)
         val bundle = initArguments()
         if (bundle.size() > 0) {
             initVariables(bundle)
@@ -94,10 +95,10 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
         initAttributes()
         if (null == mRootView) {
             mRootView = inflater.inflate(initLayoutResId(), container, false)
-        } else {
-            //  二次加载删除上一个子view
-            val viewGroup = mRootView?.parent as ViewGroup
-            viewGroup.removeView(mRootView)
+//        } else {
+//            //  二次加载删除上一个子view
+//            val viewGroup = mRootView?.parent as ViewGroup
+//            viewGroup.removeView(mRootView)
         }
         mRootView!!.setOnTouchListener { _, event ->
             mActivity.onTouchEvent(event)
@@ -108,7 +109,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mLazyProxy.onActivityCreated(savedInstanceState)
+        mLazyProxy.onActivityCreated(savedInstanceState, isSubPage())
         //当设备旋转时，fragment会随托管activity一起销毁并重建。
 //        retainInstance = true
     }
@@ -124,11 +125,14 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
             javaClass.getAnnotation(TagValue::class.java)?.let { sceneId = it.value }
             javaClass.getAnnotation(FitsSystemWindows::class.java)?.let { fitsSystemWindows = it.value }
             javaClass.getAnnotation(SwipeBack::class.java)?.let { swipeBack = it.value }
+            javaClass.getAnnotation(SubPage::class.java)?.let { subPage = it.value }
 
-            setStatusBarTranslucent(statusBarTranslucent, fitsSystemWindows)
-            setStatusBarStyle(statusBarDarkTheme)
-            setStatusBarHidden(statusBarHidden)
-            setSwipeBack(swipeBack)
+            if (!subPage){
+                setStatusBarTranslucent(statusBarTranslucent, fitsSystemWindows)
+                setStatusBarStyle(statusBarDarkTheme)
+                setStatusBarHidden(statusBarHidden)
+                setSwipeBack(swipeBack)
+            }
         })
     }
 
@@ -172,7 +176,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
      * 是否子页面
      */
     open fun isSubPage(): Boolean {
-        return false
+        return subPage
     }
 
     /**
@@ -288,22 +292,24 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
     // ------- statusBar --------
 
     fun setStatusBarTranslucent(translucent: Boolean, fitsSystemWindows: Boolean) = (mActivity as? BaseActivity)?.setStatusBarTranslucent(translucent, fitsSystemWindows)
-            ?: let { StatusBarUtils.setStatusBarTranslucent(getWindow(), translucent, fitsSystemWindows) }
+//            ?: let { StatusBarUtils.setStatusBarTranslucent(getWindow(), translucent, fitsSystemWindows) }
 
     fun setStatusBarColor(color: Int) = (mActivity as? BaseActivity)?.setStatusBarColor(color)
-            ?: let { StatusBarUtils.setStatusBarColor(getWindow(), color) }
+//            ?: let { StatusBarUtils.setStatusBarColor(getWindow(), color) }
 
     fun setStatusBarStyle(barStyle: BarStyle) = (mActivity as? BaseActivity)?.setStatusBarStyle(barStyle)
-            ?: let { StatusBarUtils.setStatusBarStyle(getWindow(), barStyle === BarStyle.DarkContent) }
+//            ?: let { StatusBarUtils.setStatusBarStyle(getWindow(), barStyle === BarStyle.DarkContent) }
 
     fun setStatusBarHidden(hidden: Boolean) = (mActivity as? BaseActivity)?.setStatusBarHidden(hidden)
-            ?: let { StatusBarUtils.setStatusBarHidden(getWindow(), hidden) }
+//            ?: let { StatusBarUtils.setStatusBarHidden(getWindow(), hidden) }
 
     fun setSwipeBack(mSwipeBack: Int = 0) = (mActivity as? BaseActivity)?.setSwipeBack(mSwipeBack)
 
 
     //更新状态栏样式
     fun setNeedsStatusBarAppearanceUpdate() {
+
+        if (subPage) return
 
         // 隐藏
         val hidden = statusBarHidden
