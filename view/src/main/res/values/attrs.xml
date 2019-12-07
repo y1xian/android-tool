@@ -4,85 +4,81 @@
     <!--标题栏-->
     <declare-styleable name="TitleBar">
         <!-- 状态栏背景 颜色 -->
-        <attr name="statusBarColor" format="color" />
-        <!-- 标题栏背景 图片或颜色 -->
-        <attr name="titleBarColor" format="color" />
+        <attr name="tb_statusBarColor" format="color" />
+        <!-- 标题栏背景 颜色 -->
+        <attr name="tb_titleBarColor" format="color" />
         <!-- 填充状态栏 -->
-        <attr name="fillStatusBar" format="boolean" />
+        <attr name="tb_fillStatusBar" format="boolean" />
         <!-- 标题栏高度 -->
-        <attr name="titleBarHeight" format="dimension" />
+        <attr name="tb_titleBarHeight" format="dimension" />
         <!-- 显示标题栏分割线 -->
-        <attr name="showBottomLine" format="boolean" />
+        <attr name="tb_showBottomLine" format="boolean" />
         <!-- 标题栏分割线颜色 -->
-        <attr name="bottomLineColor" format="color" />
+        <attr name="tb_bottomLineColor" format="color" />
 
         <!-- 左边视图类型 -->
-        <attr name="leftType">
+        <attr name="tb_leftType">
             <enum name="none" value="0" />
             <enum name="textView" value="1" />
             <enum name="imageButton" value="2" />
             <enum name="customView" value="3" />
         </attr>
         <!-- TextView 文字, 对应leftType_TextView -->
-        <attr name="leftText" format="string" />
+        <attr name="tb_leftText" format="string" />
         <!-- TextView 颜色, 对应leftType_TextView -->
-        <attr name="leftTextColor" format="color" />
+        <attr name="tb_leftTextColor" format="color" />
         <!-- TextView 字体大小, 对应leftType_TextView -->
-        <attr name="leftTextSize" format="dimension" />
+        <attr name="tb_leftTextSize" format="dimension" />
         <!-- TextView 左边图片, 对应leftType_TextView -->
-        <attr name="leftDrawable" format="reference" />
+        <attr name="tb_leftDrawable" format="reference" />
         <!-- TextView 左边padding, 对应leftType_TextView -->
-        <attr name="leftDrawablePadding" format="dimension" />
+        <attr name="tb_leftDrawablePadding" format="dimension" />
         <!-- ImageView 资源, 对应leftType_ImageBotton -->
-        <attr name="leftImageResource" format="reference" />
+        <attr name="tb_leftImageResource" format="reference" />
         <!-- 左边自定义布局, 对应leftType_CustomView -->
-        <attr name="leftCustomView" format="reference" />
+        <attr name="tb_leftCustomView" format="reference" />
 
         <!-- 右边视图类型 -->
-        <attr name="rightType">
+        <attr name="tb_rightType">
             <enum name="none" value="0" />
             <enum name="textView" value="1" />
             <enum name="imageButton" value="2" />
             <enum name="customView" value="3" />
         </attr>
         <!-- TextView 文字, 对应rightType_TextView -->
-        <attr name="rightText" format="string" />
+        <attr name="tb_rightText" format="string" />
         <!-- TextView 颜色, 对应rightType_TextView -->
-        <attr name="rightTextColor" format="color" />
+        <attr name="tb_rightTextColor" format="color" />
         <!-- TextView 字体大小, 对应rightType_TextView -->
-        <attr name="rightTextSize" format="dimension" />
+        <attr name="tb_rightTextSize" format="dimension" />
         <!-- ImageView 资源, 对应rightType_ImageBotton -->
-        <attr name="rightImageResource" format="reference" />
+        <attr name="tb_rightImageResource" format="reference" />
         <!-- 右边自定义布局, 对应rightType_CustomView -->
-        <attr name="rightCustomView" format="reference" />
+        <attr name="tb_rightCustomView" format="reference" />
 
         <!-- 中间视图类型 -->
-        <attr name="centerType">
+        <attr name="tb_centerType">
             <enum name="none" value="0" />
             <enum name="textView" value="1" />
             <enum name="searchView" value="2" />
             <enum name="customView" value="3" />
         </attr>
-        <attr name="centerSearchRightType">
-            <enum name="voice" value="0" />
-            <enum name="delete" value="1" />
-        </attr>
         <!-- TextView 文字, 对应centerType_TextView -->
-        <attr name="centerText" format="string" />
+        <attr name="tb_centerText" format="string" />
         <!-- TextView 颜色, 对应centerType_TextView -->
-        <attr name="centerTextColor" format="color" />
+        <attr name="tb_centerTextColor" format="color" />
         <!-- TextView 字体大小, 对应centerType_TextView -->
-        <attr name="centerTextSize" format="dimension" />
+        <attr name="tb_centerTextSize" format="dimension" />
         <!-- TextView 跑马灯效果, 默认打开, 对应centerType_TextView -->
-        <attr name="centerTextMarquee" format="boolean" />
+        <attr name="tb_centerTextMarquee" format="boolean" />
         <!-- 子标题TextView 文字, 对应centerType_TextView -->
-        <attr name="centerSubText" format="string" />
+        <attr name="tb_centerSubText" format="string" />
         <!-- 子标题TextView 颜色, 对应centerType_TextView -->
-        <attr name="centerSubTextColor" format="color" />
+        <attr name="tb_centerSubTextColor" format="color" />
         <!-- 子标题TextView 字体大小, 对应centerType_TextView -->
-        <attr name="centerSubTextSize" format="dimension" />
+        <attr name="tb_centerSubTextSize" format="dimension" />
         <!-- 中间自定义布局, 对应centerType_CustomView -->
-        <attr name="centerCustomView" format="reference" />
+        <attr name="tb_centerCustomView" format="reference" />
     </declare-styleable>
 
     <!--可以调节drawable大小的RadioButton-->
@@ -108,6 +104,60 @@
         <attr name="drawableRightHeight" format="dimension"/>
         <attr name="drawableBottomWidth" format="dimension"/>
         <attr name="drawableBottomHeight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="FlowlayoutTags">
+        <!-- 背景颜色 -->
+        <attr name="tag_backgroundColor" format="reference|color" />
+        <!-- 选中背景颜色 -->
+        <attr name="tag_checkedBackgroundColor" format="reference|color" />
+        <!-- 按下颜色 -->
+        <attr name="tag_pressedBackgroundColor" format="reference|color" />
+
+        <!-- 横 边距 -->
+        <attr name="tag_horizontalSpacing" format="dimension" />
+        <!-- 纵 边距 -->
+        <attr name="tag_verticalSpacing" format="dimension" />
+        <!-- 横 padding -->
+        <attr name="tag_horizontalPadding" format="dimension" />
+        <!-- 纵 padding -->
+        <attr name="tag_verticalPadding" format="dimension" />
+
+        <!-- 文字颜色 -->
+        <attr name="tag_textColor" format="color" />
+        <!-- 选中文字颜色 -->
+        <attr name="tag_checkedTextColor" format="reference|color" />
+        <!-- 文字大小 -->
+        <attr name="tag_textSize" format="dimension" />
+
+        <!-- 边框圆角半径 -->
+        <attr name="tag_radius" format="dimension" />
+        <attr name="tag_bottomLeftRadius" format="dimension" />
+        <attr name="tag_bottomRightRadius" format="dimension" />
+        <attr name="tag_topLeftRadius" format="dimension" />
+        <attr name="tag_topRightRadius" format="dimension" />
+        <!-- 边框颜色 -->
+        <attr name="tag_strokeColor" format="reference|color" />
+        <!-- 选中 边框颜色 -->
+        <attr name="tag_checkedStrokeColor" format="reference|color" />
+        <!-- 边框宽度 -->
+        <attr name="tag_strokeWidth" format="dimension" />
+        <!-- 是否多选 -->
+        <attr name="tag_multiChooseable" format="boolean" />
+        <attr name="tag_singleLine" format="boolean" />
+        <!-- 是否可选 -->
+        <attr name="tag_isSelect" format="boolean" />
+
+        <!-- 单位dp,为了适应wrap_content用integer -->
+        <attr name="tag_width" format="integer|enum">
+            <enum name="wrap_content" value="-2"/>
+            <enum name="match_parent" value="-1"/>
+        </attr>
+        <attr name="tag_height" format="integer|enum">
+            <enum name="wrap_content" value="-2"/>
+            <enum name="match_parent" value="-1"/>
+        </attr>
+        <attr name="tag_maxEms" format="integer" />
     </declare-styleable>
 
 </resources>

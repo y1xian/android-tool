@@ -4,9 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * @date: on 2019-11-13
- * @author: a112233
- * @email: mxnzp_life@163.com
  * @desc: 添加描述
  */
 public class FanPermissionConfig implements Parcelable {

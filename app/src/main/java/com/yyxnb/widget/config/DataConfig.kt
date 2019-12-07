@@ -14,11 +14,29 @@ object DataConfig {
     val dataMain = ArrayList<String>()
         get() {
             field.clear()
-            field.add("----- 网络数据 -----")
+            field.add("----- title -----")
+            field.add("----- 网络请求 -----")
+            field.add("----- fragment -----")
+            field.add("----- adapter -----")
+            field.add("----- 自定义 behavior -----")
+            field.add("----- 标签 -----")
+            field.add("----- 弹框 -----")
+            return field
+        }
+
+    val fragmentList = ArrayList<String>()
+        get() {
+            field.clear()
             field.add("----- fragment 懒加载 s/h -----")
             field.add("----- fragment 懒加载 vp -----")
-            field.add("----- 自定义 behavior -----")
-            field.add("----- 弹框 -----")
+            return field
+        }
+
+    val networkList = ArrayList<String>()
+        get() {
+            field.clear()
+            field.add("----- 列表 -----")
+            field.add("----- paging -----")
             return field
         }
 

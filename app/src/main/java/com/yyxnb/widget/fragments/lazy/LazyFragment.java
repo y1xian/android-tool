@@ -1,4 +1,4 @@
-package com.yyxnb.widget.fragments;
+package com.yyxnb.widget.fragments.lazy;
 
 
 import android.os.Bundle;

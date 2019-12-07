@@ -1,4 +1,4 @@
-package com.yyxnb.widget.fragments;
+package com.yyxnb.widget.fragments.lazy;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * 懒加载.vp
  */
-//@StatusBarDarkTheme(value = BarStyle.LightContent)
+@StatusBarDarkTheme(value = BarStyle.LightContent)
 public class LazyVpFragment extends BaseFragment {
 
     private Toolbar mToolbar;

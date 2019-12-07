@@ -55,6 +55,7 @@ ext {
 
     libs = [
             kotlin_stdlib                  : [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: versions.kotlin],
+            kotlin_stdlib_common           : [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-common', version: versions.kotlin],
             //协程    https://github.com/Kotlin/kotlinx.coroutines
             kotlin_coroutines              : [group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-android', version: versions.kotlin_coroutines],
             kotlin_coroutines_core         : [group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: versions.kotlin_coroutines],

@@ -6,12 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.yyxnb.arch.annotations.BarStyle
-import com.yyxnb.arch.annotations.StatusBarDarkTheme
-import com.yyxnb.arch.annotations.StatusBarTranslucent
 import com.yyxnb.arch.base.BaseActivity
-import com.yyxnb.arch.utils.StatusBarUtils
-import com.yyxnb.arch.utils.log.LogUtils
 import com.yyxnb.view.rv.MultiItemTypeAdapter
 import com.yyxnb.widget.adapter.MainListAdapter
 import com.yyxnb.widget.config.DataConfig
@@ -19,18 +14,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.yyxnb.view.permission.FanPermissionUtils
 import com.yyxnb.view.permission.FanPermissionListener
 import com.yyxnb.view.popup.Popup
-import com.yyxnb.view.proxy.http.HttpHelper
-import com.yyxnb.view.proxy.http.ICallBack
 import com.yyxnb.view.rv.ItemDecoration
-import com.yyxnb.widget.fragments.BehaviorFragment
-import com.yyxnb.widget.fragments.LazyFragment
-import com.yyxnb.widget.fragments.LazyVpFragment
-import com.yyxnb.widget.fragments.NetWorkFragment
+import com.yyxnb.widget.fragments.*
+import com.yyxnb.widget.fragments.adapter.AdapterListFragment
+import com.yyxnb.widget.fragments.lazy.FragmentListFragment
+import com.yyxnb.widget.fragments.network.NetWorkListFragment
 
 class MainActivity : BaseActivity() {
 
     private val mAdapter by lazy { MainListAdapter() }
-
 
     override fun initLayoutResId(): Int = R.layout.activity_main
 
@@ -76,10 +68,12 @@ class MainActivity : BaseActivity() {
     private fun setMenu(position: Int) {
 
         when (position) {
-            0 -> startFragment(NetWorkFragment.newInstance())
-            1 -> startFragment(LazyFragment.newInstance())
-            2 -> startFragment(LazyVpFragment.newInstance())
-            3 -> startFragment(BehaviorFragment())
+            0 -> startFragment(TitleFragment.newInstance())
+            1 -> startFragment(NetWorkListFragment.newInstance())
+            2 -> startFragment(FragmentListFragment.newInstance())
+            3 -> startFragment(AdapterListFragment.newInstance())
+            4 -> startFragment(BehaviorFragment())
+            5 -> startFragment(TagFragment.newInstance())
             else -> {
                 val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
                 loadingPopup.show()

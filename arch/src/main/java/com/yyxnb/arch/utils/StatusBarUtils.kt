@@ -191,9 +191,9 @@ object StatusBarUtils : Serializable {
             val decorView = window.decorView
             var systemUi = decorView.systemUiVisibility
             if (dark) {
-                systemUi = systemUi or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                systemUi = systemUi or SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             } else {
-                systemUi = systemUi and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+                systemUi = systemUi and SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
             }
             decorView.systemUiVisibility = systemUi
         }
@@ -207,7 +207,7 @@ object StatusBarUtils : Serializable {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val decorView = window.decorView
             val vis = decorView.systemUiVisibility
-            return vis and SYSTEM_UI_FLAG_LIGHT_STATUS_BAR !== 0
+            return vis and SYSTEM_UI_FLAG_LIGHT_STATUS_BAR === 0
         }
         return false
     }

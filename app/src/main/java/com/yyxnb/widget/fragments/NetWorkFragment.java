@@ -2,7 +2,6 @@ package com.yyxnb.widget.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -15,12 +14,11 @@ import com.yyxnb.widget.vm.NetWorkViewModel;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 网络列表.
  */
 public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
 
     private NetWorkListAdapter mAdapter;
-//    private RecyclerAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
     @Override

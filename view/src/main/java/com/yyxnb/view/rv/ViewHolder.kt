@@ -13,6 +13,7 @@ class ViewHolder(val convertView: View) : RecyclerView.ViewHolder(convertView) {
 
     private val mViews: SparseArray<View> = SparseArray()
 
+    @Suppress("UNCHECKED_CAST")
     fun <T : View> getView(viewId: Int): T {
         var view: View? = mViews.get(viewId)
         if (view == null) {

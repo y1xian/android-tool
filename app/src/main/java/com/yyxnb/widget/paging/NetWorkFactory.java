@@ -5,6 +5,9 @@ import android.arch.paging.DataSource;
 
 import com.yyxnb.widget.bean.TestData;
 
+/**
+ * 元数据传递
+ */
 public class NetWorkFactory extends DataSource.Factory<Integer, TestData> {
 
     private MutableLiveData<NetWorkDataSource> mSourceLiveData =

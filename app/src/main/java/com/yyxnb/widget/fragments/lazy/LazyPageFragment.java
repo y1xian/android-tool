@@ -1,4 +1,4 @@
-package com.yyxnb.widget.fragments;
+package com.yyxnb.widget.fragments.lazy;
 
 
 import android.graphics.Color;
@@ -54,7 +54,8 @@ public class LazyPageFragment extends BaseFragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         ItemDecoration decoration = new ItemDecoration(mContext);
-        decoration.setDividerColor(Color.BLUE);
+//        decoration.setDividerColor(Color.BLUE);
+        decoration.setOnlySetItemOffsetsButNoDraw(true);
         mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
