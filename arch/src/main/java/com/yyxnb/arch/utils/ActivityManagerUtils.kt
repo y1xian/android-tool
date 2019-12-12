@@ -7,13 +7,13 @@ import com.yyxnb.arch.interfaces.IOnActivityStatusChangeListener
 import java.io.Serializable
 import java.util.*
 
-object ActivityManagerUtils :Serializable{
+object ActivityManagerUtils : Serializable {
 
     private var onActivityStatusChangeListener: IOnActivityStatusChangeListener? = null
     private var activityStack: Stack<Activity>? = null
 
     fun setOnActivityStatusChangeListener(onActivityStatusChangeListener: IOnActivityStatusChangeListener) {
-        ActivityManagerUtils.onActivityStatusChangeListener = onActivityStatusChangeListener
+        this.onActivityStatusChangeListener = onActivityStatusChangeListener
     }
 
     /**

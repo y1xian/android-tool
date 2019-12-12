@@ -1,15 +1,21 @@
 package com.yyxnb.widget;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.noober.background.BLAutoInjectController;
+import com.yyxnb.arch.interfaces.IOnActivityStatusChangeListener;
+import com.yyxnb.arch.utils.ActivityManagerUtils;
 import com.yyxnb.http.RetrofitManager;
 import com.yyxnb.http.config.OkHttpConfig;
 import com.yyxnb.view.proxy.http.HttpHelper;
 import com.yyxnb.view.proxy.imageloader.ImageHelper;
 import com.yyxnb.widget.utils.GlideImageProxy;
 import com.yyxnb.widget.utils.OkHttpProxy;
+
+import org.jetbrains.annotations.NotNull;
 
 import okhttp3.OkHttpClient;
 
@@ -69,5 +75,6 @@ public class MyApp extends Application {
         super.attachBaseContext(base);
         // you must install multiDex whatever tinker is installed!
         MultiDex.install(base);
+//        BLAutoInjectController.setEnableAutoInject(false);
     }
 }

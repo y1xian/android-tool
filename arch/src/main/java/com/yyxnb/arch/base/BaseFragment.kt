@@ -19,9 +19,11 @@ import com.yyxnb.arch.Arch
 import com.yyxnb.arch.ContainerActivity
 import com.yyxnb.arch.annotations.*
 import com.yyxnb.arch.common.AppConfig
+import com.yyxnb.arch.common.AppConfig.REQUEST_CODE
 import com.yyxnb.arch.common.AppConfig.statusBarColor
 import com.yyxnb.arch.interfaces.*
 import com.yyxnb.arch.jetpack.LifecycleDelegate
+import com.yyxnb.arch.utils.FragmentManagerUtils
 import com.yyxnb.arch.utils.MainThreadUtils
 import com.yyxnb.arch.utils.StatusBarUtils
 import kotlinx.coroutines.CoroutineScope
@@ -79,6 +81,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
         if (bundle.size() > 0) {
             initVariables(bundle)
         }
+        FragmentManagerUtils.pushFragment(this)
     }
 
     fun initArguments(): Bundle {
@@ -95,10 +98,10 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
         initAttributes()
         if (null == mRootView) {
             mRootView = inflater.inflate(initLayoutResId(), container, false)
-//        } else {
-//            //  二次加载删除上一个子view
-//            val viewGroup = mRootView?.parent as ViewGroup
-//            viewGroup.removeView(mRootView)
+        } else {
+            //  二次加载删除上一个子view
+            val viewGroup = mRootView?.parent as ViewGroup
+            viewGroup.removeView(mRootView)
         }
         mRootView!!.setOnTouchListener { _, event ->
             mActivity.onTouchEvent(event)
@@ -106,6 +109,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
         }
         return mRootView
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -127,7 +131,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
             javaClass.getAnnotation(SwipeBack::class.java)?.let { swipeBack = it.value }
             javaClass.getAnnotation(SubPage::class.java)?.let { subPage = it.value }
 
-            if (!subPage){
+            if (!subPage) {
                 setStatusBarTranslucent(statusBarTranslucent, fitsSystemWindows)
                 setStatusBarStyle(statusBarDarkTheme)
                 setStatusBarHidden(statusBarHidden)
@@ -170,6 +174,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
         super.onDestroyView()
         cancel() // 关闭页面后，结束所有协程任务
         mRootView = null
+        FragmentManagerUtils.finishFragment()
     }
 
     /**
@@ -183,7 +188,9 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
      * 被ViewPager移出的Fragment 下次显示时会从getArguments()中重新获取数据
      * 所以若需要刷新被移除Fragment内的数据需要重新put数据
      */
-    open fun initVariables(bundle: Bundle) {}
+    open fun initVariables(bundle: Bundle) {
+        setRequest(bundle.getInt(REQUEST_CODE , 0))
+    }
 
     /**
      * 当界面可见时的操作
@@ -281,27 +288,39 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
     fun <T : BaseFragment> startFragment(targetFragment: T, requestCode: Int = 0) {
         onHiddenChanged(true)
         scheduleTaskAtStarted(Runnable {
+            val bundle = initArguments()
+            bundle.putInt(REQUEST_CODE, requestCode)
             val intent = Intent(mActivity, ContainerActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtra(AppConfig.FRAGMENT, targetFragment.javaClass.canonicalName)
-            intent.putExtra(AppConfig.BUNDLE, initArguments())
+            intent.putExtra(AppConfig.BUNDLE, bundle)
             startActivityForResult(intent, requestCode)
         })
+    }
+
+    var requestCode = 0
+    var resultCode = 0
+    var result: Intent? = null
+
+    fun setRequest(requestCode: Int) {
+        this.requestCode = requestCode
+    }
+
+    @JvmOverloads
+    fun setResult(resultCode: Int, result: Intent? = null) {
+        this.resultCode = resultCode
+        this.result = result
     }
 
     // ------- statusBar --------
 
     fun setStatusBarTranslucent(translucent: Boolean, fitsSystemWindows: Boolean) = (mActivity as? BaseActivity)?.setStatusBarTranslucent(translucent, fitsSystemWindows)
-//            ?: let { StatusBarUtils.setStatusBarTranslucent(getWindow(), translucent, fitsSystemWindows) }
 
     fun setStatusBarColor(color: Int) = (mActivity as? BaseActivity)?.setStatusBarColor(color)
-//            ?: let { StatusBarUtils.setStatusBarColor(getWindow(), color) }
 
     fun setStatusBarStyle(barStyle: BarStyle) = (mActivity as? BaseActivity)?.setStatusBarStyle(barStyle)
-//            ?: let { StatusBarUtils.setStatusBarStyle(getWindow(), barStyle === BarStyle.DarkContent) }
 
     fun setStatusBarHidden(hidden: Boolean) = (mActivity as? BaseActivity)?.setStatusBarHidden(hidden)
-//            ?: let { StatusBarUtils.setStatusBarHidden(getWindow(), hidden) }
 
     fun setSwipeBack(mSwipeBack: Int = 0) = (mActivity as? BaseActivity)?.setSwipeBack(mSwipeBack)
 

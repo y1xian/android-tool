@@ -19,8 +19,10 @@ import com.yyxnb.arch.annotations.*
 import com.yyxnb.arch.common.AppConfig
 import com.yyxnb.arch.ext.hideKeyBoard
 import com.yyxnb.arch.jetpack.LifecycleDelegate
+import com.yyxnb.arch.utils.FragmentManagerUtils
 import com.yyxnb.arch.utils.MainThreadUtils
 import com.yyxnb.arch.utils.StatusBarUtils
+import com.yyxnb.arch.utils.log.LogUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -76,6 +78,7 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
         })
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onDestroy() {
         super.onDestroy()
         cancel() // 关闭页面后，结束所有协程任务
@@ -163,22 +166,34 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
         StatusBarUtils.setNavigationBarHidden(window, hidden)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onBackPressed() {
         val fragments = supportFragmentManager.fragments
-        if (fragments.size > 0) {
+        if (FragmentManagerUtils.count > 1) {
+            val last = FragmentManagerUtils.currentFragment();
+            val f = FragmentManagerUtils.getFragmentStack()[FragmentManagerUtils.count - 2];
+            //将回调的传入到fragment中去
+            f.onActivityResult(last.requestCode, last.resultCode, last.result)
+            LogUtils.w("---")
+        }
+        if (fragments.isNotEmpty()) {
             ActivityCompat.finishAfterTransition(this)
         } else {
             super.onBackPressed()
         }
     }
 
+
+
     @JvmOverloads
     fun <T : BaseFragment> startFragment(targetFragment: T, requestCode: Int = 0) {
         scheduleTaskAtStarted(Runnable {
             val intent = Intent(this, ContainerActivity::class.java)
+            val bundle = targetFragment.initArguments()
+            bundle.putInt(AppConfig.REQUEST_CODE, requestCode)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtra(AppConfig.FRAGMENT, targetFragment.javaClass.canonicalName)
-            intent.putExtra(AppConfig.BUNDLE, targetFragment.initArguments())
+            intent.putExtra(AppConfig.BUNDLE, bundle)
             startActivityForResult(intent, requestCode)
         })
     }
@@ -232,4 +247,5 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
         // 如果焦点不是EditText则忽略
         return false
     }
+
 }

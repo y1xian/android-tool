@@ -29,6 +29,7 @@ object DataConfig {
             field.clear()
             field.add("----- fragment 懒加载 s/h -----")
             field.add("----- fragment 懒加载 vp -----")
+            field.add("----- fragment ForResult -----")
             return field
         }
 

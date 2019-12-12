@@ -1,6 +1,7 @@
 package com.yyxnb.widget.fragments.lazy;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.view.View;
 
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.utils.ToastUtils;
+import com.yyxnb.arch.utils.log.LogUtils;
 import com.yyxnb.view.rv.ItemDecoration;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
@@ -66,6 +68,9 @@ public class FragmentListFragment extends BaseFragment {
                     case 1:
                         startFragment(LazyVpFragment.newInstance());
                         break;
+                    case 2:
+                        startFragment(ForResultFragment.newInstance(), 123);
+                        break;
                     default:
                         break;
                 }
@@ -78,4 +83,17 @@ public class FragmentListFragment extends BaseFragment {
         super.initViewData();
         mAdapter.setDataItems(DataConfig.INSTANCE.getFragmentList());
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtils.INSTANCE.w(" requestCode : " + requestCode + " , resultCode : " + resultCode);
+        if (requestCode == 123 && resultCode == 321 && data != null) {
+            String s = data.getStringExtra("data");
+            ToastUtils.INSTANCE.normal(s);
+            LogUtils.INSTANCE.w(s);
+        }
+
+    }
+
 }
