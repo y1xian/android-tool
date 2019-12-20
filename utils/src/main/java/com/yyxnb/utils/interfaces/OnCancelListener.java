@@ -1,4 +1,4 @@
-package com.yyxnb.view.popup.interfaces;
+package com.yyxnb.utils.interfaces;
 
 /**
  * Description:

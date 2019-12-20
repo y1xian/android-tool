@@ -1,27 +1,31 @@
 package com.yyxnb.widget
 
 import android.Manifest
+import android.arch.lifecycle.Observer
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.yyxnb.arch.base.BaseActivity
-import com.yyxnb.utils.SPUtils
+import com.yyxnb.http.upload.UploadRetrofit
+import com.yyxnb.utils.interfaces.OnCancelListener
+import com.yyxnb.utils.interfaces.OnConfirmListener
+import com.yyxnb.utils.log.LogUtils
+import com.yyxnb.utils.permission.FanPermissionListener
+import com.yyxnb.utils.permission.FanPermissionUtils
+import com.yyxnb.view.popup.Popup
+import com.yyxnb.view.rv.ItemDecoration
 import com.yyxnb.view.rv.MultiItemTypeAdapter
 import com.yyxnb.widget.adapter.MainListAdapter
 import com.yyxnb.widget.config.DataConfig
-import kotlinx.android.synthetic.main.activity_main.*
-import com.yyxnb.view.permission.FanPermissionUtils
-import com.yyxnb.view.permission.FanPermissionListener
-import com.yyxnb.view.popup.Popup
-import com.yyxnb.view.popup.interfaces.OnCancelListener
-import com.yyxnb.view.popup.interfaces.OnConfirmListener
-import com.yyxnb.view.rv.ItemDecoration
-import com.yyxnb.widget.fragments.*
+import com.yyxnb.widget.fragments.BehaviorFragment
+import com.yyxnb.widget.fragments.TagFragment
+import com.yyxnb.widget.fragments.TitleFragment
 import com.yyxnb.widget.fragments.adapter.AdapterListFragment
 import com.yyxnb.widget.fragments.lazy.FragmentListFragment
 import com.yyxnb.widget.fragments.network.NetWorkListFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
@@ -80,9 +84,31 @@ class MainActivity : BaseActivity() {
 //                val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
 //                loadingPopup.show()
 
+                val url = "/storage/emulated/0/MagazineUnlock/magazine-unlock-05-2.3.2862-98D64FEA5AEA01B9532F258EE5AF1980.jpg"
+
+                val map = mutableMapOf("uid" to "74", "token" to "5afee96b6156db5efee003f174640667")
+                val f = mutableListOf<String>()
+                f.add(url)
+
+                UploadRetrofit.uploadImgsWithParams("http://www.51duanshiping.com/api/public/?service=Video.setVideoThumb",
+                        "file",map,f).observe(this, Observer {
+                    t ->
+                    t?.let {
+                        LogUtils.w("uuuu  ${it.string()}")
+                    }
+
+                })
+
+
+//                DownloadRetrofit.downloadFile("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319212559089721.mp4", "download.mp4")
+//                        .observe(this, Observer { t ->
+//                            t?.let {
+//                                LogUtils.w("dddd  已下 ${it.bytesRead} -进度 ${it.progress}  是否完成 ${it.done} - 路径 ${it.filePath}")
+//                            }
+//                        })
 
                 Popup.Builder(mContext)
-                        .asConfirm("1","您确定要退出吗？", OnConfirmListener {  }, OnCancelListener {  })
+                        .asConfirm("1","您确定要退出吗？", OnConfirmListener { }, OnCancelListener { })
                         .bindLayout(R.layout.popup_tip_confirm)
                         .show()
 

@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yyxnb.view.R;
-import com.yyxnb.view.utils.DpUtils;
+import com.yyxnb.utils.DpUtils;
 
 
 /**

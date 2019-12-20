@@ -9,7 +9,7 @@ import android.os.Looper;
 import android.provider.Settings;
 
 import com.yyxnb.view.popup.interfaces.OnNavigationBarListener;
-import com.yyxnb.view.utils.OSUtils;
+import com.yyxnb.utils.OSUtils;
 
 import java.util.ArrayList;
 

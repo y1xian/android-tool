@@ -8,7 +8,7 @@ import android.view.View;
 
 
 import com.yyxnb.view.R;
-import com.yyxnb.view.popup.interfaces.OnSelectListener;
+import com.yyxnb.utils.interfaces.OnSelectListener;
 import com.yyxnb.view.rv.BaseAdapter;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.view.rv.ViewHolder;

@@ -1,4 +1,4 @@
-package com.yyxnb.view.permission;
+package com.yyxnb.utils.permission;
 
 /**
  * @desc: 授权反馈事件

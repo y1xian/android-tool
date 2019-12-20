@@ -13,7 +13,7 @@ import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.base.BaseFragmentPagerAdapter;
 import com.yyxnb.utils.StatusBarUtils;
 import com.yyxnb.utils.log.LogUtils;
-import com.yyxnb.view.utils.DpUtils;
+import com.yyxnb.utils.DpUtils;
 import com.yyxnb.widget.R;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;

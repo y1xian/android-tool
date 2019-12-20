@@ -1,4 +1,4 @@
-package com.yyxnb.view.permission;
+package com.yyxnb.utils.permission;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @date: on 2019-11-11
+ * @author: a112233
+ * @email: mxnzp_life@163.com
  * @desc: 权限检查主要帮助类
  */
 public class FanPermissionUtils {

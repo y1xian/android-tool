@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.yyxnb.view.R;
-import com.yyxnb.view.popup.interfaces.OnCancelListener;
+import com.yyxnb.utils.interfaces.OnCancelListener;
 import com.yyxnb.view.popup.interfaces.OnInputConfirmListener;
 import com.yyxnb.view.popup.Popup;
 import com.yyxnb.view.popup.PopupUtils;

@@ -21,11 +21,13 @@ compileOptions {
 }
 
 dependencies {
-    //Jitpack架构，mvvm
+    // Jitpack架构，mvvm 基类封装
     implementation 'com.github.y1xian.Widget:arch:+'
-    //网络框架
+    // 网络框架 Retrofit2 + Okhttp3 ,Gson
     implementation 'com.github.y1xian.Widget:http:+'
-    //view
+    // 常用自定义
     implementation 'com.github.y1xian.Widget:view:+'
+    // 常用工具分离，kt扩展 (arch已包括此包)
+    implementation 'com.github.y1xian.Widget:utils:+'
 }
 ```

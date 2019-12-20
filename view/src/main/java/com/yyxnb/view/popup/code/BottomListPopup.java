@@ -1,7 +1,6 @@
 package com.yyxnb.view.popup.code;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 
 
 import com.yyxnb.view.R;
-import com.yyxnb.view.popup.interfaces.OnSelectListener;
+import com.yyxnb.utils.interfaces.OnSelectListener;
 import com.yyxnb.view.popup.Popup;
 import com.yyxnb.view.rv.BaseAdapter;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;

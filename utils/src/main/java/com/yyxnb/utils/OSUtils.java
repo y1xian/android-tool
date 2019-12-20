@@ -1,4 +1,4 @@
-package com.yyxnb.view.utils;
+package com.yyxnb.utils;
 
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
@@ -6,11 +6,7 @@ import android.text.TextUtils;
 import java.lang.reflect.Method;
 
 /**
- * copy from https://github.com/gyf-dev/ImmersionBar.
  * 手机系统判断
- *
- * @author geyifeng
- * @date 2017/4/18
  */
 public class OSUtils {
 

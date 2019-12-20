@@ -1,4 +1,4 @@
-package com.yyxnb.view.permission;
+package com.yyxnb.utils.permission;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -21,7 +21,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
-import com.yyxnb.view.R;
+import com.yyxnb.utils.R;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,4 +1,4 @@
-package com.yyxnb.view.utils;
+package com.yyxnb.utils;
 
 import android.content.Context;
 

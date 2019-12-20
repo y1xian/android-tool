@@ -15,7 +15,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.yyxnb.view.R;
-import com.yyxnb.view.utils.DpUtils;
+import com.yyxnb.utils.DpUtils;
 
 /*
         mRefreshView.setLayoutManager(new GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false));
