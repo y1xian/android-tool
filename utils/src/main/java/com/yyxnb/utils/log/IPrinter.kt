@@ -1,6 +1,6 @@
-package com.yyxnb.arch.interfaces
+package com.yyxnb.utils.log
 
-import com.yyxnb.arch.utils.log.LogConfig
+import com.yyxnb.utils.log.LogConfig
 
 interface IPrinter {
 

@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-
     //版本配置
     compileSdkVersion build_version.compileSdkVersion
 
@@ -44,11 +43,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    //Kotlin中使用Java8特性
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
     //防止编译的时候oom、GC
     dexOptions {
         preDexLibraries false
@@ -72,19 +66,9 @@ android {
 }
 
 dependencies {
-    api project(':utils')
-    //  v7 v4 约束
-    api([libs.support_v7, libs.support_v4, libs.design, libs.annotations, libs.constraint,libs.recyclerview])
-    // jetpack
-    api libs.arch_comp_java8, libs.arch_comp_extensions
-    // 避免65K限制       https://developer.android.com/tools/building/multidex.html
-    api libs.multidex
-    //https://github.com/JessYanCoding/AndroidAutoSize
-    api libs.autosize
-    //侧滑
-    api libs.parallaxbacklayout
+    implementation libs.support_v7
     //kt
-    api libs.kotlin_stdlib
-    api libs.kotlin_coroutines
-    api libs.kotlin_coroutines_core
+    implementation libs.kotlin_stdlib
+    implementation libs.kotlin_coroutines
+    implementation libs.kotlin_coroutines_core
 }

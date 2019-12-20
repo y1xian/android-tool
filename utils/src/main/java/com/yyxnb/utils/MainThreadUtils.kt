@@ -1,4 +1,4 @@
-package com.yyxnb.arch.utils
+package com.yyxnb.utils
 
 import android.os.Handler
 import android.os.Looper

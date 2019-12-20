@@ -11,8 +11,8 @@ import com.yyxnb.arch.annotations.BarStyle;
 import com.yyxnb.arch.annotations.StatusBarDarkTheme;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.base.BaseFragmentPagerAdapter;
-import com.yyxnb.arch.utils.StatusBarUtils;
-import com.yyxnb.arch.utils.log.LogUtils;
+import com.yyxnb.utils.StatusBarUtils;
+import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.view.utils.DpUtils;
 import com.yyxnb.widget.R;
 

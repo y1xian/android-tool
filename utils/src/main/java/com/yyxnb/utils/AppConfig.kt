@@ -1,4 +1,4 @@
-package com.yyxnb.arch
+package com.yyxnb.utils
 
 
 import android.annotation.SuppressLint
@@ -12,7 +12,6 @@ import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.Log
-import com.yyxnb.arch.utils.ToastUtils
 import java.io.Serializable
 import java.lang.ref.WeakReference
 import java.lang.reflect.ParameterizedType
@@ -20,7 +19,7 @@ import java.lang.reflect.ParameterizedType
 /**
  * 初始化相关
  */
-object Arch : Serializable {
+object AppConfig : Serializable {
 
     private lateinit var mWeakReferenceContext: WeakReference<Context>
 
@@ -50,16 +49,16 @@ object Arch : Serializable {
         }
 
     //debug下吐司
-    fun debugToast(str: String) {
-        if (isDebug) {
-            ToastUtils.normal(str)
-        }
-    }
-
-    //正常吐司
-    fun toast(str: String) {
-        ToastUtils.normal(str)
-    }
+//    fun debugToast(str: String) {
+//        if (isDebug) {
+//            ToastUtils.normal(str)
+//        }
+//    }
+//
+//    //正常吐司
+//    fun toast(str: String) {
+//        ToastUtils.normal(str)
+//    }
 
     //debug下打印
     fun debugLog(str: String) {

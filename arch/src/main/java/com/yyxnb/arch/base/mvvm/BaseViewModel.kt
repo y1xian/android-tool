@@ -5,8 +5,8 @@ import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper
 import com.yyxnb.arch.common.Message
-import com.yyxnb.arch.ext.tryCatch
 import com.yyxnb.arch.jetpack.SingleLiveEvent
+import com.yyxnb.utils.ext.tryCatch
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -3,7 +3,7 @@ package com.yyxnb.http.interceptor
 
 import android.text.TextUtils
 import com.yyxnb.http.utils.ISPKeys
-import com.yyxnb.http.utils.SPUtils
+import com.yyxnb.utils.SPUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

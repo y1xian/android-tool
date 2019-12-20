@@ -1,7 +1,7 @@
 package com.yyxnb.http.interceptor
 
 
-import com.yyxnb.http.utils.NetworkUtils
+import com.yyxnb.utils.NetworkUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

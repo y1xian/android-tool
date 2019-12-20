@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.WindowManager
 import com.yyxnb.arch.base.BaseActivity
 import com.yyxnb.arch.base.BaseFragment
-import com.yyxnb.arch.common.AppConfig
-import com.yyxnb.arch.ext.tryCatch
-import com.yyxnb.arch.utils.log.LogUtils
+import com.yyxnb.arch.common.ArchConfig
+import com.yyxnb.utils.ext.tryCatch
+import com.yyxnb.utils.log.LogUtils
 
 /**
  * Description: 盛装Fragment的一个容器(代理)Activity
@@ -27,13 +27,13 @@ class ContainerActivity : BaseActivity() {
             if (null == intent) {
                 throw RuntimeException("you must provide a page info to display")
             }
-            val fragmentName = intent.getStringExtra(AppConfig.FRAGMENT)
+            val fragmentName = intent.getStringExtra(ArchConfig.FRAGMENT)
             if (fragmentName.isEmpty()) {
                 throw IllegalArgumentException("can not find page fragmentName")
             }
             val fragmentClass = Class.forName(fragmentName)
             val fragment = fragmentClass.newInstance() as BaseFragment
-            intent?.getBundleExtra(AppConfig.BUNDLE)?.let {
+            intent?.getBundleExtra(ArchConfig.BUNDLE)?.let {
                 fragment.arguments = it
             }
 

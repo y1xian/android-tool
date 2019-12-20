@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.yyxnb.arch.base.BaseActivity
+import com.yyxnb.utils.SPUtils
 import com.yyxnb.view.rv.MultiItemTypeAdapter
 import com.yyxnb.widget.adapter.MainListAdapter
 import com.yyxnb.widget.config.DataConfig
@@ -14,6 +15,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.yyxnb.view.permission.FanPermissionUtils
 import com.yyxnb.view.permission.FanPermissionListener
 import com.yyxnb.view.popup.Popup
+import com.yyxnb.view.popup.interfaces.OnCancelListener
+import com.yyxnb.view.popup.interfaces.OnConfirmListener
 import com.yyxnb.view.rv.ItemDecoration
 import com.yyxnb.widget.fragments.*
 import com.yyxnb.widget.fragments.adapter.AdapterListFragment
@@ -40,7 +43,6 @@ class MainActivity : BaseActivity() {
         mRecyclerView.adapter = mAdapter
 
         mAdapter.setDataItems(DataConfig.dataMain)
-
 
         mAdapter.setOnItemClickListener(object : MultiItemTypeAdapter.SimpleOnItemClickListener() {
             override fun onItemClick(view: View, holder: RecyclerView.ViewHolder, position: Int) {
@@ -75,8 +77,14 @@ class MainActivity : BaseActivity() {
             4 -> startFragment(BehaviorFragment())
             5 -> startFragment(TagFragment.newInstance())
             else -> {
-                val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
-                loadingPopup.show()
+//                val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
+//                loadingPopup.show()
+
+
+                Popup.Builder(mContext)
+                        .asConfirm("1","您确定要退出吗？", OnConfirmListener {  }, OnCancelListener {  })
+                        .bindLayout(R.layout.popup_tip_confirm)
+                        .show()
 
 //                HttpHelper.get().url("http://www.mocky.io/v2/5dd6271933000041d5f38453").execute(object :ICallBack{
 //                    override fun onSuccess(result: String) {

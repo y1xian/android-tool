@@ -1,4 +1,4 @@
-package com.yyxnb.http.utils
+package com.yyxnb.utils
 
 
 import android.annotation.SuppressLint
@@ -8,7 +8,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.wifi.WifiManager
 import android.telephony.TelephonyManager
-import com.yyxnb.http.RetrofitManager
 import java.io.Serializable
 import java.net.InetAddress
 import java.net.NetworkInterface
@@ -35,7 +34,7 @@ object NetworkUtils : Serializable {
     }
 
 
-    private val context = RetrofitManager.context
+    private val context = AppConfig.context
 
     /**
      * 打开网络设置界面
@@ -58,6 +57,7 @@ object NetworkUtils : Serializable {
      * @return NetworkInfo
      */
     private val activeNetworkInfo: NetworkInfo?
+        @SuppressLint("MissingPermission")
         get() = (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
 
     /**
@@ -191,6 +191,7 @@ object NetworkUtils : Serializable {
      * @return `true`: 连接<br></br>`false`: 未连接
      */
     val isWifiConnected: Boolean
+        @SuppressLint("MissingPermission")
         get() {
             val cm = context.applicationContext
                     .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

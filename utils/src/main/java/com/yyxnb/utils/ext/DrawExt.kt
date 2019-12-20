@@ -1,4 +1,4 @@
-package com.yyxnb.arch.ext
+package com.yyxnb.utils.ext
 
 import android.content.Context
 import android.graphics.Canvas

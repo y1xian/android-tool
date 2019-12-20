@@ -1,4 +1,4 @@
-package com.yyxnb.arch.ext
+package com.yyxnb.utils.ext
 
 import java.text.SimpleDateFormat
 import java.util.*

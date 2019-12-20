@@ -1,4 +1,4 @@
-package com.yyxnb.arch.ext
+package com.yyxnb.utils.ext
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver

@@ -3,7 +3,7 @@ package com.yyxnb.arch
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
-import com.yyxnb.arch.utils.log.LogUtils
+import com.yyxnb.utils.log.LogUtils
 
 /**
  * 监听应用状态

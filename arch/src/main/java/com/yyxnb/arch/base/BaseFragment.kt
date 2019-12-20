@@ -15,17 +15,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import com.yyxnb.arch.Arch
 import com.yyxnb.arch.ContainerActivity
 import com.yyxnb.arch.annotations.*
-import com.yyxnb.arch.common.AppConfig
-import com.yyxnb.arch.common.AppConfig.REQUEST_CODE
-import com.yyxnb.arch.common.AppConfig.statusBarColor
+import com.yyxnb.arch.common.ArchConfig
+import com.yyxnb.arch.common.ArchConfig.REQUEST_CODE
+import com.yyxnb.arch.common.ArchConfig.statusBarColor
 import com.yyxnb.arch.interfaces.*
 import com.yyxnb.arch.jetpack.LifecycleDelegate
 import com.yyxnb.arch.utils.FragmentManagerUtils
-import com.yyxnb.arch.utils.MainThreadUtils
-import com.yyxnb.arch.utils.StatusBarUtils
+import com.yyxnb.utils.StatusBarUtils
+import com.yyxnb.utils.MainThreadUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -46,11 +45,11 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
 
     protected var mRootView: View? = null
 
-    private var statusBarTranslucent = AppConfig.statusBarTranslucent
-    private var fitsSystemWindows = AppConfig.fitsSystemWindows
-    private var statusBarHidden = AppConfig.statusBarHidden
-    private var statusBarDarkTheme = AppConfig.statusBarStyle
-    private var swipeBack = AppConfig.swipeBack
+    private var statusBarTranslucent = ArchConfig.statusBarTranslucent
+    private var fitsSystemWindows = ArchConfig.fitsSystemWindows
+    private var statusBarHidden = ArchConfig.statusBarHidden
+    private var statusBarDarkTheme = ArchConfig.statusBarStyle
+    private var swipeBack = ArchConfig.swipeBack
     private var subPage = false
 
     private val lifecycleDelegate by lazy { LifecycleDelegate(this) }
@@ -197,14 +196,12 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
      */
     override fun onVisible() {
         setNeedsStatusBarAppearanceUpdate()
-        Arch.debugLog("---onVisible $TAG")
     }
 
     /**
      * 当界面不可见时的操作
      */
     override fun onInVisible() {
-        Arch.debugLog("---onInVisible $TAG")
     }
 
     /**
@@ -227,7 +224,6 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
      * 初始化复杂数据 懒加载
      */
     override fun initViewData() {
-        Arch.debugLog("--- 懒加载 initViewData $TAG")
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -292,8 +288,8 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
             bundle.putInt(REQUEST_CODE, requestCode)
             val intent = Intent(mActivity, ContainerActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.putExtra(AppConfig.FRAGMENT, targetFragment.javaClass.canonicalName)
-            intent.putExtra(AppConfig.BUNDLE, bundle)
+            intent.putExtra(ArchConfig.FRAGMENT, targetFragment.javaClass.canonicalName)
+            intent.putExtra(ArchConfig.BUNDLE, bundle)
             startActivityForResult(intent, requestCode)
         })
     }
@@ -352,7 +348,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
             }
             //如果状态栏处于白色且状态栏文字也处于白色，避免看不见
             if (shouldAdjustForWhiteStatusBar) {
-                statusBarColor = AppConfig.shouldAdjustForWhiteStatusBar
+                statusBarColor = ArchConfig.shouldAdjustForWhiteStatusBar
             }
 
             setStatusBarColor(statusBarColor)

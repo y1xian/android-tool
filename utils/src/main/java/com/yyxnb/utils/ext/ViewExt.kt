@@ -1,4 +1,4 @@
-package com.yyxnb.arch.ext
+package com.yyxnb.utils.ext
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -21,9 +21,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.ImageView
-import com.yyxnb.arch.ext.ViewClickDelay.DELAY_TIME
-import com.yyxnb.arch.ext.ViewClickDelay.hash
-import com.yyxnb.arch.ext.ViewClickDelay.lastClickTime
+import com.yyxnb.utils.ext.ViewClickDelay.DELAY_TIME
+import com.yyxnb.utils.ext.ViewClickDelay.hash
+import com.yyxnb.utils.ext.ViewClickDelay.lastClickTime
 
 /**
  * @author TuFei

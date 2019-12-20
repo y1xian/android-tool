@@ -4,10 +4,10 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.yyxnb.arch.Arch
 import com.yyxnb.arch.base.BaseActivity
 import com.yyxnb.arch.common.Message
-import com.yyxnb.arch.utils.ToastUtils
+import com.yyxnb.utils.ToastUtils
+import com.yyxnb.utils.AppConfig
 
 abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {
 
@@ -17,7 +17,7 @@ abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {
     protected lateinit var mViewModel: VM
 
     override fun initView(savedInstanceState: Bundle?) {
-        mViewModel = initViewModel(this, Arch.getInstance(this, 0)!!)
+        mViewModel = initViewModel(this, AppConfig.getInstance(this, 0)!!)
         lifecycle.addObserver(mViewModel)
         registerDefUIChange()
         initObservable()

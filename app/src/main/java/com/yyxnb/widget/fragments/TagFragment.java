@@ -4,7 +4,7 @@ package com.yyxnb.widget.fragments;
 import android.os.Bundle;
 
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.arch.utils.ToastUtils;
+import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.view.text.FlowlayoutTags;
 import com.yyxnb.widget.R;
 

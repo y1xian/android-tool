@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.arch.utils.ToastUtils;
-import com.yyxnb.arch.utils.log.LogUtils;
+import com.yyxnb.utils.ToastUtils;
+import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.view.rv.ItemDecoration;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;

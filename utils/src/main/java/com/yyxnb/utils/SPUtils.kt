@@ -1,4 +1,4 @@
-package com.yyxnb.http.utils
+package com.yyxnb.utils
 
 import android.annotation.SuppressLint
 import android.content.Context

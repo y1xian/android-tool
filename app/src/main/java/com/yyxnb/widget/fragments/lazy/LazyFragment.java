@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.arch.utils.log.LogUtils;
+import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.widget.R;
 
 import org.jetbrains.annotations.Nullable;

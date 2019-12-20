@@ -5,7 +5,7 @@ object DataConfig {
     val data = ArrayList<String>()
         get() {
             field.clear()
-            for (i in 0..19) {
+            for (i in 0..9) {
                 field.add("----- 第 $i 条数据 -----")
             }
             return field
@@ -41,10 +41,18 @@ object DataConfig {
             return field
         }
 
+    val adapterList = ArrayList<String>()
+        get() {
+            field.clear()
+            field.add("----- 头尾 -----")
+            field.add("----- 无数据 -----")
+            return field
+        }
+
     val dataUrl = ArrayList<String>()
         get() {
             field.clear()
-            for (i in 0..19) {
+            for (i in 0..9) {
                 field.add("http://img0.imgtn.bdimg.com/it/u=4073821464,3431246218&fm=26&gp=0.jpg")
             }
             return field

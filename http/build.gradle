@@ -72,7 +72,7 @@ android {
 }
 
 dependencies {
-
+    implementation project(':utils')
     // jetpack
     api([libs.arch_comp_extensions])
     // retrofit2    https://github.com/square/retrofit
@@ -82,7 +82,7 @@ dependencies {
     // gson  https://github.com/google/gson
     api libs.gson
     //kt
-    api libs.kotlin_stdlib
-    api libs.kotlin_coroutines
-    api libs.kotlin_coroutines_core
+    implementation libs.kotlin_stdlib
+    implementation libs.kotlin_coroutines
+    implementation libs.kotlin_coroutines_core
 }

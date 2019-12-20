@@ -3,7 +3,7 @@ package com.yyxnb.widget.paging;
 import android.arch.paging.PageKeyedDataSource;
 import android.support.annotation.NonNull;
 
-import com.yyxnb.arch.utils.log.LogUtils;
+import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.http.RetrofitManager;
 import com.yyxnb.widget.api.NetWorkService;
 import com.yyxnb.widget.bean.TestData;

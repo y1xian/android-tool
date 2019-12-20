@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.yyxnb.arch.base.mvvm.BaseFragmentVM;
-import com.yyxnb.arch.utils.log.LogUtils;
+import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.NetWorkListAdapter;
 import com.yyxnb.widget.vm.NetWorkViewModel;

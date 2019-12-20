@@ -16,13 +16,12 @@ import com.github.anzewei.parallaxbacklayout.widget.ParallaxBackLayout.EDGE_MODE
 import com.github.anzewei.parallaxbacklayout.widget.ParallaxBackLayout.EDGE_MODE_FULL
 import com.yyxnb.arch.ContainerActivity
 import com.yyxnb.arch.annotations.*
-import com.yyxnb.arch.common.AppConfig
-import com.yyxnb.arch.ext.hideKeyBoard
+import com.yyxnb.arch.common.ArchConfig
 import com.yyxnb.arch.jetpack.LifecycleDelegate
 import com.yyxnb.arch.utils.FragmentManagerUtils
-import com.yyxnb.arch.utils.MainThreadUtils
-import com.yyxnb.arch.utils.StatusBarUtils
-import com.yyxnb.arch.utils.log.LogUtils
+import com.yyxnb.utils.StatusBarUtils
+import com.yyxnb.utils.MainThreadUtils
+import com.yyxnb.utils.ext.hideKeyBoard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -44,12 +43,12 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
 
     private val lifecycleDelegate by lazy { LifecycleDelegate(this) }
 
-    private var statusBarTranslucent = AppConfig.statusBarTranslucent
-    private var fitsSystemWindows = AppConfig.fitsSystemWindows
-    private var statusBarHidden = AppConfig.statusBarHidden
-    private var statusBarDarkTheme = AppConfig.statusBarStyle
-    private var navigationBarDarkTheme = AppConfig.navigationBarStyle
-    private var swipeBack = AppConfig.swipeBack
+    private var statusBarTranslucent = ArchConfig.statusBarTranslucent
+    private var fitsSystemWindows = ArchConfig.fitsSystemWindows
+    private var statusBarHidden = ArchConfig.statusBarHidden
+    private var statusBarDarkTheme = ArchConfig.statusBarStyle
+    private var navigationBarDarkTheme = ArchConfig.navigationBarStyle
+    private var swipeBack = ArchConfig.swipeBack
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -174,7 +173,6 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
             val f = FragmentManagerUtils.getFragmentStack()[FragmentManagerUtils.count - 2];
             //将回调的传入到fragment中去
             f.onActivityResult(last.requestCode, last.resultCode, last.result)
-            LogUtils.w("---")
         }
         if (fragments.isNotEmpty()) {
             ActivityCompat.finishAfterTransition(this)
@@ -183,17 +181,15 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
         }
     }
 
-
-
     @JvmOverloads
     fun <T : BaseFragment> startFragment(targetFragment: T, requestCode: Int = 0) {
         scheduleTaskAtStarted(Runnable {
             val intent = Intent(this, ContainerActivity::class.java)
             val bundle = targetFragment.initArguments()
-            bundle.putInt(AppConfig.REQUEST_CODE, requestCode)
+            bundle.putInt(ArchConfig.REQUEST_CODE, requestCode)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.putExtra(AppConfig.FRAGMENT, targetFragment.javaClass.canonicalName)
-            intent.putExtra(AppConfig.BUNDLE, bundle)
+            intent.putExtra(ArchConfig.FRAGMENT, targetFragment.javaClass.canonicalName)
+            intent.putExtra(ArchConfig.BUNDLE, bundle)
             startActivityForResult(intent, requestCode)
         })
     }

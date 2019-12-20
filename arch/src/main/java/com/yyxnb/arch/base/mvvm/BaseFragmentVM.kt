@@ -3,10 +3,10 @@ package com.yyxnb.arch.base.mvvm
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import com.yyxnb.arch.Arch
 import com.yyxnb.arch.base.BaseFragment
 import com.yyxnb.arch.common.Message
-import com.yyxnb.arch.utils.ToastUtils
+import com.yyxnb.utils.ToastUtils
+import com.yyxnb.utils.AppConfig
 
 
 /**
@@ -24,7 +24,7 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewModel = initViewModel(Arch.getInstance(this, 0)!!)
+        mViewModel = initViewModel(AppConfig.getInstance(this, 0)!!)
         lifecycle.addObserver(mViewModel)
     }
 

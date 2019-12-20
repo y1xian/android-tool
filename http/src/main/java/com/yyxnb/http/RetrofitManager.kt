@@ -7,7 +7,7 @@ import com.yyxnb.http.config.OkHttpConfig
 import com.yyxnb.http.gson.GsonAdapter
 import com.yyxnb.http.network.LiveDataCallAdapterFactory
 import com.yyxnb.http.utils.ISPKeys
-import com.yyxnb.http.utils.SPUtils
+import com.yyxnb.utils.SPUtils
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

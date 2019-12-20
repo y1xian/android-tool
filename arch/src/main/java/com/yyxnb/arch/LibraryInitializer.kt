@@ -9,7 +9,8 @@ import android.net.Uri
 import android.support.multidex.MultiDex
 import com.github.anzewei.parallaxbacklayout.ParallaxHelper
 import com.yyxnb.arch.base.ManagerActivityLifecycleCallbacksImplI
-import com.yyxnb.arch.utils.log.LogUtils
+import com.yyxnb.utils.log.LogUtils
+import com.yyxnb.utils.AppConfig
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import me.jessyan.autosize.AutoSizeConfig
@@ -32,7 +33,7 @@ class LibraryInitializer : ContentProvider() {
                 //突破65535的限制
                 MultiDex.install(it)
 
-                Arch.init(it)
+                AppConfig.init(it)
 
                 AutoSizeConfig.getInstance().isCustomFragment = true
 
@@ -43,7 +44,7 @@ class LibraryInitializer : ContentProvider() {
 
                 LogUtils.init()
                         .setTag("Arch")//设置全局tag
-                        .setShowThreadInfo(true).setDebug(Arch.isDebug) //是否显示日志，默认true，发布时最好关闭
+                        .setShowThreadInfo(true).setDebug(AppConfig.isDebug) //是否显示日志，默认true，发布时最好关闭
             }
         }
 

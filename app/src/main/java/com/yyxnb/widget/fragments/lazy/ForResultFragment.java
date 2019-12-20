@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.arch.utils.log.LogUtils;
+import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.widget.R;
 
 import org.jetbrains.annotations.Nullable;

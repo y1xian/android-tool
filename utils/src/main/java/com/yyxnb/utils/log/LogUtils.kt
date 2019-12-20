@@ -1,4 +1,4 @@
-package com.yyxnb.arch.utils.log
+package com.yyxnb.utils.log
 
 object LogUtils {
 
