@@ -30,6 +30,7 @@ object AppConfig : Serializable {
      */
     fun init(application: Application) {
         mApp = application
+        SPUtils.init(application)
         mWeakReferenceContext = WeakReference(application.applicationContext)
     }
 

@@ -29,7 +29,6 @@ object RetrofitManager : Serializable {
      */
     fun init(application: Application): RetrofitManager {
         mWeakReferenceContext = WeakReference(application.applicationContext)
-        SPUtils.init(application)
         return this
     }
 

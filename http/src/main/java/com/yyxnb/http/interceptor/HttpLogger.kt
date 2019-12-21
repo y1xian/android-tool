@@ -1,7 +1,7 @@
 package com.yyxnb.http.interceptor
 
-import android.util.Log
 import com.yyxnb.http.utils.JsonUtils
+import com.yyxnb.utils.log.LogUtils
 
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -34,7 +34,8 @@ class HttpLogger : HttpLoggingInterceptor.Logger {
         mMessage.append(message + "\n")
         // 请求或者响应结束，打印整条日志
         if (message.startsWith("<-- END HTTP")) {
-            Log.d("---", mMessage.toString())
+//            Log.d("---" ,mMessage.toString())
+            LogUtils.w(mMessage.toString())
         }
     }
 }
