@@ -73,7 +73,7 @@ import javax.xml.transform.stream.StreamSource
      */
     override fun json(json: String) {
         if (TextUtils.isEmpty(json)) {
-            d("json 数据为空！")
+            w("json 数据为空！")
             return
         }
         try {
@@ -85,7 +85,7 @@ import javax.xml.transform.stream.StreamSource
                 val ja = JSONArray(json)
                 message = ja.toString(4)
             }
-            d(message)
+            w(message)
         } catch (e: Exception) {
             e(e.cause?.message + LINE_SEPARATOR + json)
         }
@@ -97,7 +97,7 @@ import javax.xml.transform.stream.StreamSource
      */
     override fun xml(xml: String) {
         if (TextUtils.isEmpty(xml)) {
-            d("xml 数据为空！")
+            w("xml 数据为空！")
             return
         }
         try {
@@ -108,7 +108,7 @@ import javax.xml.transform.stream.StreamSource
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4")
             transformer.transform(xmlInput, xmlOutput)
             val message = xmlOutput.writer.toString().replaceFirst(">".toRegex(), ">" + LINE_SEPARATOR!!)
-            d(message)
+            w(message)
         } catch (e: TransformerException) {
             e(e.cause?.message + LINE_SEPARATOR + xml)
         }
@@ -121,14 +121,14 @@ import javax.xml.transform.stream.StreamSource
     override fun map(map: Map<*, *>?) {
         if (map != null) {
             val stringBuilder = StringBuilder()
-            for (entry in map.entries) {
+            for ((k,v) in map){
                 stringBuilder.append("[key] → ")
-                stringBuilder.append((entry as java.util.Map.Entry<*, *>).key)
+                stringBuilder.append(k)
                 stringBuilder.append(",[value] → ")
-                stringBuilder.append((entry as java.util.Map.Entry<*, *>).value)
+                stringBuilder.append(v)
                 stringBuilder.append(LINE_SEPARATOR)
             }
-            d(stringBuilder.toString())
+            w(stringBuilder.toString())
         }
     }
 
@@ -143,7 +143,7 @@ import javax.xml.transform.stream.StreamSource
                 stringBuilder.append(list[i])
                 stringBuilder.append(LINE_SEPARATOR)
             }
-            d(stringBuilder.toString())
+            w(stringBuilder.toString())
         }
     }
 

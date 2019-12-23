@@ -86,18 +86,40 @@ class MainActivity : BaseActivity() {
 
                 val url = "/storage/emulated/0/MagazineUnlock/magazine-unlock-05-2.3.2862-98D64FEA5AEA01B9532F258EE5AF1980.jpg"
 
-                val map = mutableMapOf("uid" to "74", "token" to "5afee96b6156db5efee003f174640667")
-                val f = mutableListOf<String>()
-                f.add(url)
+//                val map = mutableMapOf("uid" to "74", "token" to "5afee96b6156db5efee003f174640667")
+//                val f = mutableListOf<String>()
+//                f.add(url)
 
-                UploadRetrofit.uploadImgsWithParams("http://www.51duanshiping.com/api/public/?service=Video.setVideoThumb",
-                        "file",map,f).observe(this, Observer {
-                    t ->
-                    t?.let {
-                        LogUtils.w("uuuu  ${it.string()}")
-                    }
+                val map = mutableMapOf(
+                        "realname" to "741",
+                        "idcard" to "12321321",
+                        "role" to "1",
+                        "realname" to "74",
+                        "token" to "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJKSUZFTlNIT1AiLCJpYXQiOjE1NzY5MDAzOTQsImV4cCI6MTU3NzUwNTE5NCwidXNlcl9pZCI6MTM0fQ.gG8A86_N_cw7qoqHYLBE-nAyz6Upx5FDgDS2nlCig-w"
+                )
+                val m = mutableMapOf("just1" to url,"back" to url)
 
-                })
+
+//                UploadRetrofit.uploadImgsWithParams("http://www.51duanshiping.com/api/public/?service=Video.setVideoThumb",
+//                        "file",map,f).observe(this, Observer {
+//                    t ->
+//                    t?.let {
+//                        LogUtils.w("uuuu  ${it.string()}")
+//                    }
+//
+//                })
+
+//                LogUtils.w(" ${m.size} \n ${m["just"]} \n ${m["back"]}")
+                LogUtils.map(m)
+//
+//                UploadRetrofit.uploadImgsWithParams("http://www.second.shop.ce27p.cn/api/League/authentication",
+//                        map,filePaths = m).observe(this, Observer {
+//                    t ->
+//                    t?.let {
+//                        LogUtils.w("uuuu  ${it.string()}")
+//                    }
+//
+//                })
 
 
 //                DownloadRetrofit.downloadFile("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319212559089721.mp4", "download.mp4")
@@ -107,10 +129,10 @@ class MainActivity : BaseActivity() {
 //                            }
 //                        })
 
-                Popup.Builder(mContext)
-                        .asConfirm("1","您确定要退出吗？", OnConfirmListener { }, OnCancelListener { })
-                        .bindLayout(R.layout.popup_tip_confirm)
-                        .show()
+//                Popup.Builder(mContext)
+//                        .asConfirm("1","您确定要退出吗？", OnConfirmListener { }, OnCancelListener { })
+//                        .bindLayout(R.layout.popup_tip_confirm)
+//                        .show()
 
 //                HttpHelper.get().url("http://www.mocky.io/v2/5dd6271933000041d5f38453").execute(object :ICallBack{
 //                    override fun onSuccess(result: String) {

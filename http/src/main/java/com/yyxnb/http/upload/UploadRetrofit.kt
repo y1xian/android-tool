@@ -1,5 +1,6 @@
 package com.yyxnb.http.upload
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import com.yyxnb.http.RetrofitManager
@@ -56,7 +57,7 @@ object UploadRetrofit : Serializable {
      * @param fileName  后台协定的接受图片的name（没特殊要求就可以随便写）
      * @param map       普通参数
      * @param filePaths 图片路径
-     * @return Observable
+     * @return LiveData
      */
     fun uploadImgsWithParams(uploadUrl: String, fileName: String, map: Map<String, Any>?, filePaths: List<String>): LiveData<ResponseBody> {
 
@@ -74,6 +75,56 @@ object UploadRetrofit : Serializable {
             val imageBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
             //"medias"+i 后台接收图片流的参数名
             builder.addFormDataPart(fileName, file.name, imageBody)
+        }
+
+        val parts = builder.build().parts
+
+        val result = MediatorLiveData<ResponseBody>()
+
+        result.addSource(RetrofitManager
+                .createApi(IUploadFileApi::class.java)
+                .uploadFiles(uploadUrl, parts)) { response ->
+            when (response) {
+                is ApiSuccessResponse -> {
+                    GlobalScope.launch {
+                        withContext(Dispatchers.IO) {
+                            result.postValue(response.body)
+                        }
+                    }
+                }
+                is ApiErrorResponse -> {
+                    LogUtils.e(response.errorMessage)
+                }
+            }
+        }
+        return result
+    }
+
+    /**
+     * 图片和参数同时上传的请求
+     *
+     * @param uploadUrl 上传图片的服务器url
+     * @param fileName  后台协定的接受图片的name（没特殊要求就可以随便写）
+     * @param map       普通参数
+     * @param filePaths 不同图片参数名
+     * @return LiveData
+     */
+    fun uploadImgsWithParams(uploadUrl: String, map: Map<String, Any>?, filePaths: Map<String,String>): LiveData<ResponseBody> {
+
+        val builder = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+
+        if (null != map) {
+            for (key in map.keys) {
+                builder.addFormDataPart(key, (map[key] as String?)!!)
+            }
+        }
+
+        for ((key,value) in filePaths) {
+            val file = File(filePaths[key])
+            val imageBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+            //"medias"+i 后台接收图片流的参数名
+            builder.addFormDataPart(key, file.name, imageBody)
         }
 
         val parts = builder.build().parts
