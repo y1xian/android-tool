@@ -35,7 +35,7 @@ class LibraryInitializer : ContentProvider() {
 
                 AppConfig.init(it)
 
-                AutoSizeConfig.getInstance().isCustomFragment = true
+//                AutoSizeConfig.getInstance().isCustomFragment = true
 
                 //系统会在每个 Activity 执行完对应的生命周期后都调用这个实现类中对应的方法
                 it.registerActivityLifecycleCallbacks(ParallaxHelper.getInstance())

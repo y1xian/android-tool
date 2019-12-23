@@ -3,7 +3,7 @@ ext {
     build_version = [
             compileSdkVersion: 28,
             buildToolsVersion: '28.0.3',
-            minSdkVersion    : 19,
+            minSdkVersion    : 21,
             applicationId    : "com.yyxnb.widget",
             targetSdkVersion : 28,
             versionCode      : 1,

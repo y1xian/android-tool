@@ -82,6 +82,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     private int PADDING_12;
 
     private OnTitleBarListener listener;
+    private OnLeftBarListener leftListener;
     private OnTitleBarDoubleClickListener doubleClickListener;
 
     private static final int TYPE_LEFT_NONE = 0;
@@ -111,11 +112,9 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TitleBar);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // notice 未引入沉浸式标题栏之前,隐藏标题栏撑起布局
-            fillStatusBar = array.getBoolean(R.styleable.TitleBar_tb_fillStatusBar, true);
-            statusBarColor = array.getColor(R.styleable.TitleBar_tb_statusBarColor, getResources().getColor(R.color.statusBar));
-        }
+        // notice 未引入沉浸式标题栏之前,隐藏标题栏撑起布局
+        fillStatusBar = array.getBoolean(R.styleable.TitleBar_tb_fillStatusBar, true);
+        statusBarColor = array.getColor(R.styleable.TitleBar_tb_statusBarColor, getResources().getColor(R.color.statusBar));
 
         titleBarColor = array.getColor(R.styleable.TitleBar_tb_titleBarColor, getResources().getColor(R.color.titleBar));
         titleBarHeight = (int) array.getDimension(R.styleable.TitleBar_tb_titleBarHeight, DpUtils.dp2px(context, 48));
@@ -360,7 +359,9 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             tvCenter.setGravity(Gravity.CENTER);
             tvCenter.setSingleLine(true);
             // 设置跑马灯效果
-            tvCenter.setMaxWidth((int) (BarUtils.getScreenPixelSize(context)[0] * 3 / 5.0));
+            //最大宽度 设置此行会导致xml无法预览 改为标题栏高度 * 4
+//            tvCenter.setMaxWidth((int) (BarUtils.getScreenPixelSize(context)[0] * 3 / 5.0));
+            tvCenter.setMaxWidth(titleBarHeight * 4);
             if (centerTextMarquee) {
                 tvCenter.setEllipsize(TextUtils.TruncateAt.MARQUEE);
                 tvCenter.setMarqueeRepeatLimit(-1);
@@ -414,7 +415,10 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (listener == null) {
+        if (leftListener != null && (v.equals(btnLeft) || v.equals(tvLeft))) {
+            leftListener.onClicked(v);
+            return;
+        } else if (listener == null) {
             return;
         }
 
@@ -449,7 +453,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     }
 
     /**
-     * 设置背景图片
+     * 设置背景图片、渐变色 (整体背景 包括状态栏)
      */
     @Override
     public void setBackgroundResource(int resource) {
@@ -548,6 +552,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
 
     /**
      * 左边自定义
+     *
      * @param leftView
      */
     public void setLeftView(View leftView) {
@@ -562,6 +567,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
 
     /**
      * 中间自定义
+     *
      * @param centerView
      */
     public void setCenterView(View centerView) {
@@ -576,6 +582,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
 
     /**
      * 右边自定义
+     *
      * @param rightView
      */
     public void setRightView(View rightView) {
@@ -602,11 +609,16 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         progressCenter.setVisibility(View.GONE);
     }
 
+    /**
+     * 左边返回按钮
+     */
+    public void setBackListener(OnLeftBarListener leftListener) {
+        this.leftListener = leftListener;
+    }
 
     /**
      * 设置点击事件监听
      */
-
     public void setClickListener(OnTitleBarListener listener) {
         this.listener = listener;
     }
@@ -623,6 +635,16 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     public static final int ACTION_RIGHT_TEXT = 3;       // 右边TextView被点击
     public static final int ACTION_RIGHT_BUTTON = 4;     // 右边ImageBtn被点击
     public static final int ACTION_CENTER_TEXT = 9;     // 中间文字点击
+
+    /**
+     * 返回事件
+     */
+    public interface OnLeftBarListener {
+        /**
+         * @param v
+         */
+        void onClicked(View v);
+    }
 
     /**
      * 点击事件

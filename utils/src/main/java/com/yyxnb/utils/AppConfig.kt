@@ -50,16 +50,16 @@ object AppConfig : Serializable {
         }
 
     //debug下吐司
-//    fun debugToast(str: String) {
-//        if (isDebug) {
-//            ToastUtils.normal(str)
-//        }
-//    }
-//
-//    //正常吐司
-//    fun toast(str: String) {
-//        ToastUtils.normal(str)
-//    }
+    fun debugToast(str: String) {
+        if (isDebug) {
+            ToastUtils.normal(str)
+        }
+    }
+
+    //正常吐司
+    fun toast(str: String) {
+        ToastUtils.normal(str)
+    }
 
     //debug下打印
     fun debugLog(str: String) {

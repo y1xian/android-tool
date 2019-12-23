@@ -10,6 +10,7 @@ import android.os.Build
 import android.support.v4.view.ViewCompat
 import android.util.TypedValue
 import android.view.*
+import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.widget.FrameLayout
 import java.io.Serializable
@@ -62,7 +63,7 @@ object StatusBarUtils : Serializable {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
             window.statusBarColor = Color.TRANSPARENT
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        } else {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
     }
@@ -70,38 +71,36 @@ object StatusBarUtils : Serializable {
     //开启沉浸式
     @JvmOverloads
     fun setStatusBarTranslucent(window: Window, translucent: Boolean = true, fitsSystemWindows: Boolean = false) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //First translucent status bar.
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        //First translucent status bar.
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                setRenderContentInShortEdgeCutoutAreas(window, translucent)
-                //After LOLLIPOP just set LayoutParams.
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                val decorView = window.decorView
-                if (translucent) {
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                    decorView.setOnApplyWindowInsetsListener { v, insets ->
-                        val defaultInsets = v.onApplyWindowInsets(insets)
-                        defaultInsets.replaceSystemWindowInsets(
-                                defaultInsets.systemWindowInsetLeft,
-                                //是否撑开
-                                if (fitsSystemWindows) defaultInsets.systemWindowInsetTop else 0,
-                                defaultInsets.systemWindowInsetRight,
-                                defaultInsets.systemWindowInsetBottom)
-                    }
-                } else {
-                    decorView.setOnApplyWindowInsetsListener(null)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setRenderContentInShortEdgeCutoutAreas(window, translucent)
+            //After LOLLIPOP just set LayoutParams.
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            val decorView = window.decorView
+            if (translucent) {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                decorView.setOnApplyWindowInsetsListener { v, insets ->
+                    val defaultInsets = v.onApplyWindowInsets(insets)
+                    defaultInsets.replaceSystemWindowInsets(
+                            defaultInsets.systemWindowInsetLeft,
+                            //是否撑开
+                            if (fitsSystemWindows) defaultInsets.systemWindowInsetTop else 0,
+                            defaultInsets.systemWindowInsetRight,
+                            defaultInsets.systemWindowInsetBottom)
                 }
-                ViewCompat.requestApplyInsets(decorView)
             } else {
-                if (translucent) {
-                    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                } else {
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                }
-                ViewCompat.requestApplyInsets(window.decorView)
+                decorView.setOnApplyWindowInsetsListener(null)
             }
+            ViewCompat.requestApplyInsets(decorView)
+        } else {
+            if (translucent) {
+                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            } else {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            }
+            ViewCompat.requestApplyInsets(window.decorView)
         }
     }
 
@@ -166,14 +165,14 @@ object StatusBarUtils : Serializable {
             //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = color
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        } else {
             val decorViewGroup = window.decorView as ViewGroup
             var statusBarView: View? = decorViewGroup.findViewWithTag("custom_status_bar_tag")
             if (statusBarView == null) {
-                statusBarView = View(window.context.applicationContext)
+                statusBarView = View(window.context)
                 statusBarView.tag = "custom_status_bar_tag"
                 val params = FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT, getStatusBarHeight(window.context.applicationContext))
+                        FrameLayout.LayoutParams.MATCH_PARENT, getStatusBarHeight(window.context))
                 params.gravity = Gravity.TOP
                 statusBarView.layoutParams = params
                 decorViewGroup.addView(statusBarView, 0)
@@ -193,7 +192,7 @@ object StatusBarUtils : Serializable {
             if (dark) {
                 systemUi = systemUi or SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             } else {
-                systemUi = systemUi and SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+                systemUi = systemUi and SYSTEM_UI_FLAG_LAYOUT_STABLE
             }
             decorView.systemUiVisibility = systemUi
         }
@@ -216,39 +215,35 @@ object StatusBarUtils : Serializable {
      * 隐藏状态栏
      */
     fun setStatusBarHidden(window: Window, hidden: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val decorView = window.decorView
-            var systemUi = decorView.systemUiVisibility
-            if (hidden) {
-                systemUi = systemUi or View.SYSTEM_UI_FLAG_FULLSCREEN
-                systemUi = systemUi or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            } else {
-                systemUi = systemUi and View.SYSTEM_UI_FLAG_FULLSCREEN.inv()
-                systemUi = systemUi and View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
-            }
-            window.decorView.systemUiVisibility = systemUi
+        val decorView = window.decorView
+        var systemUi = decorView.systemUiVisibility
+        if (hidden) {
+            systemUi = systemUi or View.SYSTEM_UI_FLAG_FULLSCREEN
+            systemUi = systemUi or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        } else {
+            systemUi = systemUi and View.SYSTEM_UI_FLAG_FULLSCREEN.inv()
+            systemUi = systemUi and View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
         }
+        window.decorView.systemUiVisibility = systemUi
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-            val decorViewGroup = window.decorView as ViewGroup
-            val statusBarView = decorViewGroup.findViewWithTag<View>("custom_status_bar_tag")
-            if (statusBarView != null) {
-                val hiding = statusBarView.isClickable
-                if (hiding == hidden) {
-                    return
-                }
-                if (hidden) {
-                    statusBarView.isClickable = true
-                    val animator = ObjectAnimator.ofFloat(statusBarView, "y", -getStatusBarHeight(window.context.applicationContext) as Float)
-                    animator.duration = 100
-                    animator.startDelay = 100
-                    animator.start()
-                } else {
-                    statusBarView.isClickable = false
-                    val animator = ObjectAnimator.ofFloat(statusBarView, "y", 0f)
-                    animator.duration = 100
-                    animator.start()
-                }
+        val decorViewGroup = window.decorView as ViewGroup
+        val statusBarView = decorViewGroup.findViewWithTag<View>("custom_status_bar_tag")
+        if (statusBarView != null) {
+            val hiding = statusBarView.isClickable
+            if (hiding == hidden) {
+                return
+            }
+            if (hidden) {
+                statusBarView.isClickable = true
+                val animator = ObjectAnimator.ofFloat(statusBarView, "y", -getStatusBarHeight(window.context) as Float)
+                animator.duration = 100
+                animator.startDelay = 100
+                animator.start()
+            } else {
+                statusBarView.isClickable = false
+                val animator = ObjectAnimator.ofFloat(statusBarView, "y", 0f)
+                animator.duration = 100
+                animator.start()
             }
         }
     }
@@ -257,15 +252,13 @@ object StatusBarUtils : Serializable {
      * 增加View的paddingTop,增加的值为状态栏高度
      */
     fun appendStatusBarPadding(view: View?, viewHeight: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (view != null) {
-                val statusBarHeight = getStatusBarHeight(view.context.applicationContext)
-                view.setPadding(view.paddingLeft, statusBarHeight, view.paddingRight, view.paddingBottom)
-                if (viewHeight > 0) {
-                    view.layoutParams.height = statusBarHeight + viewHeight
-                } else {
-                    view.layoutParams.height = viewHeight
-                }
+        if (view != null) {
+            val statusBarHeight = getStatusBarHeight(view.context)
+            view.setPadding(view.paddingLeft, statusBarHeight, view.paddingRight, view.paddingBottom)
+            if (viewHeight > 0) {
+                view.layoutParams.height = statusBarHeight + viewHeight
+            } else {
+                view.layoutParams.height = viewHeight
             }
         }
     }
@@ -274,12 +267,10 @@ object StatusBarUtils : Serializable {
      * 删除View的paddingTop,增加的值为状态栏高度
      */
     fun removeStatusBarPadding(view: View?, viewHeight: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (view != null) {
-                view.setPadding(view.paddingLeft, 0, view.paddingRight,
-                        view.paddingBottom)
-                view.layoutParams.height = viewHeight
-            }
+        if (view != null) {
+            view.setPadding(view.paddingLeft, 0, view.paddingRight,
+                    view.paddingBottom)
+            view.layoutParams.height = viewHeight
         }
     }
 
@@ -293,17 +284,17 @@ object StatusBarUtils : Serializable {
             return statusBarHeight
         }
         //获取status_bar_height资源的ID
-        val resourceId = context.applicationContext.resources.getIdentifier("status_bar_height", "dimen", "android")
+        val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
         if (resourceId > 0) {
             //根据资源ID获取响应的尺寸值
-            statusBarHeight = context.applicationContext.resources.getDimensionPixelSize(resourceId)
+            statusBarHeight = context.resources.getDimensionPixelSize(resourceId)
         }
         return statusBarHeight
     }
 
     fun fetchContextColor(context: Context, androidAttribute: Int): Int {
         val typedValue = TypedValue()
-        val a = context.applicationContext.obtainStyledAttributes(typedValue.data, intArrayOf(androidAttribute))
+        val a = context.obtainStyledAttributes(typedValue.data, intArrayOf(androidAttribute))
         val color = a.getColor(0, 0)
         a.recycle()
         return color

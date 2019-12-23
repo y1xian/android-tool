@@ -75,6 +75,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initAttributes()
         mLazyProxy.onCreate(savedInstanceState)
         val bundle = initArguments()
         if (bundle.size() > 0) {
@@ -94,7 +95,6 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        initAttributes()
         if (null == mRootView) {
             mRootView = inflater.inflate(initLayoutResId(), container, false)
         } else {
@@ -131,10 +131,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
             javaClass.getAnnotation(SubPage::class.java)?.let { subPage = it.value }
 
             if (!subPage) {
-                setStatusBarTranslucent(statusBarTranslucent, fitsSystemWindows)
-                setStatusBarStyle(statusBarDarkTheme)
-                setStatusBarHidden(statusBarHidden)
-                setSwipeBack(swipeBack)
+                setNeedsStatusBarAppearanceUpdate()
             }
         })
     }
@@ -188,14 +185,13 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
      * 所以若需要刷新被移除Fragment内的数据需要重新put数据
      */
     open fun initVariables(bundle: Bundle) {
-        setRequest(bundle.getInt(REQUEST_CODE , 0))
+        setRequest(bundle.getInt(REQUEST_CODE, 0))
     }
 
     /**
      * 当界面可见时的操作
      */
     override fun onVisible() {
-        setNeedsStatusBarAppearanceUpdate()
     }
 
     /**
@@ -310,13 +306,19 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
 
     // ------- statusBar --------
 
-    fun setStatusBarTranslucent(translucent: Boolean, fitsSystemWindows: Boolean) = (mActivity as? BaseActivity)?.setStatusBarTranslucent(translucent, fitsSystemWindows)
+    fun setStatusBarTranslucent(translucent: Boolean, fitsSystemWindows: Boolean) =
+            (mActivity as? BaseActivity)?.setStatusBarTranslucent(translucent, fitsSystemWindows)
+                    ?: let { StatusBarUtils.setStatusBarTranslucent(getWindow(), translucent, fitsSystemWindows) }
 
     fun setStatusBarColor(color: Int) = (mActivity as? BaseActivity)?.setStatusBarColor(color)
+            ?: let { StatusBarUtils.setStatusBarColor(getWindow(), color) }
 
-    fun setStatusBarStyle(barStyle: BarStyle) = (mActivity as? BaseActivity)?.setStatusBarStyle(barStyle)
+    fun setStatusBarStyle(barStyle: BarStyle) =
+            (mActivity as? BaseActivity)?.setStatusBarStyle(barStyle)
+                    ?: let { StatusBarUtils.setStatusBarStyle(getWindow(), barStyle === BarStyle.DarkContent) }
 
     fun setStatusBarHidden(hidden: Boolean) = (mActivity as? BaseActivity)?.setStatusBarHidden(hidden)
+            ?: let { StatusBarUtils.setStatusBarHidden(getWindow(), hidden) }
 
     fun setSwipeBack(mSwipeBack: Int = 0) = (mActivity as? BaseActivity)?.setSwipeBack(mSwipeBack)
 
@@ -325,6 +327,8 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
     fun setNeedsStatusBarAppearanceUpdate() {
 
         if (subPage) return
+        // 侧滑返回
+        setSwipeBack(swipeBack)
 
         // 隐藏
         val hidden = statusBarHidden

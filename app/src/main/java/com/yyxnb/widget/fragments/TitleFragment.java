@@ -9,8 +9,6 @@ import com.yyxnb.widget.R;
 
 import org.jetbrains.annotations.Nullable;
 
-import static com.yyxnb.view.titlebar.TitleBar.ACTION_LEFT_BUTTON;
-
 /**
  * 标题栏.
  */
@@ -39,14 +37,18 @@ public class TitleFragment extends BaseFragment {
         mTitleBar.setBackgroundResource(R.drawable.shape_gradient_bg);
         mTitleBar.showCenterProgress();
 
-        mTitleBar.setClickListener((v, action) -> {
-            switch (action) {
-                case ACTION_LEFT_BUTTON:
-                    finish();
-                    break;
-                default:
-                    break;
-            }
+//        mTitleBar.setClickListener((v, action) -> {
+//            switch (action) {
+//                case ACTION_LEFT_BUTTON:
+//                    finish();
+//                    break;
+//                default:
+//                    break;
+//            }
+//        });
+
+        mTitleBar.setBackListener(v -> {
+            finish();
         });
 
     }

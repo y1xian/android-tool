@@ -69,50 +69,6 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
         this.dividerWidth = mDivider.getIntrinsicWidth();
     }
 
-//    /**
-//     * 自定义分割线
-//     *
-//     * @param context
-//     * @param drawableId 分割线图片
-//     */
-//    public ItemDecoration(Context context, @DrawableRes int drawableId) {
-//        mDivider = ContextCompat.getDrawable(context, drawableId);
-//        this.dividerHeight = mDivider.getIntrinsicHeight();
-//        this.dividerWidth = mDivider.getIntrinsicWidth();
-//    }
-//
-//    /**
-//     * 自定义分割线
-//     * 也可以使用{@link Canvas#drawRect(float, float, float, float, Paint)}或者{@link Canvas#drawText(String, float, float, Paint)}等等
-//     * 结合{@link Paint}去绘制各式各样的分割线
-//     *
-//     * @param context
-//     * @param dividerWidth  单位为dp
-//     * @param dividerHeight 单位为dp
-//     */
-//    public ItemDecoration(Context context, @Dimension float dividerWidth, @Dimension float dividerHeight) {
-//        mDivider = new ColorDrawable(context.getResources().getColor(dividerColor));
-//        this.dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, context.getResources().getDisplayMetrics());
-//        this.dividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerHeight, context.getResources().getDisplayMetrics());
-//    }
-//
-//    /**
-//     * 自定义分割线
-//     * 也可以使用{@link Canvas#drawRect(float, float, float, float, Paint)}或者{@link Canvas#drawText(String, float, float, Paint)}等等
-//     * 结合{@link Paint}去绘制各式各样的分割线
-//     *
-//     * @param context
-//     * @param color         整型颜色值，非资源id
-//     * @param dividerWidth  单位为dp
-//     * @param dividerHeight 单位为dp
-//     */
-//    public ItemDecoration(Context context, @ColorInt int color, @Dimension float dividerWidth, @Dimension float dividerHeight) {
-//        mDivider = new ColorDrawable(color);
-//        this.dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, context.getResources().getDisplayMetrics());
-//        this.dividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerHeight, context.getResources().getDisplayMetrics());
-//    }
-
-
     /**
      * 垂直滚动，item宽度充满，高度自适应
      * 水平滚动,item高度充满，宽度自适应
@@ -647,18 +603,30 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
         this.paddingRight = DpUtils.dp2px(mContext, paddingRight);
     }
 
+    /**
+     * 图片
+     */
     public void setDividerDrawable(@DrawableRes int drawableId) {
         this.mDivider = ContextCompat.getDrawable(mContext, drawableId);
     }
 
+    /**
+     * 分割线高度
+     */
     public void setDividerHeight(int dividerHeight) {
         this.dividerHeight = DpUtils.dp2px(mContext, dividerHeight);
     }
 
+    /**
+     * 分割线宽度 网格
+     */
     public void setDividerWidth(int dividerWidth) {
         this.dividerWidth = DpUtils.dp2px(mContext, dividerWidth);
     }
 
+    /**
+     * 分割线颜色
+     */
     public void setDividerColor(@ColorInt int dividerColor) {
         this.dividerColor = dividerColor;
         this.mDivider = new ColorDrawable(dividerColor);

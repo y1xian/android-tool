@@ -8,6 +8,7 @@ class ItemDelegateManager<T> {
     val itemViewDelegateCount: Int
         get() = delegates.size()
 
+    @Suppress("UNUSED_CHANGED_VALUE")
     fun addDelegate(delegate: ItemDelegate<T>): ItemDelegateManager<T> {
         var viewType = delegates.size()
         delegates.put(viewType, delegate)

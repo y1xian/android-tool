@@ -37,6 +37,7 @@ import me.jessyan.autosize.AutoSizeCompat
 @ParallaxBack(edgeMode = ParallaxBack.EdgeMode.EDGE)
 abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
+    private var subPage: Boolean = false
     protected val TAG = javaClass.canonicalName
 
     protected lateinit var mContext: Context
@@ -69,10 +70,12 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
             javaClass.getAnnotation(FitsSystemWindows::class.java)?.let { fitsSystemWindows = it.value }
             javaClass.getAnnotation(SwipeBack::class.java)?.let { swipeBack = it.value }
 
-            setStatusBarTranslucent(statusBarTranslucent, fitsSystemWindows)
-            setStatusBarStyle(statusBarDarkTheme)
-            setNavigationBarStyle(navigationBarDarkTheme)
-            setStatusBarHidden(statusBarHidden)
+            if (!subPage){
+                setStatusBarTranslucent(statusBarTranslucent, fitsSystemWindows)
+                setStatusBarStyle(statusBarDarkTheme)
+                setNavigationBarStyle(navigationBarDarkTheme)
+                setStatusBarHidden(statusBarHidden)
+            }
             setSwipeBack(swipeBack)
         })
     }
@@ -242,6 +245,13 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
         }
         // 如果焦点不是EditText则忽略
         return false
+    }
+
+    /**
+     * 是否子页面
+     */
+    open fun isSubPage(): Boolean {
+        return subPage
     }
 
 }
