@@ -114,15 +114,13 @@ object JsonUtils {
      * @param cls        将要转化成集合的类;
      * @return
      */
-    fun <T> getArray(jsonString: String, cls: Class<T>): List<T>? {
+    fun <T> getArray(jsonString: String): List<T>? {
         var list: List<T> = ArrayList()
         try {
             val gson = Gson()
             list = gson.fromJson(
                     jsonString,
-                    object : TypeToken<List<T>>() {
-
-                    }.type
+                    object : TypeToken<List<T>>() {}.type
             )
         } catch (e: Exception) {
         }
@@ -143,9 +141,7 @@ object JsonUtils {
             val gson = Gson()
             list = gson.fromJson(
                     jsonString,
-                    object : TypeToken<List<Map<String, Any>>>() {
-
-                    }.type
+                    object : TypeToken<List<Map<String, Any>>>() {}.type
             )
         } catch (e: Exception) {
         }
@@ -165,9 +161,7 @@ object JsonUtils {
             val gson = Gson()
             map = gson.fromJson(
                     jsonString,
-                    object : TypeToken<Map<String, Any>>() {
-
-                    }.type
+                    object : TypeToken<Map<String, Any>>() {}.type
             )
         } catch (e: Exception) {
         }

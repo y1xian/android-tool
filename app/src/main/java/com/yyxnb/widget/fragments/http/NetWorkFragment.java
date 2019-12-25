@@ -1,4 +1,4 @@
-package com.yyxnb.widget.fragments;
+package com.yyxnb.widget.fragments.http;
 
 
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import com.yyxnb.widget.adapter.NetWorkListAdapter;
 import com.yyxnb.widget.vm.NetWorkViewModel;
 
 import org.jetbrains.annotations.Nullable;
+
 
 /**
  * 网络列表.
@@ -45,13 +46,15 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
         mViewModel.reqTeam();
 
         mViewModel.getTestList().observe(this,t -> {
-//            LogUtils.INSTANCE.e("----mViewModel---"  + data.size());
-            switch (t.getStatus()){
+            switch (t.getStatus()) {
                 case SUCCESS:
                     mAdapter.setDataItems(t.getData().getData());
                     break;
+                case ERROR:
+                    break;
+                case LOADING:
+                    break;
             }
-//            mAdapter.submitList(data);
         });
 
         LogUtils.INSTANCE.w("---initViewData   n   ");

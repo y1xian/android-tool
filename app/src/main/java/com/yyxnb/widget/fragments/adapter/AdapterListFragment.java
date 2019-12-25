@@ -12,8 +12,7 @@ import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.StringListAdapter;
 import com.yyxnb.widget.config.DataConfig;
-import com.yyxnb.widget.fragments.NetWorkFragment;
-import com.yyxnb.widget.fragments.network.PagingFragment;
+import com.yyxnb.widget.fragments.http.PagingFragment;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

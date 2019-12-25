@@ -1,20 +1,15 @@
 package com.yyxnb.widget
 
 import android.Manifest
-import android.arch.lifecycle.Observer
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.yyxnb.arch.base.BaseActivity
-import com.yyxnb.http.upload.UploadRetrofit
-import com.yyxnb.utils.interfaces.OnCancelListener
-import com.yyxnb.utils.interfaces.OnConfirmListener
 import com.yyxnb.utils.log.LogUtils
 import com.yyxnb.utils.permission.FanPermissionListener
 import com.yyxnb.utils.permission.FanPermissionUtils
-import com.yyxnb.view.popup.Popup
 import com.yyxnb.view.rv.ItemDecoration
 import com.yyxnb.view.rv.MultiItemTypeAdapter
 import com.yyxnb.widget.adapter.MainListAdapter
@@ -24,7 +19,7 @@ import com.yyxnb.widget.fragments.TagFragment
 import com.yyxnb.widget.fragments.TitleFragment
 import com.yyxnb.widget.fragments.adapter.AdapterListFragment
 import com.yyxnb.widget.fragments.lazy.FragmentListFragment
-import com.yyxnb.widget.fragments.network.NetWorkListFragment
+import com.yyxnb.widget.fragments.http.NetWorkListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {

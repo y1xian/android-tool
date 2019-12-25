@@ -1,4 +1,4 @@
-package com.yyxnb.widget.fragments.network;
+package com.yyxnb.widget.fragments.http;
 
 
 import android.os.Bundle;

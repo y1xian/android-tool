@@ -1,4 +1,4 @@
-package com.yyxnb.widget.fragments.network;
+package com.yyxnb.widget.fragments.http;
 
 
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.StringListAdapter;
 import com.yyxnb.widget.config.DataConfig;
-import com.yyxnb.widget.fragments.NetWorkFragment;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -66,6 +65,15 @@ public class NetWorkListFragment extends BaseFragment {
                         break;
                     case 1:
                         startFragment(PagingFragment.newInstance());
+                        break;
+                    case 2:
+                        startFragment(UploadFragment.newInstance());
+                        break;
+                    case 3:
+                        startFragment(DownloadFragment.newInstance());
+                        break;
+                    case 4:
+                        startFragment(NetWorkFragment2.newInstance());
                         break;
                     default:
                         break;

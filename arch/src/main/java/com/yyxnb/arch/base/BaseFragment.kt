@@ -23,6 +23,7 @@ import com.yyxnb.arch.common.ArchConfig.statusBarColor
 import com.yyxnb.arch.interfaces.*
 import com.yyxnb.arch.jetpack.LifecycleDelegate
 import com.yyxnb.arch.utils.FragmentManagerUtils
+import com.yyxnb.arch.utils.StateLayout
 import com.yyxnb.utils.StatusBarUtils
 import com.yyxnb.utils.MainThreadUtils
 import kotlinx.coroutines.CoroutineScope
@@ -44,6 +45,7 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
     protected val TAG = javaClass.canonicalName
 
     protected var mRootView: View? = null
+    protected lateinit var stateLayout: StateLayout
 
     private var statusBarTranslucent = ArchConfig.statusBarTranslucent
     private var fitsSystemWindows = ArchConfig.fitsSystemWindows

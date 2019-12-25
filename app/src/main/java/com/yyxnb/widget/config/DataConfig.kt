@@ -38,6 +38,9 @@ object DataConfig {
             field.clear()
             field.add("----- 列表 -----")
             field.add("----- paging -----")
+            field.add("----- 上传 -----")
+            field.add("----- 下载 -----")
+            field.add("----- 列表 无状态 -----")
             return field
         }
 

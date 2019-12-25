@@ -62,6 +62,8 @@ object RetrofitManager : Serializable {
     /**
      * 创建Service
      */
+    @Suppress("UNCHECKED_CAST")
+    @Synchronized
     fun <T> createApi(apiService: Class<T>): T {
         if (mCacheEnable) {
             if (mServiceMap.containsKey(apiService.name)) {
