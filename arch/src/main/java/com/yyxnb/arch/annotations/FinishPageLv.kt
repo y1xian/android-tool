@@ -1,9 +1,9 @@
 package com.yyxnb.arch.annotations
 
 /**
- * tag标识
+ * 关闭页面
  */
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
-annotation class TagValue(val value: String = "")
+annotation class FinishPageLv(val value: Int = 0)

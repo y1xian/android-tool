@@ -171,11 +171,15 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
     @Suppress("UNCHECKED_CAST")
     override fun onBackPressed() {
         val fragments = supportFragmentManager.fragments
-        if (FragmentManagerUtils.count > 1) {
-            val last = FragmentManagerUtils.currentFragment();
-            val f = FragmentManagerUtils.getFragmentStack()[FragmentManagerUtils.count - 2];
-            //将回调的传入到fragment中去
-            f.onActivityResult(last.requestCode, last.resultCode, last.result)
+        FragmentManagerUtils.apply {
+            if (count > 1) {
+                //当前传值
+                val current = currentFragment()
+                //上一个页面需接收的
+                val before = beforeFragment()
+                //将回调的传入到fragment中去
+                before.onActivityResult(current.requestCode, current.resultCode, current.result)
+            }
         }
         if (fragments.isNotEmpty()) {
             ActivityCompat.finishAfterTransition(this)
@@ -200,8 +204,8 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
     fun setRootFragment(fragment: BaseFragment, containerId: Int = com.yyxnb.arch.R.id.content) {
         scheduleTaskAtStarted(Runnable {
             val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(containerId, fragment, fragment.getSceneId())
-            transaction.addToBackStack(fragment.getSceneId())
+            transaction.replace(containerId, fragment, fragment.sceneId)
+            transaction.addToBackStack(fragment.sceneId)
             transaction.commitAllowingStateLoss()
         })
     }

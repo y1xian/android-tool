@@ -3,6 +3,7 @@ package com.yyxnb.arch.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import com.yyxnb.arch.base.BaseFragment
 import com.yyxnb.arch.interfaces.IOnActivityStatusChangeListener
 import java.io.Serializable
 import java.util.*
@@ -22,6 +23,15 @@ object ActivityManagerUtils : Serializable {
     val count: Int
         get() = activityStack!!.size
 
+    fun getActivityStack(): List<Activity> {
+        val list = ArrayList<Activity>()
+        list.clear()
+        if (activityStack != null) {
+            list.addAll(activityStack!!)
+        }
+        return list
+    }
+
     /**
      * 添加Activity到堆栈
      */
@@ -40,6 +50,17 @@ object ActivityManagerUtils : Serializable {
         var activity: Activity? = null
         if (!activityStack!!.empty()) {
             activity = activityStack!!.lastElement()
+        }
+        return activity
+    }
+
+    /**
+     * 上一个Activity
+     */
+    fun beforeActivity(): Activity? {
+        var activity: Activity? = null
+        if (count > 1) {
+            activity = getActivityStack()[count - 2]
         }
         return activity
     }

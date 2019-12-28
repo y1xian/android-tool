@@ -78,6 +78,14 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
     }
 
     @JvmOverloads
+    fun addDataItem(position: Int = 0, t: T) {
+        if (data.isNotEmpty()) {
+            data.add(position, t)
+            notifyItemRangeInserted(headersCount + position, 1)
+        }
+    }
+
+    @JvmOverloads
     fun addDataItem(position: Int = data.size, list: List<T>?) {
         if (list != null && list.isNotEmpty()) {
             data.addAll(list)

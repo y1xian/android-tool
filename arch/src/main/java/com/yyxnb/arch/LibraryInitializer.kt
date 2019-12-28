@@ -8,6 +8,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.support.multidex.MultiDex
 import com.github.anzewei.parallaxbacklayout.ParallaxHelper
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.yyxnb.arch.base.ManagerActivityLifecycleCallbacksImplI
 import com.yyxnb.utils.log.LogUtils
 import com.yyxnb.utils.AppConfig
@@ -45,6 +46,10 @@ class LibraryInitializer : ContentProvider() {
                 LogUtils.init()
                         .setTag("Arch")//设置全局tag
                         .setShowThreadInfo(true).setDebug(AppConfig.isDebug) //是否显示日志，默认true，发布时最好关闭
+
+                LiveEventBus
+                        .config()
+                        .enableLogger(AppConfig.isDebug)
             }
         }
 

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.yyxnb.arch.annotations.FinishPageLv;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * fragment 列表.
  */
+@FinishPageLv
 public class FragmentListFragment extends BaseFragment {
 
     private StringListAdapter mAdapter;
@@ -69,7 +71,9 @@ public class FragmentListFragment extends BaseFragment {
                         startFragment(LazyVpFragment.newInstance());
                         break;
                     case 2:
-                        startFragment(ForResultFragment.newInstance(), 123);
+                        Bundle bundle = initArguments();
+                        bundle.putString("x","456");
+                        startFragment(ForResultFragment.newInstance(),123);
                         break;
                     default:
                         break;

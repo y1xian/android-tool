@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yyxnb.arch.base.BaseFragment;
+import com.yyxnb.arch.utils.FragmentManagerUtils;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.widget.R;
 
@@ -39,6 +40,8 @@ public class ForResultFragment extends BaseFragment {
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
 
+        LogUtils.INSTANCE.w("--" + getArguments().getString("x"));
+
         etInput = findViewById(R.id.etInput);
         tvConfirm = findViewById(R.id.tvConfirm);
 
@@ -60,8 +63,8 @@ public class ForResultFragment extends BaseFragment {
     @Override
     public void initViewData() {
         super.initViewData();
-        //将回调的传入到fragment中去
 
+        LogUtils.INSTANCE.w("" + FragmentManagerUtils.INSTANCE.currentFragment().getClass().getSimpleName());
 
     }
 

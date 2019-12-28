@@ -1,4 +1,4 @@
-package com.yyxnb.arch.utils
+package com.yyxnb.view.state
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -11,8 +11,8 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import com.yyxnb.arch.R
-import com.yyxnb.arch.utils.State.*
+import com.yyxnb.view.state.State.*
+import com.yyxnb.view.R
 
 /**
  * 动态切换布局状态(Loading/Error/Empty/Content)的解决方案

@@ -1,4 +1,4 @@
-package com.yyxnb.arch.utils
+package com.yyxnb.view.state
 
 enum class State {
     None,

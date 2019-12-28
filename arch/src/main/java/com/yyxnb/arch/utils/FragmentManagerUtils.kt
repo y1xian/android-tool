@@ -47,6 +47,17 @@ object FragmentManagerUtils : Serializable {
     }
 
     /**
+     * 上一个fragment [FragmentManagerUtils.count]} > 1
+     */
+    fun beforeFragment(): BaseFragment {
+        var fragment: BaseFragment? = null
+        if (count > 1) {
+            fragment = getFragmentStack()[count - 2]
+        }
+        return fragment!!
+    }
+
+    /**
      * 结束当前Fragment
      */
     fun finishFragment() {

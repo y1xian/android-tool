@@ -74,7 +74,7 @@ android {
 dependencies {
     api project(':utils')
     //  v7 v4 约束
-    api([libs.support_v7, libs.support_v4, libs.design, libs.annotations, libs.constraint,libs.recyclerview])
+    api([libs.support_v7, libs.support_v4, libs.design, libs.annotations, libs.constraint, libs.recyclerview])
     // jetpack
     api libs.arch_comp_java8, libs.arch_comp_extensions
     // 避免65K限制       https://developer.android.com/tools/building/multidex.html
@@ -87,4 +87,6 @@ dependencies {
     api libs.kotlin_stdlib
     api libs.kotlin_coroutines
     api libs.kotlin_coroutines_core
+    //bus
+    api libs.live_event_bus
 }

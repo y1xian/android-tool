@@ -18,14 +18,17 @@ import android.view.Window
 import com.yyxnb.arch.ContainerActivity
 import com.yyxnb.arch.annotations.*
 import com.yyxnb.arch.common.ArchConfig
+import com.yyxnb.arch.common.ArchConfig.FRAGMENT_FINISH
 import com.yyxnb.arch.common.ArchConfig.REQUEST_CODE
 import com.yyxnb.arch.common.ArchConfig.statusBarColor
+import com.yyxnb.arch.ext.bus
+import com.yyxnb.arch.ext.busObserve
 import com.yyxnb.arch.interfaces.*
 import com.yyxnb.arch.jetpack.LifecycleDelegate
 import com.yyxnb.arch.utils.FragmentManagerUtils
-import com.yyxnb.arch.utils.StateLayout
 import com.yyxnb.utils.StatusBarUtils
 import com.yyxnb.utils.MainThreadUtils
+import com.yyxnb.utils.log.LogUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -45,7 +48,6 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
     protected val TAG = javaClass.canonicalName
 
     protected var mRootView: View? = null
-    protected lateinit var stateLayout: StateLayout
 
     private var statusBarTranslucent = ArchConfig.statusBarTranslucent
     private var fitsSystemWindows = ArchConfig.fitsSystemWindows
@@ -53,12 +55,12 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
     private var statusBarDarkTheme = ArchConfig.statusBarStyle
     private var swipeBack = ArchConfig.swipeBack
     private var subPage = false
+    private var finishPage = -1
 
     private val lifecycleDelegate by lazy { LifecycleDelegate(this) }
 
-    private var sceneId = UUID.randomUUID().toString()
-
-    fun getSceneId(): String = sceneId
+    val sceneId: String
+        get() = UUID.randomUUID().toString()
 
     /**
      * 懒加载代理类
@@ -127,10 +129,10 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
             javaClass.getAnnotation(StatusBarTranslucent::class.java)?.let { statusBarTranslucent = it.value }
             javaClass.getAnnotation(StatusBarHidden::class.java)?.let { statusBarHidden = it.value }
             javaClass.getAnnotation(StatusBarDarkTheme::class.java)?.let { statusBarDarkTheme = it.value }
-            javaClass.getAnnotation(TagValue::class.java)?.let { sceneId = it.value }
             javaClass.getAnnotation(FitsSystemWindows::class.java)?.let { fitsSystemWindows = it.value }
             javaClass.getAnnotation(SwipeBack::class.java)?.let { swipeBack = it.value }
             javaClass.getAnnotation(SubPage::class.java)?.let { subPage = it.value }
+            javaClass.getAnnotation(FinishPageLv::class.java)?.let { finishPage = it.value }
 
             if (!subPage) {
                 setNeedsStatusBarAppearanceUpdate()
@@ -222,6 +224,11 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
      * 初始化复杂数据 懒加载
      */
     override fun initViewData() {
+        FRAGMENT_FINISH.busObserve<Int>(this) { i ->
+            if (i == finishPage && !subPage) {
+                finish()
+            }
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -236,6 +243,14 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
         mActivity.onBackPressed()
     }
 
+    /**
+     * 关掉所有的页面，可给页面设置层级
+     */
+    @JvmOverloads
+    fun finishAll(lv: Int = -1) {
+        FRAGMENT_FINISH.bus(lv)
+    }
+
     // ------ lifecycle arch -------
 
     @JvmOverloads
@@ -245,20 +260,6 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
 
     fun getWindow(): Window {
         return mActivity.window
-    }
-
-    /**
-     * 使用给定的类名创建Fragment的新实例。 这与调用其空构造函数相同。
-     *
-     * @param targetFragment 目标fragment.
-     * @param bundle        argument.
-     * @param T           [BaseFragment].
-     * @return new instance.
-     */
-    @Suppress("UNCHECKED_CAST")
-    @JvmOverloads
-    fun <T : BaseFragment> fragment(targetFragment: T, bundle: Bundle? = null): T {
-        return instantiate(context, targetFragment.javaClass.canonicalName, bundle) as T
     }
 
     /**
@@ -278,15 +279,16 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
      * @param requestCode    请求码.
      * @param T          [BaseFragment].
      */
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     @JvmOverloads
     fun <T : BaseFragment> startFragment(targetFragment: T, requestCode: Int = 0) {
         onHiddenChanged(true)
         scheduleTaskAtStarted(Runnable {
             val bundle = initArguments()
-            bundle.putInt(REQUEST_CODE, requestCode)
             val intent = Intent(mActivity, ContainerActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtra(ArchConfig.FRAGMENT, targetFragment.javaClass.canonicalName)
+            bundle.putInt(REQUEST_CODE, requestCode)
             intent.putExtra(ArchConfig.BUNDLE, bundle)
             startActivityForResult(intent, requestCode)
         })

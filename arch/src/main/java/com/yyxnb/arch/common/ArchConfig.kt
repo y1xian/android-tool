@@ -17,6 +17,7 @@ object ArchConfig : Serializable {
     const val FRAGMENT = "FRAGMENT"
     const val BUNDLE = "BUNDLE"
     const val REQUEST_CODE = "REQUEST_CODE"
+    const val FRAGMENT_FINISH = "FRAGMENT_FINISH"
 
     /**
      * 重连次数
