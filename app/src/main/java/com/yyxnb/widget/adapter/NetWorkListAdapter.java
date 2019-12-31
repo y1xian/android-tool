@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class NetWorkListAdapter extends BaseAdapter<TestData> {
 
+
     public NetWorkListAdapter() {
         super(R.layout.item_test_list_layout);
     }

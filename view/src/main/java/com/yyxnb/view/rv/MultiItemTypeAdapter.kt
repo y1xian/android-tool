@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
-import com.yyxnb.view.R
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -25,6 +24,9 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
     /** 是否使用空布局 */
     var isUseEmpty = true
 
+    /**
+     * 多类型管理
+     */
     protected var mItemDelegateManager: ItemDelegateManager<T> = ItemDelegateManager()
     protected var mOnItemClickListener: OnItemClickListener? = null
 
@@ -119,10 +121,6 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
         mItemDelegateManager.convert(holder, t, holder.adapterPosition - headersCount)
     }
 
-    protected fun isEnabled(viewType: Int): Boolean {
-        return true
-    }
-
     fun setDataItems(list: List<T>?) {
         if (list != null) {
             data.clear()
@@ -155,16 +153,12 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
         }
     }
 
-    /**
-     * 改变数据
-     */
     open fun updateDataItem(index: Int, t: T) {
         if (data.isNotEmpty()) {
             data[index] = t
             notifyItemChanged(index + headersCount)
         }
     }
-
 
     @JvmOverloads
     fun removeDataItem(position: Int, itemCount: Int = 1) {
@@ -175,29 +169,27 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
     }
 
     fun clearData() {
+        notifyItemRangeRemoved(headersCount, dataCount)
         data.clear()
-        notifyDataSetChanged()
     }
 
     fun clearHeader() {
+        notifyItemRangeRemoved(0, headersCount)
         mHeaderViews.clear()
-        notifyDataSetChanged()
     }
 
     fun clearFooter() {
+        notifyItemRangeRemoved(headersCount + dataCount, footersCount)
         mFootViews.clear()
-        notifyDataSetChanged()
     }
 
     fun clearAllData() {
         clearData()
         clearHeader()
         clearFooter()
-        notifyDataSetChanged()
     }
 
     protected fun setListener(parent: ViewGroup, viewHolder: ViewHolder, viewType: Int) {
-        if (!isEnabled(viewType)) return
 
         mOnItemClickListener?.let {
             viewHolder.convertView.setOnClickListener { v ->
@@ -259,10 +251,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (isHeaderViewPos(position)) {
-            return
-        }
-        if (isFooterViewPos(position)) {
+        if (hasEmptyView() || isHeaderViewPos(position) || isFooterViewPos(position)) {
             return
         }
         convert(holder, data[position - headersCount])
@@ -271,7 +260,6 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         weakRecyclerView = WeakReference(recyclerView)
-        setEmptyView(R.layout._loading_layout_empty)
         WrapperUtils.onAttachedToRecyclerView(
                 recyclerView
         ) { layoutManager, oldLookup, position ->
@@ -375,6 +363,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
                 isUseEmpty = true
                 removeAllViews()
                 addView(emptyView)
+                mEmptyViews.clear()
                 mEmptyViews.put(BASE_ITEM_TYPE_EMPTY, this)
             }
         }

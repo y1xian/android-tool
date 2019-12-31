@@ -3,7 +3,7 @@ package com.yyxnb.widget.fragments.adapter;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -11,10 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;
@@ -68,7 +65,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         mRecyclerView.setAdapter(mAdapter);
 
         View view = LayoutInflater.from(mContext).inflate(R.layout._loading_layout_empty, (ViewGroup) getMRootView(), false);
-        mAdapter.setEmptyView(R.layout._loading_layout_error);
+        mAdapter.setEmptyView(R.layout._loading_layout_empty);
 //        mAdapter.setEmptyView(view);
 
         tvAddHeader.setOnClickListener(v -> {
@@ -105,7 +102,13 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
             }
         });
 
-        mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData());
+        new Handler().postDelayed(() -> {
+            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData());
+        },1000);
+
+
+
+
     }
 
     @Override
