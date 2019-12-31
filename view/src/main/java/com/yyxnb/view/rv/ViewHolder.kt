@@ -25,12 +25,21 @@ class ViewHolder(val convertView: View) : RecyclerView.ViewHolder(convertView) {
 
     @Suppress("UNCHECKED_CAST")
     fun <T : View> getView(viewId: Int): T {
-        var view: View? = mViews.get(viewId)
+        val view = getViewOrNull<T>(viewId)
+        checkNotNull(view) { "No view found with id $viewId" }
+        return view
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : View> getViewOrNull(viewId: Int): T? {
+        val view = mViews.get(viewId)
         if (view == null) {
-            view = convertView.findViewById(viewId)
-            mViews.put(viewId, view)
+            itemView.findViewById<T>(viewId)?.let {
+                mViews.put(viewId, it)
+                return it
+            }
         }
-        return view as T
+        return view as? T
     }
 
     companion object {
@@ -46,60 +55,55 @@ class ViewHolder(val convertView: View) : RecyclerView.ViewHolder(convertView) {
         }
     }
 
+    fun <T : View> Int.findView(): T? {
+        return itemView.findViewById(this)
+    }
 
     /****以下为辅助方法 */
 
     fun setText(viewId: Int, text: CharSequence?): ViewHolder {
-        val tv = getView<TextView>(viewId)
-        tv.text = text
+        getView<TextView>(viewId).text = text
         return this
     }
 
-    fun setText(viewId: Int, text: String?): ViewHolder? {
-        val tv: TextView = getView(viewId)
-        tv.text = text
+    fun setText(viewId: Int, text: String?): ViewHolder {
+        getView<TextView>(viewId).text = text
         return this
     }
 
     fun setImageResource(viewId: Int, resId: Int): ViewHolder {
-        val view = getView<ImageView>(viewId)
-        view.setImageResource(resId)
+        getView<ImageView>(viewId).setImageResource(resId)
         return this
     }
 
-    fun setImageBitmap(viewId: Int, bitmap: Bitmap?): ViewHolder? {
-        val view: ImageView = getView(viewId)
-        view.setImageBitmap(bitmap)
+    fun setImageBitmap(viewId: Int, bitmap: Bitmap?): ViewHolder {
+        getView<ImageView>(viewId).setImageBitmap(bitmap)
         return this
     }
 
-    fun setImageDrawable(viewId: Int, drawable: Drawable?): ViewHolder? {
-        val view: ImageView = getView(viewId)
-        view.setImageDrawable(drawable)
+    fun setImageDrawable(viewId: Int, drawable: Drawable?): ViewHolder {
+        getView<ImageView>(viewId).setImageDrawable(drawable)
         return this
     }
 
-    fun setBackgroundColor(viewId: Int, color: Int): ViewHolder? {
-        val view: View = getView(viewId)
-        view.setBackgroundColor(color)
+    fun setBackgroundColor(viewId: Int, color: Int): ViewHolder {
+        getView<View>(viewId).setBackgroundColor(color)
         return this
     }
 
-    fun setBackgroundRes(viewId: Int, backgroundRes: Int): ViewHolder? {
-        val view: View = getView(viewId)
-        view.setBackgroundResource(backgroundRes)
+    fun setBackgroundRes(viewId: Int, backgroundRes: Int): ViewHolder {
+        getView<View>(viewId).setBackgroundResource(backgroundRes)
         return this
     }
 
     fun setTextColor(viewId: Int, textColor: Int): ViewHolder? {
-        val view: TextView = getView(viewId)
-        view.setTextColor(textColor)
+        getView<TextView>(viewId).setTextColor(textColor)
         return this
     }
 
 
     @SuppressLint("NewApi", "ObsoleteSdkInt")
-    fun setAlpha(viewId: Int, value: Float): ViewHolder? {
+    fun setAlpha(viewId: Int, value: Float): ViewHolder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             getView<View>(viewId).setAlpha(value)
         } else { // Pre-honeycomb hack to set Alpha value
@@ -111,19 +115,42 @@ class ViewHolder(val convertView: View) : RecyclerView.ViewHolder(convertView) {
         return this
     }
 
-    fun setVisible(viewId: Int, visible: Boolean): ViewHolder? {
+    fun setVisible(viewId: Int, visible: Boolean): ViewHolder {
         val view: View = getView(viewId)
         view.visibility = if (visible) View.VISIBLE else View.GONE
         return this
     }
 
-    fun linkify(viewId: Int): ViewHolder? {
-        val view: TextView = getView(viewId)
-        Linkify.addLinks(view, Linkify.ALL)
+    /**
+     * 链接
+     */
+    fun setLinkify(viewId: Int): ViewHolder {
+        Linkify.addLinks(getView<TextView>(viewId), Linkify.ALL)
         return this
     }
 
-    fun setTypeface(typeface: Typeface?, vararg viewIds: Int): ViewHolder? {
+    /**
+     * 横线
+     */
+    fun setHorizontalLine(viewId: Int): ViewHolder {
+        // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
+        getView<TextView>(viewId).paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+        return this
+    }
+
+    /**
+     * 下滑线
+     */
+    fun setGlidinglLine(viewId: Int): ViewHolder {
+        // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
+        getView<TextView>(viewId).paint.flags = Paint.UNDERLINE_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+        return this
+    }
+
+    /**
+     * 字体
+     */
+    fun setTypeface(typeface: Typeface?, vararg viewIds: Int): ViewHolder {
         for (viewId in viewIds) {
             val view: TextView = getView(viewId)
             view.typeface = typeface
@@ -132,53 +159,53 @@ class ViewHolder(val convertView: View) : RecyclerView.ViewHolder(convertView) {
         return this
     }
 
-    fun setProgress(viewId: Int, progress: Int): ViewHolder? {
+    fun setProgress(viewId: Int, progress: Int): ViewHolder {
+        getView<ProgressBar>(viewId).progress = progress
+        return this
+    }
+
+    fun setProgress(viewId: Int, progress: Int, max: Int): ViewHolder {
         val view: ProgressBar = getView(viewId)
-        view.setProgress(progress)
+        view.max = max
+        view.progress = progress
         return this
     }
 
-    fun setProgress(viewId: Int, progress: Int, max: Int): ViewHolder? {
-        val view: ProgressBar = getView(viewId)
-        view.setMax(max)
-        view.setProgress(progress)
+    fun setMax(viewId: Int, max: Int): ViewHolder {
+        getView<ProgressBar>(viewId).max = max
         return this
     }
 
-    fun setMax(viewId: Int, max: Int): ViewHolder? {
-        val view: ProgressBar = getView(viewId)
-        view.setMax(max)
+    fun setRating(viewId: Int, rating: Float): ViewHolder {
+        getView<RatingBar>(viewId).rating = rating
         return this
     }
 
-    fun setRating(viewId: Int, rating: Float): ViewHolder? {
-        val view: RatingBar = getView(viewId)
-        view.rating = rating
-        return this
-    }
-
-    fun setRating(viewId: Int, rating: Float, max: Int): ViewHolder? {
+    fun setRating(viewId: Int, rating: Float, max: Int): ViewHolder {
         val view: RatingBar = getView(viewId)
         view.max = max
         view.rating = rating
         return this
     }
 
-    fun setTag(viewId: Int, tag: Any?): ViewHolder? {
-        val view: View = getView(viewId)
-        view.tag = tag
+    fun setTag(viewId: Int, tag: Any?): ViewHolder {
+        getView<View>(viewId).tag = tag
         return this
     }
 
-    fun setTag(viewId: Int, key: Int, tag: Any?): ViewHolder? {
-        val view: View = getView(viewId)
-        view.setTag(key, tag)
+    fun setTag(viewId: Int, key: Int, tag: Any?): ViewHolder {
+        getView<View>(viewId).setTag(key, tag)
         return this
     }
 
-    fun setChecked(viewId: Int, checked: Boolean): ViewHolder? {
+    fun setChecked(viewId: Int, checked: Boolean): ViewHolder {
         val view = getView<View>(viewId) as Checkable
         view.isChecked = checked
+        return this
+    }
+
+    fun setEnabled(viewId: Int, isEnabled: Boolean): ViewHolder {
+        getView<View>(viewId).isEnabled = isEnabled
         return this
     }
 
@@ -186,21 +213,21 @@ class ViewHolder(val convertView: View) : RecyclerView.ViewHolder(convertView) {
      * 关于事件的
      */
     fun setOnClickListener(viewId: Int,
-                           listener: View.OnClickListener?): ViewHolder? {
+                           listener: View.OnClickListener?): ViewHolder {
         val view: View = getView(viewId)
         view.setOnClickListener(listener)
         return this
     }
 
     fun setOnTouchListener(viewId: Int,
-                           listener: OnTouchListener?): ViewHolder? {
+                           listener: OnTouchListener?): ViewHolder {
         val view: View = getView(viewId)
         view.setOnTouchListener(listener)
         return this
     }
 
     fun setOnLongClickListener(viewId: Int,
-                               listener: OnLongClickListener?): ViewHolder? {
+                               listener: OnLongClickListener?): ViewHolder {
         val view: View = getView(viewId)
         view.setOnLongClickListener(listener)
         return this

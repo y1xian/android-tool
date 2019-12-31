@@ -40,4 +40,8 @@ dependencies {
     kapt libs.arch_comp_room_compiler
     //https://github.com/JavaNoober/BackgroundLibrary
     implementation 'com.noober.background:core:1.6.2'
+    //https://github.com/scwang90/SmartRefreshLayout
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
+    implementation  'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
 }

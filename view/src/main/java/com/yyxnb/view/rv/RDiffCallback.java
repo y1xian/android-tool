@@ -10,21 +10,15 @@ import java.util.List;
 public class RDiffCallback<T> extends DiffUtil.Callback {
     List<T> oldDatas;
     List<T> newDatas;
-    RDiffCallback<T> mDiffCallback;
 
-    public RDiffCallback() {
-    }
-
-    public RDiffCallback(List<T> oldDatas, List<T> newDatas, RDiffCallback<T> diffCallback) {
+    public RDiffCallback(List<T> oldDatas, List<T> newDatas) {
         this.oldDatas = oldDatas;
         this.newDatas = newDatas;
-        mDiffCallback = diffCallback;
     }
 
     public static int getListSize(List list) {
         return list == null ? 0 : list.size();
     }
-
 
     /**
      * 旧数据的size
@@ -56,7 +50,7 @@ public class RDiffCallback<T> extends DiffUtil.Callback {
      */
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return mDiffCallback.areItemsTheSame(oldDatas.get(oldItemPosition), newDatas.get(newItemPosition));
+        return areItemsTheSame(oldDatas.get(oldItemPosition), newDatas.get(newItemPosition));
     }
 
     /**
@@ -66,7 +60,7 @@ public class RDiffCallback<T> extends DiffUtil.Callback {
      */
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        return mDiffCallback.areContentsTheSame(oldDatas.get(oldItemPosition), newDatas.get(newItemPosition));
+        return areContentsTheSame(oldDatas.get(oldItemPosition), newDatas.get(newItemPosition));
     }
 
     /**

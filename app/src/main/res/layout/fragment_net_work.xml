@@ -7,10 +7,16 @@
     android:orientation="vertical"
     tools:context=".fragments.http.NetWorkFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mRecyclerView"
-        android:background="@color/white"
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/mRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecyclerView"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </LinearLayout>

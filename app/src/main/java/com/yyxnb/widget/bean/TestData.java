@@ -10,6 +10,14 @@ public class TestData {
     private int id;
     private String content;
 
+    public TestData() {
+    }
+
+    public TestData(int id, String content) {
+        this.id = id;
+        this.content = content;
+    }
+
     public int getId() {
         return id;
     }

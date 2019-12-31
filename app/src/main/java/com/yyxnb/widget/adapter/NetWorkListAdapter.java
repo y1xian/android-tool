@@ -17,5 +17,7 @@ public class NetWorkListAdapter extends BaseAdapter<TestData> {
     @Override
     protected void bind(@NotNull ViewHolder holder, TestData s, int position) {
         holder.setText(R.id.tvText, " --- 第 " +s.getId() +" 条 ------- "+ s.getContent());
+
+        addChildClickViewIds(R.id.btnDel,R.id.btnDel1);
     }
 }
