@@ -11,6 +11,7 @@ import com.yyxnb.arch.annotations.FinishPageLv;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
+import com.yyxnb.view.rv.BaseViewHolder;
 import com.yyxnb.view.rv.ItemDecoration;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
@@ -61,7 +62,7 @@ public class FragmentListFragment extends BaseFragment {
 
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
             @Override
-            public void onItemClick(@NotNull View view, @NotNull RecyclerView.ViewHolder holder, int position) {
+            public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
                 super.onItemClick(view, holder, position);
                 switch (position) {
                     case 0:

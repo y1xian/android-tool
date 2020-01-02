@@ -2,7 +2,7 @@ package com.yyxnb.widget.adapter;
 
 
 import com.yyxnb.view.rv.BaseAdapter;
-import com.yyxnb.view.rv.ViewHolder;
+import com.yyxnb.view.rv.BaseViewHolder;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.bean.TestData;
 
@@ -16,9 +16,9 @@ public class NetWorkListAdapter extends BaseAdapter<TestData> {
     }
 
     @Override
-    protected void bind(@NotNull ViewHolder holder, TestData s, int position) {
+    protected void bind(@NotNull BaseViewHolder holder, TestData s, int position) {
         holder.setText(R.id.tvText, " --- 第 " +s.getId() +" 条 ------- "+ s.getContent());
 
-        addChildClickViewIds(R.id.btnDel,R.id.btnDel1);
+        addChildClickViewIds(R.id.btnDel,R.id.btnAdd);
     }
 }

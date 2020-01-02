@@ -72,4 +72,13 @@ object DataConfig {
             return field
         }
 
+    val dataTestData2 = ArrayList<TestData>()
+        get() {
+            field.clear()
+//            for (i in 0..9) {
+//                field.add(TestData(i,"第 $i 条"))
+//            }
+            return field
+        }
+
 }

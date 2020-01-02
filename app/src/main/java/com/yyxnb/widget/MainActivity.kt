@@ -10,6 +10,7 @@ import com.yyxnb.arch.base.BaseActivity
 import com.yyxnb.utils.log.LogUtils
 import com.yyxnb.utils.permission.FanPermissionListener
 import com.yyxnb.utils.permission.FanPermissionUtils
+import com.yyxnb.view.rv.BaseViewHolder
 import com.yyxnb.view.rv.ItemDecoration
 import com.yyxnb.view.rv.MultiItemTypeAdapter
 import com.yyxnb.widget.adapter.MainListAdapter
@@ -44,7 +45,7 @@ class MainActivity : BaseActivity() {
         mAdapter.setDataItems(DataConfig.dataMain)
 
         mAdapter.setOnItemClickListener(object : MultiItemTypeAdapter.SimpleOnItemClickListener() {
-            override fun onItemClick(view: View, holder: RecyclerView.ViewHolder, position: Int) {
+            override fun onItemClick(view: View, holder: BaseViewHolder, position: Int) {
 
                 setMenu(position)
 

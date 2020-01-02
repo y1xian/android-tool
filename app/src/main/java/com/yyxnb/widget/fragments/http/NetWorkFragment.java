@@ -74,22 +74,13 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
             }
         });
 
-        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
-            @Override
-            public void onItemClick(@NotNull View view, @NotNull RecyclerView.ViewHolder holder, int position) {
-                ToastUtils.INSTANCE.normal("" + position);
-            }
-
-            @Override
-            public void onItemChildClick(@Nullable MultiItemTypeAdapter<?> adapter, @Nullable View view, int position) {
-                super.onItemChildClick(adapter, view, position);
-                if (view.getId() == R.id.btnDel){
-                    ToastUtils.INSTANCE.normal("Del " + position);
-                }else if (view.getId() == R.id.btnDel1){
-                    ToastUtils.INSTANCE.normal("Del2 " + position);
-                }
-            }
-        });
+//        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
+//            @Override
+//            public void onItemClick(@NotNull View view, @NotNull RecyclerView.ViewHolder holder, int position) {
+//                ToastUtils.INSTANCE.normal("" + position);
+//            }
+//
+//        });
 
         mAdapter.setDataItems(null);
     }

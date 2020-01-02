@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.ToastUtils;
+import com.yyxnb.view.rv.BaseViewHolder;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.NetWorkListAdapter;
@@ -23,6 +24,7 @@ import com.yyxnb.widget.config.DataConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -64,9 +66,12 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout._loading_layout_empty, (ViewGroup) getMRootView(), false);
-        mAdapter.setEmptyView(R.layout._loading_layout_empty);
+        View view = LayoutInflater.from(mContext).inflate(R.layout._loading_layout_error, (ViewGroup) getMRootView(), false);
+//        mAdapter.setEmptyView(R.layout._loading_layout_error);
 //        mAdapter.setEmptyView(view);
+//        view.setOnClickListener(v -> {
+//            ToastUtils.INSTANCE.normal("213");
+//        });
 
         tvAddHeader.setOnClickListener(v -> {
             mAdapter.addHeaderView(createView("头    第 " + mAdapter.getHeadersCount(), true));
@@ -81,32 +86,48 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         });
 
         tvAddData.setOnClickListener(v -> {
-            mAdapter.addDataItem(new TestData(new Random().nextInt(1000),"666"));
+
+//            mAdapter.addDataItem(new TestData(new Random().nextInt(1000),"666"));
+            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData());
         });
 
 
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
             @Override
-            public void onItemClick(@NotNull View view, @NotNull RecyclerView.ViewHolder holder, int position) {
+            public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
                 ToastUtils.INSTANCE.normal("" + position);
             }
 
             @Override
-            public void onItemChildClick(@Nullable MultiItemTypeAdapter<?> adapter, @Nullable View view, int position) {
+            public void onItemChildClick(@Nullable MultiItemTypeAdapter<?> adapter, @NotNull View view, int position) {
                 super.onItemChildClick(adapter, view, position);
-                if (view.getId() == R.id.btnDel) {
+//                for(int id : mAdapter.getChildClickViewIds() ){
+//
+//                    if (id == R.id.btnAdd) {
+//                        mAdapter.addDataItem(position, new TestData(new Random().nextInt(100), "666"));
+//                        ToastUtils.INSTANCE.normal("Add " + position);
+//                    } else if (id == R.id.btnDel) {
+//                        mAdapter.removeDataItem(position);
+//                        ToastUtils.INSTANCE.normal("Del " + position);
+//                    }
+//
+//                }
+                if (view.getId() == R.id.btnAdd) {
+                    mAdapter.addDataItem(position, new TestData(new Random().nextInt(100), "666"));
+                    ToastUtils.INSTANCE.normal("Add " + position);
+                } else if (view.getId() == R.id.btnDel) {
+                    mAdapter.removeDataItem(position);
                     ToastUtils.INSTANCE.normal("Del " + position);
-                } else if (view.getId() == R.id.btnDel1) {
-                    ToastUtils.INSTANCE.normal("Del2 " + position);
                 }
             }
         });
 
+//        mAdapter.addHeaderView(createView("头    第 " + mAdapter.getHeadersCount(), true));
+
         new Handler().postDelayed(() -> {
             mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData());
-        },1000);
-
-
+//            mAdapter.setDataItems(new ArrayList<>());
+        }, 1000);
 
 
     }
@@ -125,7 +146,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         textView.setGravity(Gravity.CENTER);
         textView.setTextColor(Color.WHITE);
 
-        switch (new Random().nextInt(4)){
+        switch (new Random().nextInt(4)) {
             case 0:
                 textView.setBackgroundResource(R.color.red);
                 break;

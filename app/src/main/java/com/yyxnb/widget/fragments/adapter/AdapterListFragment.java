@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.yyxnb.arch.base.BaseFragment;
+import com.yyxnb.view.rv.BaseViewHolder;
 import com.yyxnb.view.rv.ItemDecoration;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
@@ -57,7 +58,7 @@ public class AdapterListFragment extends BaseFragment {
 
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
             @Override
-            public void onItemClick(@NotNull View view, @NotNull RecyclerView.ViewHolder holder, int position) {
+            public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
                 super.onItemClick(view, holder, position);
                 switch (position) {
                     case 0:

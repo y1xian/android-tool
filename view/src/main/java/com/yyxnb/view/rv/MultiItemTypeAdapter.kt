@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
+import com.yyxnb.view.R
 import java.lang.ref.WeakReference
 import java.util.*
 
 
-open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
+open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
 
     private var data: MutableList<T> = ArrayList()
     private val mHeaderViews = SparseArrayCompat<View>()
@@ -23,6 +24,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
 
     /** 是否使用空布局 */
     var isUseEmpty = true
+    var isDefaultEmpty = true
 
     /**
      * 多类型管理
@@ -53,104 +55,88 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
     /**
      * 用于保存需要设置点击事件的 item
      */
-    private val childClickViewIds = LinkedHashSet<Int>()
-
-    fun getChildClickViewIds(): LinkedHashSet<Int> {
-        return childClickViewIds
-    }
+    val childClickViewIds = LinkedHashSet<Int>()
 
     /**
      * 设置需要点击事件的子view
      */
     fun addChildClickViewIds(vararg viewIds: Int) {
-        for (viewId in viewIds) {
-            childClickViewIds.add(viewId)
-        }
+        childClickViewIds.addAll(viewIds.asList())
     }
 
     /**
      * 用于保存需要设置长按点击事件的 item
      */
-    private val childLongClickViewIds = LinkedHashSet<Int>()
-
-    fun getChildLongClickViewIds(): LinkedHashSet<Int> {
-        return childLongClickViewIds
-    }
+    val childLongClickViewIds = LinkedHashSet<Int>()
 
     /**
      * 设置需要长按点击事件的子view
      */
     fun addChildLongClickViewIds(vararg viewIds: Int) {
-        for (viewId in viewIds) {
-            childLongClickViewIds.add(viewId)
-        }
+        childLongClickViewIds.addAll(viewIds.asList())
     }
 
     override fun getItemViewType(position: Int): Int {
         if (hasEmptyView()) {
             return mEmptyViews.keyAt(position)
-        } else if (isHeaderViewPos(position)) {
+        }
+        isDefaultEmpty = false
+        if (isHeaderViewPos(position)) {
             return mHeaderViews.keyAt(position)
         } else if (isFooterViewPos(position)) {
             return mFootViews.keyAt(position - headersCount - dataCount)
         }
+
         return if (!useItemDelegateManager()) super.getItemViewType(position) else mItemDelegateManager.getItemViewType(data[position - headersCount], position - headersCount)
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        if (mHeaderViews.get(viewType) != null) {
-            return ViewHolder.createViewHolder(mHeaderViews.get(viewType)!!)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+        if (mEmptyViews.get(viewType) != null) {
+            return BaseViewHolder.createViewHolder(mEmptyViews.get(viewType)!!)
+        } else if (mHeaderViews.get(viewType) != null) {
+            return BaseViewHolder.createViewHolder(mHeaderViews.get(viewType)!!)
         } else if (mFootViews.get(viewType) != null) {
-            return ViewHolder.createViewHolder(mFootViews.get(viewType)!!)
-        } else if (mEmptyViews.get(viewType) != null) {
-            return ViewHolder.createViewHolder(mEmptyViews.get(viewType)!!)
+            return BaseViewHolder.createViewHolder(mFootViews.get(viewType)!!)
         }
         val itemViewDelegate = mItemDelegateManager.getItemViewDelegate(viewType)
 
         val layoutId = itemViewDelegate.layoutId
-        val holder = ViewHolder.createViewHolder(parent.context, parent, layoutId)
+        val holder = BaseViewHolder.createViewHolder(parent.context.applicationContext, parent, layoutId)
         onViewHolderCreated(holder, holder.convertView)
         setListener(parent, holder, viewType)
         return holder
     }
 
-    fun onViewHolderCreated(holder: ViewHolder, itemView: View) {}
+    fun onViewHolderCreated(holderBase: BaseViewHolder, itemView: View) {}
 
-    fun convert(holder: ViewHolder, t: T) {
-        mItemDelegateManager.convert(holder, t, holder.adapterPosition - headersCount)
+    fun convert(holderBase: BaseViewHolder, t: T) {
+        mItemDelegateManager.convert(holderBase, t, holderBase.adapterPosition - headersCount)
     }
 
-    fun setDataItems(list: List<T>?) {
-        if (list != null) {
-            data.clear()
-            data.addAll(list)
-            notifyDataSetChanged()
-        }
+    fun setDataItems(list: MutableList<T>?) {
+
+        if (data == list) return
+
+        data = list ?: arrayListOf()
+        notifyDataSetChanged()
     }
 
     fun addDataItem(t: T) {
         data.add(t)
-        notifyItemInserted(data.size + headersCount)
+        notifyItemInserted(dataCount + headersCount)
+        compatibilityDataSizeChanged(1)
     }
 
     fun addDataItem(position: Int = 0, t: T) {
         data.add(position, t)
         notifyItemInserted(headersCount + position)
+        compatibilityDataSizeChanged(1)
     }
 
-    fun addDataItem(position: Int = data.size, list: List<T>?) {
-        if (list != null) {
-            data.addAll(list)
-            notifyItemRangeInserted(headersCount + position, list.size)
-        }
-    }
-
-    fun addDataItem(list: List<T>?) {
-        if (list != null) {
-            data.addAll(list)
-            notifyItemRangeInserted(data.size - list.size + headersCount, list.size)
-        }
+    fun addDataItem(list: List<T>) {
+        data.addAll(list)
+        notifyItemRangeInserted(headersCount + dataCount, list.size)
+        compatibilityDataSizeChanged(list.size)
     }
 
     open fun updateDataItem(index: Int, t: T) {
@@ -160,12 +146,27 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
         }
     }
 
-    @JvmOverloads
-    fun removeDataItem(position: Int, itemCount: Int = 1) {
-        for (i in 0 until itemCount) {
-            data.removeAt(position)
+    fun removeDataItem(position: Int) {
+        if (position >= dataCount) return
+        data.removeAt(position)
+        val internalPosition = position + headersCount
+        notifyItemRemoved(internalPosition)
+        compatibilityDataSizeChanged(0)
+        notifyItemRangeChanged(internalPosition, dataCount - internalPosition)
+    }
+
+    fun replaceData(newData: Collection<T>) {
+        if (newData != data) {
+            data.clear()
+            data.addAll(newData)
         }
-        notifyItemRangeRemoved(headersCount + position, itemCount)
+        notifyDataSetChanged()
+    }
+
+    protected fun compatibilityDataSizeChanged(size: Int) {
+        if (dataCount == size) {
+            notifyDataSetChanged()
+        }
     }
 
     fun clearData() {
@@ -189,38 +190,38 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
         clearFooter()
     }
 
-    protected fun setListener(parent: ViewGroup, viewHolder: ViewHolder, viewType: Int) {
+    protected fun setListener(parent: ViewGroup, baseViewHolder: BaseViewHolder, viewType: Int) {
 
         mOnItemClickListener?.let {
-            viewHolder.convertView.setOnClickListener { v ->
-                var position = viewHolder.adapterPosition
+            baseViewHolder.itemView.setOnClickListener { v ->
+                var position = baseViewHolder.adapterPosition
                 if (position == RecyclerView.NO_POSITION) {
                     return@setOnClickListener
                 }
                 position -= headersCount
-                mOnItemClickListener!!.onItemClick(v, viewHolder, position)
+                mOnItemClickListener!!.onItemClick(v, baseViewHolder, position)
             }
         }
 
         mOnItemClickListener?.let {
-            viewHolder.convertView.setOnLongClickListener { v ->
-                var position = viewHolder.adapterPosition
+            baseViewHolder.itemView.setOnLongClickListener { v ->
+                var position = baseViewHolder.adapterPosition
                 if (position == RecyclerView.NO_POSITION) {
                     return@setOnLongClickListener false
                 }
                 position -= headersCount
-                mOnItemClickListener!!.onItemLongClick(v, viewHolder, position)
+                mOnItemClickListener!!.onItemLongClick(v, baseViewHolder, position)
             }
         }
 
         mOnItemClickListener?.let {
-            for (id in getChildClickViewIds()) {
-                viewHolder.convertView.findViewById<View>(id)?.let { childView ->
+            for (id in childClickViewIds) {
+                baseViewHolder.itemView.findViewById<View>(id)?.let { childView ->
                     if (!childView.isClickable) {
                         childView.isClickable = true
                     }
                     childView.setOnClickListener { v ->
-                        var position = viewHolder.adapterPosition
+                        var position = baseViewHolder.adapterPosition
                         if (position == RecyclerView.NO_POSITION) {
                             return@setOnClickListener
                         }
@@ -232,13 +233,13 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
         }
 
         mOnItemClickListener?.let {
-            for (id in getChildLongClickViewIds()) {
-                viewHolder.convertView.findViewById<View>(id)?.let { childView ->
+            for (id in childLongClickViewIds) {
+                baseViewHolder.itemView.findViewById<View>(id)?.let { childView ->
                     if (!childView.isLongClickable) {
                         childView.isLongClickable = true
                     }
                     childView.setOnLongClickListener { v ->
-                        var position = viewHolder.adapterPosition - headersCount
+                        var position = baseViewHolder.adapterPosition
                         if (position == RecyclerView.NO_POSITION) {
                             return@setOnLongClickListener false
                         }
@@ -250,16 +251,17 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
         }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holderBase: BaseViewHolder, position: Int) {
         if (hasEmptyView() || isHeaderViewPos(position) || isFooterViewPos(position)) {
             return
         }
-        convert(holder, data[position - headersCount])
+        convert(holderBase, data[position - headersCount])
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         weakRecyclerView = WeakReference(recyclerView)
+        setEmptyView(R.layout._loading_layout_empty)
         WrapperUtils.onAttachedToRecyclerView(
                 recyclerView
         ) { layoutManager, oldLookup, position ->
@@ -273,11 +275,11 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
         }
     }
 
-    override fun onViewAttachedToWindow(holder: ViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        val position = holder.layoutPosition
+    override fun onViewAttachedToWindow(holderBase: BaseViewHolder) {
+        super.onViewAttachedToWindow(holderBase)
+        val position = holderBase.layoutPosition
         if (isHeaderViewPos(position) || isFooterViewPos(position)) {
-            WrapperUtils.setFullSpan(holder)
+            WrapperUtils.setFullSpan(holderBase)
         }
     }
 
@@ -322,13 +324,13 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
     }
 
     interface OnItemClickListener {
-        fun onItemClick(view: View, holder: RecyclerView.ViewHolder, position: Int)
+        fun onItemClick(view: View, holder: BaseViewHolder, position: Int)
 
-        fun onItemLongClick(view: View, holder: RecyclerView.ViewHolder, position: Int): Boolean
+        fun onItemLongClick(view: View, holder: BaseViewHolder, position: Int): Boolean
 
-        fun onItemChildClick(adapter: MultiItemTypeAdapter<*>?, view: View?, position: Int)
+        fun onItemChildClick(adapter: MultiItemTypeAdapter<*>?, view: View, position: Int)
 
-        fun onItemChildLongClick(adapter: MultiItemTypeAdapter<*>?, view: View?, position: Int): Boolean
+        fun onItemChildLongClick(adapter: MultiItemTypeAdapter<*>?, view: View, position: Int): Boolean
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
@@ -337,15 +339,15 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
 
     open class SimpleOnItemClickListener : OnItemClickListener {
 
-        override fun onItemClick(view: View, holder: RecyclerView.ViewHolder, position: Int) {}
+        override fun onItemClick(view: View, holder: BaseViewHolder, position: Int) {}
 
-        override fun onItemLongClick(view: View, holder: RecyclerView.ViewHolder, position: Int): Boolean {
+        override fun onItemLongClick(view: View, holder: BaseViewHolder, position: Int): Boolean {
             return false
         }
 
-        override fun onItemChildClick(adapter: MultiItemTypeAdapter<*>?, view: View?, position: Int) {}
+        override fun onItemChildClick(adapter: MultiItemTypeAdapter<*>?, view: View, position: Int) {}
 
-        override fun onItemChildLongClick(adapter: MultiItemTypeAdapter<*>?, view: View?, position: Int): Boolean {
+        override fun onItemChildLongClick(adapter: MultiItemTypeAdapter<*>?, view: View, position: Int): Boolean {
             return false
         }
     }
@@ -355,7 +357,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
      */
     fun setEmptyView(emptyView: View) {
         if (data.isEmpty()) {
-            mEmptyLayout = FrameLayout(emptyView.context)
+            mEmptyLayout = FrameLayout(emptyView.context.applicationContext)
             mEmptyLayout?.apply {
                 layoutParams = emptyView.layoutParams?.let {
                     return@let ViewGroup.LayoutParams(it.width, it.height)
@@ -365,6 +367,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
                 addView(emptyView)
                 mEmptyViews.clear()
                 mEmptyViews.put(BASE_ITEM_TYPE_EMPTY, this)
+                notifyItemInserted(0)
             }
         }
     }
@@ -382,10 +385,11 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<ViewHolder>() {
     }
 
     fun hasEmptyView(): Boolean {
+
         if (emptyCount == 0 || headersCount != 0 || footersCount != 0) {
             return false
         }
-        if (!isUseEmpty) {
+        if (!isUseEmpty || isDefaultEmpty) {
             return false
         }
         return data.isEmpty()

@@ -7,7 +7,7 @@ import android.view.View
 import com.yyxnb.view.rv.BaseAdapter
 import com.yyxnb.view.rv.ItemDelegate
 import com.yyxnb.view.rv.MultiItemTypeAdapter
-import com.yyxnb.view.rv.ViewHolder
+import com.yyxnb.view.rv.BaseViewHolder
 
 /**
  * 设置分割线
@@ -68,10 +68,10 @@ inline val RecyclerView.orientation
     }
 
 
-fun <T> RecyclerView.bindData(layoutId: Int, bindFn: (holder: ViewHolder, t: T, position: Int) -> Unit): RecyclerView {
+fun <T> RecyclerView.bindData(layoutId: Int, bindFn: (holderBase: BaseViewHolder, t: T, position: Int) -> Unit): RecyclerView {
     adapter = object : BaseAdapter<T>(layoutId) {
-        override fun bind(holder: ViewHolder, t: T, position: Int) {
-            bindFn(holder, t, position)
+        override fun bind(holderBase: BaseViewHolder, t: T, position: Int) {
+            bindFn(holderBase, t, position)
         }
     }
     return this
@@ -104,25 +104,25 @@ fun <T> RecyclerView.multiTypes(itemDelegates: List<ItemDelegate<T>>): RecyclerV
     return this
 }
 
-fun <T> RecyclerView.itemClick(listener: (data: List<T>, holder: RecyclerView.ViewHolder, position: Int) -> Unit): RecyclerView {
-    adapter?.apply {
-        (adapter as MultiItemTypeAdapter<*>).setOnItemClickListener(object : MultiItemTypeAdapter.SimpleOnItemClickListener() {
-            override fun onItemClick(view: View, holder: RecyclerView.ViewHolder, position: Int) {
-                listener(data as List<T>, holder, position)
-            }
-        })
-    }
-    return this
-}
-
-fun <T> RecyclerView.itemLongClick(listener: (data: List<T>, holder: RecyclerView.ViewHolder, position: Int) -> Unit): RecyclerView {
-    adapter?.apply {
-        (adapter as MultiItemTypeAdapter<*>).setOnItemClickListener(object : MultiItemTypeAdapter.SimpleOnItemClickListener() {
-            override fun onItemLongClick(view: View, holder: RecyclerView.ViewHolder, position: Int): Boolean {
-                listener(data as List<T>, holder, position)
-                return super.onItemLongClick(view, holder, position)
-            }
-        })
-    }
-    return this
-}
+//fun <T> RecyclerView.itemClick(listener: (data: List<T>, holder: RecyclerView.ViewHolder, position: Int) -> Unit): RecyclerView {
+//    adapter?.apply {
+//        (adapter as MultiItemTypeAdapter<*>).setOnItemClickListener(object : MultiItemTypeAdapter.SimpleOnItemClickListener() {
+//            override fun onItemClick(view: View, holder: RecyclerView.ViewHolder, position: Int) {
+//                listener(data as List<T>, holder, position)
+//            }
+//        })
+//    }
+//    return this
+//}
+//
+//fun <T> RecyclerView.itemLongClick(listener: (data: List<T>, holder: RecyclerView.ViewHolder, position: Int) -> Unit): RecyclerView {
+//    adapter?.apply {
+//        (adapter as MultiItemTypeAdapter<*>).setOnItemClickListener(object : MultiItemTypeAdapter.SimpleOnItemClickListener() {
+//            override fun onItemLongClick(view: View, holder: RecyclerView.ViewHolder, position: Int): Boolean {
+//                listener(data as List<T>, holder, position)
+//                return super.onItemLongClick(view, holder, position)
+//            }
+//        })
+//    }
+//    return this
+//}

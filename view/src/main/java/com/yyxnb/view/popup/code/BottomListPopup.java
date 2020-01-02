@@ -14,7 +14,7 @@ import com.yyxnb.utils.interfaces.OnSelectListener;
 import com.yyxnb.view.popup.Popup;
 import com.yyxnb.view.rv.BaseAdapter;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;
-import com.yyxnb.view.rv.ViewHolder;
+import com.yyxnb.view.rv.BaseViewHolder;
 
 import java.util.Arrays;
 
@@ -77,7 +77,7 @@ public class BottomListPopup extends BottomPopup {
 
         final BaseAdapter<String> adapter = new BaseAdapter<String>(bindItemLayoutId == 0 ? R.layout._popup_adapter_text : bindItemLayoutId) {
             @Override
-            protected void bind(@NonNull ViewHolder holder, @NonNull String s, int position) {
+            protected void bind(@NonNull BaseViewHolder holder, @NonNull String s, int position) {
                 holder.setText(R.id.tvText, s);
                 if (iconIds != null && iconIds.length > position) {
                     holder.getView(R.id.ivIcon).setVisibility(VISIBLE);
@@ -102,7 +102,7 @@ public class BottomListPopup extends BottomPopup {
         };
         adapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
             @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+            public void onItemClick(View view, BaseViewHolder holder, int position) {
                 if (selectListener != null) {
                     selectListener.onSelect(position, adapter.getData().get(position));
                 }
