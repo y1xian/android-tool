@@ -1,6 +1,7 @@
 package com.yyxnb.widget.config
 
 import com.yyxnb.widget.bean.TestData
+import kotlin.random.Random
 
 object DataConfig {
 
@@ -66,8 +67,8 @@ object DataConfig {
     val dataTestData = ArrayList<TestData>()
         get() {
             field.clear()
-            for (i in 0..9) {
-                field.add(TestData(i,"第 $i 条"))
+            for (i in 0..2) {
+                field.add(TestData(i," - ${Random.nextInt(99)} - "))
             }
             return field
         }
@@ -75,9 +76,9 @@ object DataConfig {
     val dataTestData2 = ArrayList<TestData>()
         get() {
             field.clear()
-//            for (i in 0..9) {
-//                field.add(TestData(i,"第 $i 条"))
-//            }
+            for (i in 0..2) {
+                field.add(TestData(i,"第 $i 条"))
+            }
             return field
         }
 

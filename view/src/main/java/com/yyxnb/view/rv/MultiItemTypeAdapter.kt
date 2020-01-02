@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
+import com.yyxnb.utils.log.LogUtils
 import com.yyxnb.view.R
 import java.lang.ref.WeakReference
 import java.util.*
@@ -14,7 +15,7 @@ import java.util.*
 
 open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
 
-    private var data: MutableList<T> = ArrayList()
+    private  var data: MutableList<T> = arrayListOf()
     private val mHeaderViews = SparseArrayCompat<View>()
     private val mFootViews = SparseArrayCompat<View>()
     private val mEmptyViews = SparseArrayCompat<View>()
@@ -115,30 +116,58 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
 
     fun setDataItems(list: MutableList<T>?) {
 
-        if (data == list) return
-
-        data = list ?: arrayListOf()
+//        if (data == list) return
+        if (list == null){
+            data = arrayListOf()
+        }else{
+            data = list
+        }
+//        data = list ?: arrayListOf()
+        isDefaultEmpty = false
         notifyDataSetChanged()
+
+        LogUtils.e("null")
     }
 
+    /**
+     * 添加一条新数据
+     */
     fun addDataItem(t: T) {
         data.add(t)
         notifyItemInserted(dataCount + headersCount)
         compatibilityDataSizeChanged(1)
     }
 
-    fun addDataItem(position: Int = 0, t: T) {
+    /**
+     * 在指定位置添加一条新数据
+     */
+    fun addDataItem(position: Int, t: T) {
         data.add(position, t)
         notifyItemInserted(headersCount + position)
         compatibilityDataSizeChanged(1)
     }
 
-    fun addDataItem(list: List<T>) {
-        data.addAll(list)
-        notifyItemRangeInserted(headersCount + dataCount, list.size)
+    /**
+     * 添加数据集
+     */
+    fun addDataItem(list: MutableList<T>) {
+            data.addAll(list)
+//        LogUtils.e(" ${dataCount - list.size +  headersCount}   ${list.size +  headersCount}  ${dataCount +  headersCount}")
+            notifyItemRangeInserted(dataCount + headersCount , list.size)
+    }
+
+    /**
+     * 在指定位置添加数据集
+     */
+    fun addDataItem(position: Int, list: MutableList<T>) {
+        data.addAll(position, list)
+        notifyItemRangeInserted(headersCount + position, list.size)
         compatibilityDataSizeChanged(list.size)
     }
 
+    /**
+     *  改变数据
+     */
     open fun updateDataItem(index: Int, t: T) {
         if (data.isNotEmpty()) {
             data[index] = t
@@ -146,6 +175,9 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         }
     }
 
+    /**
+     * 删除指定位置的数据
+     */
     fun removeDataItem(position: Int) {
         if (position >= dataCount) return
         data.removeAt(position)
@@ -155,7 +187,10 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         notifyItemRangeChanged(internalPosition, dataCount - internalPosition)
     }
 
-    fun replaceData(newData: Collection<T>) {
+    /**
+     * 不是同一个引用才清空列表
+     */
+    fun replaceData(newData: MutableList<T>) {
         if (newData != data) {
             data.clear()
             data.addAll(newData)

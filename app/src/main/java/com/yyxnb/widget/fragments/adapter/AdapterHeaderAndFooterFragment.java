@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.ToastUtils;
+import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.view.rv.BaseViewHolder;
 import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
@@ -87,8 +88,9 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 
         tvAddData.setOnClickListener(v -> {
 
-//            mAdapter.addDataItem(new TestData(new Random().nextInt(1000),"666"));
-            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData());
+//            mAdapter.addDataItem(new TestData(new Random().nextInt(100),"666"));
+            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
+            LogUtils.INSTANCE.w( "size " + mAdapter.getDataCount());
         });
 
 
@@ -125,8 +127,8 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 //        mAdapter.addHeaderView(createView("头    第 " + mAdapter.getHeadersCount(), true));
 
         new Handler().postDelayed(() -> {
-            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData());
-//            mAdapter.setDataItems(new ArrayList<>());
+            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
+//            mAdapter.setDataItems(null);
         }, 1000);
 
 
