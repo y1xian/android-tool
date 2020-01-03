@@ -1,9 +1,6 @@
 package com.yyxnb.widget.adapter;
 
 
-import android.view.View;
-
-import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.view.rv.BaseAdapter;
 import com.yyxnb.view.rv.BaseViewHolder;
 import com.yyxnb.widget.R;
@@ -23,5 +20,8 @@ public class NetWorkListAdapter extends BaseAdapter<TestData> {
         holder.setText(R.id.tvText, " --- 第 " +s.getId() +" 条 ------- "+ s.getContent());
 
         addChildClickViewIds(R.id.btnDel,R.id.btnAdd);
+//        holder.setOnClickListener(R.id.btnAdd,v -> {
+//            holder.addChildClickViewIds(R.id.btnAdd);
+//        });
     }
 }

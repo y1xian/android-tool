@@ -67,7 +67,7 @@ object DataConfig {
     val dataTestData = ArrayList<TestData>()
         get() {
             field.clear()
-            for (i in 0..20) {
+            for (i in 0..2) {
                 field.add(TestData(i," - ${Random.nextInt(99)} - "))
             }
             return field

@@ -1,12 +1,14 @@
 package com.yyxnb.view.rv
 
 import android.support.v4.util.SparseArrayCompat
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
+import com.yyxnb.utils.log.LogUtils
 import com.yyxnb.view.R
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
@@ -107,11 +109,10 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
             }
             else -> {
                 val itemViewDelegate = mItemDelegateManager.getItemViewDelegate(viewType)
-
                 val layoutId = itemViewDelegate.layoutId
                 val holder = BaseViewHolder.createViewHolder(parent.context.applicationContext, parent, layoutId)
                 onViewHolderCreated(holder, holder.convertView)
-                setListener(parent, holder, viewType)
+                setListener(holder, viewType)
                 return holder
             }
         }
@@ -128,14 +129,14 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
      * 新数据
      */
     @JvmOverloads
-    fun setDataItems(list: List<T>?, isResetFirst: Boolean = false, delay: Long = 300L) {
+    fun setDataItems(list: List<T>?, isResetFirst: Boolean = false, delay: Long = 300) {
         if (list != null) {
             data.clear()
             data.addAll(list)
             notifyDataSetChanged()
 
             if (isResetFirst) {
-                resetFirstDataItems(list, delay)
+                resetFirstDataItems(data, delay)
             }
         }
         isDefaultEmpty = false
@@ -144,15 +145,17 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     /**
      * 如果需要子view点击事件，建议使用这个，防止第一条无点击事件
      */
-    private fun resetFirstDataItems(list: List<T>?, delay: Long) {
-        if (list != null) {
+    fun resetFirstDataItems(list: List<T>, delay: Long = 300) {
+        if (list.isNotEmpty()) {
             weakRecyclerView.get()?.apply {
                 GlobalScope.launch(Main) {
+                    (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
                     delay(delay)
                     addDataItem(0, data[0])
-                    delay(1)
+                    delay(delay / 10)
                     removeDataItem(1)
                     notifyDataSetChanged()
+                    (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = true
                 }
             }
         }
@@ -181,7 +184,6 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
      */
     fun addDataItem(list: List<T>) {
         data.addAll(list)
-//        LogUtils.e(" ${dataCount - list.size +  headersCount}   ${list.size +  headersCount}  ${dataCount +  headersCount}")
         notifyItemRangeInserted(dataCount + headersCount, list.size)
         compatibilityDataSizeChanged(list.size)
     }
@@ -255,7 +257,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         clearFooter()
     }
 
-    protected fun setListener(parent: ViewGroup, baseViewHolder: BaseViewHolder, viewType: Int) {
+    protected fun setListener(baseViewHolder: BaseViewHolder, viewType: Int) {
 
         mOnItemClickListener?.let {
             baseViewHolder.itemView.setOnClickListener { v ->
@@ -281,12 +283,14 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
 
         mOnItemClickListener?.let {
             for (id in childClickViewIds) {
+                LogUtils.e("111111 ${baseViewHolder.adapterPosition}  ` ${childClickViewIds}    ` ${childClickViewIds.size}")
                 baseViewHolder.itemView.findViewById<View>(id)?.let { childView ->
                     if (!childView.isClickable) {
                         childView.isClickable = true
                     }
                     childView.setOnClickListener { v ->
                         var position = baseViewHolder.adapterPosition
+                        LogUtils.e("`````````````")
                         if (position == RecyclerView.NO_POSITION) {
                             return@setOnClickListener
                         }

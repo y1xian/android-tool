@@ -4,6 +4,7 @@ package com.yyxnb.widget.fragments.adapter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -12,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
@@ -25,6 +29,7 @@ import com.yyxnb.widget.config.DataConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -37,6 +42,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
     private TextView tvAddFooter;
     private TextView tvClear;
     private TextView tvAddData;
+    private SmartRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
 
     public static AdapterHeaderAndFooterFragment newInstance() {
@@ -59,6 +65,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         tvAddFooter = findViewById(R.id.tvAddFooter);
         tvClear = findViewById(R.id.tvClear);
         tvAddData = findViewById(R.id.tvAddData);
+        mRefreshLayout = findViewById(R.id.mRefreshLayout);
         mRecyclerView = findViewById(R.id.mRecyclerView);
 
         mAdapter = new NetWorkListAdapter();
@@ -87,9 +94,24 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 
         tvAddData.setOnClickListener(v -> {
 
-            mAdapter.addDataItem(0, new TestData(new Random().nextInt(100), "666"));
-//            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
+//            mAdapter.addDataItem(0, new TestData(new Random().nextInt(100), "666"));
+            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
             LogUtils.INSTANCE.w("size " + mAdapter.getDataCount());
+            mAdapter.notifyDataSetChanged();
+        });
+
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
+                refreshLayout.finishLoadMore(200);
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData(), true);
+                refreshLayout.finishRefresh(200);
+            }
         });
 
 
@@ -98,11 +120,28 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
             public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
                 ToastUtils.INSTANCE.normal("" + position);
                 LogUtils.INSTANCE.w("" + mAdapter.getChildClickViewIds().toString());
-            }
 
-//            @Override
-//            public void onItemChildClick(@Nullable MultiItemTypeAdapter<?> adapter, @NotNull View view, int position) {
-//                super.onItemChildClick(adapter, view, position);
+//                for (int i : holder.getChildClickViewIds()){
+//                                    if (i == R.id.btnAdd) {
+//                    mAdapter.addDataItem(position, new TestData(new Random().nextInt(100), "666"));
+//                    ToastUtils.INSTANCE.normal("Add " + position);
+//                } else if (i == R.id.btnDel) {
+//                    mAdapter.removeDataItem(position);
+//                    ToastUtils.INSTANCE.normal("Del " + position);
+//                }
+//                }
+//                holder.getView(R.id.btnAdd).setOnClickListener(v -> {
+//                    mAdapter.addDataItem(position, new TestData(new Random().nextInt(100), "666"));
+//                    ToastUtils.INSTANCE.normal("Add " + position);
+//                });
+////                holder.setOnClickListener(R.id.btnAdd,v -> {
+////                    mAdapter.addDataItem(position, new TestData(new Random().nextInt(100), "666"));
+////                    ToastUtils.INSTANCE.normal("Add " + position);
+////                });
+//                holder.setOnClickListener(R.id.btnDel,v -> {
+//                    mAdapter.removeDataItem(position);
+//                    ToastUtils.INSTANCE.normal("Del " + position);
+//                });
 //                if (view.getId() == R.id.btnAdd) {
 //                    mAdapter.addDataItem(position, new TestData(new Random().nextInt(100), "666"));
 //                    ToastUtils.INSTANCE.normal("Add " + position);
@@ -110,8 +149,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 //                    mAdapter.removeDataItem(position);
 //                    ToastUtils.INSTANCE.normal("Del " + position);
 //                }
-//
-//            }
+            }
 
             @Override
             public void onItemChildClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
@@ -132,7 +170,8 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 //            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
             mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData(), true);
 //            mAdapter.setNewDataItems(DataConfig.INSTANCE.getDataTestData());
-//            mAdapter.setDataItems(null);
+//            mAdapter.setDataItems(new ArrayList<>(),true);
+//            mAdapter.notifyDataSetChanged();
         }, 1000);
 
 
