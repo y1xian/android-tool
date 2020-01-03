@@ -151,10 +151,12 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
                 GlobalScope.launch(Main) {
                     (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
                     delay(delay)
-                    addDataItem(0, data[0])
-                    delay(delay / 10)
+                    addDataItem(0, list[0])
+                    delay(delay / 20)
                     removeDataItem(1)
+                    delay(delay / 5)
                     notifyDataSetChanged()
+                    scrollToPosition(0)
                     (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = true
                 }
             }
@@ -283,14 +285,12 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
 
         mOnItemClickListener?.let {
             for (id in childClickViewIds) {
-                LogUtils.e("111111 ${baseViewHolder.adapterPosition}  ` ${childClickViewIds}    ` ${childClickViewIds.size}")
                 baseViewHolder.itemView.findViewById<View>(id)?.let { childView ->
                     if (!childView.isClickable) {
                         childView.isClickable = true
                     }
                     childView.setOnClickListener { v ->
                         var position = baseViewHolder.adapterPosition
-                        LogUtils.e("`````````````")
                         if (position == RecyclerView.NO_POSITION) {
                             return@setOnClickListener
                         }
