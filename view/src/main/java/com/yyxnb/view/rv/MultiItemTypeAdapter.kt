@@ -7,15 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
-import com.yyxnb.utils.log.LogUtils
 import com.yyxnb.view.R
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import java.util.*
 
 
 open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
 
-    private  var data: MutableList<T> = arrayListOf()
+    private var data: MutableList<T> = arrayListOf()
     private val mHeaderViews = SparseArrayCompat<View>()
     private val mFootViews = SparseArrayCompat<View>()
     private val mEmptyViews = SparseArrayCompat<View>()
@@ -114,19 +117,38 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         mItemDelegateManager.convert(holderBase, t, holderBase.adapterPosition - headersCount)
     }
 
-    fun setDataItems(list: MutableList<T>?) {
+    /**
+     * 新数据
+     */
+    @JvmOverloads
+    fun setDataItems(list: MutableList<T>?, isResetFirst: Boolean = false, delay: Long = 300L) {
+        if (list != null) {
+            data.clear()
+            data.addAll(list)
+            notifyDataSetChanged()
 
-//        if (data == list) return
-        if (list == null){
-            data = arrayListOf()
-        }else{
-            data = list
+            if (isResetFirst) {
+                resetFirstDataItems(list, delay)
+            }
         }
-//        data = list ?: arrayListOf()
         isDefaultEmpty = false
-        notifyDataSetChanged()
+    }
 
-        LogUtils.e("null")
+    /**
+     * 如果需要子view点击事件，建议使用这个，防止第一条无点击事件
+     */
+    private fun resetFirstDataItems(list: MutableList<T>?, delay: Long) {
+        if (list != null) {
+            weakRecyclerView.get()?.apply {
+                GlobalScope.launch(Main) {
+                    delay(delay)
+                    addDataItem(0, data[0])
+                    delay(1)
+                    removeDataItem(1)
+                    notifyDataSetChanged()
+                }
+            }
+        }
     }
 
     /**
@@ -151,9 +173,10 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
      * 添加数据集
      */
     fun addDataItem(list: MutableList<T>) {
-            data.addAll(list)
+        data.addAll(list)
 //        LogUtils.e(" ${dataCount - list.size +  headersCount}   ${list.size +  headersCount}  ${dataCount +  headersCount}")
-            notifyItemRangeInserted(dataCount + headersCount , list.size)
+        notifyItemRangeInserted(dataCount + headersCount, list.size)
+        compatibilityDataSizeChanged(list.size)
     }
 
     /**
@@ -234,7 +257,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
                     return@setOnClickListener
                 }
                 position -= headersCount
-                mOnItemClickListener!!.onItemClick(v, baseViewHolder, position)
+                it.onItemClick(v, baseViewHolder, position)
             }
         }
 
@@ -245,7 +268,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
                     return@setOnLongClickListener false
                 }
                 position -= headersCount
-                mOnItemClickListener!!.onItemLongClick(v, baseViewHolder, position)
+                it.onItemLongClick(v, baseViewHolder, position)
             }
         }
 
@@ -261,7 +284,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
                             return@setOnClickListener
                         }
                         position -= headersCount
-                        mOnItemClickListener!!.onItemChildClick(this, v, position)
+                        it.onItemChildClick(v, baseViewHolder, position)
                     }
                 }
             }
@@ -279,7 +302,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
                             return@setOnLongClickListener false
                         }
                         position -= headersCount
-                        mOnItemClickListener!!.onItemChildLongClick(this, v, position)
+                        it.onItemChildLongClick(v, baseViewHolder, position)
                     }
                 }
             }
@@ -313,7 +336,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     override fun onViewAttachedToWindow(holderBase: BaseViewHolder) {
         super.onViewAttachedToWindow(holderBase)
         val position = holderBase.layoutPosition
-        if (isHeaderViewPos(position) || isFooterViewPos(position)) {
+        if (hasEmptyView() || isHeaderViewPos(position) || isFooterViewPos(position)) {
             WrapperUtils.setFullSpan(holderBase)
         }
     }
@@ -363,9 +386,9 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
 
         fun onItemLongClick(view: View, holder: BaseViewHolder, position: Int): Boolean
 
-        fun onItemChildClick(adapter: MultiItemTypeAdapter<*>?, view: View, position: Int)
+        fun onItemChildClick(view: View, holder: BaseViewHolder, position: Int)
 
-        fun onItemChildLongClick(adapter: MultiItemTypeAdapter<*>?, view: View, position: Int): Boolean
+        fun onItemChildLongClick(view: View, holder: BaseViewHolder, position: Int): Boolean
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
@@ -380,9 +403,9 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
             return false
         }
 
-        override fun onItemChildClick(adapter: MultiItemTypeAdapter<*>?, view: View, position: Int) {}
+        override fun onItemChildClick(view: View, holder: BaseViewHolder, position: Int) {}
 
-        override fun onItemChildLongClick(adapter: MultiItemTypeAdapter<*>?, view: View, position: Int): Boolean {
+        override fun onItemChildLongClick(view: View, holder: BaseViewHolder, position: Int): Boolean {
             return false
         }
     }

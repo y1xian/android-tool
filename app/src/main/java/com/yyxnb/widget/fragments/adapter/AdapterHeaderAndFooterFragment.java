@@ -25,7 +25,6 @@ import com.yyxnb.widget.config.DataConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -83,14 +82,14 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         });
 
         tvClear.setOnClickListener(v -> {
-            mAdapter.clearAllData();
+            mAdapter.clearData();
         });
 
         tvAddData.setOnClickListener(v -> {
 
-//            mAdapter.addDataItem(new TestData(new Random().nextInt(100),"666"));
-            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
-            LogUtils.INSTANCE.w( "size " + mAdapter.getDataCount());
+            mAdapter.addDataItem(0, new TestData(new Random().nextInt(100), "666"));
+//            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
+            LogUtils.INSTANCE.w("size " + mAdapter.getDataCount());
         });
 
 
@@ -98,22 +97,25 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
             @Override
             public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
                 ToastUtils.INSTANCE.normal("" + position);
+                LogUtils.INSTANCE.w("" + mAdapter.getChildClickViewIds().toString());
             }
 
-            @Override
-            public void onItemChildClick(@Nullable MultiItemTypeAdapter<?> adapter, @NotNull View view, int position) {
-                super.onItemChildClick(adapter, view, position);
-//                for(int id : mAdapter.getChildClickViewIds() ){
-//
-//                    if (id == R.id.btnAdd) {
-//                        mAdapter.addDataItem(position, new TestData(new Random().nextInt(100), "666"));
-//                        ToastUtils.INSTANCE.normal("Add " + position);
-//                    } else if (id == R.id.btnDel) {
-//                        mAdapter.removeDataItem(position);
-//                        ToastUtils.INSTANCE.normal("Del " + position);
-//                    }
-//
+//            @Override
+//            public void onItemChildClick(@Nullable MultiItemTypeAdapter<?> adapter, @NotNull View view, int position) {
+//                super.onItemChildClick(adapter, view, position);
+//                if (view.getId() == R.id.btnAdd) {
+//                    mAdapter.addDataItem(position, new TestData(new Random().nextInt(100), "666"));
+//                    ToastUtils.INSTANCE.normal("Add " + position);
+//                } else if (view.getId() == R.id.btnDel) {
+//                    mAdapter.removeDataItem(position);
+//                    ToastUtils.INSTANCE.normal("Del " + position);
 //                }
+//
+//            }
+
+            @Override
+            public void onItemChildClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
+                super.onItemChildClick(view, holder, position);
                 if (view.getId() == R.id.btnAdd) {
                     mAdapter.addDataItem(position, new TestData(new Random().nextInt(100), "666"));
                     ToastUtils.INSTANCE.normal("Add " + position);
@@ -127,7 +129,9 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 //        mAdapter.addHeaderView(createView("头    第 " + mAdapter.getHeadersCount(), true));
 
         new Handler().postDelayed(() -> {
-            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
+//            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
+            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData(), true);
+//            mAdapter.setNewDataItems(DataConfig.INSTANCE.getDataTestData());
 //            mAdapter.setDataItems(null);
         }, 1000);
 
