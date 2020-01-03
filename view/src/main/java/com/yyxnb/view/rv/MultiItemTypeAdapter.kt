@@ -95,20 +95,27 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        if (mEmptyViews.get(viewType) != null) {
-            return BaseViewHolder.createViewHolder(mEmptyViews.get(viewType)!!)
-        } else if (mHeaderViews.get(viewType) != null) {
-            return BaseViewHolder.createViewHolder(mHeaderViews.get(viewType)!!)
-        } else if (mFootViews.get(viewType) != null) {
-            return BaseViewHolder.createViewHolder(mFootViews.get(viewType)!!)
-        }
-        val itemViewDelegate = mItemDelegateManager.getItemViewDelegate(viewType)
+        when {
+            mEmptyViews.get(viewType) != null -> {
+                return BaseViewHolder.createViewHolder(mEmptyViews.get(viewType)!!)
+            }
+            mHeaderViews.get(viewType) != null -> {
+                return BaseViewHolder.createViewHolder(mHeaderViews.get(viewType)!!)
+            }
+            mFootViews.get(viewType) != null -> {
+                return BaseViewHolder.createViewHolder(mFootViews.get(viewType)!!)
+            }
+            else -> {
+                val itemViewDelegate = mItemDelegateManager.getItemViewDelegate(viewType)
 
-        val layoutId = itemViewDelegate.layoutId
-        val holder = BaseViewHolder.createViewHolder(parent.context.applicationContext, parent, layoutId)
-        onViewHolderCreated(holder, holder.convertView)
-        setListener(parent, holder, viewType)
-        return holder
+                val layoutId = itemViewDelegate.layoutId
+                val holder = BaseViewHolder.createViewHolder(parent.context.applicationContext, parent, layoutId)
+                onViewHolderCreated(holder, holder.convertView)
+                setListener(parent, holder, viewType)
+                return holder
+            }
+        }
+
     }
 
     fun onViewHolderCreated(holderBase: BaseViewHolder, itemView: View) {}
@@ -121,7 +128,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
      * 新数据
      */
     @JvmOverloads
-    fun setDataItems(list: MutableList<T>?, isResetFirst: Boolean = false, delay: Long = 300L) {
+    fun setDataItems(list: List<T>?, isResetFirst: Boolean = false, delay: Long = 300L) {
         if (list != null) {
             data.clear()
             data.addAll(list)
@@ -137,7 +144,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     /**
      * 如果需要子view点击事件，建议使用这个，防止第一条无点击事件
      */
-    private fun resetFirstDataItems(list: MutableList<T>?, delay: Long) {
+    private fun resetFirstDataItems(list: List<T>?, delay: Long) {
         if (list != null) {
             weakRecyclerView.get()?.apply {
                 GlobalScope.launch(Main) {
@@ -172,7 +179,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     /**
      * 添加数据集
      */
-    fun addDataItem(list: MutableList<T>) {
+    fun addDataItem(list: List<T>) {
         data.addAll(list)
 //        LogUtils.e(" ${dataCount - list.size +  headersCount}   ${list.size +  headersCount}  ${dataCount +  headersCount}")
         notifyItemRangeInserted(dataCount + headersCount, list.size)
@@ -182,7 +189,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     /**
      * 在指定位置添加数据集
      */
-    fun addDataItem(position: Int, list: MutableList<T>) {
+    fun addDataItem(position: Int, list: List<T>) {
         data.addAll(position, list)
         notifyItemRangeInserted(headersCount + position, list.size)
         compatibilityDataSizeChanged(list.size)
@@ -213,7 +220,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     /**
      * 不是同一个引用才清空列表
      */
-    fun replaceData(newData: MutableList<T>) {
+    fun replaceData(newData: List<T>) {
         if (newData != data) {
             data.clear()
             data.addAll(newData)
