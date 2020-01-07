@@ -1,31 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.yyxnb.view.swipemenu.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:gravity="center">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    app:ios="false"
+    app:swipeEnable="true">
 
-    <TextView
-        android:id="@+id/tvText"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/mLinearLayout"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="1234" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_margin="6dp"
+            android:gravity="center"
+            android:text="add" />
+
+    </LinearLayout>
+
+    <!-- 以下都是侧滑菜单的内容依序排列 -->
+    <Button
+        android:id="@+id/btnTop"
+        android:layout_width="60dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="1234" />
+        android:background="#d9dee4"
+        android:text="置顶"
+        android:textColor="@color/white"/>
 
     <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_margin="6dp"
-        android:gravity="center"
-        android:text="add" />
+        android:id="@+id/btnDelete"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:background="@color/red"
+        android:text="删除"
+        android:textColor="@color/white"/>
 
-    <Button
-        android:id="@+id/btnDel"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_margin="6dp"
-        android:gravity="center"
-        android:text="del" />
-
-</LinearLayout>
+</com.yyxnb.view.swipemenu.SwipeMenuLayout>

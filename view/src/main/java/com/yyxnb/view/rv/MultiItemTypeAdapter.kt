@@ -119,144 +119,10 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
 
     }
 
-    fun onViewHolderCreated(holderBase: BaseViewHolder, itemView: View) {}
+    fun onViewHolderCreated(holder: BaseViewHolder, itemView: View) {}
 
-    fun convert(holderBase: BaseViewHolder, t: T) {
-        mItemDelegateManager.convert(holderBase, t, holderBase.adapterPosition - headersCount)
-    }
-
-    /**
-     * 新数据
-     */
-    @JvmOverloads
-    fun setDataItems(list: List<T>?, isResetFirst: Boolean = false, delay: Long = 300) {
-        if (list != null) {
-            data.clear()
-            data.addAll(list)
-            notifyDataSetChanged()
-
-            if (isResetFirst) {
-                resetFirstDataItems(data, delay)
-            }
-        }
-        isDefaultEmpty = false
-    }
-
-    /**
-     * 如果需要子view点击事件，建议使用这个，防止第一条无点击事件
-     */
-    fun resetFirstDataItems(list: List<T>, delay: Long = 300) {
-        if (list.isNotEmpty()) {
-            weakRecyclerView.get()?.apply {
-                GlobalScope.launch(Main) {
-                    (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-                    delay(delay)
-                    addDataItem(0, list[0])
-                    delay(delay / 20)
-                    removeDataItem(1)
-                    delay(delay / 5)
-                    notifyDataSetChanged()
-                    scrollToPosition(0)
-                    (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = true
-                }
-            }
-        }
-    }
-
-    /**
-     * 添加一条新数据
-     */
-    fun addDataItem(t: T) {
-        data.add(t)
-        notifyItemInserted(dataCount + headersCount)
-        compatibilityDataSizeChanged(1)
-    }
-
-    /**
-     * 在指定位置添加一条新数据
-     */
-    fun addDataItem(position: Int, t: T) {
-        data.add(position, t)
-        notifyItemInserted(headersCount + position)
-        compatibilityDataSizeChanged(1)
-    }
-
-    /**
-     * 添加数据集
-     */
-    fun addDataItem(list: List<T>) {
-        data.addAll(list)
-        notifyItemRangeInserted(dataCount + headersCount, list.size)
-        compatibilityDataSizeChanged(list.size)
-    }
-
-    /**
-     * 在指定位置添加数据集
-     */
-    fun addDataItem(position: Int, list: List<T>) {
-        data.addAll(position, list)
-        notifyItemRangeInserted(headersCount + position, list.size)
-        compatibilityDataSizeChanged(list.size)
-    }
-
-    /**
-     *  改变数据
-     */
-    open fun updateDataItem(index: Int, t: T) {
-        if (data.isNotEmpty()) {
-            data[index] = t
-            notifyItemChanged(index + headersCount)
-        }
-    }
-
-    /**
-     * 删除指定位置的数据
-     */
-    fun removeDataItem(position: Int) {
-        if (position >= dataCount) return
-        data.removeAt(position)
-        val internalPosition = position + headersCount
-        notifyItemRemoved(internalPosition)
-        compatibilityDataSizeChanged(0)
-        notifyItemRangeChanged(internalPosition, dataCount - internalPosition)
-    }
-
-    /**
-     * 不是同一个引用才清空列表
-     */
-    fun replaceData(newData: List<T>) {
-        if (newData != data) {
-            data.clear()
-            data.addAll(newData)
-        }
-        notifyDataSetChanged()
-    }
-
-    protected fun compatibilityDataSizeChanged(size: Int) {
-        if (dataCount == size) {
-            notifyDataSetChanged()
-        }
-    }
-
-    fun clearData() {
-        notifyItemRangeRemoved(headersCount, dataCount)
-        data.clear()
-    }
-
-    fun clearHeader() {
-        notifyItemRangeRemoved(0, headersCount)
-        mHeaderViews.clear()
-    }
-
-    fun clearFooter() {
-        notifyItemRangeRemoved(headersCount + dataCount, footersCount)
-        mFootViews.clear()
-    }
-
-    fun clearAllData() {
-        clearData()
-        clearHeader()
-        clearFooter()
+    fun convert(holder: BaseViewHolder, t: T) {
+        mItemDelegateManager.convert(holder, t, holder.adapterPosition - headersCount)
     }
 
     protected fun setListener(baseViewHolder: BaseViewHolder, viewType: Int) {
@@ -320,11 +186,11 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         }
     }
 
-    override fun onBindViewHolder(holderBase: BaseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         if (hasEmptyView() || isHeaderViewPos(position) || isFooterViewPos(position)) {
             return
         }
-        convert(holderBase, data[position - headersCount])
+        convert(holder, data[position - headersCount])
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -344,11 +210,11 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         }
     }
 
-    override fun onViewAttachedToWindow(holderBase: BaseViewHolder) {
-        super.onViewAttachedToWindow(holderBase)
-        val position = holderBase.layoutPosition
+    override fun onViewAttachedToWindow(holder: BaseViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        val position = holder.layoutPosition
         if (hasEmptyView() || isHeaderViewPos(position) || isFooterViewPos(position)) {
-            WrapperUtils.setFullSpan(holderBase)
+            WrapperUtils.setFullSpan(holder)
         }
     }
 
@@ -468,6 +334,160 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         private const val BASE_ITEM_TYPE_HEADER = 100000
         private const val BASE_ITEM_TYPE_FOOTER = 200000
         private const val BASE_ITEM_TYPE_EMPTY = 300000
+    }
+
+
+    /**
+     * 新数据
+     */
+    @JvmOverloads
+    fun setDataItems(list: List<T>?, isResetFirst: Boolean = false, delay: Long = 100) {
+        if (list != null) {
+            data.clear()
+            data.addAll(list)
+            notifyDataSetChanged()
+
+            if (isResetFirst) {
+                resetFirstDataItems(data, delay)
+            }
+        }
+        isDefaultEmpty = false
+    }
+
+    /**
+     * 如果需要子view点击事件，建议使用这个，防止第一条无点击事件
+     */
+    fun resetFirstDataItems(list: List<T>, delay: Long = 100) {
+        if (list.isNotEmpty()) {
+            weakRecyclerView.get()?.apply {
+                GlobalScope.launch(Main) {
+                    (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+                    delay(delay)
+                    addDataItem(0, list[0])
+                    delay(delay / 20)
+                    removeDataItem(1)
+                    delay(delay / 5)
+                    notifyDataSetChanged()
+                    scrollToPosition(0)
+                    (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = true
+                }
+            }
+        }
+    }
+
+    /**
+     * 添加一条新数据
+     */
+    fun addDataItem(t: T) {
+        data.add(t)
+        notifyItemInserted(dataCount + headersCount)
+        compatibilityDataSizeChanged(1)
+    }
+
+    /**
+     * 在指定位置添加一条新数据
+     */
+    fun addDataItem(position: Int, t: T) {
+        data.add(position, t)
+        notifyItemInserted(headersCount + position)
+        compatibilityDataSizeChanged(1)
+    }
+
+    /**
+     * 添加数据集
+     */
+    fun addDataItem(list: List<T>) {
+        data.addAll(list)
+        notifyItemRangeInserted(dataCount + headersCount, list.size)
+        compatibilityDataSizeChanged(list.size)
+    }
+
+    /**
+     * 在指定位置添加数据集
+     */
+    fun addDataItem(position: Int, list: List<T>) {
+        data.addAll(position, list)
+        notifyItemRangeInserted(headersCount + position, list.size)
+        compatibilityDataSizeChanged(list.size)
+    }
+
+    /**
+     *  改变数据
+     */
+    open fun updateDataItem(index: Int, t: T) {
+        if (data.isNotEmpty()) {
+            data[index] = t
+            notifyItemChanged(index + headersCount)
+        }
+    }
+
+    /**
+     * 删除指定位置的数据
+     */
+    fun removeDataItem(position: Int) {
+        if (position >= dataCount) return
+        data.removeAt(position)
+        val internalPosition = position + headersCount
+        notifyItemRemoved(internalPosition)
+        compatibilityDataSizeChanged(0)
+        notifyItemRangeChanged(internalPosition, dataCount - internalPosition)
+    }
+
+    fun removeDataItem(t: T) {
+        val index = data.indexOf(t)
+        if (index == -1) {
+            return
+        }
+        removeDataItem(index)
+    }
+
+    /**
+     * 调换位置
+     */
+    fun changeDataItem(position: Int, t: T) {
+        removeDataItem(t)
+        addDataItem(position, t)
+        if (position == 0){
+            weakRecyclerView.get()?.scrollToPosition(0)
+        }
+    }
+
+    /**
+     * 不是同一个引用才清空列表
+     */
+    fun replaceData(newData: List<T>) {
+        if (newData != data) {
+            data.clear()
+            data.addAll(newData)
+        }
+        notifyDataSetChanged()
+    }
+
+    protected fun compatibilityDataSizeChanged(size: Int) {
+        if (dataCount == size) {
+            notifyDataSetChanged()
+        }
+    }
+
+    fun clearData() {
+        notifyItemRangeRemoved(headersCount, dataCount)
+        data.clear()
+    }
+
+    fun clearHeader() {
+        notifyItemRangeRemoved(0, headersCount)
+        mHeaderViews.clear()
+    }
+
+    fun clearFooter() {
+        notifyItemRangeRemoved(headersCount + dataCount, footersCount)
+        mFootViews.clear()
+    }
+
+    fun clearAllData() {
+        clearData()
+        clearHeader()
+        clearFooter()
     }
 
 }

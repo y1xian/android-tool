@@ -118,6 +118,10 @@ fun getString(resId: Int): String {
     return AppConfig.context.resources.getString(resId)
 }
 
+fun getColor(resId: Int): Int {
+    return AppConfig.context.resources.getColor(resId)
+}
+
 /**
  * 获取指定资源名的资源id。
  *
