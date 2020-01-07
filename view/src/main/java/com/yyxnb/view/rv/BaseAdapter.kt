@@ -14,12 +14,12 @@ abstract class BaseAdapter<T>(
                 return true
             }
 
-            override fun bind(holderBase: BaseViewHolder, t: T, position: Int) {
-                this@BaseAdapter.bind(holderBase, t, position)
+            override fun bind(holder: BaseViewHolder, t: T, position: Int) {
+                this@BaseAdapter.bind(holder, t, position)
             }
         })
     }
 
-    protected abstract fun bind(holderBase: BaseViewHolder, t: T, position: Int)
+    protected abstract fun bind(holder: BaseViewHolder, t: T, position: Int)
 
 }

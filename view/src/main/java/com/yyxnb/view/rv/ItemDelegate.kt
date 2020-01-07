@@ -15,6 +15,6 @@ interface ItemDelegate<T> {
     /**
      * 数据处理
      */
-    fun bind(holderBase: BaseViewHolder, t: T, position: Int)
+    fun bind(holder: BaseViewHolder, t: T, position: Int)
 
 }

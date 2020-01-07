@@ -58,13 +58,13 @@ class ItemDelegateManager<T> {
                 "No ItemDelegate added that matches position=$position in data source")
     }
 
-    fun convert(holderBase: BaseViewHolder, item: T, position: Int) {
+    fun convert(holder: BaseViewHolder, item: T, position: Int) {
         val delegatesCount = delegates.size()
         for (i in 0 until delegatesCount) {
             val delegate = delegates.valueAt(i)
 
             if (delegate.isThisType(item, position)) {
-                delegate.bind(holderBase, item, position)
+                delegate.bind(holder, item, position)
                 return
             }
         }

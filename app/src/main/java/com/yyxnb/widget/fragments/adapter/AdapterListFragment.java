@@ -65,7 +65,7 @@ public class AdapterListFragment extends BaseFragment {
                         startFragment(AdapterHeaderAndFooterFragment.newInstance());
                         break;
                     case 1:
-                        startFragment(AdapterHeaderAndFooterFragment.newInstance());
+                        startFragment(MultiAdapterFragment.newInstance());
                         break;
                     default:
                         break;

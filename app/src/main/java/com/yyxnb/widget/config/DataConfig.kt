@@ -50,8 +50,8 @@ object DataConfig {
     val adapterList = ArrayList<String>()
         get() {
             field.clear()
-            field.add("----- 头尾 -----")
-            field.add("----- 无数据 -----")
+            field.add("----- 头尾 侧滑-----")
+            field.add("----- 多Item -----")
             return field
         }
 
