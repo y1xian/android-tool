@@ -28,7 +28,6 @@ import com.yyxnb.arch.jetpack.LifecycleDelegate
 import com.yyxnb.arch.utils.FragmentManagerUtils
 import com.yyxnb.utils.StatusBarUtils
 import com.yyxnb.utils.MainThreadUtils
-import com.yyxnb.utils.log.LogUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -225,7 +224,8 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
      */
     override fun initViewData() {
         FRAGMENT_FINISH.busObserve<Int>(this) { i ->
-            if (i == finishPage && !subPage) {
+            //层级
+            if (i >= finishPage && finishPage != -1 && !subPage) {
                 finish()
             }
         }
@@ -247,7 +247,8 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
      * 关掉所有的页面，可给页面设置层级
      */
     @JvmOverloads
-    fun finishAll(lv: Int = -1) {
+    fun finishAll(lv: Int = 0) {
+        finishPage = 0
         FRAGMENT_FINISH.bus(lv)
     }
 

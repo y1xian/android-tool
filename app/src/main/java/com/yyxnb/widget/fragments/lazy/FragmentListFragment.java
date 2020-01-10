@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * fragment 列表.
  */
-@FinishPageLv
+@FinishPageLv(value = 5)
 public class FragmentListFragment extends BaseFragment {
 
     private StringListAdapter mAdapter;

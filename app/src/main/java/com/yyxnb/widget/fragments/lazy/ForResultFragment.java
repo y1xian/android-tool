@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.yyxnb.arch.annotations.FinishPageLv;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.utils.FragmentManagerUtils;
 import com.yyxnb.utils.log.LogUtils;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * startActivityForResult .
  */
+@FinishPageLv(value = 3)
 public class ForResultFragment extends BaseFragment {
 
     private EditText etInput;
@@ -56,7 +58,7 @@ public class ForResultFragment extends BaseFragment {
             intent.putExtra("data", str);
             setResult(321, intent);
             LogUtils.INSTANCE.w("setResult");
-            finish();
+            finishAll(4);
         });
     }
 

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
-import com.yyxnb.utils.log.LogUtils
 import com.yyxnb.view.R
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
@@ -336,7 +335,6 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         private const val BASE_ITEM_TYPE_EMPTY = 300000
     }
 
-
     /**
      * 新数据
      */
@@ -357,19 +355,22 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     /**
      * 如果需要子view点击事件，建议使用这个，防止第一条无点击事件
      */
-    fun resetFirstDataItems(list: List<T>, delay: Long = 100) {
+    fun resetFirstDataItems(list: List<T>, delay: Long) {
         if (list.isNotEmpty()) {
             weakRecyclerView.get()?.apply {
+                visibility = View.INVISIBLE
+                (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
                 GlobalScope.launch(Main) {
-                    (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-                    delay(delay)
+                    delay(delay / 2)
                     addDataItem(0, list[0])
-                    delay(delay / 20)
+                    delay(delay / 10)
                     removeDataItem(1)
-                    delay(delay / 5)
+                    delay(delay / 2)
                     notifyDataSetChanged()
-                    scrollToPosition(0)
+                    visibility = View.VISIBLE
+                    delay(delay / 2)
                     (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = true
+                    notifyDataSetChanged()
                 }
             }
         }
@@ -447,7 +448,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     fun changeDataItem(position: Int, t: T) {
         removeDataItem(t)
         addDataItem(position, t)
-        if (position == 0){
+        if (position == 0) {
             weakRecyclerView.get()?.scrollToPosition(0)
         }
     }

@@ -126,7 +126,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
             public void onItemChildClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
                 super.onItemChildClick(view, holder, position);
                 if (view.getId() == R.id.btnAdd) {
-                    mAdapter.addDataItem(position, new TestData(new Random().nextInt(100), "666"));
+                    mAdapter.addDataItem(position + 1, new TestData(new Random().nextInt(100), "666"));
                     ToastUtils.INSTANCE.normal("Add " + position);
                 }else if (view.getId() == R.id.btnTop){
                     mAdapter.changeDataItem(0,mAdapter.getData().get(position));
