@@ -35,6 +35,7 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
     private RecyclerView mRecyclerView;
     private int page = 1;
 
+
     @Override
     public int initLayoutResId() {
         return R.layout.fragment_net_work;

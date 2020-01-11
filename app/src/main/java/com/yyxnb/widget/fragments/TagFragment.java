@@ -4,6 +4,7 @@ package com.yyxnb.widget.fragments;
 import android.os.Bundle;
 
 import com.yyxnb.arch.base.BaseFragment;
+import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.view.text.FlowlayoutTags;
 import com.yyxnb.widget.R;
@@ -56,9 +57,9 @@ public class TagFragment extends BaseFragment {
         refreshCategorys(mFlowlayoutTags1,list);
         refreshCategorys(mFlowlayoutTags2,list);
 
-        mFlowlayoutTags.setOnTagClickListener(ToastUtils.INSTANCE::normal);
+        mFlowlayoutTags.setOnTagClickListener(AppConfig.INSTANCE::toast);
 
-        mFlowlayoutTags1.setOnTagClickListener(ToastUtils.INSTANCE::normal);
+        mFlowlayoutTags1.setOnTagClickListener(AppConfig.INSTANCE::toast);
 
         mFlowlayoutTags2.setOnTagClickListener(tag -> {
             ArrayList<String> tagList = mFlowlayoutTags2.getCheckedTagsTextsArrayList();
@@ -66,7 +67,7 @@ public class TagFragment extends BaseFragment {
             for (int i = 0; i < tagList.size(); i++) {
                 s.append(tagList.get(i)).append(",");
             }
-            ToastUtils.INSTANCE.normal(s.toString());
+            AppConfig.INSTANCE.toast(s.toString());
         });
 
 

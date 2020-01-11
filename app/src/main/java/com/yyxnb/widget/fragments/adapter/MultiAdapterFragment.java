@@ -17,6 +17,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.yyxnb.arch.base.BaseFragment;
+import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.view.rv.BaseViewHolder;
@@ -116,7 +117,7 @@ public class MultiAdapterFragment extends BaseFragment {
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
             @Override
             public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
-                ToastUtils.INSTANCE.normal("" + position);
+                AppConfig.INSTANCE.toast("" + position);
             }
         });
 
@@ -163,7 +164,7 @@ public class MultiAdapterFragment extends BaseFragment {
             } else {
 
             }
-            ToastUtils.INSTANCE.normal(text);
+            AppConfig.INSTANCE.toast(text);
         });
         return textView;
     }

@@ -15,6 +15,7 @@ import android.util.Log
 import java.io.Serializable
 import java.lang.ref.WeakReference
 import java.lang.reflect.ParameterizedType
+import java.util.*
 
 /**
  * 初始化相关
@@ -116,34 +117,34 @@ object AppConfig : Serializable {
      * 记得添加相应权限
      * android.permission.READ_PHONE_STATE
      */
-//    val uuid: String
-//        get() {
-//
-//            var uuid: String = MMKV.defaultMMKV().decodeString("PHONE_UUID", "")
-//
-//            if (TextUtils.isEmpty(uuid)) {
-//
-//                try {
-//                    val telephonyManager = mWeakReferenceContext.get()!!
-//                            .getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-//                    @SuppressLint("MissingPermission", "HardwareIds") val tmDevice = telephonyManager.deviceId
-//                    @SuppressLint("MissingPermission", "HardwareIds") val tmSerial = telephonyManager.simSerialNumber
-//
-//                    @SuppressLint("HardwareIds") val androidId = Settings.Secure.getString(mWeakReferenceContext.get()!!.getContentResolver(), Settings.Secure.ANDROID_ID)
-//                    val deviceUuid = UUID(androidId.hashCode().toLong(), tmDevice.hashCode().toLong() shl 32 or tmSerial.hashCode().toLong())
-//                    val uniqueId = deviceUuid.toString()
-//                    uuid = uniqueId
-//                    MMKV.defaultMMKV().encode("PHONE_UUID", uuid)
-//
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
-//
-//            }
-//
-//            return uuid
-//
-//        }
+    val uuid: String
+        get() {
+
+            var uuid: String = SPUtils.getParam("PHONE_UUID", "") as String
+
+            if (TextUtils.isEmpty(uuid)) {
+
+                try {
+                    val telephonyManager = mWeakReferenceContext.get()!!
+                            .getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                    @SuppressLint("MissingPermission", "HardwareIds") val tmDevice = telephonyManager.deviceId
+                    @SuppressLint("MissingPermission", "HardwareIds") val tmSerial = telephonyManager.simSerialNumber
+
+                    @SuppressLint("HardwareIds") val androidId = Settings.Secure.getString(mWeakReferenceContext.get()!!.getContentResolver(), Settings.Secure.ANDROID_ID)
+                    val deviceUuid = UUID(androidId.hashCode().toLong(), tmDevice.hashCode().toLong() shl 32 or tmSerial.hashCode().toLong())
+                    val uniqueId = deviceUuid.toString()
+                    uuid = uniqueId
+                    SPUtils.saveParam("PHONE_UUID", uuid)
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            return uuid
+
+        }
 
     /**
      * 获取手机唯一标识序列号

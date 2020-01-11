@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.yyxnb.arch.annotations.SubPage;
 import com.yyxnb.arch.base.BaseFragment;
+import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.view.rv.BaseViewHolder;
@@ -64,7 +65,7 @@ public class LazyPageFragment extends BaseFragment {
             @Override
             public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
                 super.onItemClick(view, holder, position);
-                ToastUtils.INSTANCE.normal("第 " + position + " 条");
+                AppConfig.INSTANCE.toast("第 " + position + " 条");
             }
         });
 

@@ -17,6 +17,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.yyxnb.arch.base.BaseFragment;
+import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.view.rv.BaseViewHolder;
@@ -127,15 +128,15 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
                 super.onItemChildClick(view, holder, position);
                 if (view.getId() == R.id.btnAdd) {
                     mAdapter.addDataItem(position + 1, new TestData(new Random().nextInt(100), "666"));
-                    ToastUtils.INSTANCE.normal("Add " + position);
-                }else if (view.getId() == R.id.btnTop){
-                    mAdapter.changeDataItem(0,mAdapter.getData().get(position));
-                    ToastUtils.INSTANCE.normal("btnTop " + position);
-                }else if (view.getId() == R.id.btnDelete){
+                    AppConfig.INSTANCE.toast("Add " + position);
+                } else if (view.getId() == R.id.btnTop) {
+                    mAdapter.changeDataItem(0, mAdapter.getData().get(position));
+                    AppConfig.INSTANCE.toast("btnTop " + position);
+                } else if (view.getId() == R.id.btnDelete) {
                     mAdapter.removeDataItem(position);
-                    ToastUtils.INSTANCE.normal("btnDelete " + position);
-                }else if (view.getId() == R.id.mLinearLayout){
-                    ToastUtils.INSTANCE.normal("" + position);
+                    AppConfig.INSTANCE.toast("btnDelete " + position);
+                } else if (view.getId() == R.id.mLinearLayout) {
+                    AppConfig.INSTANCE.toast("" + position);
                 }
             }
         });
@@ -188,7 +189,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
             } else {
 
             }
-            ToastUtils.INSTANCE.normal(text);
+            AppConfig.INSTANCE.toast(text);
         });
         return textView;
     }

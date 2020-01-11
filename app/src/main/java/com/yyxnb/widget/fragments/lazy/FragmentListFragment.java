@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.yyxnb.arch.annotations.FinishPageLv;
 import com.yyxnb.arch.base.BaseFragment;
+import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.view.rv.BaseViewHolder;
@@ -95,7 +96,7 @@ public class FragmentListFragment extends BaseFragment {
         LogUtils.INSTANCE.w(" requestCode : " + requestCode + " , resultCode : " + resultCode);
         if (requestCode == 123 && resultCode == 321 && data != null) {
             String s = data.getStringExtra("data");
-            ToastUtils.INSTANCE.normal(s);
+            AppConfig.INSTANCE.toast(s);
             LogUtils.INSTANCE.w(s);
         }
 

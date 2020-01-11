@@ -28,7 +28,7 @@ abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {
      */
     private fun registerDefUIChange() {
         mViewModel.defUI.toastEvent.observe(this, Observer {
-            ToastUtils.normal(it.toString())
+            AppConfig.toast(it.toString())
         })
         mViewModel.defUI.msgEvent.observe(this, Observer {
             handleEvent(it)

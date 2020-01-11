@@ -39,7 +39,7 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
      */
     private fun registerDefUIChange() {
         mViewModel.defUI.toastEvent.observe(this, Observer {
-            ToastUtils.normal(it.toString())
+            AppConfig.toast(it.toString())
         })
         mViewModel.defUI.msgEvent.observe(this, Observer {
             handleEvent(it)
@@ -57,6 +57,8 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
      */
     open fun handleEvent(msg: Message?) {}
 
+    open fun isShare() = false
+
     /**
      * 初始化ViewModel
      * create ViewModelProviders
@@ -64,7 +66,11 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
      * @return ViewModel
      */
     private fun initViewModel(modelClass: Class<VM>): VM {
-        return ViewModelProviders.of(this).get(modelClass)
+        return if (isShare()){
+            ViewModelProviders.of(mActivity).get(modelClass)
+        }else{
+            ViewModelProviders.of(this).get(modelClass)
+        }
     }
 
     override fun onDestroy() {
