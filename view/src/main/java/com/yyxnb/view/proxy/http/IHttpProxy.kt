@@ -9,10 +9,4 @@ interface IHttpProxy {
 
     fun cancel(tag :String)
 
-//    fun get(options : HttpOptions)
-//
-//    fun post(options : HttpOptions)
-
-//    fun get(url: String, callback: ICallBack)
-//    fun post(url: String, params: Map<String, Any>, callback: ICallBack)
 }

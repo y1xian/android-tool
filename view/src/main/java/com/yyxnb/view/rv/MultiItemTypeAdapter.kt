@@ -1,6 +1,7 @@
 package com.yyxnb.view.rv
 
 import android.support.v4.util.SparseArrayCompat
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -341,6 +342,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     @JvmOverloads
     fun setDataItems(list: List<T>?, isResetFirst: Boolean = false, delay: Long = 100) {
         if (list != null) {
+
             data.clear()
             data.addAll(list)
             notifyDataSetChanged()
@@ -445,11 +447,12 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     /**
      * 调换位置
      */
-    fun changeDataItem(position: Int, t: T) {
+    @JvmOverloads
+    fun changeDataItem(position: Int, t: T, isScroll: Boolean = false) {
         removeDataItem(t)
         addDataItem(position, t)
-        if (position == 0) {
-            weakRecyclerView.get()?.scrollToPosition(0)
+        if (isScroll) {
+            weakRecyclerView.get()?.scrollToPosition(position)
         }
     }
 
@@ -489,6 +492,19 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         clearData()
         clearHeader()
         clearFooter()
+    }
+
+    /**
+     *  DiffUtil
+     */
+    fun diffUtilData(newData: List<T>, detectMoves: Boolean = true) {
+        //第一个参数是DiffUtil.Callback对象，
+        //第二个参数代表是否检测Item的移动，改为false算法效率更高，按需设置，我们这里是true。
+        val result = DiffUtil.calculateDiff(DiffCallBack(data, newData), detectMoves)
+        // 这里的getData即表示获取整个列表的数据，自行实现即可
+        data.clear()
+        data.addAll(newData)
+        result.dispatchUpdatesTo(this)
     }
 
 }

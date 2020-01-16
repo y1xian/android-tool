@@ -7,11 +7,14 @@ import android.text.TextUtils;
 
 import java.util.List;
 
-public class RDiffCallback<T> extends DiffUtil.Callback {
-    List<T> oldDatas;
-    List<T> newDatas;
+/**
+ * 用来判断 新旧Item是否相等
+ */
+public class DiffCallBack<T> extends DiffUtil.Callback {
+    private List<T> oldDatas;
+    private List<T> newDatas;
 
-    public RDiffCallback(List<T> oldDatas, List<T> newDatas) {
+    public DiffCallBack(List<T> oldDatas, List<T> newDatas) {
         this.oldDatas = oldDatas;
         this.newDatas = newDatas;
     }
@@ -37,6 +40,15 @@ public class RDiffCallback<T> extends DiffUtil.Callback {
         return getListSize(newDatas);
     }
 
+    /**
+     * 当{@link #areItemsTheSame(int, int)} 返回true，且{@link #areContentsTheSame(int, int)} 返回false时，DiffUtils会回调此方法，
+     * 去得到这个Item（有哪些）改变的payload。
+     * 例如，如果你用RecyclerView配合DiffUtils，你可以返回  这个Item改变的那些字段，
+     *
+     * {@link android.support.v7.widget.RecyclerView.ItemAnimator ItemAnimator} 可以用那些信息去执行正确的动画
+     *
+     * 返回 一个 代表着新老item的改变内容的 payload对象
+     */
     @Nullable
     @Override
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {

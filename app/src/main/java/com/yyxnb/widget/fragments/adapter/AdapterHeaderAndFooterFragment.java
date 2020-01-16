@@ -110,7 +110,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData(), true);
+                mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData());
                 refreshLayout.finishRefresh(200);
             }
         });
@@ -130,7 +130,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
                     mAdapter.addDataItem(position + 1, new TestData(new Random().nextInt(100), "666"));
                     AppConfig.INSTANCE.toast("Add " + position);
                 } else if (view.getId() == R.id.btnTop) {
-                    mAdapter.changeDataItem(0, mAdapter.getData().get(position));
+                    mAdapter.changeDataItem(0, mAdapter.getData().get(position),true);
                     AppConfig.INSTANCE.toast("btnTop " + position);
                 } else if (view.getId() == R.id.btnDelete) {
                     mAdapter.removeDataItem(position);
