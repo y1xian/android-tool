@@ -90,7 +90,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         });
 
         tvClear.setOnClickListener(v -> {
-            mAdapter.clearData();
+            mAdapter.clearAllData();
         });
 
         tvAddData.setOnClickListener(v -> {
@@ -110,18 +110,23 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData());
+                mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
                 refreshLayout.finishRefresh(200);
             }
         });
 
+//        mAdapter.setOnItemChildClickListener(new IOnItemChildClick() {
+//            @Override
+//            public void onItemChildClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
+//                AppConfig.INSTANCE.toast("Add " + position);
+//            }
+//        });
 
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
-//            @Override
-//            public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
-//                ToastUtils.INSTANCE.normal("" + position);
-//                LogUtils.INSTANCE.w("" + mAdapter.getChildClickViewIds().toString());
-//            }
+            @Override
+            public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
+                ToastUtils.INSTANCE.normal("" + position);
+            }
 
             @Override
             public void onItemChildClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
@@ -136,8 +141,14 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
                     mAdapter.removeDataItem(position);
                     AppConfig.INSTANCE.toast("btnDelete " + position);
                 } else if (view.getId() == R.id.mLinearLayout) {
-                    AppConfig.INSTANCE.toast("" + position);
+                    AppConfig.INSTANCE.toast("mLinearLayout " + position);
                 }
+            }
+
+            @Override
+            public boolean onItemChildLongClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
+                AppConfig.INSTANCE.toast("Add lllllllllllll" + position);
+                return true;
             }
         });
 
@@ -145,7 +156,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 
         new Handler().postDelayed(() -> {
 //            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
-            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData(), true);
+            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
 //            mAdapter.setNewDataItems(DataConfig.INSTANCE.getDataTestData());
 //            mAdapter.setDataItems(new ArrayList<>(),true);
 //            mAdapter.notifyDataSetChanged();
