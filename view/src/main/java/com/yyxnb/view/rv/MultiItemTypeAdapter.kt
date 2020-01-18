@@ -54,17 +54,19 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     fun getEmptyItems() = mEmptyViews
 
     override fun getItemViewType(position: Int): Int {
-        if (hasEmptyView()) {
-            return mEmptyViews.keyAt(position)
-        }
-        isDefaultEmpty = false
-        if (isHeaderViewPos(position)) {
-            return mHeaderViews.keyAt(position)
-        } else if (isFooterViewPos(position)) {
-            return mFootViews.keyAt(position - headersCount - dataCount)
+        return when {
+            hasEmptyView() -> {
+                mEmptyViews.keyAt(position)
+            }
+            isHeaderViewPos(position) -> {
+                mHeaderViews.keyAt(position)
+            }
+            isFooterViewPos(position) -> {
+                mFootViews.keyAt(position - headersCount - dataCount)
+            }
+            else -> if (!useItemDelegateManager()) super.getItemViewType(position) else mItemDelegateManager.getItemViewType(data[position - headersCount], position - headersCount)
         }
 
-        return if (!useItemDelegateManager()) super.getItemViewType(position) else mItemDelegateManager.getItemViewType(data[position - headersCount], position - headersCount)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -162,7 +164,6 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         }
 
     }
-
 
     /**
      * 设置需要点击事件的子view
@@ -324,12 +325,10 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     /**
      * 新数据
      */
-    fun setDataItems(list: List<T>?) {
-        if (list != null) {
-            data.clear()
-            data.addAll(list)
-            notifyDataSetChanged()
-        }
+    fun setDataItems(list: List<T> = arrayListOf()) {
+        data.clear()
+        data.addAll(list)
+        compatibilityDataSizeChanged(list.size)
     }
 
     /**
@@ -422,6 +421,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     protected fun compatibilityDataSizeChanged(size: Int) {
+        isDefaultEmpty = false
         if (dataCount == size) {
             notifyDataSetChanged()
         }

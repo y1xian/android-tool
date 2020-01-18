@@ -34,7 +34,7 @@ ext {
 
             gson                : '2.8.6',
 
-            mmkv                : '1.0.23',
+            mmkv                : '1.0.24',
 
             butterknife         : '9.0.0',
 

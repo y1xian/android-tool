@@ -155,11 +155,8 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 //        mAdapter.addHeaderView(createView("头    第 " + mAdapter.getHeadersCount(), true));
 
         new Handler().postDelayed(() -> {
-//            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
             mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
-//            mAdapter.setNewDataItems(DataConfig.INSTANCE.getDataTestData());
-//            mAdapter.setDataItems(new ArrayList<>(),true);
-//            mAdapter.notifyDataSetChanged();
+//            mAdapter.setDataItems(new ArrayList<>());
         }, 1000);
 
 
