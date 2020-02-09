@@ -83,7 +83,7 @@ public class MultiAdapterFragment extends BaseFragment {
         });
 
         tvAddFooter.setOnClickListener(v -> {
-            mAdapter.addFootView(createView("尾    第 " + mAdapter.getFootersCount(), false));
+            mAdapter.addFooterView(createView("尾    第 " + mAdapter.getFootersCount(), false));
         });
 
         tvClear.setOnClickListener(v -> {

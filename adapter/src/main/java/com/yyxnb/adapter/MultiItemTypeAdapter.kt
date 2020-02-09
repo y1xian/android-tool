@@ -1,146 +1,87 @@
 package com.yyxnb.adapter
 
-import android.support.v4.util.SparseArrayCompat
 import android.support.v7.util.DiffUtil
 import android.support.v7.util.ListUpdateCallback
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
+import com.yyxnb.adapter.rv.BaseRecyclerView
+import com.yyxnb.adapter.rv.BaseState
 import java.lang.ref.WeakReference
 
 
 open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
 
     private var data: MutableList<T> = arrayListOf()
-    private val mHeaderViews = SparseArrayCompat<View>()
-    private val mFootViews = SparseArrayCompat<View>()
-    private val mEmptyViews = SparseArrayCompat<View>()
 
-    lateinit var weakRecyclerView: WeakReference<RecyclerView>
+    private var weakRecyclerView: WeakReference<BaseRecyclerView>? = null
     private var mEmptyLayout: FrameLayout? = null
 
     /** 是否使用空布局 */
-    var isUseEmpty = true
     var isDefaultEmpty = true
 
     /**
      * 多类型管理
      */
     protected var mItemDelegateManager: ItemDelegateManager<T> = ItemDelegateManager()
-    lateinit var mOnItemClickListener: OnItemClickListener
+    private var mOnItemClickListener: OnItemClickListener? = null
 
     val dataCount: Int
         get() = data.size
 
     val headersCount: Int
-        get() = mHeaderViews.size()
+        get() = getCustomTopItemViewCount
 
     val footersCount: Int
-        get() = mFootViews.size()
+        get() = weakRecyclerView?.get()?.footerViewSize ?: 0
 
-    val emptyCount: Int
-        get() = mEmptyViews.size()
+    /**
+     * list列表数据头部的view数量：RefreshView + HeaderView + EmptyView
+     */
+    val getCustomTopItemViewCount: Int
+        get() = weakRecyclerView?.get()?.customTopItemViewCount ?: 0
 
     fun getData() = data
 
-    fun getHeaderItems() = mHeaderViews
+    fun getItemData(position: Int): T {
+        return getData()[position]
+    }
 
-    fun getFooterItems() = mFootViews
-
-    fun getEmptyItems() = mEmptyViews
+    fun setRecyclerView(recyclerView: BaseRecyclerView) {
+        weakRecyclerView = WeakReference(recyclerView)
+    }
 
     override fun getItemViewType(position: Int): Int {
-        return when {
-            hasEmptyView() -> {
-                mEmptyViews.keyAt(position)
-            }
-            isHeaderViewPos(position) -> {
-                mHeaderViews.keyAt(position)
-            }
-            isFooterViewPos(position) -> {
-                mFootViews.keyAt(position - headersCount - dataCount)
-            }
-            else -> if (!useItemDelegateManager()) super.getItemViewType(position) else mItemDelegateManager.getItemViewType(data[position - headersCount], position - headersCount)
-        }
-
+        return if (!useItemDelegateManager()) super.getItemViewType(position) else mItemDelegateManager.getItemViewType(data[position], position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        when {
-            mEmptyViews.get(viewType) != null -> {
-                return BaseViewHolder.createViewHolder(mEmptyViews.get(viewType)!!)
-            }
-            mHeaderViews.get(viewType) != null -> {
-                return BaseViewHolder.createViewHolder(mHeaderViews.get(viewType)!!)
-            }
-            mFootViews.get(viewType) != null -> {
-                return BaseViewHolder.createViewHolder(mFootViews.get(viewType)!!)
-            }
-            else -> {
-                val itemViewDelegate = mItemDelegateManager.getItemViewDelegate(viewType)
-                val layoutId = itemViewDelegate.layoutId
-                val holder = BaseViewHolder.createViewHolder(parent.context.applicationContext, parent, layoutId)
-                onViewHolderCreated(holder, holder.convertView)
-                setListener(holder)
-                return holder
-            }
-        }
-
+        val itemViewDelegate = mItemDelegateManager.getItemViewDelegate(viewType)
+        val layoutId = itemViewDelegate.layoutId
+        val holder = BaseViewHolder.createViewHolder(parent.context.applicationContext, parent, layoutId)
+        onViewHolderCreated(holder, holder.convertView)
+        setListener(holder)
+        return holder
     }
 
     fun onViewHolderCreated(holder: BaseViewHolder, itemView: View) {}
 
     fun convert(holder: BaseViewHolder, t: T) {
-        mItemDelegateManager.convert(holder, t, holder.adapterPosition - headersCount)
+        mItemDelegateManager.convert(holder, t, holder.adapterPosition)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        if (hasEmptyView() || isHeaderViewPos(position) || isFooterViewPos(position)) {
-            return
-        }
-        convert(holder, data[position - headersCount])
-    }
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        weakRecyclerView = WeakReference(recyclerView)
-        setEmptyView(R.layout._loading_layout_empty)
-        WrapperUtils.onAttachedToRecyclerView(
-                recyclerView
-        ) { layoutManager, oldLookup, position ->
-            val viewType = getItemViewType(position)
-            when {
-                mHeaderViews.get(viewType) != null -> layoutManager.spanCount
-                mFootViews.get(viewType) != null -> layoutManager.spanCount
-                mEmptyViews.get(viewType) != null -> layoutManager.spanCount
-                else -> oldLookup.getSpanSize(position)
-            }
-        }
-    }
-
-    override fun onViewAttachedToWindow(holder: BaseViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        val position = holder.layoutPosition
-        if (hasEmptyView() || isHeaderViewPos(position) || isFooterViewPos(position)) {
-            WrapperUtils.setFullSpan(holder)
-        }
+        convert(holder, data[position])
     }
 
     override fun getItemCount(): Int {
-        val itemCount = data.size
-        if (hasEmptyView()) {
-            return emptyCount
-        }
-        return headersCount + footersCount + itemCount
+        return dataCount
     }
-
 
     protected fun setListener(holder: BaseViewHolder) {
 
-        mOnItemClickListener.let {
+        mOnItemClickListener?.let {
             holder.itemView.setOnClickListener { v ->
                 var position = holder.adapterPosition
                 if (position == RecyclerView.NO_POSITION) {
@@ -151,7 +92,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
             }
         }
 
-        mOnItemClickListener.let {
+        mOnItemClickListener?.let {
             holder.itemView.setOnLongClickListener { v ->
                 var position = holder.adapterPosition
                 if (position == RecyclerView.NO_POSITION) {
@@ -168,7 +109,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
      * 设置需要点击事件的子view
      */
     fun addChildClickViewIds(holder: BaseViewHolder, vararg viewIds: Int) {
-        mOnItemClickListener.let {
+        mOnItemClickListener?.let {
             for (id in viewIds) {
                 holder.itemView.findViewById<View>(id)?.let { childView ->
                     if (!childView.isClickable) {
@@ -192,7 +133,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
      * 设置需要长按点击事件的子view
      */
     fun addChildLongClickViewIds(holder: BaseViewHolder, vararg viewIds: Int) {
-        mOnItemClickListener.let {
+        mOnItemClickListener?.let {
             for (id in viewIds) {
                 holder.itemView.findViewById<View>(id)?.let { childView ->
                     if (!childView.isLongClickable) {
@@ -220,13 +161,15 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     fun addHeaderView(view: View) {
-        mHeaderViews.put(mHeaderViews.size() + BASE_ITEM_TYPE_HEADER, view)
-        notifyItemInserted(headersCount)
+        weakRecyclerView?.get()?.apply {
+            addHeaderView(view)
+        }
     }
 
-    fun addFootView(view: View) {
-        mFootViews.put(mFootViews.size() + BASE_ITEM_TYPE_FOOTER, view)
-        notifyItemInserted(headersCount + dataCount + footersCount)
+    fun addFooterView(view: View) {
+        weakRecyclerView?.get()?.apply {
+            addFooterView(view)
+        }
     }
 
     fun addItemDelegate(itemViewDelegate: ItemDelegate<T>): MultiItemTypeAdapter<T> {
@@ -273,60 +216,15 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     /**
-     * 设置空布局视图，注意：[data]必须为空数组
-     */
-    fun setEmptyView(emptyView: View) {
-        if (data.isEmpty()) {
-            mEmptyLayout = FrameLayout(emptyView.context.applicationContext)
-            mEmptyLayout?.apply {
-                layoutParams = emptyView.layoutParams?.let {
-                    return@let ViewGroup.LayoutParams(it.width, it.height)
-                } ?: ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-                isUseEmpty = true
-                removeAllViews()
-                addView(emptyView)
-                mEmptyViews.clear()
-                mEmptyViews.put(BASE_ITEM_TYPE_EMPTY, this)
-                notifyItemInserted(0)
-            }
-        }
-    }
-
-    fun setEmptyView(layoutResId: Int) {
-        weakRecyclerView.get()?.let {
-            val view = LayoutInflater.from(it.context).inflate(layoutResId, it, false)
-            setEmptyView(view)
-        }
-    }
-
-    fun removeEmptyView() {
-        isUseEmpty = false
-        mEmptyViews.clear()
-    }
-
-    fun hasEmptyView(): Boolean {
-
-        if (emptyCount == 0 || headersCount != 0 || footersCount != 0) {
-            return false
-        }
-        if (!isUseEmpty || isDefaultEmpty) {
-            return false
-        }
-        return data.isEmpty()
-    }
-
-    companion object {
-        private const val BASE_ITEM_TYPE_HEADER = 100000
-        private const val BASE_ITEM_TYPE_FOOTER = 200000
-        private const val BASE_ITEM_TYPE_EMPTY = 300000
-    }
-
-    /**
      * 新数据
      */
     fun setDataItems(list: List<T> = arrayListOf()) {
         data.clear()
         data.addAll(list)
+        weakRecyclerView?.get()?.apply {
+            isRefreshing = false
+            setStateType(BaseState.SUCCESS)
+        }
         compatibilityDataSizeChanged(list.size)
     }
 
@@ -385,7 +283,9 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         val internalPosition = position + headersCount
         notifyItemRemoved(internalPosition)
         compatibilityDataSizeChanged(0)
-        notifyItemRangeChanged(internalPosition, dataCount - internalPosition)
+        if (position != dataCount) {
+            notifyItemRangeChanged(internalPosition, dataCount - internalPosition)
+        }
     }
 
     fun removeDataItem(t: T) {
@@ -404,7 +304,7 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         removeDataItem(t)
         addDataItem(position, t)
         if (isScroll) {
-            weakRecyclerView.get()?.scrollToPosition(position)
+            weakRecyclerView?.get()?.scrollToPosition(position)
         }
     }
 
@@ -432,19 +332,15 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     fun clearHeader() {
-        notifyItemRangeRemoved(0, headersCount)
-        mHeaderViews.clear()
+        weakRecyclerView?.get()?.apply {
+            removeAllHeaderView()
+        }
     }
 
     fun clearFooter() {
-        notifyItemRangeRemoved(headersCount + dataCount, footersCount)
-        mFootViews.clear()
-    }
-
-    fun clearAllData() {
-        clearData()
-        clearHeader()
-        clearFooter()
+        weakRecyclerView?.get()?.apply {
+            removeAllFooterView()
+        }
     }
 
     /**

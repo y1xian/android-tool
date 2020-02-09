@@ -52,6 +52,7 @@ object DataConfig {
             field.clear()
             field.add("----- 头尾 侧滑-----")
             field.add("----- 多Item -----")
+            field.add("----- 状态视图 -----")
             return field
         }
 

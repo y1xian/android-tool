@@ -8,34 +8,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.yyxnb.view.titlebar.TitleBar
-            app:tb_centerText="适配器"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:tb_centerText="适配器" />
 
-        <com.scwang.smart.refresh.layout.SmartRefreshLayout
-            android:id="@+id/mRefreshLayout"
+        <com.yyxnb.adapter.rv.BaseRecyclerView
+            android:id="@+id/mRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.yyxnb.adapter.rv.BaseRecyclerView
-                android:id="@+id/mRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+            android:layout_height="match_parent" />
 
 
     </LinearLayout>
 
 
     <android.support.constraint.ConstraintLayout
-        android:layout_marginTop="100dp"
         android:layout_width="80dp"
-        android:layout_height="250dp">
+        android:layout_height="250dp"
+        android:layout_marginTop="100dp">
 
 
         <TextView
@@ -43,9 +36,9 @@
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_marginTop="15dp"
-            android:text="添加头部"
-            android:gravity="center"
             android:background="@color/item_div_bg"
+            android:gravity="center"
+            android:text="添加头部"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

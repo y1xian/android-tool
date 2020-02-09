@@ -4,24 +4,21 @@ package com.yyxnb.widget.fragments.adapter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.yyxnb.adapter.BaseViewHolder;
+import com.yyxnb.adapter.MultiItemTypeAdapter;
+import com.yyxnb.adapter.rv.BaseState;
+import com.yyxnb.adapter.rv.BaseRecyclerView;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
-import com.yyxnb.adapter.BaseViewHolder;
-import com.yyxnb.adapter.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.NetWorkListAdapter;
 import com.yyxnb.widget.bean.TestData;
@@ -33,30 +30,30 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 
 /**
- * 适配器 头 + 底.
+ * 状态视图 头 + 底.
  */
-public class AdapterHeaderAndFooterFragment extends BaseFragment {
+public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
 
+    private int page = 1;
     private NetWorkListAdapter mAdapter;
     private TextView tvAddHeader;
     private TextView tvAddFooter;
     private TextView tvClear;
     private TextView tvAddData;
-    private SmartRefreshLayout mRefreshLayout;
-    private RecyclerView mRecyclerView;
+    private BaseRecyclerView mRecyclerView;
 
-    public static AdapterHeaderAndFooterFragment newInstance() {
+    public static AdapterHeaderAndFooterFragment2 newInstance() {
 
         Bundle args = new Bundle();
 
-        AdapterHeaderAndFooterFragment fragment = new AdapterHeaderAndFooterFragment();
+        AdapterHeaderAndFooterFragment2 fragment = new AdapterHeaderAndFooterFragment2();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public int initLayoutResId() {
-        return R.layout.fragment_adapter_header_and_footer;
+        return R.layout.fragment_adapter_header_and_footer2;
     }
 
     @Override
@@ -65,7 +62,6 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         tvAddFooter = findViewById(R.id.tvAddFooter);
         tvClear = findViewById(R.id.tvClear);
         tvAddData = findViewById(R.id.tvAddData);
-        mRefreshLayout = findViewById(R.id.mRefreshLayout);
         mRecyclerView = findViewById(R.id.mRecyclerView);
 
         mAdapter = new NetWorkListAdapter();
@@ -89,7 +85,10 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         });
 
         tvClear.setOnClickListener(v -> {
+//            mRecyclerView.removeAllHeaderView();
+//            mRecyclerView.removeAllFooterView();
             mAdapter.clearData();
+            mRecyclerView.setStateType(BaseState.EMPTY);
         });
 
         tvAddData.setOnClickListener(v -> {
@@ -100,19 +99,22 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
             mAdapter.notifyDataSetChanged();
         });
 
-        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
-                refreshLayout.finishLoadMore(200);
-            }
+        mRecyclerView.setOnRefreshListener(() -> {
+            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
+            page = 1;
+        }, 500);
 
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
-                refreshLayout.finishRefresh(200);
+        mRecyclerView.setOnLoadMoreListener(() -> {
+            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
+            if (page % 2 == 0) {
+                mRecyclerView.loadMoreFail();
+            } else if (page == 5) {
+                mRecyclerView.loadMoreEnd();
+            } else {
+                mRecyclerView.loadMoreComplete();
             }
-        });
+            page++;
+        }, 500);
 
 //        mAdapter.setOnItemChildClickListener(new IOnItemChildClick() {
 //            @Override
@@ -134,7 +136,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
                     mAdapter.addDataItem(position + 1, new TestData(new Random().nextInt(100), "666"));
                     AppConfig.INSTANCE.toast("Add " + position);
                 } else if (view.getId() == R.id.btnTop) {
-                    mAdapter.changeDataItem(0, mAdapter.getData().get(position),true);
+                    mAdapter.changeDataItem(0, mAdapter.getData().get(position), true);
                     AppConfig.INSTANCE.toast("btnTop " + position);
                 } else if (view.getId() == R.id.btnDelete) {
                     mAdapter.removeDataItem(position);
@@ -153,7 +155,10 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 
 //        mAdapter.addHeaderView(createView("头    第 " + mAdapter.getHeadersCount(), true));
 
+        mRecyclerView.setStateType(BaseState.LOADING);
+
         new Handler().postDelayed(() -> {
+//            mRecyclerView.setStateType(BaseState.EMPTY);
             mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
 //            mAdapter.setDataItems(new ArrayList<>());
         }, 1000);
@@ -191,11 +196,6 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         }
         textView.setText(text);
         textView.setOnClickListener(v -> {
-            if (isHeader) {
-//                mAdapter
-            } else {
-
-            }
             AppConfig.INSTANCE.toast(text);
         });
         return textView;

@@ -51,7 +51,7 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
 
         View view = LayoutInflater.from(mContext).inflate(R.layout._loading_layout_empty, (ViewGroup) getMRootView(),false);
 //        mAdapter.setEmptyView(view);
-        mAdapter.setEmptyView(R.layout._loading_layout_empty);
+//        mAdapter.setEmptyView(R.layout._loading_layout_empty);
 //        mAdapter.addFootView(view);
 
 
@@ -66,7 +66,7 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
                 if (page == 1){
                     mViewModel.reqTeam();
                 }else {
-                    mAdapter.clearAllData();
+                    mAdapter.clearData();
                 }
             }
         });
