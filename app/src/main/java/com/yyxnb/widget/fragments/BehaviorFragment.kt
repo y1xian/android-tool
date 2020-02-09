@@ -4,7 +4,7 @@ package com.yyxnb.widget.fragments
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.yyxnb.arch.base.BaseFragment
-import com.yyxnb.view.rv.ItemDecoration
+import com.yyxnb.adapter.ItemDecoration
 
 import com.yyxnb.widget.R
 import com.yyxnb.widget.adapter.StringListAdapter

@@ -12,16 +12,12 @@ import android.view.ViewGroup;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
-import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.base.mvvm.BaseFragmentVM;
-import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
-import com.yyxnb.view.rv.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.NetWorkListAdapter;
 import com.yyxnb.widget.vm.NetWorkViewModel;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 

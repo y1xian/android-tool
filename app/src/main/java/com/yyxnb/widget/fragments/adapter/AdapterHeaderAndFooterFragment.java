@@ -20,8 +20,8 @@ import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
-import com.yyxnb.view.rv.BaseViewHolder;
-import com.yyxnb.view.rv.MultiItemTypeAdapter;
+import com.yyxnb.adapter.BaseViewHolder;
+import com.yyxnb.adapter.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.NetWorkListAdapter;
 import com.yyxnb.widget.bean.TestData;
@@ -30,7 +30,6 @@ import com.yyxnb.widget.config.DataConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 /**

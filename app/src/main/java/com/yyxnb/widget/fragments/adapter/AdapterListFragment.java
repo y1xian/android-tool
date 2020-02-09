@@ -7,13 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.view.rv.BaseViewHolder;
-import com.yyxnb.view.rv.ItemDecoration;
-import com.yyxnb.view.rv.MultiItemTypeAdapter;
+import com.yyxnb.adapter.BaseViewHolder;
+import com.yyxnb.adapter.ItemDecoration;
+import com.yyxnb.adapter.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.StringListAdapter;
 import com.yyxnb.widget.config.DataConfig;
-import com.yyxnb.widget.fragments.http.PagingFragment;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

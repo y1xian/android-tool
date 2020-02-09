@@ -1,8 +1,8 @@
 package com.yyxnb.widget.adapter;
 
-import com.yyxnb.view.rv.BaseViewHolder;
-import com.yyxnb.view.rv.ItemDelegate;
-import com.yyxnb.view.rv.MultiItemTypeAdapter;
+import com.yyxnb.adapter.BaseViewHolder;
+import com.yyxnb.adapter.ItemDelegate;
+import com.yyxnb.adapter.MultiItemTypeAdapter;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.bean.TestData;
 

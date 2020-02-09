@@ -1,8 +1,8 @@
 package com.yyxnb.widget.adapter;
 
 import com.yyxnb.view.proxy.imageloader.ImageHelper;
-import com.yyxnb.view.rv.BaseAdapter;
-import com.yyxnb.view.rv.BaseViewHolder;
+import com.yyxnb.adapter.BaseAdapter;
+import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.widget.R;
 
 import org.jetbrains.annotations.NotNull;
