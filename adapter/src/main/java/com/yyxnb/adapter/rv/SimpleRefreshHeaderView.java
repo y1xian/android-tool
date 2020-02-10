@@ -43,9 +43,9 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
         addView(mContainer, lp);
         setGravity(Gravity.BOTTOM);
 
-        mIvArrow = (ImageView) findViewById(R.id.iv_arrow);
-        mProgress = (ProgressBar) findViewById(R.id.pb_progress);
-        tvRefreshTip = (TextView) findViewById(R.id.tv_refresh_tip);
+        mIvArrow = findViewById(R.id.iv_arrow);
+        mProgress = findViewById(R.id.pb_progress);
+        tvRefreshTip = findViewById(R.id.tv_refresh_tip);
 
         measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mMeasuredHeight = getMeasuredHeight();
@@ -156,12 +156,7 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
     private void smoothScrollTo(final int destHeight) {
         ValueAnimator animator = ValueAnimator.ofInt(getVisibleHeight(), destHeight);
         animator.setDuration(300).start();
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                setVisibleHeight((int) animation.getAnimatedValue());
-            }
-        });
+        animator.addUpdateListener(animation -> setVisibleHeight((int) animation.getAnimatedValue()));
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

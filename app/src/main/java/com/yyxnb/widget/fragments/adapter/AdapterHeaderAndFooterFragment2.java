@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.adapter.MultiItemTypeAdapter;
+import com.yyxnb.adapter.ext.RecyclerViewExtKt;
 import com.yyxnb.adapter.rv.BaseState;
 import com.yyxnb.adapter.rv.BaseRecyclerView;
 import com.yyxnb.arch.base.BaseFragment;
@@ -27,6 +28,7 @@ import com.yyxnb.widget.config.DataConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -65,9 +67,12 @@ public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
         mRecyclerView = findViewById(R.id.mRecyclerView);
 
         mAdapter = new NetWorkListAdapter();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mAdapter);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+//        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setAdapter(mAdapter);
+
+        RecyclerViewExtKt.wrapLinear(mRecyclerView, mContext).setAdapter(mAdapter);
+
 
         View view = LayoutInflater.from(mContext).inflate(R.layout._loading_layout_error, (ViewGroup) getMRootView(), false);
 //        mAdapter.setEmptyView(R.layout._loading_layout_error);
@@ -100,20 +105,23 @@ public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
         });
 
         mRecyclerView.setOnRefreshListener(() -> {
-            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
             page = 1;
+            setData(DataConfig.INSTANCE.getDataTestData2());
         }, 500);
 
         mRecyclerView.setOnLoadMoreListener(() -> {
-            mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
-            if (page % 2 == 0) {
-                mRecyclerView.loadMoreFail();
-            } else if (page == 5) {
-                mRecyclerView.loadMoreEnd();
-            } else {
-                mRecyclerView.loadMoreComplete();
-            }
+
+//            if (page % 2 == 0) {
+//                mRecyclerView.loadMoreFail();
+//            } else if (page == 5) {
+//                mRecyclerView.loadMoreEnd();
+//            } else {
+//                mRecyclerView.loadMoreComplete();
+//            }
+
             page++;
+            setData(DataConfig.INSTANCE.getDataTestData2());
+
         }, 500);
 
 //        mAdapter.setOnItemChildClickListener(new IOnItemChildClick() {
@@ -159,7 +167,8 @@ public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
 
         new Handler().postDelayed(() -> {
 //            mRecyclerView.setStateType(BaseState.EMPTY);
-            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
+//            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
+            setData(DataConfig.INSTANCE.getDataTestData2());
 //            mAdapter.setDataItems(new ArrayList<>());
         }, 1000);
 
@@ -171,6 +180,10 @@ public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
         super.initViewData();
 
 
+    }
+
+    public void setData(ArrayList<TestData> data){
+        RecyclerViewExtKt.wrapData(mRecyclerView, page, data);
     }
 
     private TextView createView(String text, Boolean isHeader) {

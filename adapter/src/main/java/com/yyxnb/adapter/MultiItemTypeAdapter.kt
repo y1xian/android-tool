@@ -221,10 +221,6 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
     fun setDataItems(list: List<T> = arrayListOf()) {
         data.clear()
         data.addAll(list)
-        weakRecyclerView?.get()?.apply {
-            isRefreshing = false
-            setStateType(BaseState.SUCCESS)
-        }
         compatibilityDataSizeChanged(list.size)
     }
 
@@ -319,8 +315,13 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         notifyDataSetChanged()
     }
 
-    protected fun compatibilityDataSizeChanged(size: Int) {
+    private fun compatibilityDataSizeChanged(size: Int) {
         isDefaultEmpty = false
+        weakRecyclerView?.get()?.apply {
+            if (dataCount > 0) {
+                setStateType(BaseState.SUCCESS)
+            }
+        }
         if (dataCount == size) {
             notifyDataSetChanged()
         }

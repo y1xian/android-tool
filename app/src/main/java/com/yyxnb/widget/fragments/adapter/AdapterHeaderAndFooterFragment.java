@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.yyxnb.adapter.ext.RecyclerViewExtKt;
+import com.yyxnb.adapter.rv.BaseRecyclerView;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.ToastUtils;
@@ -30,6 +32,7 @@ import com.yyxnb.widget.config.DataConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -43,7 +46,8 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
     private TextView tvClear;
     private TextView tvAddData;
     private SmartRefreshLayout mRefreshLayout;
-    private RecyclerView mRecyclerView;
+    private BaseRecyclerView mRecyclerView;
+    private int page = 1;
 
     public static AdapterHeaderAndFooterFragment newInstance() {
 
@@ -103,13 +107,15 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData2());
+                page++;
+                setData(DataConfig.INSTANCE.getDataTestData2());
                 refreshLayout.finishLoadMore(200);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
+                page = 1;
+                setData(DataConfig.INSTANCE.getDataTestData2());
                 refreshLayout.finishRefresh(200);
             }
         });
@@ -134,7 +140,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
                     mAdapter.addDataItem(position + 1, new TestData(new Random().nextInt(100), "666"));
                     AppConfig.INSTANCE.toast("Add " + position);
                 } else if (view.getId() == R.id.btnTop) {
-                    mAdapter.changeDataItem(0, mAdapter.getData().get(position),true);
+                    mAdapter.changeDataItem(0, mAdapter.getData().get(position), true);
                     AppConfig.INSTANCE.toast("btnTop " + position);
                 } else if (view.getId() == R.id.btnDelete) {
                     mAdapter.removeDataItem(position);
@@ -154,7 +160,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
 //        mAdapter.addHeaderView(createView("头    第 " + mAdapter.getHeadersCount(), true));
 
         new Handler().postDelayed(() -> {
-            mAdapter.setDataItems(DataConfig.INSTANCE.getDataTestData2());
+            setData(DataConfig.INSTANCE.getDataTestData2());
 //            mAdapter.setDataItems(new ArrayList<>());
         }, 1000);
 
@@ -166,6 +172,10 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         super.initViewData();
 
 
+    }
+
+    public void setData(ArrayList<TestData> data) {
+        RecyclerViewExtKt.wrapData(mRecyclerView, page, data);
     }
 
     private TextView createView(String text, Boolean isHeader) {

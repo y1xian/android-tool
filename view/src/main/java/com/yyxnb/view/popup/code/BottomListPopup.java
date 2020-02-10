@@ -12,9 +12,9 @@ import android.widget.TextView;
 import com.yyxnb.view.R;
 import com.yyxnb.utils.interfaces.OnSelectListener;
 import com.yyxnb.view.popup.Popup;
-import com.yyxnb.view.rv.BaseAdapter;
-import com.yyxnb.view.rv.MultiItemTypeAdapter;
-import com.yyxnb.view.rv.BaseViewHolder;
+import com.yyxnb.adapter.BaseAdapter;
+import com.yyxnb.adapter.BaseViewHolder;
+import com.yyxnb.adapter.MultiItemTypeAdapter;
 
 import java.util.Arrays;
 

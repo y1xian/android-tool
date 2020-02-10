@@ -181,21 +181,13 @@ public class BaseRecyclerView extends RecyclerView {
         }
         mIsLoadingData = false;
         mLoadMore.setState(BaseLoadMore.STATE_FAILURE);
-        mLoadMore.getFailureView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mIsLoadingData = true;
-                mLoadMore.setState(BaseLoadMore.STATE_LOADING);
-                if (mLoadMoreDelayMillis <= 0) {
-                    mLoadMoreListener.onLoadMore();
-                } else {
-                    postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mLoadMoreListener.onLoadMore();
-                        }
-                    }, mLoadMoreDelayMillis);
-                }
+        mLoadMore.getFailureView().setOnClickListener(v -> {
+            mIsLoadingData = true;
+            mLoadMore.setState(BaseLoadMore.STATE_LOADING);
+            if (mLoadMoreDelayMillis <= 0) {
+                mLoadMoreListener.onLoadMore();
+            } else {
+                postDelayed(() -> mLoadMoreListener.onLoadMore(), mLoadMoreDelayMillis);
             }
         });
     }
@@ -214,12 +206,7 @@ public class BaseRecyclerView extends RecyclerView {
             }
             mRefreshHeader.setState(BaseRefreshHeader.STATE_REFRESHING);
             if (mRefreshListener != null) {
-                postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRefreshListener.onRefresh();
-                    }
-                }, 300 + mRefreshDelayMillis);
+                postDelayed(() -> mRefreshListener.onRefresh(), 300 + mRefreshDelayMillis);
             }
         } else {
             if (getPullHeaderSize() > 0) {
@@ -274,6 +261,20 @@ public class BaseRecyclerView extends RecyclerView {
             return mWrapAdapter.getOriginalAdapter();
         } else {
             return null;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setDataItems(List<Object> list){
+        if (getAdapter() instanceof MultiItemTypeAdapter){
+            ((MultiItemTypeAdapter) getAdapter()).setDataItems(list);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void addDataItem(List<Object> list){
+        if (getAdapter() instanceof MultiItemTypeAdapter){
+            ((MultiItemTypeAdapter) getAdapter()).addDataItem(list);
         }
     }
 
@@ -810,9 +811,7 @@ public class BaseRecyclerView extends RecyclerView {
         mStateLoadingResId = layoutResId;
     }
 
-    private BaseState mState;
     public void setStateType(BaseState state) {
-        mState = state;
         switch (state) {
             case LOADING:
                 setStateView(mStateLoadingResId);
@@ -1075,7 +1074,7 @@ public class BaseRecyclerView extends RecyclerView {
     }
 
     /**
-     * 是否刷新
+     * 是否正在刷新
      */
     public boolean isRefreshing() {
         return mRefreshHeader != null && mRefreshHeader.getState() == BaseRefreshHeader.STATE_REFRESHING;
