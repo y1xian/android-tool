@@ -21,14 +21,18 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.ImageView
+import com.yyxnb.utils.AppConfig
 import com.yyxnb.utils.ext.ViewClickDelay.DELAY_TIME
 import com.yyxnb.utils.ext.ViewClickDelay.hash
 import com.yyxnb.utils.ext.ViewClickDelay.lastClickTime
 
-/**
- * @author TuFei
- * @date 18-10-10.
- */
+fun String.toast() {
+    AppConfig.toast(this)
+}
+
+fun String.log() {
+    AppConfig.debugLog(this)
+}
 
 object ViewClickDelay {
     var hash: Int = 0

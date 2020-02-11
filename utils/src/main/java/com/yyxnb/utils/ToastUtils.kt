@@ -71,17 +71,17 @@ object ToastUtils : Serializable {
 
     @CheckResult
     fun custom(context: Context, message: String, icon: Drawable?, @ColorInt textColor: Int, duration: Int, withIcon: Boolean): Toast? {
-        return custom(context, message, icon, textColor, -1, duration, withIcon, false)
+        return custom(context, message, icon, textColor, -1, duration, withIcon)
     }
 
     //*******************************************内需方法********************************************
     @CheckResult
-    fun custom(context: Context, message: String, @DrawableRes iconRes: Int, @ColorInt textColor: Int, @ColorInt tintColor: Int, duration: Int, withIcon: Boolean, shouldTint: Boolean): Toast? {
-        return custom(context, message, getDrawable(context, iconRes), textColor, tintColor, duration, withIcon, shouldTint)
+    fun custom(context: Context, message: String, @DrawableRes iconRes: Int, @ColorInt textColor: Int, @DrawableRes bgRes: Int, duration: Int, withIcon: Boolean): Toast? {
+        return custom(context, message, getDrawable(context, iconRes), textColor, bgRes, duration, withIcon)
     }
 
     @CheckResult
-    fun custom(context: Context, message: String, icon: Drawable?, @ColorInt textColor: Int, @ColorInt tintColor: Int, duration: Int, withIcon: Boolean, shouldTint: Boolean): Toast? {
+    fun custom(context: Context, message: String, icon: Drawable?, @ColorInt textColor: Int, @DrawableRes bgRes: Int, duration: Int, withIcon: Boolean): Toast? {
         if (currentToast == null) {
             currentToast = Toast(context)
         } else {
@@ -92,12 +92,9 @@ object ToastUtils : Serializable {
         val toastLayout = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.toast_layout, null)
         val toastIcon = toastLayout.findViewById<ImageView>(R.id.toast_icon)
         val toastTextView = toastLayout.findViewById<TextView>(R.id.toast_text)
-        val drawableFrame: Drawable = if (shouldTint) {
-            tint9PatchDrawableFrame(context, tintColor)
-        } else {
-            getDrawable(context, R.drawable.toast_frame)
+        if (bgRes != -1) {
+            setBackground(toastLayout, getDrawable(context, bgRes))
         }
-        setBackground(toastLayout, drawableFrame)
         if (withIcon) {
             requireNotNull(icon) { "Avoid passing 'icon' as null if 'withIcon' is set to true" }
             setBackground(toastIcon, icon)
@@ -111,12 +108,6 @@ object ToastUtils : Serializable {
         currentToast!!.duration = duration
         //        currentToast.setGravity(Gravity.CENTER, 0, 0);
         return currentToast
-    }
-
-    fun tint9PatchDrawableFrame(context: Context, @ColorInt tintColor: Int): Drawable {
-        val toastDrawable = getDrawable(context, R.drawable.toast_frame) as NinePatchDrawable
-        toastDrawable.colorFilter = PorterDuffColorFilter(tintColor, PorterDuff.Mode.SRC_IN)
-        return toastDrawable
     }
 
     //===========================================内需方法============================================

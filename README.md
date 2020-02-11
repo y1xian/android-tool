@@ -27,7 +27,7 @@ dependencies {
     implementation 'com.github.y1xian.Widget:http:+'
     // 常用自定义
     implementation 'com.github.y1xian.Widget:view:+'
-    // 常用工具 (各包都已包括此包)
+    // 公共工具 (各包都已包括此包)
     implementation 'com.github.y1xian.Widget:utils:+'
     // 各种工具 
     implementation 'com.github.y1xian.Widget:tools:+'
