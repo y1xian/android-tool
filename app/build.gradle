@@ -26,6 +26,7 @@ dependencies {
     implementation project(':arch')
     implementation project(':http')
     implementation project(':view')
+    implementation project(':tools')
     implementation project(':adapter')
 
     //glide

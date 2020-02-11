@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.yyxnb.arch.base.BaseActivity
 import com.yyxnb.arch.common.Message
-import com.yyxnb.utils.ToastUtils
 import com.yyxnb.utils.AppConfig
 
 abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {

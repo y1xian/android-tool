@@ -1,21 +1,15 @@
 package com.yyxnb.utils
 
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.os.Build
-import android.provider.Settings
-import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.Log
 import java.io.Serializable
 import java.lang.ref.WeakReference
 import java.lang.reflect.ParameterizedType
-import java.util.*
 
 /**
  * 初始化相关
@@ -87,158 +81,6 @@ object AppConfig : Serializable {
             }
 
         }
-
-    /**
-     * 获取手机版本号
-     *
-     * @return 返回版本号
-     */
-    val appVersion: String
-        get() {
-            val pi: PackageInfo
-            var versionNum: String
-            try {
-                val pm = mWeakReferenceContext.get()!!.packageManager
-                pi = pm.getPackageInfo(mWeakReferenceContext.get()!!.packageName, PackageManager.GET_CONFIGURATIONS)
-                versionNum = pi.versionName
-            } catch (e: Exception) {
-                versionNum = "0"
-            }
-
-            return versionNum
-        }
-
-    /**
-     * 获取手机唯一标识码UUID
-     *
-     * @return 返回UUID
-     *
-     *
-     * 记得添加相应权限
-     * android.permission.READ_PHONE_STATE
-     */
-    val uuid: String
-        get() {
-
-            var uuid: String = SPUtils.getParam("PHONE_UUID", "") as String
-
-            if (TextUtils.isEmpty(uuid)) {
-
-                try {
-                    val telephonyManager = mWeakReferenceContext.get()!!
-                            .getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                    @SuppressLint("MissingPermission", "HardwareIds") val tmDevice = telephonyManager.deviceId
-                    @SuppressLint("MissingPermission", "HardwareIds") val tmSerial = telephonyManager.simSerialNumber
-
-                    @SuppressLint("HardwareIds") val androidId = Settings.Secure.getString(mWeakReferenceContext.get()!!.getContentResolver(), Settings.Secure.ANDROID_ID)
-                    val deviceUuid = UUID(androidId.hashCode().toLong(), tmDevice.hashCode().toLong() shl 32 or tmSerial.hashCode().toLong())
-                    val uniqueId = deviceUuid.toString()
-                    uuid = uniqueId
-                    SPUtils.saveParam("PHONE_UUID", uuid)
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            return uuid
-
-        }
-
-    /**
-     * 获取手机唯一标识序列号
-     *
-     * @return
-     */
-    // Galaxy nexus 品牌类型
-    //samsung 品牌
-    val uniqueSerialNumber: String
-        get() {
-            val phoneName = Build.MODEL
-            val manuFacturer = Build.MANUFACTURER
-            Log.d("详细序列号", "$manuFacturer-$phoneName-$serialNumber")
-            return "$manuFacturer-$phoneName-$serialNumber"
-        }
-
-    /**
-     * 获取设备的IMEI
-     *
-     * @return
-     */
-    @SuppressLint("HardwareIds", "MissingPermission")
-    fun getDeviceIdIMEI(): String {
-        val id: String
-        //android.telephony.TelephonyManager
-        val mTelephony = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        if (mTelephony.deviceId != null) {
-            id = mTelephony.deviceId
-        } else {
-            //android.provider.Settings;
-            id = Settings.Secure.getString(context.applicationContext.contentResolver, Settings.Secure.ANDROID_ID)
-        }
-        return id
-    }
-
-    /**
-     * 获取设备的软件版本号
-     *
-     * @return
-     */
-    @SuppressLint("MissingPermission")
-    fun getDeviceSoftwareVersion(): String {
-        val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        return tm.deviceSoftwareVersion
-    }
-
-    /**
-     * 序列号
-     *
-     * @return
-     */
-    val serialNumber: String?
-        get() {
-            var serial: String? = null
-            try {
-                val c = Class.forName("android.os.SystemProperties")
-                val get = c.getMethod("get", String::class.java)
-                serial = get.invoke(c, "ro.serialno") as String
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-            return serial
-        }
-
-    /**
-     * 获取ANDROID ID
-     *
-     * @return
-     */
-    @SuppressLint("HardwareIds")
-    fun getAndroidId(): String {
-        return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-    }
-
-    /**
-     * 获取设备的IMSI
-     * @return
-     */
-    @SuppressLint("MissingPermission", "HardwareIds")
-    fun getIMSI(): String {
-        val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        return tm.subscriberId
-    }
-
-    /**
-     * 判断设备是否是手机
-     *
-     * @return `true`: 是<br></br>`false`: 否
-     */
-    fun isPhone(): Boolean {
-        val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        return tm.phoneType != TelephonyManager.PHONE_TYPE_NONE
-    }
 
     /**
      * 返回实例的泛型类型

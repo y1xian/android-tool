@@ -10,7 +10,7 @@ import com.yyxnb.adapter.ItemDecoration;
 import com.yyxnb.adapter.MultiItemTypeAdapter;
 import com.yyxnb.adapter.ext.RecyclerViewExtKt;
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.utils.ToastUtils;
+import com.yyxnb.utils.AppConfig;
 import com.yyxnb.view.popup.Popup;
 import com.yyxnb.view.titlebar.TitleBar;
 import com.yyxnb.widget.R;
@@ -75,40 +75,40 @@ public class DialogFragment extends BaseFragment {
                         break;
                     case 1:
                         new Popup.Builder(mContext).asConfirm("标题", "内容", () -> {
-                            ToastUtils.INSTANCE.normal("确认");
+                            AppConfig.INSTANCE.toast("确认");
                         }, () -> {
-                            ToastUtils.INSTANCE.normal("取消");
+                            AppConfig.INSTANCE.toast("取消");
                         }).show();
                         break;
                     case 2:
                         new Popup.Builder(mContext).asInputConfirm("标题", "内容", "", "请输入", text -> {
-                            ToastUtils.INSTANCE.normal("确认 ：" + text);
+                            AppConfig.INSTANCE.toast("确认 ：" + text);
                         }, () -> {
-                            ToastUtils.INSTANCE.normal("取消");
+                            AppConfig.INSTANCE.toast("取消");
                         }).show();
                         break;
                     case 3:
                         new Popup.Builder(mContext).asCenterList("标题", new String[]{"序列1", "序列2", "序列3"}, (position1, text) -> {
-                            ToastUtils.INSTANCE.normal("选中 " + position1 + "，" + text);
+                            AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
                         }).show();
                         break;
                     case 4:
                         new Popup.Builder(mContext).asCenterList("标题", new String[]{"序列1", "序列2", "序列3"},
                                 new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher}, 1,
                                 R.mipmap.ic_del, (position1, text) -> {
-                                    ToastUtils.INSTANCE.normal("选中 " + position1 + "，" + text);
+                                    AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
                                 }).show();
                         break;
                     case 5:
                         new Popup.Builder(mContext).asBottomList("标题", new String[]{"序列1", "序列2", "序列3"}, (position1, text) -> {
-                            ToastUtils.INSTANCE.normal("选中 " + position1 + "，" + text);
+                            AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
                         }).show();
                         break;
                     case 6:
                         new Popup.Builder(mContext).asBottomList("标题", new String[]{"序列1", "序列2", "序列3"},
                                 new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher}, 1,
                                 R.mipmap.ic_del, (position1, text) -> {
-                                    ToastUtils.INSTANCE.normal("选中 " + position1 + "，" + text);
+                                    AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
                                 }).show();
                         break;
                     case 7:
@@ -152,16 +152,16 @@ public class DialogFragment extends BaseFragment {
                         break;
                     case 1:
                         new Popup.Builder(mContext).asConfirm("标题", "内容", () -> {
-                            ToastUtils.INSTANCE.normal("确认");
+                            AppConfig.INSTANCE.toast("确认");
                         }, () -> {
-                            ToastUtils.INSTANCE.normal("取消");
+                            AppConfig.INSTANCE.toast("取消");
                         }).bindLayout(R.layout.popup_tip_confirm).show();
                         break;
                     case 2:
                         new Popup.Builder(mContext).asInputConfirm("标题", "内容", "", "请输入", text -> {
-                            ToastUtils.INSTANCE.normal("确认 ：" + text);
+                            AppConfig.INSTANCE.toast("确认 ：" + text);
                         }, () -> {
-                            ToastUtils.INSTANCE.normal("取消");
+                            AppConfig.INSTANCE.toast("取消");
                         }).bindLayout(R.layout.popup_tip_confirm).show();
                         break;
                     case 3:

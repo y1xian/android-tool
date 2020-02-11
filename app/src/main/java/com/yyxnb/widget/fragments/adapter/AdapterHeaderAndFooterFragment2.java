@@ -4,7 +4,6 @@ package com.yyxnb.widget.fragments.adapter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.yyxnb.adapter.rv.BaseState;
 import com.yyxnb.adapter.rv.BaseRecyclerView;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
-import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.NetWorkListAdapter;
@@ -140,7 +138,7 @@ public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
             @Override
             public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
-                ToastUtils.INSTANCE.normal("" + position);
+                AppConfig.INSTANCE.toast("" + position);
             }
 
             @Override

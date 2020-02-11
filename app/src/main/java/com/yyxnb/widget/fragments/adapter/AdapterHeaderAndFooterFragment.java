@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import com.yyxnb.adapter.ext.RecyclerViewExtKt;
 import com.yyxnb.adapter.rv.BaseRecyclerView;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
-import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.adapter.MultiItemTypeAdapter;
@@ -130,7 +128,7 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
             @Override
             public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
-                ToastUtils.INSTANCE.normal("" + position);
+                AppConfig.INSTANCE.toast("" + position);
             }
 
             @Override

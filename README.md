@@ -27,8 +27,10 @@ dependencies {
     implementation 'com.github.y1xian.Widget:http:+'
     // 常用自定义
     implementation 'com.github.y1xian.Widget:view:+'
-    // 常用工具分离，kt扩展 (arch已包括此包)
+    // 常用工具 (各包都已包括此包)
     implementation 'com.github.y1xian.Widget:utils:+'
+    // 各种工具 
+    implementation 'com.github.y1xian.Widget:tools:+'
     // 适配器
     implementation 'com.github.y1xian.Widget:adapter:+'
 }

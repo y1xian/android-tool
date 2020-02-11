@@ -7,8 +7,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.yyxnb.arch.base.BaseActivity
 import com.yyxnb.utils.log.LogUtils
-import com.yyxnb.utils.permission.FanPermissionListener
-import com.yyxnb.utils.permission.FanPermissionUtils
+import com.yyxnb.tools.permission.FanPermissionListener
+import com.yyxnb.tools.permission.FanPermissionUtils
 import com.yyxnb.adapter.BaseViewHolder
 import com.yyxnb.adapter.ItemDecoration
 import com.yyxnb.adapter.MultiItemTypeAdapter

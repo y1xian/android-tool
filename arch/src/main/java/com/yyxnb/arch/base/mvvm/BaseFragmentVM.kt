@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.yyxnb.arch.base.BaseFragment
 import com.yyxnb.arch.common.Message
-import com.yyxnb.utils.ToastUtils
 import com.yyxnb.utils.AppConfig
 
 
