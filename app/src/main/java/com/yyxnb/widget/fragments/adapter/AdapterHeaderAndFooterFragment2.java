@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yyxnb.adapter.BaseViewHolder;
+import com.yyxnb.adapter.ItemDecoration;
 import com.yyxnb.adapter.MultiItemTypeAdapter;
 import com.yyxnb.adapter.ext.RecyclerViewExtKt;
 import com.yyxnb.adapter.rv.BaseState;
@@ -70,8 +71,13 @@ public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 //        mRecyclerView.setHasFixedSize(true);
 //        mRecyclerView.setAdapter(mAdapter);
-
-        RecyclerViewExtKt.wrapLinear(mRecyclerView, mContext).setAdapter(mAdapter);
+        ItemDecoration decoration = new ItemDecoration(mContext);
+        decoration.setOnlySetItemOffsetsButNoDraw(true);
+        decoration.setDrawBorderTopAndBottom(true);
+        decoration.setDrawBorderLeftAndRight(true);
+//        decoration.setDividerHeight(20);
+//        decoration.setDividerWidth(20);
+        RecyclerViewExtKt.wrapLinear(mRecyclerView, mContext,decoration).setAdapter(mAdapter);
 
 
         View view = LayoutInflater.from(mContext).inflate(R.layout._loading_layout_error, (ViewGroup) getMRootView(), false);
@@ -182,7 +188,7 @@ public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
 
     }
 
-    public void setData(ArrayList<TestData> data){
+    public void setData(ArrayList<TestData> data) {
         RecyclerViewExtKt.wrapData(mRecyclerView, page, data);
     }
 

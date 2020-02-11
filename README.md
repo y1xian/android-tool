@@ -29,5 +29,7 @@ dependencies {
     implementation 'com.github.y1xian.Widget:view:+'
     // 常用工具分离，kt扩展 (arch已包括此包)
     implementation 'com.github.y1xian.Widget:utils:+'
+    // 适配器
+    implementation 'com.github.y1xian.Widget:adapter:+'
 }
 ```

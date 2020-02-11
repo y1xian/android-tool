@@ -20,6 +20,18 @@ fun RecyclerView.wrapLinear(
     return this
 }
 
+fun RecyclerView.wrapLinear(
+        context: Context,
+        decoration: ItemDecoration.() -> ItemDecoration
+): RecyclerView {
+    apply {
+        layoutManager = LinearLayoutManager(context)
+        setHasFixedSize(true)
+        addItemDecoration(ItemDecoration(context).let(decoration))
+    }
+    return this
+}
+
 @JvmOverloads
 fun RecyclerView.wrapGrid(
         context: Context,
@@ -30,6 +42,19 @@ fun RecyclerView.wrapGrid(
         layoutManager = GridLayoutManager(context, spanCount)
         setHasFixedSize(true)
         addItemDecoration(decoration)
+    }
+    return this
+}
+
+fun RecyclerView.wrapGrid(
+        context: Context,
+        spanCount: Int = 2,
+        decoration: ItemDecoration.() -> ItemDecoration
+): RecyclerView {
+    apply {
+        layoutManager = GridLayoutManager(context, spanCount)
+        setHasFixedSize(true)
+        addItemDecoration(ItemDecoration(context).let(decoration))
     }
     return this
 }

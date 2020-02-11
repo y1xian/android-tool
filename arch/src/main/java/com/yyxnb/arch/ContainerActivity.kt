@@ -22,8 +22,7 @@ class ContainerActivity : BaseActivity() {
     override fun initLayoutResId(): Int = R.layout.base_nav_content
 
     override fun initView(savedInstanceState: Bundle?) {
-        setStatusBarStyle(BarStyle.DarkContent)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         tryCatch({
             if (null == intent) {

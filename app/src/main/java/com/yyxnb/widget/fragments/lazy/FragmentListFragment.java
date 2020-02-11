@@ -69,7 +69,7 @@ public class FragmentListFragment extends BaseFragment {
                         startFragment(LazyFragment.newInstance());
                         break;
                     case 1:
-                        startFragment(LazyVpFragment.newInstance());
+                        startFragment(LazyTitleVpFragment.newInstance());
                         break;
                     case 2:
                         Bundle bundle = initArguments();

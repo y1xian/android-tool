@@ -53,16 +53,11 @@ public abstract class BottomPopup extends BasePopup {
 
             @Override
             public void onOpen() {
-                BottomPopup.super.doAfterShow();
+                doAfterShow();
             }
         });
 
-        bottomPopupContainer.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        bottomPopupContainer.setOnClickListener(v -> dismiss());
     }
 
 

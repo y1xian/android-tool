@@ -9,12 +9,11 @@ import android.support.v7.widget.Toolbar;
 
 import com.yyxnb.arch.annotations.BarStyle;
 import com.yyxnb.arch.annotations.StatusBarDarkTheme;
-import com.yyxnb.arch.annotations.SubPage;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.base.BaseFragmentPagerAdapter;
+import com.yyxnb.utils.DpUtils;
 import com.yyxnb.utils.StatusBarUtils;
 import com.yyxnb.utils.log.LogUtils;
-import com.yyxnb.utils.DpUtils;
 import com.yyxnb.widget.R;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -34,8 +33,8 @@ import java.util.List;
 /**
  * 懒加载.vp
  */
-@SubPage
-public class LazyVpFragment extends BaseFragment {
+@StatusBarDarkTheme(value = BarStyle.LightContent)
+public class LazyTitleVpFragment extends BaseFragment {
 
     private Toolbar mToolbar;
     private MagicIndicator mIndicator;
@@ -43,18 +42,18 @@ public class LazyVpFragment extends BaseFragment {
     private String[] title = new String[]{"11","2222","333","44444"};
     private List<Fragment> fragments = new ArrayList<>();
 
-    public static LazyVpFragment newInstance() {
+    public static LazyTitleVpFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        LazyVpFragment fragment = new LazyVpFragment();
+        LazyTitleVpFragment fragment = new LazyTitleVpFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public int initLayoutResId() {
-        return R.layout.fragment_lazy_vp;
+        return R.layout.fragment_lazy_title_vp;
     }
 
     @Override
@@ -66,12 +65,12 @@ public class LazyVpFragment extends BaseFragment {
 //        StatusBarUtils.INSTANCE.appendStatusBarPadding(mToolbar,100);
 
 
-//        LogUtils.INSTANCE.e("， " + StatusBarUtils.INSTANCE.isStatusBarLightMode(getWindow()));
+        LogUtils.INSTANCE.e("， " + StatusBarUtils.INSTANCE.isStatusBarLightMode(getWindow()));
 
-//        mToolbar.post(() -> {
-//            LogUtils.INSTANCE.e(mToolbar.getHeight() +"， " + mToolbar.getMeasuredHeight());
-//            StatusBarUtils.INSTANCE.appendStatusBarPadding(mToolbar,mToolbar.getHeight());
-//        });
+        mToolbar.post(() -> {
+            LogUtils.INSTANCE.e(mToolbar.getHeight() +"， " + mToolbar.getMeasuredHeight());
+            StatusBarUtils.INSTANCE.appendStatusBarPadding(mToolbar,mToolbar.getHeight());
+        });
     }
 
     @Override

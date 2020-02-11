@@ -1,5 +1,6 @@
 package com.yyxnb.view.popup;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.v4.view.NestedScrollingParent;
@@ -30,6 +31,7 @@ public class SmartDragLayout extends FrameLayout implements NestedScrollingParen
     boolean hasShadowBg = true;
     boolean isUserClose = false;
     LayoutStatus status = LayoutStatus.Close;
+
     public SmartDragLayout(Context context) {
         this(context, null);
     }
@@ -82,6 +84,8 @@ public class SmartDragLayout extends FrameLayout implements NestedScrollingParen
     }
 
     float touchX, touchY;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (scroller.computeScrollOffset()) {
@@ -130,8 +134,8 @@ public class SmartDragLayout extends FrameLayout implements NestedScrollingParen
                 }
 
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
         return true;
     }
@@ -191,32 +195,19 @@ public class SmartDragLayout extends FrameLayout implements NestedScrollingParen
 
     public void open() {
         status = LayoutStatus.Opening;
-        post(new Runnable() {
-            @Override
-            public void run() {
-                smoothScroll(maxY - getScrollY());
-            }
-        });
+        post(() -> smoothScroll(maxY - getScrollY()));
     }
 
     public void close() {
         isUserClose = true;
         status = LayoutStatus.Closing;
-        post(new Runnable() {
-            @Override
-            public void run() {
-                smoothScroll(minY - getScrollY());
-            }
-        });
+        post(() -> smoothScroll(minY - getScrollY()));
     }
 
     public void smoothScroll(final int dy) {
-        post(new Runnable() {
-            @Override
-            public void run() {
-                scroller.startScroll(getScrollX(), getScrollY(), 0, dy, Popup.getAnimationDuration());
-                ViewCompat.postInvalidateOnAnimation(SmartDragLayout.this);
-            }
+        post(() -> {
+            scroller.startScroll(getScrollX(), getScrollY(), 0, dy, Popup.getAnimationDuration());
+            ViewCompat.postInvalidateOnAnimation(SmartDragLayout.this);
         });
     }
 

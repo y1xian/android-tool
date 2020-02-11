@@ -14,11 +14,7 @@ import com.yyxnb.utils.OSUtils;
 import java.util.ArrayList;
 
 /**
- * copy from https://github.com/gyf-dev/ImmersionBar.
  * 导航栏显示隐藏处理，目前只支持emui和miui带有导航栏的手机
- *
- * @author geyifeng
- * @date 2019/4/10 6:02 PM
  */
 public final class NavigationBarObserver extends ContentObserver {
     /**
@@ -97,7 +93,7 @@ public final class NavigationBarObserver extends ContentObserver {
     }
 
     public void removeOnNavigationBarListener(OnNavigationBarListener listener) {
-        if(mIsRegister){
+        if (mIsRegister) {
             context.getContentResolver().unregisterContentObserver(this);
             mIsRegister = false;
         }

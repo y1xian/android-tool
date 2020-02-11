@@ -259,12 +259,12 @@ public class PopupUtils {
             if (focusEt != null && overflowHeight > 0) {
                 dy = overflowHeight;
             }
-        }else if(isTopPartShadow(pv)){
+        } else if (isTopPartShadow(pv)) {
             int overflowHeight = (focusBottom + keyboardHeight) - windowHeight;
             if (focusEt != null && overflowHeight > 0) {
                 dy = overflowHeight;
             }
-            if(dy!=0){
+            if (dy != 0) {
                 pv.getPopupImplView().animate().translationY(-dy)
                         .setDuration(200)
                         .setInterpolator(new OvershootInterpolator(0))
@@ -302,7 +302,7 @@ public class PopupUtils {
             pv.getPopupImplView().animate().translationY(0)
                     .setInterpolator(new OvershootInterpolator(0))
                     .setDuration(200).start();
-        }else {
+        } else {
             pv.getPopupContentView().animate().translationY(0)
                     .setInterpolator(new OvershootInterpolator(0))
                     .setDuration(200).start();

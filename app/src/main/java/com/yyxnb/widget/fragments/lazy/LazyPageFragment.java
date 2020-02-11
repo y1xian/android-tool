@@ -33,7 +33,7 @@ public class LazyPageFragment extends BaseFragment {
     public static LazyPageFragment newInstance(int page) {
 
         Bundle args = new Bundle();
-        args.putInt("page",page);
+        args.putInt("page", page);
         LazyPageFragment fragment = new LazyPageFragment();
         fragment.setArguments(args);
         return fragment;
@@ -47,7 +47,7 @@ public class LazyPageFragment extends BaseFragment {
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
 
-        page = getArguments().getInt("page",0);
+        page = getArguments().getInt("page", 0);
 
         mRecyclerView = findViewById(R.id.mRecyclerView);
         mAdapter = new StringListAdapter();
@@ -55,12 +55,12 @@ public class LazyPageFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         ItemDecoration decoration = new ItemDecoration(mContext);
 //        decoration.setDividerColor(Color.BLUE);
-        decoration.setOnlySetItemOffsetsButNoDraw(true);
+        decoration.setOnlySetItemOffsetsButNoDraw(true).setDividerHeight(10);
         mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener(){
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
             @Override
             public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
                 super.onItemClick(view, holder, position);

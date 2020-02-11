@@ -566,69 +566,80 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
         return drawBorderTopAndBottom;
     }
 
-    public void setDrawBorderTopAndBottom(boolean drawBorderTopAndBottom) {
+    public ItemDecoration setDrawBorderTopAndBottom(boolean drawBorderTopAndBottom) {
         this.drawBorderTopAndBottom = drawBorderTopAndBottom;
+        return this;
     }
 
     public boolean isDrawBorderLeftAndRight() {
         return drawBorderLeftAndRight;
     }
 
-    public void setDrawBorderLeftAndRight(boolean drawBorderLeftAndRight) {
+    public ItemDecoration setDrawBorderLeftAndRight(boolean drawBorderLeftAndRight) {
         this.drawBorderLeftAndRight = drawBorderLeftAndRight;
+        return this;
     }
 
     public boolean isOnlySetItemOffsetsButNoDraw() {
         return onlySetItemOffsetsButNoDraw;
     }
 
-    public void setOnlySetItemOffsetsButNoDraw(boolean onlySetItemOffsetsButNoDraw) {
+    public ItemDecoration setOnlySetItemOffsetsButNoDraw(boolean onlySetItemOffsetsButNoDraw) {
         this.onlySetItemOffsetsButNoDraw = onlySetItemOffsetsButNoDraw;
+        return this;
     }
 
-    public void setPaddingTop(int paddingTop) {
+    public ItemDecoration setPaddingTop(int paddingTop) {
         this.paddingTop = DpUtils.dp2px(mContext, paddingTop);
+        return this;
     }
 
-    public void setPaddingBottom(int paddingBottom) {
+    public ItemDecoration setPaddingBottom(int paddingBottom) {
         this.paddingBottom = DpUtils.dp2px(mContext, paddingBottom);
+        return this;
     }
 
-    public void setPaddingLeft(int paddingLeft) {
+    public ItemDecoration setPaddingLeft(int paddingLeft) {
         this.paddingLeft = DpUtils.dp2px(mContext, paddingLeft);
+        return this;
     }
 
-    public void setPaddingRight(int paddingRight) {
+    public ItemDecoration setPaddingRight(int paddingRight) {
         this.paddingRight = DpUtils.dp2px(mContext, paddingRight);
+        return this;
     }
 
     /**
      * 图片
      */
-    public void setDividerDrawable(@DrawableRes int drawableId) {
+    public ItemDecoration setDividerDrawable(@DrawableRes int drawableId) {
         this.mDivider = ContextCompat.getDrawable(mContext, drawableId);
+        return this;
     }
 
     /**
      * 分割线高度
      */
-    public void setDividerHeight(int dividerHeight) {
+    public ItemDecoration setDividerHeight(int dividerHeight) {
         this.dividerHeight = DpUtils.dp2px(mContext, dividerHeight);
+        return this;
     }
 
     /**
      * 分割线宽度 网格
      */
-    public void setDividerWidth(int dividerWidth) {
+    public ItemDecoration setDividerWidth(int dividerWidth) {
         this.dividerWidth = DpUtils.dp2px(mContext, dividerWidth);
+        return this;
     }
 
     /**
      * 分割线颜色
      */
-    public void setDividerColor(@ColorInt int dividerColor) {
+    public ItemDecoration setDividerColor(@ColorInt int dividerColor) {
         this.dividerColor = dividerColor;
         this.mDivider = new ColorDrawable(dividerColor);
+        return this;
     }
 
 }

@@ -51,22 +51,10 @@ public class InputConfirmPopup extends ConfirmPopup implements View.OnClickListe
             etInput.setText(inputContent);
             etInput.setSelection(inputContent.length());
         }
-        applyPrimary();
     }
 
     public EditText getEditText() {
         return etInput;
-    }
-
-    protected void applyPrimary() {
-        super.applyPrimaryColor();
-        PopupUtils.setCursorDrawableColor(etInput, Popup.getPrimaryColor());
-        etInput.post(() -> {
-            BitmapDrawable defaultDrawable = PopupUtils.createBitmapDrawable(getResources(), etInput.getMeasuredWidth(), Color.parseColor("#888888"));
-            BitmapDrawable focusDrawable = PopupUtils.createBitmapDrawable(getResources(), etInput.getMeasuredWidth(), Popup.getPrimaryColor());
-            etInput.setBackgroundDrawable(PopupUtils.createSelector(defaultDrawable, focusDrawable));
-        });
-
     }
 
     OnCancelListener cancelListener;

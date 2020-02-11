@@ -18,6 +18,7 @@ import com.yyxnb.widget.fragments.BehaviorFragment
 import com.yyxnb.widget.fragments.TagFragment
 import com.yyxnb.widget.fragments.TitleFragment
 import com.yyxnb.widget.fragments.adapter.AdapterListFragment
+import com.yyxnb.widget.fragments.dialog.DialogFragment
 import com.yyxnb.widget.fragments.lazy.FragmentListFragment
 import com.yyxnb.widget.fragments.http.NetWorkListFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -75,6 +76,7 @@ class MainActivity : BaseActivity() {
             3 -> startFragment(AdapterListFragment.newInstance())
             4 -> startFragment(BehaviorFragment())
             5 -> startFragment(TagFragment.newInstance())
+            6 -> startFragment(DialogFragment.newInstance())
             else -> {
 //                val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
 //                loadingPopup.show()

@@ -21,7 +21,8 @@ public final class KeyboardUtils {
 
     public static int sDecorViewInvisibleHeightPre;
     private static ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener;
-    private static HashMap<View,OnSoftInputChangedListener> listenerMap = new HashMap<>();
+    private static HashMap<View, OnSoftInputChangedListener> listenerMap = new HashMap<>();
+
     private KeyboardUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
@@ -60,27 +61,27 @@ public final class KeyboardUtils {
         ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                    int height = getDecorViewInvisibleHeight(activity);
-                    if (sDecorViewInvisibleHeightPre != height) {
-                        //通知所有弹窗的监听器输入法高度变化了
-                        for (OnSoftInputChangedListener  changedListener: listenerMap.values()) {
-                            changedListener.onSoftInputChanged(height);
-                        }
-                        sDecorViewInvisibleHeightPre = height;
+                int height = getDecorViewInvisibleHeight(activity);
+                if (sDecorViewInvisibleHeightPre != height) {
+                    //通知所有弹窗的监听器输入法高度变化了
+                    for (OnSoftInputChangedListener changedListener : listenerMap.values()) {
+                        changedListener.onSoftInputChanged(height);
                     }
+                    sDecorViewInvisibleHeightPre = height;
+                }
             }
         };
         contentView.getViewTreeObserver()
                 .addOnGlobalLayoutListener(onGlobalLayoutListener);
     }
 
-    public static void removeLayoutChangeListener(View decorView, BasePopup popupView){
+    public static void removeLayoutChangeListener(View decorView, BasePopup popupView) {
         onGlobalLayoutListener = null;
-        if(decorView==null) {
+        if (decorView == null) {
             return;
         }
         View contentView = decorView.findViewById(android.R.id.content);
-        if(contentView==null) {
+        if (contentView == null) {
             return;
         }
         contentView.getViewTreeObserver().removeGlobalOnLayoutListener(onGlobalLayoutListener);

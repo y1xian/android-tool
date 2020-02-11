@@ -1,10 +1,10 @@
 package com.yyxnb.view.popup.code;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -48,9 +48,15 @@ public abstract class BasePopup extends FrameLayout implements OnNavigationBarLi
     private int touchSlop;
     public PopupStatus popupStatus = PopupStatus.Dismiss;
     private boolean isCreated = false;
+    private AppCompatActivity activity;
+
+    public AppCompatActivity getActivity() {
+        return activity;
+    }
 
     public BasePopup(@NonNull Context context) {
         super(context);
+        activity = (AppCompatActivity) context;
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         shadowBgAnimator = new ShadowBgAnimator(this);
         //  添加Popup窗体内容View
@@ -188,7 +194,6 @@ public abstract class BasePopup extends FrameLayout implements OnNavigationBarLi
         if (getParent() != null) {
             return this;
         }
-        final Activity activity = (Activity) getContext();
         popupInfo.decorView = (ViewGroup) activity.getWindow().getDecorView();
         KeyboardUtils.registerSoftInputChangedListener(activity, this, height -> {
             if (height == 0) { // 说明对话框隐藏
@@ -201,18 +206,15 @@ public abstract class BasePopup extends FrameLayout implements OnNavigationBarLi
             }
         });
         // 1. add PopupView to its decorView after measured.
-        popupInfo.decorView.post(new Runnable() {
-            @Override
-            public void run() {
-                if (getParent() != null) {
-                    ((ViewGroup) getParent()).removeView(BasePopup.this);
-                }
-                popupInfo.decorView.addView(BasePopup.this, new LayoutParams(LayoutParams.MATCH_PARENT,
-                        LayoutParams.MATCH_PARENT));
-
-                //2. do init，game start.
-                init();
+        popupInfo.decorView.post(() -> {
+            if (getParent() != null) {
+                ((ViewGroup) getParent()).removeView(BasePopup.this);
             }
+            popupInfo.decorView.addView(BasePopup.this, new LayoutParams(LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT));
+
+            //2. do init，game start.
+            init();
         });
         return this;
     }
@@ -222,20 +224,17 @@ public abstract class BasePopup extends FrameLayout implements OnNavigationBarLi
         postDelayed(doAfterShowTask, getAnimationDuration());
     }
 
-    private Runnable doAfterShowTask = new Runnable() {
-        @Override
-        public void run() {
-            popupStatus = PopupStatus.Show;
-            onShow();
-            if (BasePopup.this instanceof FullScreenPopup) {
-                focusAndProcessBackPress();
-            }
-            if (popupInfo != null && popupInfo.popupCallback != null) {
-                popupInfo.popupCallback.onShow();
-            }
-            if (PopupUtils.getDecorViewInvisibleHeight((Activity) getContext()) > 0 && !hasMoveUp) {
-                PopupUtils.moveUpToKeyboard(PopupUtils.getDecorViewInvisibleHeight((Activity) getContext()), BasePopup.this);
-            }
+    private Runnable doAfterShowTask = () -> {
+        popupStatus = PopupStatus.Show;
+        onShow();
+        if (BasePopup.this instanceof FullScreenPopup) {
+            focusAndProcessBackPress();
+        }
+        if (popupInfo != null && popupInfo.popupCallback != null) {
+            popupInfo.popupCallback.onShow();
+        }
+        if (PopupUtils.getDecorViewInvisibleHeight(activity) > 0 && !hasMoveUp) {
+            PopupUtils.moveUpToKeyboard(PopupUtils.getDecorViewInvisibleHeight(activity), BasePopup.this);
         }
     };
 
@@ -526,7 +525,7 @@ public abstract class BasePopup extends FrameLayout implements OnNavigationBarLi
                     stack.get(stack.size() - 1).focusAndProcessBackPress();
                 } else {
                     // 让根布局拿焦点，避免布局内RecyclerView类似布局获取焦点导致布局滚动
-                    View needFocusView = ((Activity) getContext()).findViewById(android.R.id.content);
+                    View needFocusView = activity.findViewById(android.R.id.content);
                     needFocusView.setFocusable(true);
                     needFocusView.setFocusableInTouchMode(true);
                 }

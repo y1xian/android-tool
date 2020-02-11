@@ -56,6 +56,23 @@ object DataConfig {
             return field
         }
 
+    val dialogList = ArrayList<String>()
+        get() {
+            field.clear()
+            field.add("loading")
+            field.add("提示")
+            field.add("输入框")
+            field.add("中间列表")
+            field.add("中间列表 带选中")
+            field.add("底部列表")
+            field.add("底部列表 带选中")
+            field.add("全屏")
+            field.add("底部弹框 注册")
+            field.add("评论列表")
+            field.add("底部 + vp")
+            return field
+        }
+
     val dataUrl = ArrayList<String>()
         get() {
             field.clear()

@@ -30,7 +30,6 @@ dependencies {
 
     //glide
     api libs.glide
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     kapt libs.glide_compiler
 
     //https://github.com/hackware1993/MagicIndicator

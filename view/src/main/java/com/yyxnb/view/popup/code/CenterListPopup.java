@@ -33,7 +33,7 @@ public class CenterListPopup extends CenterPopup {
     /**
      * 传入自定义的布局，对布局中的id有要求
      *
-     * @param layoutId 要求layoutId中必须有一个id为recyclerView的RecyclerView，如果你需要显示标题，则必须有一个id为tv_title的TextView
+     * @param layoutId 要求layoutId中必须有一个id为mRecyclerView的RecyclerView，如果你需要显示标题，则必须有一个id为tvTitle的TextView
      * @return
      */
     public CenterListPopup bindLayout(int layoutId) {

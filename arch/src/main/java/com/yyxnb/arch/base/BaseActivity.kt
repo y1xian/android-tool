@@ -70,7 +70,7 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
             javaClass.getAnnotation(FitsSystemWindows::class.java)?.let { fitsSystemWindows = it.value }
             javaClass.getAnnotation(SwipeBack::class.java)?.let { swipeBack = it.value }
 
-            if (!subPage){
+            if (!subPage) {
                 setStatusBarTranslucent(statusBarTranslucent, fitsSystemWindows)
                 setStatusBarStyle(statusBarDarkTheme)
                 setNavigationBarStyle(navigationBarDarkTheme)
