@@ -1,5 +1,13 @@
 package com.yyxnb.widget.config
 
+import android.content.Context
+import android.graphics.Color
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import com.yyxnb.utils.AppConfig.toast
+import com.yyxnb.widget.R
 import com.yyxnb.widget.bean.TestData
 import kotlin.random.Random
 
@@ -40,10 +48,8 @@ object DataConfig {
         get() {
             field.clear()
             field.add("----- 列表 -----")
-            field.add("----- paging -----")
             field.add("----- 上传 -----")
             field.add("----- 下载 -----")
-            field.add("----- 列表 无状态 -----")
             return field
         }
 
@@ -53,6 +59,7 @@ object DataConfig {
             field.add("----- 头尾 侧滑-----")
             field.add("----- 多Item -----")
             field.add("----- 状态视图 -----")
+            field.add("----- Paging -----")
             return field
         }
 
@@ -86,7 +93,7 @@ object DataConfig {
         get() {
             field.clear()
             for (i in 0..2) {
-                field.add(TestData(i," - ${Random.nextInt(99)} - "))
+                field.add(TestData(Random.nextInt(999), " - ${Random.nextInt(999)} - "))
             }
             return field
         }
@@ -95,9 +102,26 @@ object DataConfig {
         get() {
             field.clear()
             for (i in 0..2) {
-                field.add(TestData(i,"第 $i 条"))
+                field.add(TestData(i, "第 $i 条"))
             }
             return field
         }
+
+    fun createView(mContext: Context, text: String): TextView? {
+        val textView = TextView(mContext)
+        textView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100)
+        //        textView.setPadding(80, 80, 80, 80);
+        textView.gravity = Gravity.CENTER
+        textView.setTextColor(Color.WHITE)
+        when (java.util.Random().nextInt(4)) {
+            0 -> textView.setBackgroundResource(R.color.red)
+            1 -> textView.setBackgroundResource(R.color.yellow)
+            2 -> textView.setBackgroundResource(R.color.blue)
+            else -> textView.setBackgroundResource(R.color.black)
+        }
+        textView.text = text
+        textView.setOnClickListener { v: View? -> toast(text) }
+        return textView
+    }
 
 }

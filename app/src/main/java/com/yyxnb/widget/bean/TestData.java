@@ -3,6 +3,8 @@ package com.yyxnb.widget.bean;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "test")
 public class TestData {
 
@@ -32,5 +34,19 @@ public class TestData {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TestData)) return false;
+        TestData data = (TestData) o;
+        return getId() == data.getId() &&
+                getContent().equals(data.getContent());
+    }
+
+    @Override
+    public int hashCode() {
+        return Math.abs(Objects.hash(getId(), getContent()));
     }
 }

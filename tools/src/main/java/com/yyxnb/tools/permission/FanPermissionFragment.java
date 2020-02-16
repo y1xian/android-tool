@@ -21,7 +21,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
-import com.yyxnb.utils.R;
+import com.yyxnb.tools.R;
+
 
 /**
  * A simple {@link Fragment} subclass.

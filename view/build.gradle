@@ -70,7 +70,5 @@ dependencies {
     implementation project(':utils'), project(':adapter')
     implementation libs.support_v7, libs.support_v4
     //kt
-    implementation libs.kotlin_stdlib
-    implementation libs.kotlin_coroutines
-    implementation libs.kotlin_coroutines_core
+    compileOnly libs.kotlin_stdlib, libs.kotlin_coroutines, libs.kotlin_coroutines_core
 }

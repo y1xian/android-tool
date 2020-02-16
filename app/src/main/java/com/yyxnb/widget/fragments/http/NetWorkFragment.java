@@ -58,16 +58,12 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mAdapter.setDataItems(null);
+//                mAdapter.setDataItems(null);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (page == 1){
-                    mViewModel.reqTeam();
-                }else {
-                    mAdapter.clearData();
-                }
+                mViewModel.reqTeam();
             }
         });
 
@@ -79,7 +75,7 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
 //
 //        });
 
-        mAdapter.setDataItems(null);
+        mViewModel.reqTeam();
     }
 
     @Override

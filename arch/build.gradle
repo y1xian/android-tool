@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
 
@@ -69,6 +70,10 @@ android {
         cruncherEnabled false
     }
 
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {
@@ -84,9 +89,7 @@ dependencies {
     //侧滑
     api libs.parallaxbacklayout
     //kt
-    api libs.kotlin_stdlib
-    api libs.kotlin_coroutines
-    api libs.kotlin_coroutines_core
+    api libs.kotlin_stdlib, libs.kotlin_coroutines, libs.kotlin_coroutines_core
     //bus
     api libs.live_event_bus
 }

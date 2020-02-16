@@ -75,7 +75,7 @@ public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
         decoration.setDrawBorderLeftAndRight(true);
 //        decoration.setDividerHeight(20);
 //        decoration.setDividerWidth(20);
-        RecyclerViewExtKt.wrapLinear(mRecyclerView, mContext,decoration).setAdapter(mAdapter);
+        RecyclerViewExtKt.wrapLinear(mRecyclerView, mContext, decoration).setAdapter(mAdapter);
 
 
         View view = LayoutInflater.from(mContext).inflate(R.layout._loading_layout_error, (ViewGroup) getMRootView(), false);
@@ -86,11 +86,11 @@ public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
 //        });
 
         tvAddHeader.setOnClickListener(v -> {
-            mAdapter.addHeaderView(createView("头    第 " + mAdapter.getHeadersCount(), true));
+            mAdapter.addHeaderView(DataConfig.INSTANCE.createView(mContext, "头    第 " + mAdapter.getHeadersCount()));
         });
 
         tvAddFooter.setOnClickListener(v -> {
-            mAdapter.addFooterView(createView("尾    第 " + mAdapter.getFootersCount(), false));
+            mAdapter.addFooterView(DataConfig.INSTANCE.createView(mContext, "尾    第 " + mAdapter.getFootersCount()));
         });
 
         tvClear.setOnClickListener(v -> {

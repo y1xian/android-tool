@@ -2,7 +2,6 @@ package com.yyxnb.widget.fragments.adapter;
 
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -53,11 +52,11 @@ public class AdapterListFragment extends BaseFragment {
         decoration.setDividerWidth(20);
 //        RecyclerViewExtKt.wrapLinear(mRecyclerView, mContext, decoration).setAdapter(mAdapter);
 //        RecyclerViewExtKt.wrapLinear(mRecyclerView, mContext,itemDecoration -> decoration).setAdapter(mAdapter);
-        RecyclerViewExtKt.wrapLinear(mRecyclerView, mContext,itemDecoration -> itemDecoration.setOnlySetItemOffsetsButNoDraw(true)
-        .setDrawBorderTopAndBottom(true)
-        .setDrawBorderLeftAndRight(true)
-        .setDividerHeight(20)
-        .setDividerWidth(20)).setAdapter(mAdapter);
+        RecyclerViewExtKt.wrapLinear(mRecyclerView, mContext, itemDecoration -> itemDecoration.setOnlySetItemOffsetsButNoDraw(true)
+                .setDrawBorderTopAndBottom(true)
+                .setDrawBorderLeftAndRight(true)
+                .setDividerHeight(20)
+                .setDividerWidth(20)).setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
             @Override
@@ -72,6 +71,9 @@ public class AdapterListFragment extends BaseFragment {
                         break;
                     case 2:
                         startFragment(AdapterHeaderAndFooterFragment2.newInstance());
+                        break;
+                    case 3:
+                        startFragment(PagingFragment.newInstance());
                         break;
                     default:
                         break;

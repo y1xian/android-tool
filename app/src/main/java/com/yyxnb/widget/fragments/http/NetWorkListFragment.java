@@ -65,16 +65,10 @@ public class NetWorkListFragment extends BaseFragment {
                         startFragment(NetWorkFragment.newInstance());
                         break;
                     case 1:
-                        startFragment(PagingFragment.newInstance());
-                        break;
-                    case 2:
                         startFragment(UploadFragment.newInstance());
                         break;
-                    case 3:
+                    case 2:
                         startFragment(DownloadFragment.newInstance());
-                        break;
-                    case 4:
-                        startFragment(NetWorkFragment2.newInstance());
                         break;
                     default:
                         break;

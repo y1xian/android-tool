@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
 
@@ -70,8 +71,7 @@ dependencies {
     implementation project(':utils')
     implementation libs.support_v7, libs.design, libs.annotations
     api libs.recyclerview
+    api libs.arch_comp_paging
     //kt
-    implementation libs.kotlin_stdlib
-    implementation libs.kotlin_coroutines
-    implementation libs.kotlin_coroutines_core
+    compileOnly libs.kotlin_stdlib, libs.kotlin_coroutines, libs.kotlin_coroutines_core
 }

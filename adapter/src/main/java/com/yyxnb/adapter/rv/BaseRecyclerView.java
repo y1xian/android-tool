@@ -265,15 +265,15 @@ public class BaseRecyclerView extends RecyclerView {
     }
 
     @SuppressWarnings("unchecked")
-    public void setDataItems(List<Object> list){
-        if (getAdapter() instanceof MultiItemTypeAdapter){
+    public void setDataItems(List<Object> list) {
+        if (getAdapter() instanceof MultiItemTypeAdapter) {
             ((MultiItemTypeAdapter) getAdapter()).setDataItems(list);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public void addDataItem(List<Object> list){
-        if (getAdapter() instanceof MultiItemTypeAdapter){
+    public void addDataItem(List<Object> list) {
+        if (getAdapter() instanceof MultiItemTypeAdapter) {
             ((MultiItemTypeAdapter) getAdapter()).addDataItem(list);
         }
     }
@@ -863,7 +863,7 @@ public class BaseRecyclerView extends RecyclerView {
             if (getStateViewSize() == 1) {
                 int position = getHeaderViewCount() + getPullHeaderSize();
                 if (mWrapAdapter != null) {
-                        mWrapAdapter.getOriginalAdapter().notifyItemInserted(position);
+                    mWrapAdapter.getOriginalAdapter().notifyItemInserted(position);
                 }
             }
         }
@@ -914,7 +914,7 @@ public class BaseRecyclerView extends RecyclerView {
     }
 
     /**
-     *  是否显示头部布局
+     * 是否显示头部布局
      */
     public void setHeaderViewEnabled(boolean headerViewEnabled) {
         this.mHeaderViewEnabled = headerViewEnabled;

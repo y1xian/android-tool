@@ -32,7 +32,7 @@ public class NetWorkDataSource extends PageKeyedDataSource<Integer,TestData> {
 //        netWorkService.getTestList().observe();
 
         LogUtils.INSTANCE.w("--------loadInitial " + params.requestedLoadSize);
-        callback.onResult(fetchItems(0), 0,1);
+        callback.onResult(fetchItems(0),null,null);
     }
 
     /*往上滑加载的数据 每次传递的第二个参数 就是 你加载数据依赖的key*/
@@ -46,13 +46,13 @@ public class NetWorkDataSource extends PageKeyedDataSource<Integer,TestData> {
     @Override
     public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, TestData> callback) {
         LogUtils.INSTANCE.w("--------loadAfter");
-        callback.onResult(fetchItems(params.key),params.key + 1);
+//        callback.onResult(fetchItems(params.key),params.key + 1);
     }
 
 
     private List<TestData> fetchItems(int page) {
         List<TestData> list = new ArrayList<>();
-        for (int i = page * 20; i < (page + 1) * 20; i++) {
+        for (int i = page * 10; i < (page + 1) * 10; i++) {
             TestData concert = new TestData();
             concert.setId(i);
             concert.setContent("content = " + i);

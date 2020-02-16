@@ -68,7 +68,5 @@ android {
 dependencies {
     implementation libs.support_v7
     //kt
-    implementation libs.kotlin_stdlib
-    implementation libs.kotlin_coroutines
-    implementation libs.kotlin_coroutines_core
+    compileOnly libs.kotlin_stdlib, libs.kotlin_coroutines, libs.kotlin_coroutines_core
 }
