@@ -3,10 +3,11 @@ package com.yyxnb.widget.bean;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(tableName = "test")
-public class TestData {
+public class TestData implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

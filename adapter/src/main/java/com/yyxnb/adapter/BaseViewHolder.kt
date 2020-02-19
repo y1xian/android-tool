@@ -2,6 +2,8 @@ package com.yyxnb.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.graphics.Bitmap
 import android.graphics.Paint
 import android.graphics.Typeface
@@ -22,6 +24,14 @@ import android.widget.*
 class BaseViewHolder(val convertView: View) : RecyclerView.ViewHolder(convertView) {
 
     private val mViews: SparseArray<View> = SparseArray()
+
+    /**
+     * 如果使用了 DataBinding 绑定 View，可调用此方法获取 [ViewDataBinding]
+     */
+    fun <B : ViewDataBinding> getBinding(): B? {
+        DataBindingUtil.bind<B>(itemView)
+        return DataBindingUtil.getBinding(itemView)
+    }
 
     @Suppress("UNCHECKED_CAST")
     fun <T : View> getView(viewId: Int): T {

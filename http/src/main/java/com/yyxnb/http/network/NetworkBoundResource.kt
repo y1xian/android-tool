@@ -16,12 +16,17 @@
 
 package com.yyxnb.http.network
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
 import android.support.annotation.MainThread
 import android.support.annotation.WorkerThread
+import android.text.TextUtils
 import android.util.Log
+import com.yyxnb.http.cache.CacheDatabase
+import com.yyxnb.http.cache.CacheManager
+import com.yyxnb.utils.log.LogUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -43,48 +48,14 @@ abstract class NetworkBoundResource<R>
     init {
         result.value = Resource.loading(null)
 
-        @Suppress("LeakingThis")
-        if (loadFromDb().value == null) {
-            val apiResponse = createCall()
-            result.addSource(apiResponse) { response ->
-                result.removeSource(apiResponse)
-                GlobalScope.launch {
-                    when (response) {
-                        is ApiSuccessResponse -> {
-                            withContext(Dispatchers.IO) {
-                                saveCallResult(processResponse(response))
-                            }
-                            withContext(Dispatchers.Main) {
-                                // we specially request a new live data,
-                                setValue(Resource.success(processResponse(response)))
-                            }
-                        }
-                        is ApiEmptyResponse -> {
-                            onFetchEmpty()
-                            withContext(Dispatchers.Main) {
-                                // reload from disk whatever we had
-                                result.addSource(loadFromDb()) { newData ->
-                                    setValue(Resource.success(newData))
-                                }
-                            }
-                        }
-                        is ApiErrorResponse -> {
-                            onFetchFailed()
-                            setValue(Resource.error(response.errorMessage, null))
-                        }
-                    }
-                }
-            }
-        } else {
-            val dbSource = loadFromDb()
-            result.addSource(dbSource) { data ->
-                result.removeSource(dbSource)
-                if (shouldFetch(data)) {
-                    fetchFromNetwork(dbSource)
-                } else {
-                    result.addSource(dbSource) { newData ->
-                        setValue(Resource.success(newData))
-                    }
+        val dbSource = loadFromDb()
+        result.addSource(dbSource) { data ->
+            result.removeSource(dbSource)
+            if (shouldFetch(data)) {
+                fetchFromNetwork(dbSource)
+            } else {
+                result.addSource(dbSource) { newData ->
+                    setValue(Resource.success(newData))
                 }
             }
         }
@@ -110,6 +81,7 @@ abstract class NetworkBoundResource<R>
             GlobalScope.launch {
                 when (response) {
                     is ApiSuccessResponse -> {
+                        //把网络数据存储数据库
                         withContext(Dispatchers.IO) {
                             saveCallResult(processResponse(response))
                         }
@@ -118,8 +90,13 @@ abstract class NetworkBoundResource<R>
                             // we specially request a new live data,
                             // otherwise we will get immediately last cached value,
                             // which may not be updated with latest results received from network.
-                            result.addSource(loadFromDb()) { newData ->
-                                setValue(Resource.success(newData))
+                            // 确保数据的准确性，优先读取数据库中数据，无数据库则直接读取网络
+                            if (TextUtils.isEmpty(dbKey())) {
+                                setValue(Resource.success(response.body))
+                            } else {
+                                result.addSource(loadFromDb()) { newData ->
+                                    setValue(Resource.success(newData))
+                                }
                             }
                         }
                     }
@@ -162,6 +139,11 @@ abstract class NetworkBoundResource<R>
     // 当要把网络数据存储到数据库中时调用
     @WorkerThread
     protected open fun saveCallResult(item: R) {
+        if (TextUtils.isEmpty(dbKey())) {
+            return
+        }
+        CacheManager.save(dbKey(), item)
+        LogUtils.w("save")
     }
 
     // 决定是否去网络获取数据
@@ -169,10 +151,20 @@ abstract class NetworkBoundResource<R>
     protected open fun shouldFetch(data: R?): Boolean = true
 
     // 用于从数据库中获取缓存数据
-    @MainThread
-    protected open fun loadFromDb(): LiveData<R> = MutableLiveData()
+//    @MainThread
+    @Suppress("UNCHECKED_CAST")
+    protected fun loadFromDb(): LiveData<R> {
+        val l = MutableLiveData<R>()
+        val db = CacheManager.getCache(dbKey()) as R
+        l.value = (db)
+        return l
+    }
 
     // 创建网络数据请求
     @MainThread
     protected abstract fun createCall(): LiveData<ApiResponse<R>>
+
+    // 作用于数据库的key
+    protected open fun dbKey(): String = ""
+
 }

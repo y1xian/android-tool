@@ -60,12 +60,12 @@ open class MultiItemTypeAdapter<T> : RecyclerView.Adapter<BaseViewHolder>() {
         val itemViewDelegate = mItemDelegateManager.getItemViewDelegate(viewType)
         val layoutId = itemViewDelegate.layoutId
         val holder = BaseViewHolder.createViewHolder(parent.context.applicationContext, parent, layoutId)
-        onViewHolderCreated(holder, holder.convertView)
+        onViewHolderCreated(holder, parent, viewType)
         setListener(holder)
         return holder
     }
 
-    fun onViewHolderCreated(holder: BaseViewHolder, itemView: View) {}
+    open fun onViewHolderCreated(holder: BaseViewHolder, parent: ViewGroup, viewType: Int) {}
 
     fun convert(holder: BaseViewHolder, t: T) {
         mItemDelegateManager.convert(holder, t, holder.adapterPosition)

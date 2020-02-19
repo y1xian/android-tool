@@ -13,6 +13,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.yyxnb.arch.base.mvvm.BaseFragmentVM;
+import com.yyxnb.http.cache.CacheManager;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.NetWorkListAdapter;
@@ -49,7 +50,7 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
 
         mRecyclerView.setAdapter(mAdapter);
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout._loading_layout_empty, (ViewGroup) getMRootView(),false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout._loading_layout_empty, (ViewGroup) getMRootView(), false);
 //        mAdapter.setEmptyView(view);
 //        mAdapter.setEmptyView(R.layout._loading_layout_empty);
 //        mAdapter.addFootView(view);
@@ -82,18 +83,27 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
     public void initViewData() {
         super.initViewData();
 
+        LogUtils.INSTANCE.e(CacheManager.cacheSize() + " 条");
 
 
-        mViewModel.getTestList().observe(this,t -> {
+        mViewModel.getTestList().observe(this, t -> {
             switch (t.getStatus()) {
                 case SUCCESS:
                     page++;
                     mRefreshLayout.finishRefresh();
-                    mAdapter.setDataItems(t.getData().getData());
+                    if (t.getData() != null) {
+                        LogUtils.INSTANCE.w(" success   " + (t.getData().getData().size() > 0));
+                        LogUtils.INSTANCE.list(t.getData().getData());
+                        mAdapter.setDataItems(t.getData().getData());
+                    }
                     break;
                 case ERROR:
                     break;
                 case LOADING:
+                    if (t.getData() != null){
+                        LogUtils.INSTANCE.w(" loading   " + (t.getData().getData().size() > 0));
+                        mAdapter.setDataItems(t.getData().getData());
+                    }
                     break;
             }
         });
@@ -102,11 +112,17 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
     }
 
     public static NetWorkFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         NetWorkFragment fragment = new NetWorkFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onDestroy() {
+//        CacheManager.deleteKey("getTestList");
+        super.onDestroy();
     }
 }

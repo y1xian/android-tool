@@ -2,43 +2,55 @@ package com.yyxnb.widget.vm;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.paging.DataSource;
-import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PageKeyedDataSource;
 import android.arch.paging.PagedList;
+import android.support.annotation.NonNull;
 
-import com.yyxnb.arch.base.mvvm.BaseViewModel;
+import com.yyxnb.arch.base.mvvm.BasePagedViewModel;
 import com.yyxnb.widget.bean.TestData;
-import com.yyxnb.widget.paging.NetWorkFactory;
 
-public class PagingViewModel extends BaseViewModel {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    private LiveData<PagedList<TestData>> convertList;
-    private DataSource<Integer, TestData> concertDataSource;
+public class PagingViewModel extends BasePagedViewModel<TestData> {
+    @Override
+    public DataSource createDataSource() {
+        return new PageKeyedDataSource<Integer, TestData>() {
+            @Override
+            public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, TestData> callback) {
+                callback.onResult(fetchItems(0), null, null);
+            }
 
-    public PagingViewModel() {
-        NetWorkFactory concertFactory = new NetWorkFactory();
-        concertDataSource = concertFactory.create();
+            @Override
+            public void loadBefore(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, TestData> callback) {
+                callback.onResult(Collections.emptyList(), null);
+            }
 
-        int pageSize = 10;
-        PagedList.Config config = new PagedList.Config.Builder()
-                //配置分页加载的数量
-                .setPageSize(pageSize)
-                //初始化加载的数量
-                .setInitialLoadSizeHint(pageSize + 2)
-                //距离底部还有多少条数据时开始预加载
-//                .setPrefetchDistance(pageSize / 4)
-                //配置是否启动PlaceHolders
-//                .setEnablePlaceholders(false)
-                .build();
-
-        convertList = new LivePagedListBuilder<>(concertFactory, config).build();
+            @Override
+            public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, TestData> callback) {
+                callback.onResult(Collections.emptyList(), null);
+            }
+        };
     }
 
     //invalidate 之后Paging会重新创建一个DataSource 重新调用它的loadInitial方法加载初始化数据
     public void invalidateDataSource() {
-        concertDataSource.invalidate();
+        getDataSource().invalidate();
     }
 
     public LiveData<PagedList<TestData>> getConvertList() {
-        return convertList;
+        return getPageData();
+    }
+
+    private List<TestData> fetchItems(int page) {
+        List<TestData> list = new ArrayList<>();
+        for (int i = page * 10; i < (page + 1) * 10; i++) {
+            TestData concert = new TestData();
+            concert.setId(i);
+            concert.setContent("content = " + i);
+            list.add(concert);
+        }
+        return list;
     }
 }

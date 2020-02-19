@@ -11,4 +11,13 @@ public interface CacheDao extends BaseDao<Cache> {
     @Query("select * from cache where `key`=:key")
     public Cache getCache(String key);
 
+
+    //根据key删除
+    @Query("delete from cache where `key`=:key")
+    public int deleteCache(String key);
+
+    // 行数
+    @Query("select count(1) from cache")
+    public int size();
+
 }

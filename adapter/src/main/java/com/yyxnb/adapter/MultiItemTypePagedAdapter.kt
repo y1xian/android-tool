@@ -114,7 +114,7 @@ open class MultiItemTypePagedAdapter<T> constructor(diffCallback: DiffUtil.ItemC
                 val itemViewDelegate = mItemDelegateManager.getItemViewDelegate(viewType)
                 val layoutId = itemViewDelegate.layoutId
                 val holder = BaseViewHolder.createViewHolder(parent.context.applicationContext, parent, layoutId)
-                onViewHolderCreated(holder, holder.convertView)
+                onViewHolderCreated(holder, parent, viewType)
                 setListener(holder)
                 return holder
             }
@@ -122,7 +122,7 @@ open class MultiItemTypePagedAdapter<T> constructor(diffCallback: DiffUtil.ItemC
 
     }
 
-    fun onViewHolderCreated(holder: BaseViewHolder, itemView: View) {}
+    open fun onViewHolderCreated(holder: BaseViewHolder, parent: ViewGroup, viewType: Int) {}
 
     fun convert(holder: BaseViewHolder, t: T) {
         mItemDelegateManager.convert(holder, t, holder.adapterPosition)

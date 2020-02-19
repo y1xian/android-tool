@@ -65,6 +65,10 @@ android {
         cruncherEnabled false
     }
 
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {

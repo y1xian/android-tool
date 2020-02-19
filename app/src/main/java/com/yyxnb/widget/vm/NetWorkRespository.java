@@ -19,7 +19,15 @@ import java.util.List;
 public class NetWorkRespository extends BaseRepository<NetWorkService> {
 
     public LiveData<Resource<BaseDatas<List<TestData>>>> getTestList() {
+
         return new NetworkBoundResource<BaseDatas<List<TestData>>>(){
+
+            @NotNull
+            @Override
+            protected String dbKey() {
+                return "getTestList";
+            }
+
             @NotNull
             @Override
             protected LiveData<ApiResponse<BaseDatas<List<TestData>>>> createCall() {

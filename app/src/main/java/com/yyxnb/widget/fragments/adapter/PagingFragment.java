@@ -1,6 +1,7 @@
 package com.yyxnb.widget.fragments.adapter;
 
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.RecyclerAdapter2;
 import com.yyxnb.widget.bean.TestData;
 import com.yyxnb.widget.config.DataConfig;
+import com.yyxnb.widget.databinding.FragmentPagingBinding;
 import com.yyxnb.widget.vm.PagingViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +38,7 @@ public class PagingFragment extends BaseFragmentVM<PagingViewModel> {
     private RecyclerView mRecyclerView;
     private SmartRefreshLayout mRefreshLayout;
     private int page = 1;
+    private FragmentPagingBinding binding;
 
     public static PagingFragment newInstance() {
 
@@ -53,8 +56,14 @@ public class PagingFragment extends BaseFragmentVM<PagingViewModel> {
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
-        mRecyclerView = findViewById(R.id.mRecyclerView);
-        mRefreshLayout = findViewById(R.id.refresh_layout);
+
+        binding = getBinding();
+
+        mRecyclerView = binding.mRecyclerView;
+        mRefreshLayout = binding.refreshLayout;
+
+//        mRecyclerView = findViewById(R.id.mRecyclerView);
+//        mRefreshLayout = findViewById(R.id.refresh_layout);
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 //        mRecyclerView.setHasFixedSize(true);
 
@@ -98,7 +107,7 @@ public class PagingFragment extends BaseFragmentVM<PagingViewModel> {
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData());
+//                mAdapter.addDataItem(DataConfig.INSTANCE.getDataTestData());
                 refreshLayout.finishLoadMore();
             }
 
@@ -138,6 +147,9 @@ public class PagingFragment extends BaseFragmentVM<PagingViewModel> {
     public void initViewData() {
         super.initViewData();
 
+        mViewModel.getBoundaryPageData().observe(this, aBoolean -> {
+            LogUtils.INSTANCE.w("是否有值 ：" + aBoolean);
+        });
 
         mViewModel.getConvertList().observe(this, data -> {
             LogUtils.INSTANCE.e("----mViewModel---" + data.size());

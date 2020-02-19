@@ -1,6 +1,7 @@
 package com.yyxnb.widget.fragments.http;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -63,6 +64,7 @@ public class NetWorkListFragment extends BaseFragment {
                 switch (position) {
                     case 0:
                         startFragment(NetWorkFragment.newInstance());
+//                        startActivity(new Intent(mContext, NetWorkActivity.class));
                         break;
                     case 1:
                         startFragment(UploadFragment.newInstance());

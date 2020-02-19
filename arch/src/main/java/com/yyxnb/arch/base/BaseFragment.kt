@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -60,6 +62,11 @@ abstract class BaseFragment : Fragment(), ILazyProxy, CoroutineScope by MainScop
 
     val sceneId: String
         get() = UUID.randomUUID().toString()
+
+    fun <B : ViewDataBinding> getBinding(): B? {
+        DataBindingUtil.bind<B>(mRootView!!)
+        return DataBindingUtil.getBinding(mRootView!!)
+    }
 
     /**
      * 懒加载代理类
