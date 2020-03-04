@@ -5,12 +5,11 @@ import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper
 import com.yyxnb.arch.common.Message
-import com.yyxnb.arch.jetpack.SingleLiveEvent
+import com.yyxnb.arch.livedata.SingleLiveEvent
 import com.yyxnb.utils.ext.tryCatch
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-
 
 /**
  * 逻辑处理
@@ -64,8 +63,6 @@ abstract class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
      * UI事件
      */
     inner class UIChange {
-        val showDialog by lazy { SingleLiveEvent<String>() }
-        val dismissDialog by lazy { SingleLiveEvent<Void>() }
         val toastEvent by lazy { SingleLiveEvent<String>() }
         val msgEvent by lazy { SingleLiveEvent<Message>() }
     }

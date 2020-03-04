@@ -3,8 +3,8 @@ package com.yyxnb.widget.fragments.http;
 
 import android.os.Bundle;
 
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.http.upload.UploadRetrofit;
 import com.yyxnb.widget.R;
 
 import org.jetbrains.annotations.Nullable;
@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 上传.
  */
+@BindFragment(layoutRes = R.layout.fragment_upload)
 public class UploadFragment extends BaseFragment {
 
     public static UploadFragment newInstance() {
@@ -21,11 +22,6 @@ public class UploadFragment extends BaseFragment {
         UploadFragment fragment = new UploadFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_upload;
     }
 
     @Override

@@ -7,9 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
-import com.yyxnb.arch.annotations.BarStyle;
-import com.yyxnb.arch.annotations.StatusBarDarkTheme;
-import com.yyxnb.arch.annotations.SubPage;
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.base.BaseFragmentPagerAdapter;
 import com.yyxnb.utils.StatusBarUtils;
@@ -34,13 +32,14 @@ import java.util.List;
 /**
  * 懒加载.vp
  */
-@SubPage
+//@SubPage
+@BindFragment(layoutRes = R.layout.fragment_lazy_vp)
 public class LazyVpFragment extends BaseFragment {
 
     private Toolbar mToolbar;
     private MagicIndicator mIndicator;
     private ViewPager mViewPager;
-    private String[] title = new String[]{"11","2222","333","44444"};
+    private String[] title = new String[]{"11", "2222", "333", "44444"};
     private List<Fragment> fragments = new ArrayList<>();
 
     public static LazyVpFragment newInstance() {
@@ -50,11 +49,6 @@ public class LazyVpFragment extends BaseFragment {
         LazyVpFragment fragment = new LazyVpFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_lazy_vp;
     }
 
     @Override
@@ -111,7 +105,7 @@ public class LazyVpFragment extends BaseFragment {
                 //设置宽度
 //                indicator.setLineWidth(DpUtils.dp2px(mContext,30));
                 //设置高度
-                indicator.setLineHeight(DpUtils.dp2px(mContext,5));
+                indicator.setLineHeight(DpUtils.dp2px(mContext, 5));
                 //设置颜色
                 indicator.setColors(Color.parseColor("#FF9241"));
                 //设置圆角
@@ -124,7 +118,7 @@ public class LazyVpFragment extends BaseFragment {
         mIndicator.setNavigator(commonNavigator);
 
         mViewPager.setOffscreenPageLimit(title.length - 1);
-        mViewPager.setAdapter(new BaseFragmentPagerAdapter(getChildFragmentManager(),fragments));
+        mViewPager.setAdapter(new BaseFragmentPagerAdapter(getChildFragmentManager(), fragments));
         //与ViewPagger联动
         ViewPagerHelper.bind(mIndicator, mViewPager);
     }

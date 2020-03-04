@@ -26,7 +26,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme">
-        <activity android:name=".fragments.http.NetWorkActivity"></activity>
+        <activity android:name=".ButtonActivity"></activity>
+        <activity android:name=".fragments.http.NetWorkActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

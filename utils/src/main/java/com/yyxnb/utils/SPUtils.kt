@@ -16,7 +16,8 @@ import java.io.Serializable
 
 object SPUtils : Serializable{
 
-    private var preferences: SharedPreferences? = null
+    private val preferences = PreferenceManager.getDefaultSharedPreferences(AppConfig.context
+            .applicationContext)
     private var editor: SharedPreferences.Editor? = null
     private var value: Any? = null
 
@@ -36,10 +37,10 @@ object SPUtils : Serializable{
     val isLogin: Boolean
         get() = (getParam("isLogin", false) as Boolean?)!!
 
-    fun init(context: Context) {
-        preferences = PreferenceManager.getDefaultSharedPreferences(context
-                .applicationContext)
-    }
+//    fun init(context: Context) {
+//        preferences = PreferenceManager.getDefaultSharedPreferences(context
+//                .applicationContext)
+//    }
 
     /**
      * 保存数据 , 所有的类型都适用

@@ -3,7 +3,6 @@ package com.yyxnb.view.proxy.imageloader
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.support.annotation.DrawableRes
 import android.widget.ImageView
 
 import java.io.File
@@ -30,7 +29,7 @@ class ImageOptions {
     var file: File? = null
     var drawableResId: Int = 0
     var uri: Uri? = null
-    var imageProxy: IImageProxy? = null//实时切换图片加载库
+    var image: IImage? = null//实时切换图片加载库
 
     constructor(url: String) {
         this.url = url
@@ -58,8 +57,8 @@ class ImageOptions {
         ImageHelper.loadOptions(this)
     }
 
-    fun loader(imageImage: IImageProxy): ImageOptions {
-        this.imageProxy = imageImage
+    fun loader(imageImage: IImage): ImageOptions {
+        this.image = imageImage
         return this
     }
 

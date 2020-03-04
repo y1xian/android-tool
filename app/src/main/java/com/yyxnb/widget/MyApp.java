@@ -1,15 +1,12 @@
 package com.yyxnb.widget;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 
-import com.noober.background.BLAutoInjectController;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
-import com.scwang.smart.refresh.header.MaterialHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshFooter;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
@@ -17,16 +14,12 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshInitializer;
-import com.yyxnb.arch.interfaces.IOnActivityStatusChangeListener;
-import com.yyxnb.arch.utils.ActivityManagerUtils;
 import com.yyxnb.http.RetrofitManager;
 import com.yyxnb.http.config.OkHttpConfig;
 import com.yyxnb.view.proxy.http.HttpHelper;
 import com.yyxnb.view.proxy.imageloader.ImageHelper;
-import com.yyxnb.widget.utils.GlideImageProxy;
-import com.yyxnb.widget.utils.OkHttpProxy;
-
-import org.jetbrains.annotations.NotNull;
+import com.yyxnb.widget.utils.GlideImage;
+import com.yyxnb.widget.utils.OkHttp;
 
 import okhttp3.OkHttpClient;
 
@@ -41,8 +34,8 @@ public class MyApp extends Application {
         super.onCreate();
         initRxHttp();
 
-        ImageHelper.INSTANCE.init(new GlideImageProxy());
-        HttpHelper.INSTANCE.init(new OkHttpProxy()).setBaseUrl("http://www.mocky.io/");
+        ImageHelper.INSTANCE.init(new GlideImage());
+        HttpHelper.INSTANCE.init(new OkHttp()).setBaseUrl("http://www.mocky.io/");
 
     }
 

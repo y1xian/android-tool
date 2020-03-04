@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.yyxnb.utils.AppConfig.toast
 import com.yyxnb.widget.R
+import com.yyxnb.widget.bean.MainBean
 import com.yyxnb.widget.bean.TestData
+import kotlin.collections.set
 import kotlin.random.Random
 
 object DataConfig {
@@ -22,7 +24,7 @@ object DataConfig {
             return field
         }
 
-    val dataMain = ArrayList<String>()
+    val dataMain2 = ArrayList<String>()
         get() {
             field.clear()
             field.add("----- title -----")
@@ -32,6 +34,19 @@ object DataConfig {
             field.add("----- 自定义 behavior -----")
             field.add("----- 标签 -----")
             field.add("----- 弹框 -----")
+            return field
+        }
+
+    val dataMain = ArrayList<MainBean>()
+        get() {
+            field.clear()
+            field.add(MainBean(1145905694, "----- title -----", "home/f/title"))
+            field.add(MainBean(135884164, "----- 网络请求 -----", "home/f/http"))
+            field.add(MainBean(1231750126, "----- fragment -----", "home/f/fragment"))
+            field.add(MainBean(474114952, "----- adapter -----", "home/f/adapter"))
+            field.add(MainBean(288680808, "----- 自定义 behavior -----", "home/f/behavior"))
+            field.add(MainBean(1260165028, "----- 标签 -----", "home/f/tag"))
+            field.add(MainBean(819827592, "----- 弹框 -----", "home/f/popup"))
             return field
         }
 
@@ -122,6 +137,63 @@ object DataConfig {
         textView.text = text
         textView.setOnClickListener { v: View? -> toast(text) }
         return textView
+    }
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+
+        val json = "{\n" +
+                "  \"main/f/fragment\": {\n" +
+                "    \"id\": 1231750126,\n" +
+                "    \"needLogin\": false,\n" +
+                "    \"asStarter\": false,\n" +
+                "    \"pageUrl\": \"main/f/fragment\",\n" +
+                "    \"className\": \"com.yyxnb.widget.fragments.lazy.FragmentListFragment\",\n" +
+                "    \"isFragment\": true\n" +
+                "  },\n" +
+                "  \"main/tabs/other\": {\n" +
+                "    \"id\": 1183122074,\n" +
+                "    \"needLogin\": true,\n" +
+                "    \"asStarter\": false,\n" +
+                "    \"pageUrl\": \"main/tabs/other\",\n" +
+                "    \"className\": \"com.yyxnb.widget.fragments.OtherFragment\",\n" +
+                "    \"isFragment\": true\n" +
+                "  }}"
+
+        val map = hashMapOf<String, String>()
+        map["main/1"] = "1"
+        map["main/2"] = "2"
+        map["main/3"] = "3"
+        map["user/1"] = "11"
+        map["user/2"] = "22"
+        map["user/3"] = "33"
+
+//        getDestConfig()
+
+        val sp = "main"
+
+//        map.forEach { entry ->
+//
+//            if (entry.key.contains(sp)) {
+//                println(entry.key + entry.value)
+//            }
+//        }
+
+
+//        val v :HashMap<String,Destination>() = Gson().fromJson<HashMap<String,Destination>()>(json,object : Type {})
+
+//        val a = JSON.parseObject<HashMap<String, Destination>>(json, object : TypeReference<HashMap<String, Destination>>() {})
+
+
+//        a.forEach{
+//            entry ->
+//            println(entry.key + entry.value)
+//        }
+//        a.forEach { t: String ->
+//            if (t.contains(sp)) {
+//                println(t)
+//            }
+//        }
     }
 
 }

@@ -11,13 +11,13 @@ import java.io.File
 object ImageHelper {
 
     @Volatile
-    private var imageProxy: IImageProxy? = null
+    private var image: IImage? = null
 
     /**
      * 提供全局替换图片加载框架的接口，若切换其它框架，可以实现一键全局替换
      */
-    fun init(image: IImageProxy) {
-        imageProxy = image
+    fun init(image: IImage) {
+        this.image = image
     }
 
     fun load(url: String): ImageOptions {
@@ -42,26 +42,26 @@ object ImageHelper {
      */
     @Synchronized
     fun loadOptions(options: ImageOptions) {
-        if (options.imageProxy != null) {
-            options.imageProxy!!.loadImage(options)
+        if (options.image != null) {
+            options.image!!.loadImage(options)
         } else {
             checkNotNull()
-            imageProxy!!.loadImage(options)
+            image!!.loadImage(options)
         }
     }
 
     fun clearMemoryCache() {
         checkNotNull()
-        imageProxy!!.clearMemoryCache()
+        image!!.clearMemoryCache()
     }
 
     fun clearDiskCache() {
         checkNotNull()
-        imageProxy!!.clearDiskCache()
+        image!!.clearDiskCache()
     }
 
     private fun checkNotNull() {
-        if (imageProxy == null) {
+        if (image == null) {
             throw NullPointerException("you must be set your imageProxy at first!")
         }
     }

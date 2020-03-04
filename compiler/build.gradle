@@ -5,7 +5,7 @@ group='com.github.y1xian'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':annotation')
-    implementation 'com.alibaba:fastjson:1.2.59'
+    implementation libs.gson
     implementation 'com.google.auto.service:auto-service:1.0-rc6'
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
 }

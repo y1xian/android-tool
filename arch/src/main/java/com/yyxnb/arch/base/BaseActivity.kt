@@ -8,24 +8,27 @@ import android.support.annotation.LayoutRes
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MotionEvent
-import android.view.View
-import android.widget.EditText
 import com.github.anzewei.parallaxbacklayout.ParallaxBack
 import com.github.anzewei.parallaxbacklayout.ParallaxHelper
 import com.github.anzewei.parallaxbacklayout.widget.ParallaxBackLayout.EDGE_MODE_DEFAULT
 import com.github.anzewei.parallaxbacklayout.widget.ParallaxBackLayout.EDGE_MODE_FULL
 import com.yyxnb.arch.ContainerActivity
-import com.yyxnb.arch.annotations.*
+import com.yyxnb.arch.annotations.BarStyle
+import com.yyxnb.arch.annotations.SwipeStyle
 import com.yyxnb.arch.common.ArchConfig
-import com.yyxnb.arch.jetpack.LifecycleDelegate
+import com.yyxnb.arch.delegate.ActivityDelegate
+import com.yyxnb.arch.interfaces.IActivity
+import com.yyxnb.arch.delegate.LifecycleDelegate
 import com.yyxnb.arch.utils.FragmentManagerUtils
-import com.yyxnb.utils.StatusBarUtils
 import com.yyxnb.utils.MainThreadUtils
+import com.yyxnb.utils.StatusBarUtils
 import com.yyxnb.utils.ext.hideKeyBoard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.isActive
 import me.jessyan.autosize.AutoSizeCompat
+import kotlin.math.abs
 
 
 /**
@@ -34,14 +37,15 @@ import me.jessyan.autosize.AutoSizeCompat
  * @author : yyx
  * @date : 2018/6/10
  */
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 @ParallaxBack(edgeMode = ParallaxBack.EdgeMode.EDGE)
-abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+abstract class BaseActivity : AppCompatActivity(), IActivity, CoroutineScope by MainScope() {
 
-    private var subPage: Boolean = false
-    protected val TAG = javaClass.canonicalName
+    protected val TAG: String = javaClass.canonicalName
 
     protected lateinit var mContext: Context
 
+    private val mActivityDelegate by lazy { ActivityDelegate(this) }
     private val lifecycleDelegate by lazy { LifecycleDelegate(this) }
 
     private var statusBarTranslucent = ArchConfig.statusBarTranslucent
@@ -51,57 +55,50 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
     private var navigationBarDarkTheme = ArchConfig.navigationBarStyle
     private var swipeBack = ArchConfig.swipeBack
 
+    val hasId: Int
+        get() = abs(TAG.hashCode())
+
+    override fun getBaseDelegate(): ActivityDelegate? = mActivityDelegate
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         mContext = this
-        lifecycle.addObserver(Java8Observer(TAG))
+        // 在界面未初始化之前调用的初始化窗口
         initWindows()
+        super.onCreate(savedInstanceState)
+        lifecycle.addObserver(Java8Observer(TAG))
+
         initAttributes()
         setContentView(initLayoutResId())
+
         initView(savedInstanceState)
     }
 
     //加载注解设置
     private fun initAttributes() {
         MainThreadUtils.post(Runnable {
-            javaClass.getAnnotation(StatusBarTranslucent::class.java)?.let { statusBarTranslucent = it.value }
-            javaClass.getAnnotation(StatusBarHidden::class.java)?.let { statusBarHidden = it.value }
-            javaClass.getAnnotation(StatusBarDarkTheme::class.java)?.let { statusBarDarkTheme = it.value }
-            javaClass.getAnnotation(FitsSystemWindows::class.java)?.let { fitsSystemWindows = it.value }
-            javaClass.getAnnotation(SwipeBack::class.java)?.let { swipeBack = it.value }
-
-            if (!subPage) {
+            if (!isSubPage()) {
                 setStatusBarTranslucent(statusBarTranslucent, fitsSystemWindows)
                 setStatusBarStyle(statusBarDarkTheme)
                 setNavigationBarStyle(navigationBarDarkTheme)
                 setStatusBarHidden(statusBarHidden)
             }
-            setSwipeBack(swipeBack)
         })
     }
 
     @Suppress("UNCHECKED_CAST")
     override fun onDestroy() {
         super.onDestroy()
-        cancel() // 关闭页面后，结束所有协程任务
+        // 取消协程
+        if (isActive) {
+            cancel()
+        }
     }
-
-    /**
-     * 初始化窗口, 在界面未初始化之前调用的初始化操作
-     */
-    open fun initWindows() {}
 
     /**
      * 初始化根布局
      */
     @LayoutRes
-    abstract fun initLayoutResId(): Int
-
-    /**
-     * 初始化
-     */
-    abstract fun initView(savedInstanceState: Bundle?)
-
+    abstract override fun initLayoutResId(): Int
 
     override fun getResources(): Resources {
         //需要升级到 v1.1.2 及以上版本才能使用 AutoSizeCompat
@@ -111,17 +108,17 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
     }
 
     //侧滑
-    fun setSwipeBack(mSwipeBack: Int = 0) {
+    override fun setSwipeBack(@SwipeStyle mSwipeBack: Int) {
         val layout = ParallaxHelper.getParallaxBackLayout(this, true)
         when (mSwipeBack) {
-            0 -> {
+            SwipeStyle.Full -> {
                 ParallaxHelper.enableParallaxBack(this)
                 layout.setEdgeMode(EDGE_MODE_FULL) //全屏滑动
             }
-            -1 -> {
+            SwipeStyle.NONE -> {
                 ParallaxHelper.disableParallaxBack(this)
             }
-            else -> {
+            SwipeStyle.Edge -> {
                 ParallaxHelper.enableParallaxBack(this)
                 layout.setEdgeMode(EDGE_MODE_DEFAULT) //边缘滑动
             }
@@ -144,8 +141,8 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
     }
 
     //状态栏字体
-    fun setStatusBarStyle(barStyle: BarStyle) {
-        StatusBarUtils.setStatusBarStyle(window, barStyle === BarStyle.DarkContent)
+    fun setStatusBarStyle(barStyle: Int) {
+        StatusBarUtils.setStatusBarStyle(window, barStyle == BarStyle.DarkContent)
     }
 
     //隐藏状态栏
@@ -159,8 +156,8 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
     }
 
     //底部栏字体
-    fun setNavigationBarStyle(barStyle: BarStyle) {
-        StatusBarUtils.setNavigationBarStyle(window, barStyle === BarStyle.DarkContent)
+    fun setNavigationBarStyle(barStyle: Int) {
+        StatusBarUtils.setNavigationBarStyle(window, barStyle == BarStyle.DarkContent)
     }
 
     //隐藏虚拟导航栏
@@ -174,7 +171,7 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
         FragmentManagerUtils.apply {
             if (count > 1) {
                 //当前传值
-                val current = currentFragment()
+                val current = currentFragment() as BaseFragment
                 //上一个页面需接收的
                 val before = beforeFragment()
                 //将回调的传入到fragment中去
@@ -220,7 +217,7 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
         //把操作放在用户点击的时候
         if (event.action === MotionEvent.ACTION_DOWN) {
             val v = currentFocus      //得到当前页面的焦点,ps:有输入框的页面焦点一般会被输入框占据
-            if (isShouldHideKeyboard(v, event)) { //判断用户点击的是否是输入框以外的区域
+            if (mActivityDelegate.isShouldHideKeyboard(v, event)) { //判断用户点击的是否是输入框以外的区域
                 //收起键盘
                 v.hideKeyBoard()
             }
@@ -229,33 +226,10 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
     }
 
     /**
-     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
-     *
-     * @param v
-     * @param event
-     * @return
-     */
-    private fun isShouldHideKeyboard(v: View?, event: MotionEvent): Boolean {
-        if (v != null && v is EditText) {  //判断得到的焦点控件是否包含EditText
-            val l = intArrayOf(0, 0)
-            v.getLocationInWindow(l)
-            val left = l[0]
-            //得到输入框在屏幕中上下左右的位置
-            val top = l[1]
-            val bottom = top + v.getHeight()
-            val right = left + v.getWidth()
-            return !(event.x > left && event.x < right
-                    && event.y > top && event.y < bottom)
-        }
-        // 如果焦点不是EditText则忽略
-        return false
-    }
-
-    /**
      * 是否子页面
      */
     open fun isSubPage(): Boolean {
-        return subPage
+        return false
     }
 
 }

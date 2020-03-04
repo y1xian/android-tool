@@ -8,6 +8,7 @@ import com.yyxnb.arch.base.BaseActivity
 import com.yyxnb.arch.common.Message
 import com.yyxnb.utils.AppConfig
 
+@Deprecated("用注解@BindViewModel代替")
 abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {
 
     /**
@@ -38,12 +39,12 @@ abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {
      * 初始化界面观察者的监听
      * 接收数据结果
      */
-    open fun initObservable() {}
+    override fun initObservable() {}
 
     /**
      * 返回消息
      */
-    open fun handleEvent(msg: Message?) {}
+    override fun handleEvent(msg: Message?) {}
 
     /**
      * 初始化ViewModel

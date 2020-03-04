@@ -16,6 +16,7 @@ import com.yyxnb.adapter.MultiItemTypeAdapter;
 import com.yyxnb.adapter.ext.RecyclerViewExtKt;
 import com.yyxnb.adapter.rv.BaseState;
 import com.yyxnb.adapter.rv.BaseRecyclerView;
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.log.LogUtils;
@@ -33,6 +34,7 @@ import java.util.Random;
 /**
  * 状态视图 头 + 底.
  */
+@BindFragment(layoutRes = R.layout.fragment_adapter_header_and_footer2)
 public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
 
     private int page = 1;
@@ -50,11 +52,6 @@ public class AdapterHeaderAndFooterFragment2 extends BaseFragment {
         AdapterHeaderAndFooterFragment2 fragment = new AdapterHeaderAndFooterFragment2();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_adapter_header_and_footer2;
     }
 
     @Override

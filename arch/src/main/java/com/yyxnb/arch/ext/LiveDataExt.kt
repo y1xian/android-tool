@@ -2,9 +2,9 @@ package com.yyxnb.arch.ext
 
 import android.arch.lifecycle.*
 import android.support.v4.app.FragmentActivity
-import com.yyxnb.arch.jetpack.NonNullLiveData
-import com.yyxnb.arch.jetpack.SingleLiveData
-import com.yyxnb.arch.jetpack.SingleLiveDataConcat
+import com.yyxnb.arch.livedata.NonNullLiveData
+import com.yyxnb.arch.livedata.SingleLiveData
+import com.yyxnb.arch.livedata.SingleLiveDataConcat
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -624,7 +624,7 @@ fun <X, Y, T, Z> combineLatest(first: LiveData<X>, second: LiveData<Y>, third: L
  * Converts the LiveData to `SingleLiveData` and concats it with the `otherLiveData` and emits their
  * values one by one
  * 将livedata转换为“singlelivedata”，并将其与“otherlivedata”连接，并发出
- * 价值观一个接一个
+ * 值一个接一个
  */
 fun <T> LiveData<T>.then(otherLiveData: LiveData<T>): LiveData<T> {
     return if (this is SingleLiveData) {

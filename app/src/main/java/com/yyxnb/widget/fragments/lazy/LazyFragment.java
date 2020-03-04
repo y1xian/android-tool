@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.widget.R;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * 懒加载.
  */
+@BindFragment(layoutRes = R.layout.fragment_lazy)
 public class LazyFragment extends BaseFragment{
 
     private RadioGroup radioGroup;
@@ -32,12 +34,6 @@ public class LazyFragment extends BaseFragment{
         LazyFragment fragment = new LazyFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_lazy;
     }
 
     @Override

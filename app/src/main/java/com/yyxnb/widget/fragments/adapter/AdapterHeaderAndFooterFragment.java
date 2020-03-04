@@ -17,6 +17,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.yyxnb.adapter.ext.RecyclerViewExtKt;
 import com.yyxnb.adapter.rv.BaseRecyclerView;
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.log.LogUtils;
@@ -36,6 +37,7 @@ import java.util.Random;
 /**
  * 适配器 头 + 底.
  */
+@BindFragment(layoutRes = R.layout.fragment_adapter_header_and_footer)
 public class AdapterHeaderAndFooterFragment extends BaseFragment {
 
     private NetWorkListAdapter mAdapter;
@@ -54,11 +56,6 @@ public class AdapterHeaderAndFooterFragment extends BaseFragment {
         AdapterHeaderAndFooterFragment fragment = new AdapterHeaderAndFooterFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_adapter_header_and_footer;
     }
 
     @Override

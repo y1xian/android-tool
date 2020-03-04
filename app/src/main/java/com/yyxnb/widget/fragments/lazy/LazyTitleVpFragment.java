@@ -7,8 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
-import com.yyxnb.arch.annotations.BarStyle;
-import com.yyxnb.arch.annotations.StatusBarDarkTheme;
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.base.BaseFragmentPagerAdapter;
 import com.yyxnb.utils.DpUtils;
@@ -33,7 +32,7 @@ import java.util.List;
 /**
  * 懒加载.vp
  */
-@StatusBarDarkTheme(value = BarStyle.LightContent)
+@BindFragment(layoutRes = R.layout.fragment_lazy_title_vp ,statusBarStyle = 2)
 public class LazyTitleVpFragment extends BaseFragment {
 
     private Toolbar mToolbar;
@@ -49,11 +48,6 @@ public class LazyTitleVpFragment extends BaseFragment {
         LazyTitleVpFragment fragment = new LazyTitleVpFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_lazy_title_vp;
     }
 
     @Override

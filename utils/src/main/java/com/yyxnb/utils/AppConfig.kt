@@ -6,43 +6,25 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.text.TextUtils
-import android.util.Log
+import com.yyxnb.utils.log.LogUtils
 import java.io.Serializable
-import java.lang.ref.WeakReference
+import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
 
 /**
  * 初始化相关
  */
+@Suppress("UNCHECKED_CAST")
 object AppConfig : Serializable {
 
-    private lateinit var mWeakReferenceContext: WeakReference<Context>
-
-    /**
-     * 初始化工具类
-     *
-     * @param context 上下文
-     */
-    fun init(application: Application) {
-        mApp = application
-        SPUtils.init(application)
-        mWeakReferenceContext = WeakReference(application.applicationContext)
-    }
-
-    var mApp: Application? = null
+    val app: Application = AppGlobals.getApplication()
 
     /**
      * 获取ApplicationContext
      *
      * @return ApplicationContext
      */
-    val context: Context
-        get() {
-            if (null != mWeakReferenceContext) {
-                return mWeakReferenceContext.get()!!.applicationContext
-            }
-            throw NullPointerException("u should init first")
-        }
+    val context: Context = app.applicationContext
 
     //debug下吐司
     fun debugToast(str: String) {
@@ -59,7 +41,7 @@ object AppConfig : Serializable {
     //debug下打印
     fun debugLog(str: String) {
         if (isDebug) {
-            Log.d("---", str)
+            LogUtils.w(str)
         }
     }
 
@@ -68,41 +50,19 @@ object AppConfig : Serializable {
      */
     val isDebug: Boolean
         get() {
-            if (TextUtils.isEmpty(mWeakReferenceContext.get()!!.packageName)) {
+            if (TextUtils.isEmpty(app.packageName)) {
                 return false
             }
-            try {
-                val pm = mWeakReferenceContext.get()!!.packageManager
-                val ai = pm.getApplicationInfo(mWeakReferenceContext.get()!!.packageName, 0)
-                return ai != null && ai.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+            return try {
+                val pm = app.packageManager
+                val ai = pm.getApplicationInfo(app.packageName, 0)
+                ai != null && ai.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
-                return false
+                false
             }
 
         }
-
-    /**
-     * 返回实例的泛型类型
-     */
-    fun <T> getNewInstance(t: Any?, i: Int = 0): T? {
-        t?.let {
-            try {
-                return ((it.javaClass
-                        .genericSuperclass as ParameterizedType)
-                        .actualTypeArguments[i] as Class<T>)
-                        .newInstance()
-            } catch (e: InstantiationException) {
-                e.printStackTrace()
-            } catch (e: IllegalAccessException) {
-                e.printStackTrace()
-            } catch (e: ClassCastException) {
-                e.printStackTrace()
-            }
-        }
-        return null
-
-    }
 
     /**
      * 返回实例的泛型类型
@@ -122,4 +82,12 @@ object AppConfig : Serializable {
 
     }
 
+    fun <T> getClass(t: Any): Class<T> {
+        // 通过反射 获取当前类的父类的泛型 (T) 对应 Class类
+        return (t.javaClass.genericSuperclass as ParameterizedType)
+                .actualTypeArguments[0]
+                as Class<T>
+    }
+
+    fun <T> getFiledClazz(field: Field) = field.genericType as Class<T>
 }

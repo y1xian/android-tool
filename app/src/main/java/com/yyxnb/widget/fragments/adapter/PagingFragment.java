@@ -1,7 +1,6 @@
 package com.yyxnb.widget.fragments.adapter;
 
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +12,9 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.adapter.MultiItemTypePagedAdapter;
 import com.yyxnb.adapter.ext.RecyclerViewExtKt;
-import com.yyxnb.adapter.rv.BaseRecyclerView;
-import com.yyxnb.arch.base.mvvm.BaseFragmentVM;
+import com.yyxnb.arch.annotations.BindFragment;
+import com.yyxnb.arch.annotations.BindViewModel;
+import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.widget.R;
@@ -32,8 +32,10 @@ import java.util.Random;
 /**
  * paging.
  */
-public class PagingFragment extends BaseFragmentVM<PagingViewModel> {
-
+@BindFragment(layoutRes = R.layout.fragment_paging)
+public class PagingFragment extends BaseFragment {
+    @BindViewModel
+    PagingViewModel mViewModel;
     private RecyclerAdapter2 mAdapter;
     private RecyclerView mRecyclerView;
     private SmartRefreshLayout mRefreshLayout;
@@ -47,11 +49,6 @@ public class PagingFragment extends BaseFragmentVM<PagingViewModel> {
         PagingFragment fragment = new PagingFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_paging;
     }
 
     @Override

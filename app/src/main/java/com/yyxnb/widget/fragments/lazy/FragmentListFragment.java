@@ -7,13 +7,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.yyxnb.arch.annotations.FinishPageLv;
-import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.utils.AppConfig;
-import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.adapter.ItemDecoration;
 import com.yyxnb.adapter.MultiItemTypeAdapter;
+import com.yyxnb.arch.annotations.BindFragment;
+import com.yyxnb.arch.base.BaseFragment;
+import com.yyxnb.utils.AppConfig;
+import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.StringListAdapter;
 import com.yyxnb.widget.config.DataConfig;
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * fragment 列表.
  */
-@FinishPageLv(value = 5)
+@BindFragment(layoutRes = R.layout.fragment_fragment_list, group = 5)
 public class FragmentListFragment extends BaseFragment {
 
     private StringListAdapter mAdapter;
@@ -37,11 +37,6 @@ public class FragmentListFragment extends BaseFragment {
         FragmentListFragment fragment = new FragmentListFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_fragment_list;
     }
 
     @Override
@@ -73,8 +68,8 @@ public class FragmentListFragment extends BaseFragment {
                         break;
                     case 2:
                         Bundle bundle = initArguments();
-                        bundle.putString("x","456");
-                        startFragment(ForResultFragment.newInstance(),123);
+                        bundle.putString("x", "456");
+                        startFragment(ForResultFragment.newInstance(), 123);
                         break;
                     default:
                         break;

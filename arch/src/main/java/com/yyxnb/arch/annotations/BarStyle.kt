@@ -1,12 +1,20 @@
 package com.yyxnb.arch.annotations
 
-enum class BarStyle {
+import android.support.annotation.IntDef
+import com.yyxnb.arch.annotations.BarStyle.Companion.DarkContent
+import com.yyxnb.arch.annotations.BarStyle.Companion.LightContent
+import com.yyxnb.arch.annotations.BarStyle.Companion.NONE
 
-    /**
-     * 深色状态栏 6.0 以上生效
-     */
-    DarkContent,
-
-    LightContent
-
+@IntDef(DarkContent, LightContent, NONE)
+@Target(AnnotationTarget.FILE, AnnotationTarget.VALUE_PARAMETER)
+@kotlin.annotation.Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class BarStyle {
+    companion object {
+        // 深色
+        const val DarkContent = 1
+        // 浅色
+        const val LightContent = 2
+        const val NONE = 0
+    }
 }

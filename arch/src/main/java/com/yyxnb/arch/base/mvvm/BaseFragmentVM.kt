@@ -14,6 +14,7 @@ import com.yyxnb.utils.AppConfig
  * @author : yyx
  * @date ：2018/6/10
  */
+@Deprecated("用注解@BindViewModel代替")
 abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
 
     /**
@@ -28,7 +29,7 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
     }
 
     override fun initViewData() {
-        super.initViewData()
+//        super.initViewData()
         registerDefUIChange()
         initObservable()
     }
@@ -49,12 +50,12 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
      * 初始化界面观察者的监听
      * 接收数据结果
      */
-    open fun initObservable() {}
+    override fun initObservable() {}
 
     /**
      * 返回消息
      */
-    open fun handleEvent(msg: Message?) {}
+    override fun handleEvent(msg: Message?) {}
 
     open fun isShare() = false
 

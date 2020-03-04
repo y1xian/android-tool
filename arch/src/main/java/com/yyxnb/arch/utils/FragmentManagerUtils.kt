@@ -1,14 +1,16 @@
 package com.yyxnb.arch.utils
 
-import com.yyxnb.arch.base.BaseFragment
+import android.support.v4.app.Fragment
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * 管理所有 fragment
+ */
 object FragmentManagerUtils : Serializable {
 
-    private var fragmentStack: Stack<BaseFragment>? = null
-
+    private var fragmentStack: Stack<Fragment>? = null
 
     /**
      * 获取当前Fragment个数
@@ -16,8 +18,8 @@ object FragmentManagerUtils : Serializable {
     val count: Int
         get() = fragmentStack!!.size
 
-    fun getFragmentStack(): List<BaseFragment> {
-        val list = ArrayList<BaseFragment>()
+    fun getFragmentStack(): List<Fragment> {
+        val list = ArrayList<Fragment>()
         list.clear()
         if (fragmentStack != null) {
             list.addAll(fragmentStack!!)
@@ -28,7 +30,8 @@ object FragmentManagerUtils : Serializable {
     /**
      * 添加Fragment到堆栈
      */
-    fun pushFragment(fragment: BaseFragment) {
+    @Synchronized
+    fun pushFragment(fragment: Fragment) {
         if (fragmentStack == null) {
             fragmentStack = Stack()
         }
@@ -38,8 +41,8 @@ object FragmentManagerUtils : Serializable {
     /**
      * 获取当前Fragment
      */
-    fun currentFragment(): BaseFragment {
-        var fragment: BaseFragment? = null
+    fun currentFragment(): Fragment {
+        var fragment: Fragment? = null
         if (!fragmentStack!!.empty()) {
             fragment = fragmentStack!!.lastElement()
         }
@@ -49,8 +52,8 @@ object FragmentManagerUtils : Serializable {
     /**
      * 上一个fragment [FragmentManagerUtils.count]} > 1
      */
-    fun beforeFragment(): BaseFragment {
-        var fragment: BaseFragment? = null
+    fun beforeFragment(): Fragment {
+        var fragment: Fragment? = null
         if (count > 1) {
             fragment = getFragmentStack()[count - 2]
         }
@@ -68,7 +71,8 @@ object FragmentManagerUtils : Serializable {
     /**
      * 结束指定的Fragment
      */
-    fun killFragment(fragment: BaseFragment?) {
+    @Synchronized
+    fun killFragment(fragment: Fragment?) {
         var _fragment = fragment
         if (_fragment != null) {
 //            _fragment.finish()

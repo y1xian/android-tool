@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.y1xian'
+group = 'com.github.y1xian'
 
 android {
 
@@ -79,12 +79,12 @@ android {
 }
 
 dependencies {
-    api project(':utils'), project(':annotation')
+    api project(':utils')
     //  v7 v4 约束
     api([libs.support_v7, libs.support_v4, libs.design, libs.annotations, libs.constraint, libs.recyclerview])
     // jetpack
     api libs.arch_comp_java8, libs.arch_comp_extensions
-    compileOnly libs.arch_comp_paging
+    implementation libs.arch_comp_paging, libs.gson
     // 避免65K限制       https://developer.android.com/tools/building/multidex.html
     api libs.multidex
     //https://github.com/JessYanCoding/AndroidAutoSize
@@ -95,4 +95,5 @@ dependencies {
     api libs.kotlin_stdlib, libs.kotlin_coroutines, libs.kotlin_coroutines_core
     //bus
     api libs.live_event_bus
+
 }

@@ -2,12 +2,13 @@ package com.yyxnb.widget.fragments.lazy;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.yyxnb.arch.annotations.FinishPageLv;
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.utils.FragmentManagerUtils;
 import com.yyxnb.utils.log.LogUtils;
@@ -15,11 +16,10 @@ import com.yyxnb.widget.R;
 
 import org.jetbrains.annotations.Nullable;
 
-
 /**
  * startActivityForResult .
  */
-@FinishPageLv(value = 3)
+@BindFragment(layoutRes = R.layout.fragment_for_result, group = 3, statusBarColor = Color.BLUE)
 public class ForResultFragment extends BaseFragment {
 
     private EditText etInput;
@@ -35,11 +35,6 @@ public class ForResultFragment extends BaseFragment {
     }
 
     @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_for_result;
-    }
-
-    @Override
     public void initView(@Nullable Bundle savedInstanceState) {
 
         LogUtils.INSTANCE.w("--" + getArguments().getString("x"));
@@ -47,7 +42,7 @@ public class ForResultFragment extends BaseFragment {
         etInput = findViewById(R.id.etInput);
         tvConfirm = findViewById(R.id.tvConfirm);
 
-        etInput.setText("6");
+        etInput.setText(getArguments().getString("x"));
 
         tvConfirm.setOnClickListener(v -> {
             String str = etInput.getText().toString();

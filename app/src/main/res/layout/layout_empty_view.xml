@@ -28,7 +28,7 @@
         tools:text="虽然什么也没有,要不下拉刷新看看"></TextView>
 
 
-    <com.google.android.material.button.MaterialButton
+    <android.support.design.button.MaterialButton
         android:id="@+id/empty_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,5 +43,5 @@
         app:cornerRadius="20dp"
         tools:text="朕知道了">
 
-    </com.google.android.material.button.MaterialButton>
+    </android.support.design.button.MaterialButton>
 </LinearLayout>

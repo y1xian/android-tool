@@ -14,7 +14,7 @@ class HttpOptions {
     var type: HttpType = HttpType.POST
     var headers: Map<String, Any> = linkedMapOf()
     var params: Map<String, Any> = linkedMapOf()
-    var httpProxy: IHttpProxy? = null
+    var http: IHttp? = null
     var callBack: ICallBack? = null
 
     fun url(url: String): HttpOptions {

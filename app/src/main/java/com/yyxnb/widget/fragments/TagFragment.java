@@ -3,8 +3,10 @@ package com.yyxnb.widget.fragments;
 
 import android.os.Bundle;
 
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
+import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.view.text.FlowlayoutTags;
 import com.yyxnb.widget.R;
 
@@ -16,6 +18,7 @@ import java.util.List;
 /**
  * 标签
  */
+@BindFragment(layoutRes = R.layout.fragment_tag)
 public class TagFragment extends BaseFragment {
 
     private FlowlayoutTags mFlowlayoutTags;
@@ -33,12 +36,9 @@ public class TagFragment extends BaseFragment {
     }
 
     @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_tag;
-    }
-
-    @Override
     public void initView(@Nullable Bundle savedInstanceState) {
+
+        LogUtils.INSTANCE.e("" + getHasId() + ", " + getSceneId());
 
         mFlowlayoutTags = findViewById(R.id.mFlowlayoutTags);
         mFlowlayoutTags1 = findViewById(R.id.mFlowlayoutTags1);
@@ -52,9 +52,9 @@ public class TagFragment extends BaseFragment {
         list.add("白色圆领衬衫");
         list.add("红色长袖连衣裙");
 
-        refreshCategorys(mFlowlayoutTags,list);
-        refreshCategorys(mFlowlayoutTags1,list);
-        refreshCategorys(mFlowlayoutTags2,list);
+        refreshCategorys(mFlowlayoutTags, list);
+        refreshCategorys(mFlowlayoutTags1, list);
+        refreshCategorys(mFlowlayoutTags2, list);
 
         mFlowlayoutTags.setOnTagClickListener(AppConfig.INSTANCE::toast);
 
@@ -72,7 +72,7 @@ public class TagFragment extends BaseFragment {
 
     }
 
-    public void refreshCategorys(FlowlayoutTags flowlayoutTags,List<String> list) {
+    public void refreshCategorys(FlowlayoutTags flowlayoutTags, List<String> list) {
         flowlayoutTags.removeAllViews();
 
         flowlayoutTags.setTags(list);

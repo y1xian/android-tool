@@ -1,8 +1,8 @@
 package com.yyxnb.compiler;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.google.auto.service.AutoService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.yyxnb.annotation.ActivityDestination;
 import com.yyxnb.annotation.FragmentDestination;
 
@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -64,7 +63,7 @@ public class NavProcessor extends AbstractProcessor {
         Set<? extends Element> activityElements = roundEnv.getElementsAnnotatedWith(ActivityDestination.class);
 
         if (!fragmentElements.isEmpty() || !activityElements.isEmpty()) {
-            HashMap<String, JSONObject> destMap = new HashMap<>();
+            HashMap<String, JsonObject> destMap = new HashMap<>();
             //分别 处理FragmentDestination  和 ActivityDestination 注解类型
             //并收集到destMap 这个map中。以此就能记录下所有的页面信息了
             handleDestination(fragmentElements, FragmentDestination.class, destMap);
@@ -101,7 +100,7 @@ public class NavProcessor extends AbstractProcessor {
                 outPutFile.createNewFile();
 
                 //利用fastjson把收集到的所有的页面信息 转换成JSON格式的。并输出到文件中
-                String content = JSON.toJSONString(destMap);
+                String content = new Gson().toJson(destMap);
                 fos = new FileOutputStream(outPutFile);
                 writer = new OutputStreamWriter(fos, "UTF-8");
                 writer.write(content);
@@ -131,7 +130,7 @@ public class NavProcessor extends AbstractProcessor {
         return true;
     }
 
-    private void handleDestination(Set<? extends Element> elements, Class<? extends Annotation> annotationClaz, HashMap<String, JSONObject> destMap) {
+    private void handleDestination(Set<? extends Element> elements, Class<? extends Annotation> annotationClaz, HashMap<String, JsonObject> destMap) {
         for (Element element : elements) {
             //TypeElement是Element的一种。
             //如果我们的注解标记在了类名上。所以可以直接强转一下。使用它得到全类名
@@ -167,13 +166,13 @@ public class NavProcessor extends AbstractProcessor {
             if (destMap.containsKey(pageUrl)) {
                 messager.printMessage(Diagnostic.Kind.ERROR, "不同的页面不允许使用相同的pageUrl：" + clazName);
             } else {
-                JSONObject object = new JSONObject();
-                object.put("id", id);
-                object.put("needLogin", needLogin);
-                object.put("asStarter", asStarter);
-                object.put("pageUrl", pageUrl);
-                object.put("className", clazName);
-                object.put("isFragment", isFragment);
+                JsonObject object = new JsonObject();
+                object.addProperty("id", id);
+                object.addProperty("needLogin", needLogin);
+                object.addProperty("asStarter", asStarter);
+                object.addProperty("pageUrl", pageUrl);
+                object.addProperty("className", clazName);
+                object.addProperty("isFragment", isFragment);
                 destMap.put(pageUrl, object);
             }
         }

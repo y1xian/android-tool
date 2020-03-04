@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.log.LogUtils;
@@ -33,6 +34,7 @@ import java.util.Random;
 /**
  * 多适配器 头 + 底.
  */
+@BindFragment(layoutRes = R.layout.fragment_adapter_header_and_footer)
 public class MultiAdapterFragment extends BaseFragment {
 
     private MultiItemAdapter mAdapter;
@@ -50,11 +52,6 @@ public class MultiAdapterFragment extends BaseFragment {
         MultiAdapterFragment fragment = new MultiAdapterFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_adapter_header_and_footer;
     }
 
     @Override

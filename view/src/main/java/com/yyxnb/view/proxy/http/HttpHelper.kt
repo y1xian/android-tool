@@ -6,15 +6,15 @@ package com.yyxnb.view.proxy.http
 object HttpHelper {
 
     @Volatile
-    private var httpProxy: IHttpProxy? = null
+    private var http: IHttp? = null
     @Volatile
     private var baseUrl: String? = null
 
     /**
      * 提供全局替换网络加载框架的接口，若切换其它框架，可以实现一键全局替换
      */
-    fun init(http: IHttpProxy): HttpHelper {
-        httpProxy = http
+    fun init(http: IHttp): HttpHelper {
+        this.http = http
         return this
     }
 
@@ -34,22 +34,22 @@ object HttpHelper {
 
     @Synchronized
     fun loadOptions(options: HttpOptions) {
-        if (options.httpProxy != null) {
-            options.httpProxy!!.loadHttp(options)
+        if (options.http != null) {
+            options.http!!.loadHttp(options)
         } else {
             checkNotNull()
-            httpProxy!!.loadHttp(options)
+            http!!.loadHttp(options)
         }
     }
 
     @Synchronized
     fun cancel(tag: String) {
         checkNotNull()
-        httpProxy!!.cancel(tag)
+        http!!.cancel(tag)
     }
 
     private fun checkNotNull() {
-        if (httpProxy == null) {
+        if (http == null) {
             throw NullPointerException("you must be set your httpProxy at first!")
         }
     }

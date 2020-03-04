@@ -1,16 +1,16 @@
 package com.yyxnb.widget.fragments.http;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.adapter.ItemDecoration;
 import com.yyxnb.adapter.MultiItemTypeAdapter;
+import com.yyxnb.arch.annotations.BindFragment;
+import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.StringListAdapter;
 import com.yyxnb.widget.config.DataConfig;
@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 网络请求.
  */
+@BindFragment(layoutRes = R.layout.fragment_net_work_list)
 public class NetWorkListFragment extends BaseFragment {
 
     private StringListAdapter mAdapter;
@@ -34,11 +35,6 @@ public class NetWorkListFragment extends BaseFragment {
         NetWorkListFragment fragment = new NetWorkListFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_net_work_list;
     }
 
     @Override

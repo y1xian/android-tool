@@ -1,9 +1,9 @@
 package com.yyxnb.arch
 
+import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.WindowManager
-import com.yyxnb.arch.annotations.BarStyle
 import com.yyxnb.arch.base.BaseActivity
 import com.yyxnb.arch.base.BaseFragment
 import com.yyxnb.arch.common.ArchConfig
@@ -21,6 +21,7 @@ class ContainerActivity : BaseActivity() {
 
     override fun initLayoutResId(): Int = R.layout.base_nav_content
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun initView(savedInstanceState: Bundle?) {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

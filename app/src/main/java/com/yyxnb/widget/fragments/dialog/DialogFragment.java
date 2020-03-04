@@ -9,6 +9,7 @@ import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.adapter.ItemDecoration;
 import com.yyxnb.adapter.MultiItemTypeAdapter;
 import com.yyxnb.adapter.ext.RecyclerViewExtKt;
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
 import com.yyxnb.view.popup.Popup;
@@ -27,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 对话框.
  */
+@BindFragment(layoutRes = R.layout.fragment_dialog)
 public class DialogFragment extends BaseFragment {
 
     private TitleBar mTitleBar;
@@ -40,11 +42,6 @@ public class DialogFragment extends BaseFragment {
         DialogFragment fragment = new DialogFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_dialog;
     }
 
     @Override

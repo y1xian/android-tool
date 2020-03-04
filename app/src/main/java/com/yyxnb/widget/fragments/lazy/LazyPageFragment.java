@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.yyxnb.arch.annotations.SubPage;
+import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.utils.AppConfig;
 import com.yyxnb.utils.log.LogUtils;
@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 懒加载分页.
  */
-@SubPage
+@BindFragment(layoutRes = R.layout.fragment_lazy_page , subPage = true)
 public class LazyPageFragment extends BaseFragment {
 
     private StringListAdapter mAdapter;
@@ -37,11 +37,6 @@ public class LazyPageFragment extends BaseFragment {
         LazyPageFragment fragment = new LazyPageFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_lazy_page;
     }
 
     @Override
@@ -78,6 +73,11 @@ public class LazyPageFragment extends BaseFragment {
         mAdapter.setDataItems(DataConfig.INSTANCE.getData());
 
         LogUtils.INSTANCE.w("-pg--initViewData      " + page);
+    }
+
+    @Override
+    public void initObservable() {
+        LogUtils.INSTANCE.e("initObservable");
     }
 
     @Override

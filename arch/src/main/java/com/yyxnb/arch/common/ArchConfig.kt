@@ -3,6 +3,7 @@ package com.yyxnb.arch.common
 import android.graphics.Color
 import com.yyxnb.arch.R
 import com.yyxnb.arch.annotations.BarStyle
+import com.yyxnb.arch.annotations.SwipeStyle
 import com.yyxnb.utils.AppConfig
 import java.io.Serializable
 
@@ -18,6 +19,7 @@ object ArchConfig : Serializable {
     const val BUNDLE = "BUNDLE"
     const val REQUEST_CODE = "REQUEST_CODE"
     const val FRAGMENT_FINISH = "FRAGMENT_FINISH"
+    const val NEED_LOGIN = "NEED_LOGIN"
 
     /**
      * 重连次数
@@ -30,7 +32,7 @@ object ArchConfig : Serializable {
     /**
      * 侧滑
      */
-    var swipeBack: Int = 1
+    var swipeBack: Int = SwipeStyle.Edge
     /**
      * 状态栏透明
      */
@@ -42,7 +44,7 @@ object ArchConfig : Serializable {
     /**
      * 状态栏文字颜色
      */
-    var statusBarStyle = BarStyle.DarkContent
+    var statusBarStyle :Int = BarStyle.DarkContent
     /**
      * 状态栏是否隐藏
      */
@@ -63,5 +65,10 @@ object ArchConfig : Serializable {
      * 虚拟键颜色
      */
     var navigationBarStyle = BarStyle.DarkContent
+    /**
+     * 登录状态
+     */
+    var needLogin = false
+
 
 }

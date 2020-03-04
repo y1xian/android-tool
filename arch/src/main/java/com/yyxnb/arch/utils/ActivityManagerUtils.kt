@@ -3,11 +3,13 @@ package com.yyxnb.arch.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import com.yyxnb.arch.base.BaseFragment
 import com.yyxnb.arch.interfaces.IOnActivityStatusChangeListener
 import java.io.Serializable
 import java.util.*
 
+/**
+ * 管理所有 activity
+ */
 object ActivityManagerUtils : Serializable {
 
     private var onActivityStatusChangeListener: IOnActivityStatusChangeListener? = null
@@ -35,6 +37,7 @@ object ActivityManagerUtils : Serializable {
     /**
      * 添加Activity到堆栈
      */
+    @Synchronized
     fun pushActivity(activity: Activity) {
         if (activityStack == null) {
             activityStack = Stack()
@@ -136,6 +139,7 @@ object ActivityManagerUtils : Serializable {
     /**
      * 关闭指定 Activity
      */
+    @Synchronized
     fun deleteActivity(activity: Activity?) {
         if (activity != null) {
             activityStack!!.remove(activity)

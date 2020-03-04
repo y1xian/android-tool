@@ -12,31 +12,39 @@ import android.view.ViewGroup;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.yyxnb.adapter.BaseViewHolder;
+import com.yyxnb.adapter.MultiItemTypeAdapter;
+import com.yyxnb.arch.annotations.BindFragment;
+import com.yyxnb.arch.annotations.BindViewModel;
+import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.base.mvvm.BaseFragmentVM;
 import com.yyxnb.http.cache.CacheManager;
+import com.yyxnb.utils.ToastUtils;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.NetWorkListAdapter;
+import com.yyxnb.widget.vm.MsgViewModel;
 import com.yyxnb.widget.vm.NetWorkViewModel;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
 /**
  * 网络列表.
  */
-public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
+@BindFragment(layoutRes = R.layout.fragment_net_work)
+public class NetWorkFragment extends BaseFragment/*VM<NetWorkViewModel>*/ {
+
+    @BindViewModel
+    NetWorkViewModel mViewModel;
+    @BindViewModel
+    MsgViewModel msgViewModel;
 
     private NetWorkListAdapter mAdapter;
     private SmartRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
     private int page = 1;
-
-
-    @Override
-    public int initLayoutResId() {
-        return R.layout.fragment_net_work;
-    }
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
@@ -68,23 +76,40 @@ public class NetWorkFragment extends BaseFragmentVM<NetWorkViewModel> {
             }
         });
 
-//        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
 //            @Override
-//            public void onItemClick(@NotNull View view, @NotNull RecyclerView.ViewHolder holder, int position) {
-//                ToastUtils.INSTANCE.normal("" + position);
-//            }
-//
-//        });
+////            public void onItemClick(@NotNull View view, @NotNull RecyclerView.ViewHolder holder, int position) {
+////                ToastUtils.INSTANCE.normal("" + position);
+////            }
 
-        mViewModel.reqTeam();
+
+            @Override
+            public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
+                super.onItemClick(view, holder, position);
+
+            }
+
+            @Override
+            public void onItemChildClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
+                super.onItemChildClick(view, holder, position);
+                if (view.getId() == R.id.mLinearLayout){
+                    msgViewModel.reqToast("第 " + position);
+                }
+            }
+        });
+
+
     }
 
     @Override
     public void initViewData() {
         super.initViewData();
 
-        LogUtils.INSTANCE.e(CacheManager.cacheSize() + " 条");
+        LogUtils.INSTANCE.e(" aaaaa");
 
+        mViewModel.reqTeam();
+
+        LogUtils.INSTANCE.e(CacheManager.cacheSize() + " 条");
 
         mViewModel.getTestList().observe(this, t -> {
             switch (t.getStatus()) {

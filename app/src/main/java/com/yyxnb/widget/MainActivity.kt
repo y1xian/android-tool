@@ -5,65 +5,107 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.yyxnb.arch.base.BaseActivity
-import com.yyxnb.utils.log.LogUtils
-import com.yyxnb.tools.permission.FanPermissionListener
-import com.yyxnb.tools.permission.FanPermissionUtils
 import com.yyxnb.adapter.BaseViewHolder
 import com.yyxnb.adapter.ItemDecoration
 import com.yyxnb.adapter.MultiItemTypeAdapter
+import com.yyxnb.adapter.MultiItemTypePagedAdapter
+import com.yyxnb.arch.base.BaseActivity
+import com.yyxnb.tools.permission.FanPermissionListener
+import com.yyxnb.tools.permission.FanPermissionUtils
+import com.yyxnb.utils.log.LogUtils
 import com.yyxnb.widget.adapter.MainListAdapter
 import com.yyxnb.widget.config.DataConfig
 import com.yyxnb.widget.fragments.BehaviorFragment
+import com.yyxnb.widget.fragments.HomeFragment
 import com.yyxnb.widget.fragments.TagFragment
 import com.yyxnb.widget.fragments.TitleFragment
 import com.yyxnb.widget.fragments.adapter.AdapterListFragment
 import com.yyxnb.widget.fragments.dialog.DialogFragment
-import com.yyxnb.widget.fragments.lazy.FragmentListFragment
 import com.yyxnb.widget.fragments.http.NetWorkListFragment
+import com.yyxnb.widget.fragments.lazy.ForResultFragment
+import com.yyxnb.widget.fragments.lazy.FragmentListFragment
+import com.yyxnb.widget.fragments.lazy.LazyFragment
+import com.yyxnb.widget.fragments.lazy.LazyTitleVpFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
-    private val mAdapter by lazy { MainListAdapter() }
+//    private var navView: AppBottomBar? = null
+//    private var navController: NavController? = null
+//    private val mAdapter by lazy { MainListAdapter() }
 
     override fun initLayoutResId(): Int = R.layout.activity_main
 
     override fun initView(savedInstanceState: Bundle?) {
-
+//        super.ininView(savedInstanceState)
         initPermission()
         setStatusBarColor(Color.TRANSPARENT)
 
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
-        mRecyclerView.setHasFixedSize(true)
-        val decoration = ItemDecoration(mContext)
-        decoration.setDividerColor(resources.getColor(R.color.red))
-        decoration.setPaddingLeft(16)
-        mRecyclerView.addItemDecoration(decoration)
-        mRecyclerView.adapter = mAdapter
+//        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+//        val navController = NavHostFragment.findNavController(fragment!!)
+//        NavGraphBuilder.build(this, navController, fragment.id, DataConfig.getDestConfig(/*"main/tabs"*/))
+//        nav_view.setOnNavigationItemSelectedListener { menuItem ->
+////            if(navController.currentDestination.id == menuItem.itemId){
+////
+////            }
+//            val destConfig: HashMap<String, Destination> = DataConfig.getDestConfig()
+//            val iterator: Iterator<Map.Entry<String, Destination>> = destConfig.entries.iterator()
+//            //遍历 target destination 是否需要登录拦截
+////            while (iterator.hasNext()) {
+////                val entry: Map.Entry<String, Destination> = iterator.next()
+////                val value: Destination = entry.value
+////                if (value != null && !UserManager.get().isLogin() && value.needLogin && value.id === menuItem.itemId) {
+////                    UserManager.get().login(this).observe(this, object : Observer<User?>() {
+////                        fun onChanged(user: User?) {
+////                            navView.setSelectedItemId(menuItem.itemId)
+////                        }
+////                    })
+////                    return false
+////                }
+////            }
+//            LogUtils.e("${menuItem.itemId}")
+//            navController.navigate(menuItem.itemId)
+//            return@setOnNavigationItemSelectedListener !TextUtils.isEmpty(menuItem.title)
+//        }
 
-        mAdapter.setDataItems(DataConfig.dataMain)
+        startFragment(HomeFragment())
 
-        mAdapter.setOnItemClickListener(object : MultiItemTypeAdapter.SimpleOnItemClickListener() {
-            override fun onItemClick(view: View, holder: BaseViewHolder, position: Int) {
+//        mRecyclerView.layoutManager = LinearLayoutManager(this)
+//        mRecyclerView.setHasFixedSize(true)
+//        val decoration = ItemDecoration(mContext)
+//        decoration.setDividerColor(resources.getColor(R.color.red))
+//        decoration.setPaddingLeft(16)
+//        mRecyclerView.addItemDecoration(decoration)
+//        mRecyclerView.adapter = mAdapter
+//
+//        mAdapter.submitList(DataConfig.dataMain)
 
-                setMenu(position)
-
-//                val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
-//                loadingPopup.show()
-
-//                Popup.Builder(this@MainActivity)
-//                        .asBottomList("", arrayOf("条目1", "条目2", "条目3", "条目4", "条目5"), null
-//                                //                                null, 0,R.mipmap.icon_pay_check,
-//                        ) { position, text ->
-//                            //                                        ToastUtil.show("click " + text);
-//                        }
-//                        .show()
-
-
-            }
-
-        })
+//        mAdapter.setOnItemClickListener(object : MultiItemTypePagedAdapter.SimpleOnItemClickListener() {
+//
+//            override fun onItemClick(view: View, holder: BaseViewHolder, position: Int) {
+//                super.onItemClick(view, holder, position)
+//                setMenu(position)
+//            }
+////            override fun onItemClick(view: View, holder: BaseViewHolder, position: Int) {
+////
+////
+////                setMenu(position)
+////
+//////                val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
+//////                loadingPopup.show()
+////
+//////                Popup.Builder(this@MainActivity)
+//////                        .asBottomList("", arrayOf("条目1", "条目2", "条目3", "条目4", "条目5"), null
+//////                                //                                null, 0,R.mipmap.icon_pay_check,
+//////                        ) { position, text ->
+//////                            //                                        ToastUtil.show("click " + text);
+//////                        }
+//////                        .show()
+////
+////
+////            }
+////
+//        })
 
     }
 
@@ -94,7 +136,7 @@ class MainActivity : BaseActivity() {
                         "realname" to "74",
                         "token" to "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJKSUZFTlNIT1AiLCJpYXQiOjE1NzY5MDAzOTQsImV4cCI6MTU3NzUwNTE5NCwidXNlcl9pZCI6MTM0fQ.gG8A86_N_cw7qoqHYLBE-nAyz6Upx5FDgDS2nlCig-w"
                 )
-                val m = mutableMapOf("just1" to url,"back" to url)
+                val m = mutableMapOf("just1" to url, "back" to url)
 
 
 //                UploadRetrofit.uploadImgsWithParams("http://www.51duanshiping.com/api/public/?service=Video.setVideoThumb",
@@ -190,4 +232,25 @@ class MainActivity : BaseActivity() {
                 //开始授权
                 .startCheckPermission()
     }
+
+//    override fun onBackPressed() {
+////        super.onBackPressed();
+////当前正在显示的页面destinationId
+//        val currentPageId = navController!!.currentDestination!!.id
+//
+//        //APP页面路导航结构图  首页的destinationId
+//        //APP页面路导航结构图  首页的destinationId
+//        val homeDestId = navController!!.graph.startDestination
+//
+//        //如果当前正在显示的页面不是首页，而我们点击了返回键，则拦截。
+//        //如果当前正在显示的页面不是首页，而我们点击了返回键，则拦截。
+//        if (currentPageId != homeDestId) {
+//            nav_view.setSelectedItemId(homeDestId)
+//            return
+//        }
+//
+//        //否则 finish，此处不宜调用onBackPressed。因为navigation会操作回退栈,切换到之前显示的页面。
+//        //否则 finish，此处不宜调用onBackPressed。因为navigation会操作回退栈,切换到之前显示的页面。
+//        finish()
+//    }
 }

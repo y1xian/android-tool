@@ -1,8 +1,6 @@
 ext.mainApp = true //标记为主app module
 ext.isKt = true
 apply from: rootProject.file('module.gradle')
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     defaultConfig {
@@ -34,6 +32,7 @@ dependencies {
     implementation project(':view')
     implementation project(':tools')
     implementation project(':adapter')
+    kapt project(':compiler')
 
     //glide
     api libs.glide
@@ -52,4 +51,5 @@ dependencies {
     implementation 'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
     implementation 'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
 
+//    api 'com.alibaba:fastjson:1.2.59'
 }
