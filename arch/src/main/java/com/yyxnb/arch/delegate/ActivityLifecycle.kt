@@ -15,8 +15,6 @@ object ActivityLifecycle : Application.ActivityLifecycleCallbacks {
     private lateinit var IActivityLifecycle: IActivityLifecycle
 
     override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-        activity?.let { ActivityManagerUtils.pushActivity(it) }
-
         forwardDelegateFunction(activity) { IActivityLifecycle.onCreate(savedInstanceState) }
 
         registerFragmentCallback(activity)
@@ -46,8 +44,6 @@ object ActivityLifecycle : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityDestroyed(activity: Activity?) {
-        activity?.let { ActivityManagerUtils.deleteActivity(it) }
-
         forwardDelegateFunction(activity) {
             IActivityLifecycle.onDestroy()
             cacheActivityDelegate.clear()

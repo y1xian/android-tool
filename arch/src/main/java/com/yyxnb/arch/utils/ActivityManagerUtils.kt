@@ -144,7 +144,7 @@ object ActivityManagerUtils : Serializable {
         if (activity != null) {
             activityStack!!.remove(activity)
             onActivityStatusChangeListener?.onActivityDestroy(activity)
-            System.gc()
+//            System.gc()
         }
     }
 

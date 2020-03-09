@@ -9,7 +9,9 @@ import com.yyxnb.adapter.BaseViewHolder
 import com.yyxnb.adapter.ItemDecoration
 import com.yyxnb.adapter.MultiItemTypeAdapter
 import com.yyxnb.adapter.MultiItemTypePagedAdapter
+import com.yyxnb.arch.ContainerActivity
 import com.yyxnb.arch.base.BaseActivity
+import com.yyxnb.arch.base.BaseFragment
 import com.yyxnb.tools.permission.FanPermissionListener
 import com.yyxnb.tools.permission.FanPermissionUtils
 import com.yyxnb.utils.log.LogUtils
@@ -28,86 +30,90 @@ import com.yyxnb.widget.fragments.lazy.LazyFragment
 import com.yyxnb.widget.fragments.lazy.LazyTitleVpFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity() {
+class MainActivity : ContainerActivity() {
 
 //    private var navView: AppBottomBar? = null
 //    private var navController: NavController? = null
 //    private val mAdapter by lazy { MainListAdapter() }
 
-    override fun initLayoutResId(): Int = R.layout.activity_main
+//    override fun initLayoutResId(): Int = R.layout.activity_main
 
-    override fun initView(savedInstanceState: Bundle?) {
-//        super.ininView(savedInstanceState)
-        initPermission()
-        setStatusBarColor(Color.TRANSPARENT)
-
-//        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-//        val navController = NavHostFragment.findNavController(fragment!!)
-//        NavGraphBuilder.build(this, navController, fragment.id, DataConfig.getDestConfig(/*"main/tabs"*/))
-//        nav_view.setOnNavigationItemSelectedListener { menuItem ->
-////            if(navController.currentDestination.id == menuItem.itemId){
-////
-////            }
-//            val destConfig: HashMap<String, Destination> = DataConfig.getDestConfig()
-//            val iterator: Iterator<Map.Entry<String, Destination>> = destConfig.entries.iterator()
-//            //遍历 target destination 是否需要登录拦截
-////            while (iterator.hasNext()) {
-////                val entry: Map.Entry<String, Destination> = iterator.next()
-////                val value: Destination = entry.value
-////                if (value != null && !UserManager.get().isLogin() && value.needLogin && value.id === menuItem.itemId) {
-////                    UserManager.get().login(this).observe(this, object : Observer<User?>() {
-////                        fun onChanged(user: User?) {
-////                            navView.setSelectedItemId(menuItem.itemId)
-////                        }
-////                    })
-////                    return false
-////                }
-////            }
-//            LogUtils.e("${menuItem.itemId}")
-//            navController.navigate(menuItem.itemId)
-//            return@setOnNavigationItemSelectedListener !TextUtils.isEmpty(menuItem.title)
-//        }
-
-        startFragment(HomeFragment())
-
-//        mRecyclerView.layoutManager = LinearLayoutManager(this)
-//        mRecyclerView.setHasFixedSize(true)
-//        val decoration = ItemDecoration(mContext)
-//        decoration.setDividerColor(resources.getColor(R.color.red))
-//        decoration.setPaddingLeft(16)
-//        mRecyclerView.addItemDecoration(decoration)
-//        mRecyclerView.adapter = mAdapter
-//
-//        mAdapter.submitList(DataConfig.dataMain)
-
-//        mAdapter.setOnItemClickListener(object : MultiItemTypePagedAdapter.SimpleOnItemClickListener() {
-//
-//            override fun onItemClick(view: View, holder: BaseViewHolder, position: Int) {
-//                super.onItemClick(view, holder, position)
-//                setMenu(position)
-//            }
-////            override fun onItemClick(view: View, holder: BaseViewHolder, position: Int) {
-////
-////
-////                setMenu(position)
-////
-//////                val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
-//////                loadingPopup.show()
-////
-//////                Popup.Builder(this@MainActivity)
-//////                        .asBottomList("", arrayOf("条目1", "条目2", "条目3", "条目4", "条目5"), null
-//////                                //                                null, 0,R.mipmap.icon_pay_check,
-//////                        ) { position, text ->
-//////                            //                                        ToastUtil.show("click " + text);
-//////                        }
-//////                        .show()
-////
-////
-////            }
-////
-//        })
-
+    override fun initBaseFragment(): BaseFragment? {
+        return HomeFragment()
     }
+
+//    override fun initView(savedInstanceState: Bundle?) {
+//        super.ininView(savedInstanceState)
+////        initPermission()
+//        setStatusBarColor(Color.TRANSPARENT)
+//
+////        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+////        val navController = NavHostFragment.findNavController(fragment!!)
+////        NavGraphBuilder.build(this, navController, fragment.id, DataConfig.getDestConfig(/*"main/tabs"*/))
+////        nav_view.setOnNavigationItemSelectedListener { menuItem ->
+//////            if(navController.currentDestination.id == menuItem.itemId){
+//////
+//////            }
+////            val destConfig: HashMap<String, Destination> = DataConfig.getDestConfig()
+////            val iterator: Iterator<Map.Entry<String, Destination>> = destConfig.entries.iterator()
+////            //遍历 target destination 是否需要登录拦截
+//////            while (iterator.hasNext()) {
+//////                val entry: Map.Entry<String, Destination> = iterator.next()
+//////                val value: Destination = entry.value
+//////                if (value != null && !UserManager.get().isLogin() && value.needLogin && value.id === menuItem.itemId) {
+//////                    UserManager.get().login(this).observe(this, object : Observer<User?>() {
+//////                        fun onChanged(user: User?) {
+//////                            navView.setSelectedItemId(menuItem.itemId)
+//////                        }
+//////                    })
+//////                    return false
+//////                }
+//////            }
+////            LogUtils.e("${menuItem.itemId}")
+////            navController.navigate(menuItem.itemId)
+////            return@setOnNavigationItemSelectedListener !TextUtils.isEmpty(menuItem.title)
+////        }
+//
+////        startFragment(HomeFragment())
+//
+////        mRecyclerView.layoutManager = LinearLayoutManager(this)
+////        mRecyclerView.setHasFixedSize(true)
+////        val decoration = ItemDecoration(mContext)
+////        decoration.setDividerColor(resources.getColor(R.color.red))
+////        decoration.setPaddingLeft(16)
+////        mRecyclerView.addItemDecoration(decoration)
+////        mRecyclerView.adapter = mAdapter
+////
+////        mAdapter.submitList(DataConfig.dataMain)
+//
+////        mAdapter.setOnItemClickListener(object : MultiItemTypePagedAdapter.SimpleOnItemClickListener() {
+////
+////            override fun onItemClick(view: View, holder: BaseViewHolder, position: Int) {
+////                super.onItemClick(view, holder, position)
+////                setMenu(position)
+////            }
+//////            override fun onItemClick(view: View, holder: BaseViewHolder, position: Int) {
+//////
+//////
+//////                setMenu(position)
+//////
+////////                val loadingPopup = Popup.Builder(this@MainActivity).asLoading()
+////////                loadingPopup.show()
+//////
+////////                Popup.Builder(this@MainActivity)
+////////                        .asBottomList("", arrayOf("条目1", "条目2", "条目3", "条目4", "条目5"), null
+////////                                //                                null, 0,R.mipmap.icon_pay_check,
+////////                        ) { position, text ->
+////////                            //                                        ToastUtil.show("click " + text);
+////////                        }
+////////                        .show()
+//////
+//////
+//////            }
+//////
+////        })
+//
+//    }
 
     private fun setMenu(position: Int) {
 

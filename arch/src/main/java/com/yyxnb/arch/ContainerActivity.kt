@@ -17,9 +17,13 @@ import com.yyxnb.utils.log.LogUtils
  * @author : yyx
  * @date ：2018/6/9
  */
-class ContainerActivity : BaseActivity() {
+open class ContainerActivity : BaseActivity() {
 
     override fun initLayoutResId(): Int = R.layout.base_nav_content
+
+    open fun initBaseFragment(): BaseFragment? {
+        return null
+    }
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun initView(savedInstanceState: Bundle?) {
@@ -29,11 +33,19 @@ class ContainerActivity : BaseActivity() {
             if (null == intent) {
                 throw RuntimeException("you must provide a page info to display")
             }
+            initBaseFragment()?.let {
+                intent?.getBundleExtra(ArchConfig.BUNDLE)?.apply {
+                    it.arguments = this
+                }
+                setRootFragment(it, R.id.fragmentContent)
+                return
+            }
             val fragmentName = intent.getStringExtra(ArchConfig.FRAGMENT)
             if (fragmentName.isEmpty()) {
                 throw IllegalArgumentException("can not find page fragmentName")
             }
             val fragmentClass = Class.forName(fragmentName)
+
             val fragment = fragmentClass.newInstance() as BaseFragment
             intent?.getBundleExtra(ArchConfig.BUNDLE)?.let {
                 fragment.arguments = it

@@ -65,6 +65,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity, CoroutineScope by 
         // 在界面未初始化之前调用的初始化窗口
         initWindows()
         super.onCreate(savedInstanceState)
+        mActivityDelegate.onCreate(savedInstanceState)
         lifecycle.addObserver(Java8Observer(TAG))
 
         initAttributes()
@@ -88,6 +89,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity, CoroutineScope by 
     @Suppress("UNCHECKED_CAST")
     override fun onDestroy() {
         super.onDestroy()
+        mActivityDelegate.onDestroy()
         // 取消协程
         if (isActive) {
             cancel()

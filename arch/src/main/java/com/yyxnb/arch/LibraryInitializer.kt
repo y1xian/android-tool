@@ -37,8 +37,8 @@ class LibraryInitializer : ContentProvider() {
                 AutoSizeConfig.getInstance().isCustomFragment = true
 
                 //系统会在每个 Activity 执行完对应的生命周期后都调用这个实现类中对应的方法
-                it.registerActivityLifecycleCallbacks(ActivityLifecycle)
                 it.registerActivityLifecycleCallbacks(ParallaxHelper.getInstance())
+//                it.registerActivityLifecycleCallbacks(ActivityLifecycle)
                 ProcessLifecycleOwner.get().lifecycle.addObserver(AppLifeObserver())
 
                 LogUtils.init()

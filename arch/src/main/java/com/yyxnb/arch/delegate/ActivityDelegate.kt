@@ -1,14 +1,33 @@
 package com.yyxnb.arch.delegate
 
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
 import com.yyxnb.arch.interfaces.IActivity
+import com.yyxnb.arch.utils.ActivityManagerUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.isActive
 
 class ActivityDelegate (private val iActivity: IActivity) : CoroutineScope by MainScope() {
 
+    lateinit var mActivity: AppCompatActivity
+
+    fun onCreate(savedInstanceState: Bundle?) {
+        mActivity = iActivity as AppCompatActivity
+        ActivityManagerUtils.pushActivity(mActivity)
+    }
+
+    fun onDestroy() {
+        ActivityManagerUtils.deleteActivity(mActivity)
+        // 取消协程
+        if (isActive) {
+            cancel()
+        }
+    }
 
     /**
      * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏

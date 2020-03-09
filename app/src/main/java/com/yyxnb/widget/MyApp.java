@@ -14,6 +14,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshInitializer;
+import com.squareup.leakcanary.LeakCanary;
 import com.yyxnb.http.RetrofitManager;
 import com.yyxnb.http.config.OkHttpConfig;
 import com.yyxnb.view.proxy.http.HttpHelper;
@@ -37,6 +38,12 @@ public class MyApp extends Application {
         ImageHelper.INSTANCE.init(new GlideImage());
         HttpHelper.INSTANCE.init(new OkHttp()).setBaseUrl("http://www.mocky.io/");
 
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     private void initRxHttp() {

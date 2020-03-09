@@ -11,7 +11,6 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.adapter.MultiItemTypePagedAdapter;
 import com.yyxnb.arch.annotations.BindFragment;
-import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.MainListAdapter;
 import com.yyxnb.widget.bean.MainBean;
 import com.yyxnb.widget.fragments.adapter.AdapterListFragment;
@@ -26,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * A simple {@link Fragment} subclass.
  */
-@BindFragment(fitsSystemWindows = true, statusBarColor = R.color.red)
+@BindFragment
 public class HomeFragment extends AbsListFragment<MainBean, MainViewModel> {
 
     private MainListAdapter adapter = new MainListAdapter();
