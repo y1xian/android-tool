@@ -1,8 +1,10 @@
 package com.yyxnb.utils.interfaces;
 
+import android.view.View;
+
 /**
- * Description:
+ * Description: 选择回调
  */
 public interface OnSelectListener {
-    void onSelect(int position, String text);
+    void onClick(View v, int position, String text);
 }

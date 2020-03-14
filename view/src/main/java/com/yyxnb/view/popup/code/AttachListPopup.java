@@ -79,7 +79,7 @@ public class AttachListPopup extends AttachPopup {
             @Override
             public void onItemClick(View view, BaseViewHolder holder, int position) {
                 if (selectListener != null) {
-                    selectListener.onSelect(position, adapter.getData().get(position));
+                    selectListener.onClick(view, position, adapter.getData().get(position));
                 }
                 if (popupInfo.autoDismiss) {
                     dismiss();

@@ -85,26 +85,26 @@ public class DialogFragment extends BaseFragment {
                         }).show();
                         break;
                     case 3:
-                        new Popup.Builder(mContext).asCenterList("标题", new String[]{"序列1", "序列2", "序列3"}, (position1, text) -> {
+                        new Popup.Builder(mContext).asCenterList("标题", new String[]{"序列1", "序列2", "序列3"}, (v, position1, text) -> {
                             AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
                         }).show();
                         break;
                     case 4:
                         new Popup.Builder(mContext).asCenterList("标题", new String[]{"序列1", "序列2", "序列3"},
                                 new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher}, 1,
-                                R.mipmap.ic_del, (position1, text) -> {
+                                R.mipmap.ic_del, (v, position1, text) -> {
                                     AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
                                 }).show();
                         break;
                     case 5:
-                        new Popup.Builder(mContext).asBottomList("标题", new String[]{"序列1", "序列2", "序列3"}, (position1, text) -> {
+                        new Popup.Builder(mContext).asBottomList("标题", new String[]{"序列1", "序列2", "序列3"}, (v, position1, text) -> {
                             AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
                         }).show();
                         break;
                     case 6:
                         new Popup.Builder(mContext).asBottomList("标题", new String[]{"序列1", "序列2", "序列3"},
                                 new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher}, 1,
-                                R.mipmap.ic_del, (position1, text) -> {
+                                R.mipmap.ic_del, (v, position1, text) -> {
                                     AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
                                 }).show();
                         break;

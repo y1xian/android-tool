@@ -1,5 +1,6 @@
 package com.yyxnb.utils.ext
 
+import android.R
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -12,11 +13,9 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.Px
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
-import android.view.LayoutInflater
-import android.view.View
+import android.util.TypedValue
+import android.view.*
 import android.view.View.*
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.CompoundButton
@@ -57,6 +56,42 @@ fun View.clickDelay(delay: Long = DELAY_TIME, clickAction: () -> Unit) {
             }
         }
     }
+}
+
+/**
+ * view按下缩放效果
+ * @param ratio 缩小比例 （0-1）
+ * @param clickBackground 是否有按下效果
+ */
+@JvmOverloads
+fun View.onTouch(event: MotionEvent, ratio: Float = 0.85f, clickBackground: Boolean = true): Boolean {
+    when (event.action) {
+        // 手指按下
+        MotionEvent.ACTION_DOWN -> {
+            scaleView(ratio)
+            if (clickBackground) {
+                val typedValue = TypedValue()
+                context.theme.resolveAttribute(R.attr.selectableItemBackgroundBorderless, typedValue, true)
+                setBackgroundResource(typedValue.resourceId)
+            }
+        }
+        // 手指移动（从手指按下到抬起 move多次执行）
+        MotionEvent.ACTION_MOVE -> {
+        }
+        // 手指抬起
+        MotionEvent.ACTION_UP -> {
+            scaleView(1f)
+        }
+    }
+    return false
+}
+
+/**
+ * @param ratio   缩小的比例（0-1）
+ */
+fun View.scaleView(ratio: Float) {
+    this.scaleX = ratio
+    this.scaleY = ratio
 }
 
 /**
@@ -211,7 +246,6 @@ fun createBitmapSafely(width: Int, height: Int, config: Bitmap.Config, retryCoun
     }
 
 }
-
 
 inline fun View.onGlobalLayout(crossinline callback: () -> Unit) = with(viewTreeObserver) {
     addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {

@@ -105,7 +105,7 @@ public class CenterListPopup extends CenterPopup {
             public void onItemClick(View view, BaseViewHolder holder, int position) {
                 if (selectListener != null) {
                     if (position >= 0 && position < adapter.getData().size()) {
-                        selectListener.onSelect(position, adapter.getData().get(position));
+                        selectListener.onClick(view, position, adapter.getData().get(position));
                     }
                 }
                 if (checkedPosition != -1) {

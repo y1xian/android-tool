@@ -104,7 +104,7 @@ public class BottomListPopup extends BottomPopup {
             @Override
             public void onItemClick(View view, BaseViewHolder holder, int position) {
                 if (selectListener != null) {
-                    selectListener.onSelect(position, adapter.getData().get(position));
+                    selectListener.onClick(view, position, adapter.getData().get(position));
                 }
                 if (checkedPosition != -1) {
                     checkedPosition = position;

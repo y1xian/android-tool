@@ -83,27 +83,27 @@
 
     <!--可以调节drawable大小的RadioButton-->
     <declare-styleable name="DrawableTextView">
-        <attr name="drawableSize" format="dimension"/>
-        <attr name="top_drawableSize" format="dimension"/>
-        <attr name="left_drawableSize" format="dimension"/>
-        <attr name="right_drawableSize" format="dimension"/>
-        <attr name="bottom_drawableSize" format="dimension"/>
-        <attr name="top_drawable" format="reference"/>
-        <attr name="left_drawable" format="reference"/>
-        <attr name="right_drawable" format="reference"/>
-        <attr name="bottom_drawable" format="reference"/>
+        <attr name="drawableSize" format="dimension" />
+        <attr name="top_drawableSize" format="dimension" />
+        <attr name="left_drawableSize" format="dimension" />
+        <attr name="right_drawableSize" format="dimension" />
+        <attr name="bottom_drawableSize" format="dimension" />
+        <attr name="top_drawable" format="reference" />
+        <attr name="left_drawable" format="reference" />
+        <attr name="right_drawable" format="reference" />
+        <attr name="bottom_drawable" format="reference" />
     </declare-styleable>
 
     <!--TextView 上下左右图片的大小-->
     <declare-styleable name="TextImageView">
-        <attr name="drawableLeftWidth" format="dimension"/>
-        <attr name="drawableLeftHeight" format="dimension"/>
-        <attr name="drawableTopWidth" format="dimension"/>
-        <attr name="drawableTopHeight" format="dimension"/>
-        <attr name="drawableRightWidth" format="dimension"/>
-        <attr name="drawableRightHeight" format="dimension"/>
-        <attr name="drawableBottomWidth" format="dimension"/>
-        <attr name="drawableBottomHeight" format="dimension"/>
+        <attr name="drawableLeftWidth" format="dimension" />
+        <attr name="drawableLeftHeight" format="dimension" />
+        <attr name="drawableTopWidth" format="dimension" />
+        <attr name="drawableTopHeight" format="dimension" />
+        <attr name="drawableRightWidth" format="dimension" />
+        <attr name="drawableRightHeight" format="dimension" />
+        <attr name="drawableBottomWidth" format="dimension" />
+        <attr name="drawableBottomHeight" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="FlowlayoutTags">
@@ -150,21 +150,57 @@
 
         <!-- 单位dp,为了适应wrap_content用integer -->
         <attr name="tag_width" format="integer|enum">
-            <enum name="wrap_content" value="-2"/>
-            <enum name="match_parent" value="-1"/>
+            <enum name="wrap_content" value="-2" />
+            <enum name="match_parent" value="-1" />
         </attr>
         <attr name="tag_height" format="integer|enum">
-            <enum name="wrap_content" value="-2"/>
-            <enum name="match_parent" value="-1"/>
+            <enum name="wrap_content" value="-2" />
+            <enum name="match_parent" value="-1" />
         </attr>
         <attr name="tag_maxEms" format="integer" />
     </declare-styleable>
 
     <!-- 侧滑菜单 -->
     <declare-styleable name="SwipeMenuLayout">
-        <attr name="swipeEnable" format="boolean"/>
-        <attr name="ios" format="boolean"/>
-        <attr name="leftSwipe" format="boolean"/>
+        <attr name="swipeEnable" format="boolean" />
+        <attr name="ios" format="boolean" />
+        <attr name="leftSwipe" format="boolean" />
+    </declare-styleable>
+
+    <!-- 横向导航栏 -->
+    <declare-styleable name="TabBarView">
+        <!-- 高度 -->
+        <attr name="android:layout_height" />
+        <!-- tab按钮上下内边距 -->
+        <attr name="tb_paddingVertical" format="dimension" />
+        <!-- 不使用颜色渲染（即使用图表本身的颜色） -->
+        <attr name="tb_noDyeing" format="boolean" />
+        <!-- 禁止选择 -->
+        <attr name="tb_noSelect" format="boolean" />
+        <!-- 图标内边距 -->
+        <attr name="tb_iconPadding" format="dimension" />
+        <!-- 文字大小 -->
+        <attr name="tb_textSize" format="dimension" />
+        <!-- 处于焦点状态的颜色 -->
+        <attr name="tb_focusColor" format="color" />
+        <!-- 处于普通状态的颜色 -->
+        <attr name="tb_normalColor" format="color" />
+        <!-- tab按钮按下效果 -->
+        <attr name="tb_clickBackground">
+            <!-- 默认矩形水波纹效果 -->
+            <enum name="ripple" value="0" />
+            <!-- 外弧形水波纹效果 -->
+            <enum name="rippleOutside" value="1" />
+            <!-- 纯灰色 -->
+            <enum name="gray" value="2" />
+            <enum name="empty" value="3" />
+        </attr>
+        <!-- 是否开启底部导航栏沉浸式，开启后，Tabbar会自动设置一段 paddingBottom 边距以适应底栏高度。-->
+        <attr name="tb_paddingNavigationBar" format="boolean" />
+        <!-- 左右分割线（资源id）-->
+        <attr name="tb_splitLine" format="reference" />
+        <!-- 未读消息小红点背景 -->
+        <attr name="tb_unreadBackground" format="reference" />
     </declare-styleable>
 
 </resources>
