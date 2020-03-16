@@ -1,5 +1,4 @@
 ext.mainApp = true //标记为主app module
-ext.isKt = true
 apply from: rootProject.file('lib.gradle')
 
 android {

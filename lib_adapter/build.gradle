@@ -1,4 +1,4 @@
-ext.isKt = true
+ext.isLibrary = true
 apply from: rootProject.file('lib.gradle')
 
 dependencies {

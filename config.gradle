@@ -194,7 +194,7 @@ ext {
             swipe_support                  : [group: 'com.billy.android', name: 'smart-swipe-support', version: '1.0.0'],
 
             //https://github.com/JessYanCoding/AndroidAutoSize
-            autosize                       : [group: 'me.jessyan', name: 'autosize', version: '1.2.0']
+            autosize                       : [group: 'me.jessyan', name: 'autosize', version: '1.2.1']
     ]
 
 }

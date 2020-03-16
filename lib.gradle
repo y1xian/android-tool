@@ -3,6 +3,10 @@ def runAsApp = ext.has('runAsApp')
 def isKt = ext.has('isKt')
 ext.isKt = isKt
 
+//是否library
+def isLibrary = ext.has('isLibrary')
+ext.isLibrary = isLibrary
+
 if (runAsApp) {
     runAsApp = ext.runAsApp
 } else if (ext.has('mainApp') && ext.mainApp) { //ext.mainApp为true时，代表以app方式运行
@@ -15,10 +19,12 @@ if (runAsApp) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
-    apply plugin: 'com.github.dcendents.android-maven'
-    group = 'com.github.y1xian'
+    if (isLibrary) {
+        apply plugin: 'com.github.dcendents.android-maven'
+        group = 'com.github.y1xian'
+    }
 }
-if (isKt) {
+if (!isKt) {
     apply plugin: 'kotlin-android'
     apply plugin: 'kotlin-android-extensions'
     apply plugin: 'kotlin-kapt'
@@ -84,7 +90,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    if (isKt) {
+    if (!isKt) {
         //Kotlin中使用Java8特性
         kotlinOptions {
             jvmTarget = '1.8'
@@ -130,7 +136,7 @@ dependencies {
         androidTestImplementation libs.test_espresso
     }
 
-    if (isKt) {
+    if (!isKt) {
         api libs.kotlin_stdlib, libs.kotlin_coroutines, libs.kotlin_coroutines_core
     }
 
