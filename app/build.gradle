@@ -1,6 +1,6 @@
 ext.mainApp = true //标记为主app module
 ext.isKt = true
-apply from: rootProject.file('module.gradle')
+apply from: rootProject.file('lib.gradle')
 
 android {
     defaultConfig {
@@ -18,10 +18,6 @@ android {
             outputFileName = "app_${variant.versionCode}.${variant.versionName}.apk"
         }
 
-    }
-
-    dataBinding {
-        enabled = true
     }
 }
 

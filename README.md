@@ -27,8 +27,8 @@ dependencies {
     implementation 'com.github.y1xian.Widget:lib_http:+'
     // 常用自定义
     implementation 'com.github.y1xian.Widget:lib_view:+'
-    // 公共工具 (arch已包括此包)
-    implementation 'com.github.y1xian.Widget:lib_utils:+'
+    // 公共工具 (都已包括此包)
+    implementation 'com.github.y1xian.Widget:lib_common:+'
     // 各种工具 
     implementation 'com.github.y1xian.Widget:lib_tools:+'
     // 适配器
