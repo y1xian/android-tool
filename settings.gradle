@@ -1,2 +1,2 @@
-include ':app', ':arch', ':http', ':view', ':utils', ':adapter', ':tools', ':annotation', ':compiler'
+include ':app', ':lib_arch', ':lib_http', ':lib_view', ':lib_utils', ':lib_adapter', ':lib_tools', ':lib_annotation', ':lib_compiler'
 rootProject.name='Widget'

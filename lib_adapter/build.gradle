@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.y1xian'
+group = 'com.github.y1xian'
 
 android {
 
@@ -67,11 +67,17 @@ android {
         cruncherEnabled false
     }
 
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {
-    implementation project(':utils')
-    implementation libs.support_v7, libs.support_v4
+    implementation project(':lib_utils')
+    implementation libs.support_v7, libs.design, libs.annotations
+    api libs.recyclerview
+    api libs.arch_comp_paging
     //kt
     compileOnly libs.kotlin_stdlib, libs.kotlin_coroutines, libs.kotlin_coroutines_core
 }

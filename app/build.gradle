@@ -27,12 +27,12 @@ android {
 
 dependencies {
 
-    implementation project(':arch')
-    implementation project(':http')
-    implementation project(':view')
-    implementation project(':tools')
-    implementation project(':adapter')
-    kapt project(':compiler')
+    implementation project(':lib_arch')
+    implementation project(':lib_http')
+    implementation project(':lib_view')
+    implementation project(':lib_tools')
+    implementation project(':lib_adapter')
+    kapt project(':lib_compiler')
 
     //glide
     api libs.glide
