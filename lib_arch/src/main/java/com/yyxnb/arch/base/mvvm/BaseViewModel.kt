@@ -4,7 +4,7 @@ import android.arch.lifecycle.DefaultLifecycleObserver
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper
-import com.yyxnb.arch.common.Message
+import com.yyxnb.arch.common.MsgEvent
 import com.yyxnb.arch.livedata.SingleLiveEvent
 import com.yyxnb.utils.ext.tryCatch
 import kotlinx.coroutines.*
@@ -64,7 +64,7 @@ abstract class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
      */
     inner class UIChange {
         val toastEvent by lazy { SingleLiveEvent<String>() }
-        val msgEvent by lazy { SingleLiveEvent<Message>() }
+        val msgEvent by lazy { SingleLiveEvent<MsgEvent>() }
     }
 
     override fun onCreate(owner: LifecycleOwner) {

@@ -1,7 +1,5 @@
 package com.yyxnb.arch.interfaces
 
-import android.os.Bundle
-import com.yyxnb.arch.common.Message
 import com.yyxnb.arch.delegate.FragmentDelegate
 
 /**

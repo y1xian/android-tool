@@ -18,3 +18,13 @@ inline fun <reified T> String.busObserve(lifecycleOwner: LifecycleOwner, crossin
         }
     })
 }
+
+@Suppress("UNCHECKED_CAST", "SYNCHRONIZED_ON_INLINE")
+@Synchronized
+inline fun <reified T> String.busObserveSticky(lifecycleOwner: LifecycleOwner, crossinline block: (T) -> Unit) {
+    LiveEventBus.get(this, T::class.java).observeSticky(lifecycleOwner, Observer { t ->
+        t?.let {
+            block(it)
+        }
+    })
+}

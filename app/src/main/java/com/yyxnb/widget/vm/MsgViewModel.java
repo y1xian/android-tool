@@ -1,7 +1,7 @@
 package com.yyxnb.widget.vm;
 
 import com.yyxnb.arch.base.mvvm.BaseViewModel;
-import com.yyxnb.arch.common.Message;
+import com.yyxnb.arch.common.MsgEvent;
 
 public class MsgViewModel extends BaseViewModel {
 
@@ -10,6 +10,6 @@ public class MsgViewModel extends BaseViewModel {
         getDefUI().getToastEvent().setValue(str);
     }
     public void reqMsg(String str){
-        getDefUI().getMsgEvent().setValue(new Message(1,str));
+        getDefUI().getMsgEvent().setValue(new MsgEvent(1,str));
     }
 }

@@ -4,7 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.yyxnb.arch.base.BaseFragment
-import com.yyxnb.arch.common.Message
+import com.yyxnb.arch.common.MsgEvent
 import com.yyxnb.utils.AppConfig
 
 
@@ -55,7 +55,7 @@ abstract class BaseFragmentVM<VM : BaseViewModel> : BaseFragment() {
     /**
      * 返回消息
      */
-    override fun handleEvent(msg: Message?) {}
+    override fun handleEvent(msg: MsgEvent?) {}
 
     open fun isShare() = false
 

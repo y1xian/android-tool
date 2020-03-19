@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.yyxnb.arch.annotations.BindFragment;
 import com.yyxnb.arch.annotations.BindViewModel;
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.arch.common.Message;
+import com.yyxnb.arch.common.MsgEvent;
 import com.yyxnb.utils.log.LogUtils;
 import com.yyxnb.view.titlebar.TitleBar;
 import com.yyxnb.widget.R;
@@ -86,7 +86,7 @@ public class TitleFragment extends BaseFragment {
     }
 
     @Override
-    public void handleEvent(@Nullable Message msg) {
+    public void handleEvent(@Nullable MsgEvent msg) {
         LogUtils.INSTANCE.e("msg : " + msg.getMsg());
     }
 

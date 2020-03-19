@@ -172,6 +172,18 @@ object DataConfig {
 
         val sp = "main"
 
+        val w  = 480
+        val h  = 854
+        val v  = w/h
+        val v2 = w  + h
+
+        val w1 = 1080
+        val h1 = 2220
+        val v1 : Float = (w1 / h1).toFloat()
+
+
+        println("Hello World! $v  $v1  $v2")
+
 //        map.forEach { entry ->
 //
 //            if (entry.key.contains(sp)) {

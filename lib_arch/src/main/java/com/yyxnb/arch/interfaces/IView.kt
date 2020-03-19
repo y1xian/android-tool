@@ -2,7 +2,7 @@ package com.yyxnb.arch.interfaces
 
 import android.os.Bundle
 import android.support.annotation.LayoutRes
-import com.yyxnb.arch.common.Message
+import com.yyxnb.arch.common.MsgEvent
 
 /**
  *
@@ -34,5 +34,5 @@ interface IView {
     /**
      * 接收信息
      */
-    fun handleEvent(msg: Message?){}
+    fun handleEvent(msg: MsgEvent?){}
 }

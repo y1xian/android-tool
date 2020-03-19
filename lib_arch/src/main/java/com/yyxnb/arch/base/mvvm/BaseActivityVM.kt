@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.yyxnb.arch.base.BaseActivity
-import com.yyxnb.arch.common.Message
+import com.yyxnb.arch.common.MsgEvent
 import com.yyxnb.utils.AppConfig
 
 @Deprecated("用注解@BindViewModel代替")
@@ -44,7 +44,7 @@ abstract class BaseActivityVM<VM : BaseViewModel> : BaseActivity() {
     /**
      * 返回消息
      */
-    override fun handleEvent(msg: Message?) {}
+    override fun handleEvent(msg: MsgEvent?) {}
 
     /**
      * 初始化ViewModel
