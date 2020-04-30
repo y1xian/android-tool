@@ -163,7 +163,7 @@ class FragmentDelegate(private val iFragment: IFragment) : CoroutineScope by Mai
                              */
                             getAnnotation(BindViewModel::class.java)?.let {
                                 //向对象的这个Field属性设置新值value
-                                set(iFragment, getViewModel(this, it.isActivity))
+                                set(iFragment, getViewModel(field, it.isActivity))
                             }
                         }
                     }
