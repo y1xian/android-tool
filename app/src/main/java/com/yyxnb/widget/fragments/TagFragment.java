@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.yyxnb.arch.annotations.BindRes;
 import com.yyxnb.arch.base.IFragment;
 import com.yyxnb.common.AppConfig;
-import com.yyxnb.common.log.LogUtils;
 import com.yyxnb.view.text.FlowlayoutTags;
 import com.yyxnb.widget.R;
 
@@ -64,13 +63,11 @@ public class TagFragment extends Fragment implements IFragment {
         refreshCategorys(mFlowlayoutTags2, list);
 
         mFlowlayoutTags.setOnTagClickListener(tag -> {
-//            AppConfig.getInstance().toast(tag);
-            LogUtils.w("tag " + AppConfig.getInstance().getContext());
+            AppConfig.getInstance().toast(tag);
         });
 
         mFlowlayoutTags1.setOnTagClickListener(tag -> {
-//            AppConfig.getInstance().toast(tag);
-            LogUtils.w("tag " + AppConfig.getInstance().getApp());
+            AppConfig.getInstance().toast(tag);
         });
 
         mFlowlayoutTags2.setOnTagClickListener(tag -> {
