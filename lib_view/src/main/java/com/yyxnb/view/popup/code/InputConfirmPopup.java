@@ -1,18 +1,14 @@
 package com.yyxnb.view.popup.code;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
 import com.yyxnb.view.R;
-import com.yyxnb.utils.interfaces.OnCancelListener;
+import com.yyxnb.common.interfaces.OnCancelListener;
 import com.yyxnb.view.popup.interfaces.OnInputConfirmListener;
-import com.yyxnb.view.popup.Popup;
-import com.yyxnb.view.popup.PopupUtils;
 
 
 /**

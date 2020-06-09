@@ -6,7 +6,7 @@ import android.arch.paging.PageKeyedDataSource;
 import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 
-import com.yyxnb.arch.base.mvvm.BasePagedViewModel;
+import com.yyxnb.http.BasePagedViewModel;
 import com.yyxnb.widget.bean.TestData;
 
 import java.util.ArrayList;

@@ -1,7 +1,4 @@
 def runAsApp = ext.has('runAsApp')
-//是否kt
-def isKt = ext.has('isKt')
-ext.isKt = isKt
 
 //是否library
 def isLibrary = ext.has('isLibrary')
@@ -24,13 +21,7 @@ if (runAsApp) {
         group = 'com.github.y1xian'
     }
 }
-if (!isKt) {
-    apply plugin: 'kotlin-android'
-    apply plugin: 'kotlin-android-extensions'
-    apply plugin: 'kotlin-kapt'
-}
 
-//默认配置了AndroidManifest.xml在library模式和application模式下的文件路径
 android {
     //版本配置
     compileSdkVersion build_version.compileSdkVersion
@@ -90,13 +81,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    if (!isKt) {
-        //Kotlin中使用Java8特性
-        kotlinOptions {
-            jvmTarget = '1.8'
-        }
-    }
-
     //防止编译的时候oom、GC
     dexOptions {
         preDexLibraries false
@@ -119,8 +103,13 @@ android {
         cruncherEnabled false
     }
 
-    dataBinding {
-        enabled = true
+//    dataBinding {
+//        enabled = true
+//    }
+    // 4.0
+    buildFeatures {
+        dataBinding true
+        viewBinding true
     }
 
 }
@@ -134,10 +123,6 @@ dependencies {
         testImplementation libs.junit
         androidTestImplementation libs.test_runner
         androidTestImplementation libs.test_espresso
-    }
-
-    if (!isKt) {
-        api libs.kotlin_stdlib, libs.kotlin_coroutines, libs.kotlin_coroutines_core
     }
 
 }

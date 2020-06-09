@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.yyxnb.view.popup.PopupUtils;
 import com.yyxnb.view.popup.code.BottomPopup;
 import com.yyxnb.widget.R;
-import com.yyxnb.widget.fragments.lazy.LazyVpFragment;
+import com.yyxnb.widget.fragments.MainFragment;
 
 /**
  * vp
@@ -29,7 +29,7 @@ public class VpBottomPopup extends BottomPopup {
         findViewById(R.id.ivDel).setOnClickListener(v -> dismiss());
 
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.mFrameLayout, new LazyVpFragment());
+        ft.replace(R.id.mFrameLayout, new MainFragment());
         ft.commitAllowingStateLoss();
     }
 

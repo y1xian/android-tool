@@ -27,7 +27,6 @@
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme">
         <activity android:name=".ButtonActivity"></activity>
-        <activity android:name=".fragments.http.NetWorkActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

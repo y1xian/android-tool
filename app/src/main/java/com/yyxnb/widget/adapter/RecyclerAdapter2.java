@@ -10,7 +10,6 @@ import com.yyxnb.widget.R;
 import com.yyxnb.widget.bean.TestData;
 import com.yyxnb.widget.databinding.ItemTestListLayoutBinding;
 
-import org.jetbrains.annotations.NotNull;
 
 public class RecyclerAdapter2 extends BasePagedAdapter<TestData> {
 
@@ -27,7 +26,7 @@ public class RecyclerAdapter2 extends BasePagedAdapter<TestData> {
 //    }
 
     @Override
-    protected void bind(@NotNull BaseViewHolder holder, TestData testData, int position) {
+    protected void bind(BaseViewHolder holder, TestData testData, int position) {
 //        holder.setText(R.id.tvText, " --- 第 " + testData.getId() + " 条 ------- " + testData.getContent());
 
         binding = holder.getBinding();

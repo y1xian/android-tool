@@ -23,7 +23,7 @@
 
 <!--    <fragment-->
 <!--        android:id="@+id/nav_host_fragment"-->
-<!--        android:name="com.yyxnb.widget.fragments.HomeFragment"-->
+<!--        android:name="com.yyxnb.widget.fragments.MainFragment"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="0dp"-->
 <!--        android:layout_weight="1"-->

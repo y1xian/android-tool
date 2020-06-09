@@ -5,12 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.text.TextUtils;
 
+import com.yyxnb.common.interfaces.IData;
+
 import java.util.List;
 
 /**
  * 用来判断 新旧Item是否相等
  */
-public class DiffCallBack<T> extends DiffUtil.Callback {
+public class DiffCallBack<T extends IData<T>> extends DiffUtil.Callback {
     private List<T> oldDatas;
     private List<T> newDatas;
 

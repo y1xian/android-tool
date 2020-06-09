@@ -4,25 +4,16 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.arch.paging.PagedList;
 import android.arch.paging.PagedListAdapter;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.yyxnb.adapter.ItemDecoration;
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.arch.base.mvvm.BasePagedViewModel;
-import com.yyxnb.widget.EmptyView;
+import com.yyxnb.http.BasePagedViewModel;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.databinding.LayoutRefreshViewBinding;
 
@@ -36,7 +27,7 @@ public abstract class AbsListFragment<T, M extends BasePagedViewModel<T>> extend
 //    protected EmptyView mEmptyView;
     protected PagedListAdapter<T, RecyclerView.ViewHolder> adapter;
     protected M mViewModel;
-    protected DividerItemDecoration decoration;
+    protected ItemDecoration decoration;
 
     @Override
     public int initLayoutResId() {
@@ -44,7 +35,7 @@ public abstract class AbsListFragment<T, M extends BasePagedViewModel<T>> extend
     }
 
     @Override
-    public void initView(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void initView(Bundle savedInstanceState) {
         binding = getBinding();
         binding.getRoot().setFitsSystemWindows(true);
         mRecyclerView = binding.recyclerView;
@@ -56,14 +47,11 @@ public abstract class AbsListFragment<T, M extends BasePagedViewModel<T>> extend
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
 
-        adapter = getAdapter();
-        mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        adapter = getmAdapter();
         mRecyclerView.setItemAnimator(null);
 
         //默认给列表中的Item 一个 10dp的ItemDecoration
-        decoration = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
-        decoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.list_divider));
+        decoration = new ItemDecoration(getContext());
         mRecyclerView.addItemDecoration(decoration);
 
         genericViewModel();
@@ -148,5 +136,5 @@ public abstract class AbsListFragment<T, M extends BasePagedViewModel<T>> extend
      *
      * @return
      */
-    public abstract PagedListAdapter getAdapter();
+    public abstract PagedListAdapter getmAdapter();
 }

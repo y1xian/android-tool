@@ -8,8 +8,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 
+import com.yyxnb.common.OSUtils;
 import com.yyxnb.view.popup.interfaces.OnNavigationBarListener;
-import com.yyxnb.utils.OSUtils;
 
 import java.util.ArrayList;
 

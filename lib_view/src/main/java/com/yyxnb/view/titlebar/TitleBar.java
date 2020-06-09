@@ -18,8 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yyxnb.utils.DpUtils;
-import com.yyxnb.utils.ext.ViewExtKt;
+import com.yyxnb.common.DpUtils;
 import com.yyxnb.view.R;
 
 
@@ -257,7 +256,6 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             tvLeft.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
             tvLeft.setSingleLine(true);
             tvLeft.setOnClickListener(this);
-            tvLeft.setOnTouchListener(ViewExtKt::onTouch);
             // 设置DrawableLeft及DrawablePadding
             if (leftDrawable != 0) {
                 tvLeft.setCompoundDrawablePadding((int) leftDrawablePadding);
@@ -276,8 +274,6 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             btnLeft.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             btnLeft.setPadding(PADDING_10, 0, PADDING_10, 0);
             btnLeft.setOnClickListener(this);
-            btnLeft.setOnTouchListener(ViewExtKt::onTouch);
-
 
             rlMain.addView(btnLeft, leftInnerParams);
 
@@ -314,7 +310,6 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             tvRight.setSingleLine(true);
             tvRight.setPadding(PADDING_12, 0, PADDING_12, 0);
             tvRight.setOnClickListener(this);
-            tvRight.setOnTouchListener(ViewExtKt::onTouch);
             rlMain.addView(tvRight, rightInnerParams);
 
         } else if (rightType == TYPE_RIGHT_IMAGEBUTTON) {
@@ -326,7 +321,6 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             btnRight.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             btnRight.setPadding(PADDING_10, 0, PADDING_10, 0);
             btnRight.setOnClickListener(this);
-            btnRight.setOnTouchListener(ViewExtKt::onTouch);
 
             rlMain.addView(btnRight, rightInnerParams);
 

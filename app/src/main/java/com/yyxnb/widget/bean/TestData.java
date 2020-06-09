@@ -3,11 +3,13 @@ package com.yyxnb.widget.bean;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.yyxnb.common.interfaces.IData;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(tableName = "test")
-public class TestData implements Serializable {
+public class TestData implements IData, Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -49,5 +51,25 @@ public class TestData implements Serializable {
     @Override
     public int hashCode() {
         return Math.abs(Objects.hash(getId(), getContent()));
+    }
+
+    @Override
+    public String getCode() {
+        return null;
+    }
+
+    @Override
+    public String getMsg() {
+        return null;
+    }
+
+    @Override
+    public Object getResult() {
+        return null;
+    }
+
+    @Override
+    public boolean isSuccess() {
+        return false;
     }
 }

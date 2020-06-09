@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.yyxnb.view.R;
 import com.yyxnb.view.popup.Popup;
-import com.yyxnb.utils.interfaces.OnSelectListener;
+import com.yyxnb.common.interfaces.OnSelectListener;
 import com.yyxnb.adapter.BaseAdapter;
 import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.adapter.MultiItemTypeAdapter;

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.widget.R;
 
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +30,7 @@ public class OtherFragment extends BaseFragment {
     }
 
     @Override
-    public void initView(@Nullable Bundle savedInstanceState) {
+    public void initView(Bundle savedInstanceState) {
 
     }
 }

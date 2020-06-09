@@ -3,7 +3,6 @@ package com.yyxnb.widget.db;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
-import com.yyxnb.http.cache.BaseDao;
 import com.yyxnb.widget.bean.TestData;
 
 import java.util.List;

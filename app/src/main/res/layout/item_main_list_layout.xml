@@ -7,11 +7,12 @@
 
     <ImageView
         android:id="@+id/ivPic"
-        android:layout_width="80dp"
-        android:layout_height="60dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:scaleType="centerCrop"
-        android:src="@color/item_div_bg" />
+        android:src="@color/item_div_bg"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tvText"

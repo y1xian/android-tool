@@ -6,12 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.yyxnb.adapter.ItemDecoration;
-import com.yyxnb.adapter.ext.RecyclerViewExtKt;
 import com.yyxnb.view.popup.PopupUtils;
 import com.yyxnb.view.popup.code.BottomPopup;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.StringListAdapter;
-import com.yyxnb.widget.config.DataConfig;
+import com.yyxnb.widget.data.DataConfig;
 
 /**
  * 评论
@@ -44,10 +43,12 @@ public class CommentBottomPopup extends BottomPopup {
         decoration.setDividerHeight(10);
         decoration.setDividerWidth(20);
 
-        RecyclerViewExtKt.wrapLinear(mRecyclerView, getContext(), decoration).setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.addItemDecoration(decoration);
+        mRecyclerView.setAdapter(mAdapter);
 
+        mAdapter.setDataItems(DataConfig.getDialogList());
 
-        mAdapter.setDataItems(DataConfig.INSTANCE.getData());
     }
 
     @Override

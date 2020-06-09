@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yyxnb.view.R;
-import com.yyxnb.utils.interfaces.OnCancelListener;
-import com.yyxnb.utils.interfaces.OnConfirmListener;
+import com.yyxnb.common.interfaces.OnCancelListener;
+import com.yyxnb.common.interfaces.OnConfirmListener;
 import com.yyxnb.view.popup.Popup;
 
 

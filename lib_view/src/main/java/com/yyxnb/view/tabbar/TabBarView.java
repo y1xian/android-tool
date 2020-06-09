@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yyxnb.utils.interfaces.OnSelectListener;
+import com.yyxnb.common.interfaces.OnSelectListener;
 import com.yyxnb.view.R;
 import com.yyxnb.view.utils.NavigationBarUtil;
 

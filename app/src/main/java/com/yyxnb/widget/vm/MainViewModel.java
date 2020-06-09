@@ -6,14 +6,11 @@ import android.arch.paging.PageKeyedDataSource;
 import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 
-import com.yyxnb.arch.base.mvvm.BasePagedViewModel;
+import com.yyxnb.http.BasePagedViewModel;
 import com.yyxnb.widget.bean.MainBean;
-import com.yyxnb.widget.bean.TestData;
-import com.yyxnb.widget.config.DataConfig;
+import com.yyxnb.widget.data.DataConfig;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class MainViewModel extends BasePagedViewModel<MainBean> {
     @Override
@@ -21,7 +18,7 @@ public class MainViewModel extends BasePagedViewModel<MainBean> {
         return new PageKeyedDataSource<Integer, MainBean>() {
             @Override
             public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, MainBean> callback) {
-                callback.onResult(DataConfig.INSTANCE.getDataMain(), null, null);
+                callback.onResult(DataConfig.getMainBeans(), null, null);
             }
 
             @Override

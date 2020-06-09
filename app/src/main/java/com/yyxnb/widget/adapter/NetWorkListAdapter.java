@@ -6,7 +6,7 @@ import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.bean.TestData;
 
-import org.jetbrains.annotations.NotNull;
+
 
 public class NetWorkListAdapter extends BaseAdapter<TestData> {
 
@@ -16,7 +16,7 @@ public class NetWorkListAdapter extends BaseAdapter<TestData> {
     }
 
     @Override
-    protected void bind(@NotNull BaseViewHolder holder, TestData s, int position) {
+    protected void bind( BaseViewHolder holder, TestData s, int position) {
         holder.setText(R.id.tvText, " --- 第 " + s.getId() + " 条 ------- " + s.getContent());
 
         addChildClickViewIds(holder, R.id.btnAdd, R.id.btnDelete, R.id.btnTop, R.id.mLinearLayout);

@@ -1,25 +1,44 @@
 package com.yyxnb.widget.bean;
 
 
+import com.yyxnb.common.interfaces.IData;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public class MainBean implements Serializable {
+public class MainBean implements IData<Long>, Serializable {
 
     public int id;
-    public String content;
+    public int type;
+    public String title;
+    public String des;
     public String url;
 
-    public MainBean(int id, String content, String url) {
-        this.id = id;
-        this.content = content;
-        this.url = url;
+    @Override
+    public int id() {
+        return id;
     }
 
-    public MainBean(String content, String url) {
-        this.content = content;
-        this.url = url;
+    @Override
+    public String getCode() {
+        return null;
     }
+
+    @Override
+    public String getMsg() {
+        return des;
+    }
+
+    @Override
+    public Long getResult() {
+        return 0L;
+    }
+
+    @Override
+    public boolean isSuccess() {
+        return false;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -27,12 +46,14 @@ public class MainBean implements Serializable {
         if (!(o instanceof MainBean)) return false;
         MainBean mainBean = (MainBean) o;
         return id == mainBean.id &&
-                content.equals(mainBean.content) &&
-                url.equals(mainBean.url);
+                type == mainBean.type &&
+                Objects.equals(title, mainBean.title) &&
+                Objects.equals(des, mainBean.des) &&
+                Objects.equals(url, mainBean.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, content, url);
+        return Objects.hash(id, type, title, des, url);
     }
 }

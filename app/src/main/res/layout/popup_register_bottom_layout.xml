@@ -120,10 +120,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPass" />
 
-    <com.yyxnb.widget.view.CountdownButton
+    <Button
         android:id="@+id/tvSend"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:gravity="center"
         android:text="获取验证码"

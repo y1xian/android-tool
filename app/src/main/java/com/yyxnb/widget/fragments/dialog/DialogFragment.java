@@ -2,135 +2,137 @@ package com.yyxnb.widget.fragments.dialog;
 
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.adapter.ItemDecoration;
 import com.yyxnb.adapter.MultiItemTypeAdapter;
-import com.yyxnb.adapter.ext.RecyclerViewExtKt;
-import com.yyxnb.arch.annotations.BindFragment;
+import com.yyxnb.arch.annotations.BindRes;
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.utils.AppConfig;
+import com.yyxnb.arch.base.IFragment;
+import com.yyxnb.common.AppConfig;
 import com.yyxnb.view.popup.Popup;
 import com.yyxnb.view.titlebar.TitleBar;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.StringListAdapter;
-import com.yyxnb.widget.config.DataConfig;
+import com.yyxnb.widget.data.DataConfig;
 import com.yyxnb.widget.popup.CommentBottomPopup;
 import com.yyxnb.widget.popup.CustomFullScreenPopup;
 import com.yyxnb.widget.popup.RegisterBottomPopup;
 import com.yyxnb.widget.popup.VpBottomPopup;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 /**
  * 对话框.
  */
-@BindFragment(layoutRes = R.layout.fragment_dialog)
-public class DialogFragment extends BaseFragment {
+@BindRes
+public class DialogFragment extends Fragment implements IFragment {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_dialog, container, false);
+    }
 
     private TitleBar mTitleBar;
     private StringListAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
-    public static DialogFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        DialogFragment fragment = new DialogFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void initView(@Nullable Bundle savedInstanceState) {
+    public void initView(Bundle savedInstanceState) {
 
-        mTitleBar = findViewById(R.id.mTitleBar);
-        mRecyclerView = findViewById(R.id.mRecyclerView);
+        mTitleBar = getView().findViewById(R.id.mTitleBar);
+        mRecyclerView = getView().findViewById(R.id.mRecyclerView);
 
-        mTitleBar.setBackListener(v -> finish());
+        mTitleBar.setBackListener(v -> getBaseDelegate().finish());
 
         mAdapter = new StringListAdapter();
-        ItemDecoration decoration = new ItemDecoration(mContext);
+        ItemDecoration decoration = new ItemDecoration(getContext());
         decoration.setOnlySetItemOffsetsButNoDraw(true);
         decoration.setDrawBorderTopAndBottom(true);
         decoration.setDrawBorderLeftAndRight(true);
         decoration.setDividerHeight(10);
         decoration.setDividerWidth(20);
-        RecyclerViewExtKt.wrapGrid(mRecyclerView, mContext, 2, decoration).setAdapter(mAdapter);
+        GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.addItemDecoration(decoration);
+        mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.SimpleOnItemClickListener() {
             @Override
-            public void onItemClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
+            public void onItemClick(View view, BaseViewHolder holder, int position) {
                 super.onItemClick(view, holder, position);
                 switch (position) {
                     case 0:
-                        new Popup.Builder(mContext).asLoading("带标题")
+                        new Popup.Builder(getContext()).asLoading("带标题")
                                 .show();
                         break;
                     case 1:
-                        new Popup.Builder(mContext).asConfirm("标题", "内容", () -> {
-                            AppConfig.INSTANCE.toast("确认");
+                        new Popup.Builder(getContext()).asConfirm("标题", "内容", () -> {
+                            AppConfig.getInstance().toast("确认");
                         }, () -> {
-                            AppConfig.INSTANCE.toast("取消");
+                            AppConfig.getInstance().toast("取消");
                         }).show();
                         break;
                     case 2:
-                        new Popup.Builder(mContext).asInputConfirm("标题", "内容", "", "请输入", text -> {
-                            AppConfig.INSTANCE.toast("确认 ：" + text);
+                        new Popup.Builder(getContext()).asInputConfirm("标题", "内容", "", "请输入", text -> {
+                            AppConfig.getInstance().toast("确认 ：" + text);
                         }, () -> {
-                            AppConfig.INSTANCE.toast("取消");
+                            AppConfig.getInstance().toast("取消");
                         }).show();
                         break;
                     case 3:
-                        new Popup.Builder(mContext).asCenterList("标题", new String[]{"序列1", "序列2", "序列3"}, (v, position1, text) -> {
-                            AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
+                        new Popup.Builder(getContext()).asCenterList("标题", new String[]{"序列1", "序列2", "序列3"}, (v, position1, text) -> {
+                            AppConfig.getInstance().toast("选中 " + position1 + "，" + text);
                         }).show();
                         break;
                     case 4:
-                        new Popup.Builder(mContext).asCenterList("标题", new String[]{"序列1", "序列2", "序列3"},
+                        new Popup.Builder(getContext()).asCenterList("标题", new String[]{"序列1", "序列2", "序列3"},
                                 new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher}, 1,
-                                R.mipmap.ic_del, (v, position1, text) -> {
-                                    AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
+                                R.mipmap.ic_launcher, (v, position1, text) -> {
+                                    AppConfig.getInstance().toast("选中 " + position1 + "，" + text);
                                 }).show();
                         break;
                     case 5:
-                        new Popup.Builder(mContext).asBottomList("标题", new String[]{"序列1", "序列2", "序列3"}, (v, position1, text) -> {
-                            AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
+                        new Popup.Builder(getContext()).asBottomList("标题", new String[]{"序列1", "序列2", "序列3"}, (v, position1, text) -> {
+                            AppConfig.getInstance().toast("选中 " + position1 + "，" + text);
                         }).show();
                         break;
                     case 6:
-                        new Popup.Builder(mContext).asBottomList("标题", new String[]{"序列1", "序列2", "序列3"},
+                        new Popup.Builder(getContext()).asBottomList("标题", new String[]{"序列1", "序列2", "序列3"},
                                 new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher}, 1,
-                                R.mipmap.ic_del, (v, position1, text) -> {
-                                    AppConfig.INSTANCE.toast("选中 " + position1 + "，" + text);
+                                R.mipmap.ic_launcher, (v, position1, text) -> {
+                                    AppConfig.getInstance().toast("选中 " + position1 + "，" + text);
                                 }).show();
                         break;
                     case 7:
-                        new Popup.Builder(mContext)
+                        new Popup.Builder(getContext())
                                 .hasStatusBarShadow(false)
                                 .autoOpenSoftInput(false)
-                                .asCustom(new CustomFullScreenPopup(mContext))
+                                .asCustom(new CustomFullScreenPopup(getContext()))
                                 .show();
                         break;
                     case 8:
-                        new Popup.Builder(mContext)
+                        new Popup.Builder(getContext())
                                 .moveUpToKeyboard(false)
-                                .asCustom(new RegisterBottomPopup(mContext))
+                                .asCustom(new RegisterBottomPopup(getContext()))
                                 .show();
                         break;
                     case 9:
-                        new Popup.Builder(mContext)
+                        new Popup.Builder(getContext())
                                 .moveUpToKeyboard(false)
-                                .asCustom(new CommentBottomPopup(mContext))
+                                .asCustom(new CommentBottomPopup(getContext()))
                                 .show();
                         break;
                     case 10:
-                        new Popup.Builder(mContext)
+                        new Popup.Builder(getContext())
                                 .moveUpToKeyboard(false)
-                                .asCustom(new VpBottomPopup(mContext))
+                                .asCustom(new VpBottomPopup(getContext()))
                                 .show();
                         break;
                     default:
@@ -140,25 +142,25 @@ public class DialogFragment extends BaseFragment {
             }
 
             @Override
-            public boolean onItemLongClick(@NotNull View view, @NotNull BaseViewHolder holder, int position) {
+            public boolean onItemLongClick(View view, BaseViewHolder holder, int position) {
                 switch (position) {
                     case 0:
-                        new Popup.Builder(mContext).asLoading("带标题")
+                        new Popup.Builder(getContext()).asLoading("带标题")
                                 .bindLayout(R.layout.popup_center_impl_loading)
                                 .show();
                         break;
                     case 1:
-                        new Popup.Builder(mContext).asConfirm("标题", "内容", () -> {
-                            AppConfig.INSTANCE.toast("确认");
+                        new Popup.Builder(getContext()).asConfirm("标题", "内容", () -> {
+                            AppConfig.getInstance().toast("确认");
                         }, () -> {
-                            AppConfig.INSTANCE.toast("取消");
+                            AppConfig.getInstance().toast("取消");
                         }).bindLayout(R.layout.popup_tip_confirm).show();
                         break;
                     case 2:
-                        new Popup.Builder(mContext).asInputConfirm("标题", "内容", "", "请输入", text -> {
-                            AppConfig.INSTANCE.toast("确认 ：" + text);
+                        new Popup.Builder(getContext()).asInputConfirm("标题", "内容", "", "请输入", text -> {
+                            AppConfig.getInstance().toast("确认 ：" + text);
                         }, () -> {
-                            AppConfig.INSTANCE.toast("取消");
+                            AppConfig.getInstance().toast("取消");
                         }).bindLayout(R.layout.popup_tip_confirm).show();
                         break;
                     case 3:
@@ -175,7 +177,6 @@ public class DialogFragment extends BaseFragment {
 
     @Override
     public void initViewData() {
-        super.initViewData();
-        mAdapter.setDataItems(DataConfig.INSTANCE.getDialogList());
+        mAdapter.setDataItems(DataConfig.getDialogList());
     }
 }
