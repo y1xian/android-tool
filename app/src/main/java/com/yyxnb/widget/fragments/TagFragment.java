@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yyxnb.arch.annotations.BindRes;
-import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.arch.base.IFragment;
 import com.yyxnb.common.AppConfig;
 import com.yyxnb.common.log.LogUtils;
@@ -64,9 +63,15 @@ public class TagFragment extends Fragment implements IFragment {
         refreshCategorys(mFlowlayoutTags1, list);
         refreshCategorys(mFlowlayoutTags2, list);
 
-        mFlowlayoutTags.setOnTagClickListener(tag -> AppConfig.getInstance().toast(tag));
+        mFlowlayoutTags.setOnTagClickListener(tag -> {
+//            AppConfig.getInstance().toast(tag);
+            LogUtils.w("tag " + AppConfig.getInstance().getContext());
+        });
 
-        mFlowlayoutTags1.setOnTagClickListener(tag -> AppConfig.getInstance().toast(tag));
+        mFlowlayoutTags1.setOnTagClickListener(tag -> {
+//            AppConfig.getInstance().toast(tag);
+            LogUtils.w("tag " + AppConfig.getInstance().getApp());
+        });
 
         mFlowlayoutTags2.setOnTagClickListener(tag -> {
             ArrayList<String> tagList = mFlowlayoutTags2.getCheckedTagsTextsArrayList();

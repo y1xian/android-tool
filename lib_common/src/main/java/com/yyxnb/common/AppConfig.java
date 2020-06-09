@@ -35,7 +35,7 @@ public final class AppConfig implements Serializable {
     /**
      * 避免序列化破坏单例模式
      */
-    private Object readResolve(){
+    private Object readResolve() {
         return appConfig;
     }
 
@@ -71,12 +71,7 @@ public final class AppConfig implements Serializable {
     }
 
     public void toast(String s) {
-        try{
-            log("ccc "+ context);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-//        ToastUtils.normal(s);
+        ToastUtils.normal(s);
     }
 
     public void log(String tag, String s) {
