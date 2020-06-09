@@ -1,5 +1,5 @@
 # Widget
-组件
+常用工具库 ， [Java版本JetPack框架](https://github.com/y1xian/Amazing) ， [Kotlin版本JetPack框架](https://github.com/y1xian/Awesome)
 ## 使用方式
 
 #### 下载或添加依赖
@@ -21,10 +21,6 @@ compileOptions {
 }
 
 dependencies {
-    // Jitpack架构，mvvm 基类封装
-    implementation 'com.github.y1xian.Widget:lib_arch:+'
-    // 网络框架 Retrofit2 + Okhttp3 ,Gson
-    implementation 'com.github.y1xian.Widget:lib_http:+'
     // 常用自定义
     implementation 'com.github.y1xian.Widget:lib_view:+'
     // 公共工具 (都已包括此包)
