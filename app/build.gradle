@@ -22,7 +22,7 @@ android {
 
 dependencies {
 
-    def b_v = "1.0.2"
+    def b_v = "1.0.2.3"
     implementation 'com.github.y1xian.Amazing:lib_arch:' + b_v
     implementation 'com.github.y1xian.Amazing:lib_http:' + b_v
     implementation project(':lib_common')
