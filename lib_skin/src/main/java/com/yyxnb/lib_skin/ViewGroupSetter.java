@@ -1,18 +1,15 @@
-package com.yyxnb.widget.skin;
+package com.yyxnb.lib_skin;
 
 import android.annotation.SuppressLint;
 import android.content.res.Resources.Theme;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

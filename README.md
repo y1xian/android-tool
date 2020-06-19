@@ -29,5 +29,7 @@ dependencies {
     implementation 'com.github.y1xian.Widget:lib_tools:+'
     // 适配器
     implementation 'com.github.y1xian.Widget:lib_adapter:+'
+    // 主题切换
+    implementation 'com.github.y1xian.Widget:lib_skin:+'
 }
 ```

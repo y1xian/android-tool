@@ -1,4 +1,4 @@
-package com.yyxnb.widget.skin;
+package com.yyxnb.lib_skin;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;

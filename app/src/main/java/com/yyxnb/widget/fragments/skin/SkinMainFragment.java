@@ -9,12 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import com.yyxnb.adapter.ItemDecoration;
 import com.yyxnb.arch.annotations.BindRes;
 import com.yyxnb.arch.base.BaseFragment;
+import com.yyxnb.arch.common.Bus;
+import com.yyxnb.arch.common.MsgEvent;
+import com.yyxnb.common.log.LogUtils;
+import com.yyxnb.lib_skin.RecyclerViewSetter;
+import com.yyxnb.lib_skin.SkinTheme;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.StringListAdapter;
 import com.yyxnb.widget.data.DataConfig;
 import com.yyxnb.widget.databinding.FragmentSkinMainBinding;
-import com.yyxnb.widget.skin.RecyclerViewSetter;
-import com.yyxnb.widget.skin.SkinTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +46,10 @@ public class SkinMainFragment extends BaseFragment {
                 .childViewBgColor(R.id.mItemLayout, R.attr.colorBackgroundItem)
                 .childViewTextColor(R.id.tvTitle, R.attr.colorTitle)
                 .childViewTextColor(R.id.tvText, R.attr.colorText)
-                .childViewTextColor(R.id.tvHint, R.attr.colorHint)
-        ;
+                .childViewTextColor(R.id.tvHint, R.attr.colorHint);
 
-        // 构建Colorful对象
-        SkinTheme theme2 = new SkinTheme.Builder(getActivity())
+        // 构建对象
+        SkinTheme theme = new SkinTheme.Builder(getActivity())
                 .backgroundColor(R.id.mLayout, R.attr.colorBackground) // 设置view的背景图片
 //                .backgroundColor(R.id.change_btn, R.attr.btn_bg) // 设置按钮的背景色
                 .textColor(R.id.tvTitle, R.attr.colorTitle) // 设置文本颜色
@@ -69,18 +71,23 @@ public class SkinMainFragment extends BaseFragment {
 
 //        getActivity().setTheme(R.style.NightTheme);
 
+        LogUtils.w(" SkinTheme.getCurrentThemeId() " + SkinTheme.getCurrentThemeId() + " ， " + R.style.NightTheme + " ， "
+                + (SkinTheme.getCurrentThemeId() == R.style.NightTheme));
+        binding.checkBox.setChecked(SkinTheme.getCurrentThemeId() == R.style.NightTheme);
+
         binding.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
-                theme2.setTheme(R.style.DayTheme);
+                theme.setTheme(R.style.DayTheme);
             } else {
-                theme2.setTheme(R.style.NightTheme);
+                theme.setTheme(R.style.NightTheme);
             }
+            Bus.post(new MsgEvent(0x11, SkinTheme.getCurrentThemeId()));
         });
     }
 
     @Override
     public void initViewData() {
-        handler.sendEmptyMessageDelayed(1, 2 * 1000);
+        handler.sendEmptyMessageDelayed(1, 1000);
     }
 
     private final Handler handler = new Handler(new Handler.Callback() {

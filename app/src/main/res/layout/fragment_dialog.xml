@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?colorBackground"
     android:orientation="vertical"
     tools:context=".fragments.dialog.DialogFragment">
 
@@ -16,7 +18,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

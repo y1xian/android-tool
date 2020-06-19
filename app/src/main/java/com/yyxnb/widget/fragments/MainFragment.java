@@ -13,6 +13,10 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.yyxnb.adapter.BaseViewHolder;
 import com.yyxnb.adapter.MultiItemTypePagedAdapter;
 import com.yyxnb.arch.annotations.BindRes;
+import com.yyxnb.arch.common.Bus;
+import com.yyxnb.lib_skin.RecyclerViewSetter;
+import com.yyxnb.lib_skin.SkinTheme;
+import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.MainListAdapter;
 import com.yyxnb.widget.bean.MainBean;
 import com.yyxnb.widget.fragments.dialog.DialogFragment;
@@ -53,6 +57,28 @@ public class MainFragment extends AbsListFragment<MainBean, MainViewModel> {
         decoration.setDrawBorderTopAndBottom(true);
         decoration.setDrawBorderLeftAndRight(true);
         mRecyclerView.setAdapter(mAdapter);
+
+        RecyclerViewSetter recyclerViewSetter = new RecyclerViewSetter(mRecyclerView);
+
+        recyclerViewSetter
+                .childViewBgColor(R.id.mLayout, R.attr.colorBackground)
+                .childViewBgColor(R.id.mItemLayout, R.attr.colorBackgroundItem)
+                .childViewTextColor(R.id.tvText, R.attr.colorText);
+
+        // 构建对象
+        SkinTheme theme = new SkinTheme.Builder(getActivity())
+                .backgroundColor(R.id.mLayout, R.attr.colorBackground) // 设置view的背景图片
+                .textColor(R.id.tvText, R.attr.colorText) // 设置文本颜色
+                .setter(recyclerViewSetter)           // 手动设置setter
+                .build();
+
+        theme.setTheme(SkinTheme.getCurrentThemeId());
+
+        Bus.observe(this, msgEvent -> {
+            if (msgEvent.getCode() == 0x11){
+                theme.setTheme((Integer) msgEvent.getData());
+            }
+        });
 
     }
 
