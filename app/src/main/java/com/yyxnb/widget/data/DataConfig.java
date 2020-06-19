@@ -22,7 +22,6 @@ public class DataConfig {
             String content = FileUtils.parseFile(AppConfig.getInstance().getContext(), "main_data.json");
             mainBeans = GsonUtils.jsonToList(content, MainBean.class);
         }
-        LogUtils.list(mainBeans);
         return mainBeans;
     }
 

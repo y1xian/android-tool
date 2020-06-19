@@ -22,14 +22,17 @@ android {
 
 dependencies {
 
+    implementation 'com.android.support:support-v4:28.0.0'
     def b_v = "1.0.2.3"
     implementation 'com.github.y1xian.Amazing:lib_arch:' + b_v
-    implementation 'com.github.y1xian.Amazing:lib_http:' + b_v
+    implementation 'com.github.y1xian.Amazing:lib_rxhttp:' + b_v
     implementation project(':lib_common')
     implementation project(':lib_utils')
     implementation project(':lib_view')
     implementation project(':lib_adapter')
 //    annotationProcessor project(':lib_compiler')
+
+    implementation libs.arch_comp_room
 
     //glide
     api libs.glide

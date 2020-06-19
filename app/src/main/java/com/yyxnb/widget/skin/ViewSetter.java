@@ -59,7 +59,6 @@ public abstract class ViewSetter {
 	/**
 	 * 
 	 * @param newTheme
-	 * @param resId
 	 * @return
 	 */
 	protected int getColor(Theme newTheme) {

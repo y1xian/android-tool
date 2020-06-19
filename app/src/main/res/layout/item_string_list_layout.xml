@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mItemLayout"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:background="?attr/colorBackgroundItem"
+    android:layout_height="50dp">
 
     <TextView
         android:id="@+id/tvText"
@@ -12,6 +12,6 @@
         android:background="@drawable/shape_r25_gradient_bg"
         android:gravity="center"
         android:text="sss"
-        android:textColor="@color/white" />
+        android:textColor="?attr/colorText" />
 
 </LinearLayout>

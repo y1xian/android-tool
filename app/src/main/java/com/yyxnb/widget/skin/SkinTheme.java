@@ -6,34 +6,48 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
+import com.yyxnb.common.SPUtils;
+
 import java.util.HashSet;
 import java.util.Set;
 
 
 /**
  * 主题切换控制类
- * https://github.com/hehonghui/Colorful
- * https://github.com/xiazunyang/brick
  */
-public final class Colorful {
+public class SkinTheme {
+
+    private final static String SHARED_PREFERENCES_KEY = "SHARED_PREFERENCES_KEY_2020";
+
+    private static int currentThemeId;
+
+    public static int getCurrentThemeId() {
+        currentThemeId = (int) SPUtils.getParam(SHARED_PREFERENCES_KEY, 0);
+        return currentThemeId;
+    }
+
+    public static void setCurrentThemeId(int _currentThemeId) {
+        SPUtils.setParam(SHARED_PREFERENCES_KEY, _currentThemeId);
+        currentThemeId = _currentThemeId;
+    }
+
     /**
-     * Colorful Builder
+     * Builder
      */
-    Builder mBuilder;
+    final Builder mBuilder;
 
     /**
      * private constructor
      *
      * @param builder
      */
-    private Colorful(Builder builder) {
+    private SkinTheme(Builder builder) {
         mBuilder = builder;
+        setTheme(getCurrentThemeId());
     }
 
     /**
      * 设置新的主题
-     *
-     * @param newTheme
      */
     public void setTheme(int newTheme) {
         mBuilder.setTheme(newTheme);
@@ -48,11 +62,11 @@ public final class Colorful {
         /**
          * 存储了视图和属性资源id的关系表
          */
-        Set<ViewSetter> mElements = new HashSet<ViewSetter>();
+        final Set<ViewSetter> mElements = new HashSet<ViewSetter>();
         /**
          * 目标Activity
          */
-        Activity mActivity;
+        final Activity mActivity;
 
         /**
          * @param activity
@@ -77,7 +91,6 @@ public final class Colorful {
          *
          * @param viewId  控件id
          * @param colorId 颜色属性id
-         * @return
          */
         public Builder backgroundColor(int viewId, int colorId) {
             mElements.add(new ViewBackgroundColorSetter(findViewById(viewId),
@@ -90,7 +103,6 @@ public final class Colorful {
          *
          * @param viewId     控件id
          * @param drawableId Drawable属性id
-         * @return
          */
         public Builder backgroundDrawable(int viewId, int drawableId) {
             mElements.add(new ViewBackgroundDrawableSetter(
@@ -103,7 +115,6 @@ public final class Colorful {
          *
          * @param viewId  TextView或者TextView子类控件的id
          * @param colorId 颜色属性id
-         * @return
          */
         public Builder textColor(int viewId, int colorId) {
             TextView textView = (TextView) findViewById(viewId);
@@ -115,7 +126,6 @@ public final class Colorful {
          * 用户手动构造并且添加Setter
          *
          * @param setter 用户自定义的Setter
-         * @return
          */
         public Builder setter(ViewSetter setter) {
             mElements.add(setter);
@@ -124,10 +134,9 @@ public final class Colorful {
 
         /**
          * 设置新的主题
-         *
-         * @param newTheme
          */
         protected void setTheme(int newTheme) {
+            setCurrentThemeId(newTheme);
             mActivity.setTheme(newTheme);
             makeChange(newTheme);
         }
@@ -143,12 +152,10 @@ public final class Colorful {
         }
 
         /**
-         * 创建Colorful对象
-         *
-         * @return
+         * 创建对象
          */
-        public Colorful create() {
-            return new Colorful(this);
+        public SkinTheme build() {
+            return new SkinTheme(this);
         }
     }
 }

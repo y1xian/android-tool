@@ -13,8 +13,8 @@
     <color name="colorAccent">#dff9fb</color>
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorBackgroundItem">#E7E7E7</color>
-    <color name="colorTitle">#000000</color>
-    <color name="colorText">#000000</color>
+    <color name="colorTitle">#1F2336</color>
+    <color name="colorText">#878B99</color>
     <color name="colorHint">#888888</color>
 
     <!-- 暗 -->
@@ -24,7 +24,7 @@
     <color name="colorBackgroundNight">#2B2B2B</color>
     <color name="colorBackgroundItemNight">#383838</color>
     <color name="colorTitleNight">#95a5a6</color>
-    <color name="colorTextNight">#707070</color>
+    <color name="colorTextNight">#ffffff</color>
     <color name="colorHintNight">#3D3D3D</color>
 
 

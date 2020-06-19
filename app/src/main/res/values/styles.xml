@@ -25,7 +25,7 @@
         <!-- 自定义 -->
         <item name="colorBackground">@color/colorBackground</item>
         <item name="colorBackgroundItem">@color/colorBackgroundItem</item>
-        <item name="colorTitle">@color/colorText</item>
+        <item name="colorTitle">@color/colorTitle</item>
         <item name="colorText">@color/colorText</item>
         <item name="colorHint">@color/colorHint</item>
     </style>
@@ -38,7 +38,7 @@
         <!-- 自定义 -->
         <item name="colorBackground">@color/colorBackgroundNight</item>
         <item name="colorBackgroundItem">@color/colorBackgroundItemNight</item>
-        <item name="colorTitle">@color/colorTextNight</item>
+        <item name="colorTitle">@color/colorTitleNight</item>
         <item name="colorText">@color/colorTextNight</item>
         <item name="colorHint">@color/colorHintNight</item>
     </style>

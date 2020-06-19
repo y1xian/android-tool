@@ -67,7 +67,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     @SuppressLint("RestrictedApi")
     public <T extends View> T getView(int viewId) {
         View view = getViewOrNull(viewId);
-        checkNotNull(view);
+//        checkNotNull(view);
         return (T) view;
     }
 

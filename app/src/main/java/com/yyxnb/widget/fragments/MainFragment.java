@@ -16,6 +16,7 @@ import com.yyxnb.arch.annotations.BindRes;
 import com.yyxnb.widget.adapter.MainListAdapter;
 import com.yyxnb.widget.bean.MainBean;
 import com.yyxnb.widget.fragments.dialog.DialogFragment;
+import com.yyxnb.widget.fragments.skin.SkinMainFragment;
 import com.yyxnb.widget.vm.MainViewModel;
 
 
@@ -49,16 +50,22 @@ public class MainFragment extends AbsListFragment<MainBean, MainViewModel> {
         mRecyclerView.setLayoutManager(manager);
         decoration.setDividerWidth(5);
         decoration.setDividerHeight(5);
-//        decoration.setDrawBorderTopAndBottom(true);
-//        decoration.setDrawBorderLeftAndRight(true);
+        decoration.setDrawBorderTopAndBottom(true);
+        decoration.setDrawBorderLeftAndRight(true);
         mRecyclerView.setAdapter(mAdapter);
 
     }
 
     private void setMenu(int position) {
         switch (position) {
+            case 11:
+                startFragment(new ToastFragment());
+                break;
+            case 12:
+                startFragment(new SkinMainFragment());
+                break;
             case 41:
-                startFragment(TitleFragment.newInstance());
+                startFragment(new TitleFragment());
                 break;
             case 42:
                 startFragment(new DialogFragment());

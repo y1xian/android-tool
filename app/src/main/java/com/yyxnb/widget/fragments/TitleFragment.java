@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 
 import com.yyxnb.arch.annotations.BindRes;
 import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.common.AppConfig;
 import com.yyxnb.view.titlebar.TitleBar;
 import com.yyxnb.widget.R;
 
@@ -18,15 +17,6 @@ import com.yyxnb.widget.R;
 public class TitleFragment extends BaseFragment {
 
     private TitleBar mTitleBar;
-
-    public static TitleFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        TitleFragment fragment = new TitleFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
@@ -48,12 +38,7 @@ public class TitleFragment extends BaseFragment {
 //        LogUtils.INSTANCE.e("" + getHasId() + ", " + getSceneId());
 
         mTitleBar.setBackListener(v -> {
-//            finish();
-            try{
-                AppConfig.getInstance().toast("66666");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            finish();
         });
 
     }

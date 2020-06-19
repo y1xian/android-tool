@@ -135,9 +135,9 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
             return BaseViewHolder.createViewHolder(view);
         }
 
-        ItemDelegate<T> itemViewDelegate = mItemDelegateManager.getItemViewDelegate(viewType);
-        int layoutId = itemViewDelegate.layoutId();
-        BaseViewHolder holder = BaseViewHolder.createViewHolder(parent.getContext().getApplicationContext(), parent, layoutId);
+        final ItemDelegate<T> itemViewDelegate = mItemDelegateManager.getItemViewDelegate(viewType);
+        final int layoutId = itemViewDelegate.layoutId();
+        final BaseViewHolder holder = BaseViewHolder.createViewHolder(parent.getContext(), parent, layoutId);
         onViewHolderCreated(holder, parent, viewType);
         setListener(holder);
         return holder;

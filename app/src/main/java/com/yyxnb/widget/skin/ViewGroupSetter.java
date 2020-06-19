@@ -1,5 +1,6 @@
 package com.yyxnb.widget.skin;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources.Theme;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,14 +12,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
  * ViewGroup类型的Setter,用于修改ListView、RecyclerView等ViewGroup类型的Item
  * View,核心思想为遍历每个Item View中的子控件,然后根据用户绑定的view
  * id与属性来将View修改为当前Theme下的最新属性值，达到ViewGroup控件的换肤效果。
- * <p>
- * TODO : Color与Drawable的设计问题,是否需要修改为桥接模式 {@see ViewBackgroundColorSetter}、
  * {@link ViewBackgroundDrawableSetter}
  */
 public class ViewGroupSetter extends ViewSetter {
@@ -94,7 +94,6 @@ public class ViewGroupSetter extends ViewSetter {
      */
     private View findViewById(View rootView, int viewId) {
         View targetView = rootView.findViewById(viewId);
-        Log.d("", "### viewgroup find view : " + targetView);
         return targetView;
     }
 
@@ -114,51 +113,38 @@ public class ViewGroupSetter extends ViewSetter {
             if (childView instanceof ViewGroup) {
                 changeChildenAttrs((ViewGroup) childView, newTheme, themeId);
             }
-
             // 遍历子元素与要修改的属性,如果相同那么则修改子View的属性
             for (ViewSetter setter : mItemViewSetters) {
                 // 每次都要从ViewGroup中查找数据
                 setter.mView = findViewById(viewGroup, setter.mViewId);
-
-                Log.e("", "### childView : " + childView + ", id = "
-                        + childView.getId());
-                Log.e("", "### setter view : " + setter.mView + ", id = "
-                        + setter.getViewId());
                 if (childView.getId() == setter.getViewId()) {
                     setter.setValue(newTheme, themeId);
-                    Log.e("", "@@@ 修改新的属性: " + childView);
                 }
             }
         }
     }
 
+    @SuppressWarnings({"JavaReflectionMemberAccess", "RedundantArrayCreation"})
     private void clearListViewRecyclerBin(View rootView) {
         if (rootView instanceof AbsListView) {
             try {
                 Field localField = AbsListView.class
                         .getDeclaredField("mRecycler");
                 localField.setAccessible(true);
+                @SuppressLint("PrivateApi")
                 Method localMethod = Class.forName(
                         "android.widget.AbsListView$RecycleBin")
                         .getDeclaredMethod("clear", new Class[0]);
                 localMethod.setAccessible(true);
                 localMethod.invoke(localField.get(rootView), new Object[0]);
-                Log.e("", "### 清空AbsListView的RecycerBin ");
-            } catch (NoSuchFieldException e1) {
+            } catch (Exception e1) {
                 e1.printStackTrace();
-            } catch (ClassNotFoundException e2) {
-                e2.printStackTrace();
-            } catch (NoSuchMethodException e3) {
-                e3.printStackTrace();
-            } catch (IllegalAccessException e4) {
-                e4.printStackTrace();
-            } catch (InvocationTargetException e5) {
-                e5.printStackTrace();
             }
         }
     }
 
-    private void clearRecyclerViewRecyclerBin(View rootView) {
+    @SuppressWarnings("RedundantArrayCreation")
+    public void clearRecyclerViewRecyclerBin(View rootView) {
         if (rootView instanceof RecyclerView) {
             try {
                 Field localField = RecyclerView.class
@@ -169,18 +155,9 @@ public class ViewGroupSetter extends ViewSetter {
                         .getDeclaredMethod("clear", new Class[0]);
                 localMethod.setAccessible(true);
                 localMethod.invoke(localField.get(rootView), new Object[0]);
-                Log.e("", "### 清空RecyclerView的Recycer ");
                 rootView.invalidate();
-            } catch (NoSuchFieldException e1) {
+            } catch (Exception e1) {
                 e1.printStackTrace();
-            } catch (ClassNotFoundException e2) {
-                e2.printStackTrace();
-            } catch (NoSuchMethodException e3) {
-                e3.printStackTrace();
-            } catch (IllegalAccessException e4) {
-                e4.printStackTrace();
-            } catch (InvocationTargetException e5) {
-                e5.printStackTrace();
             }
         }
     }
