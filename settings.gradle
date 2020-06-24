@@ -1,2 +1,11 @@
-include ':app', ':lib_view', ':lib_common', ':lib_annotation', ':lib_compiler', ':lib_utils', ':lib_adapter', ':lib_skin'
+include ':skin_night'
+include ':app',
+        ':lib_view',
+        ':lib_common',
+        ':lib_annotation',
+        ':lib_compiler',
+        ':lib_utils',
+        ':lib_adapter',
+        ':lib_skin',
+        ':lib_skinloader'
 rootProject.name = 'Widget'

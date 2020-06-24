@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Button;
 
-import com.yyxnb.arch.base.BaseActivity;
 import com.yyxnb.view.titlebar.TitleBar;
+import com.yyxnb.widget.base.BaseActivity;
 
 
 public class ButtonActivity extends BaseActivity {
@@ -25,12 +25,12 @@ public class ButtonActivity extends BaseActivity {
 
         mTitleBar = findViewById(R.id.mTitleBar);
         btnShow = findViewById(R.id.btnShow);
-        mTitleBar.setBackListener(v -> finish());
+        mTitleBar.setBackListener(v -> {
+//            finish()
+        });
 
         btnShow.setOnClickListener(v -> {
 
-//            NavGraphBuilder.INSTANCE.getNavController().navigate(474114952);
-//            Navigation.findNavController().navigate(474114952);
         });
 
     }

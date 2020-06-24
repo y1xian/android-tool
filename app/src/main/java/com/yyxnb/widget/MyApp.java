@@ -1,11 +1,11 @@
 package com.yyxnb.widget;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.multidex.MultiDex;
 
+import com.github.anzewei.parallaxbacklayout.ParallaxHelper;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -16,15 +16,29 @@ import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshInitializer;
 import com.squareup.leakcanary.LeakCanary;
+import com.yyxnb.common.AppConfig;
+import com.yyxnb.common.SPUtils;
+import com.yyxnb.skinloader.SkinManager;
+import com.yyxnb.skinloader.bean.SkinConfig;
+
+import me.jessyan.autosize.AutoSizeConfig;
+
+import static com.yyxnb.widget.data.DataConfig.SKIN_PATH;
 
 public class MyApp extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
+        SkinConfig.DEBUG = true;
+        SkinManager.get().init(getApplicationContext());
+        SkinManager.get().loadSkin((String) SPUtils.getParam(SKIN_PATH,""));
+//        SkinInflaterFactory.setFactory(LayoutInflater.from(this));
 
-//        ImageHelper.INSTANCE.init(new GlideImage());
-//        HttpHelper.INSTANCE.init(new OkHttp()).setBaseUrl("http://www.mocky.io/");
+        // 布局
+        AutoSizeConfig.getInstance().setCustomFragment(true);
+        // 侧滑监听
+        AppConfig.getInstance().getApp().registerActivityLifecycleCallbacks(ParallaxHelper.getInstance());
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
@@ -37,8 +51,6 @@ public class MyApp extends Application {
 
     //static 代码段可以防止内存泄露
     static {
-
-
         //设置全局默认配置（优先级最低，会被其他设置覆盖）
         SmartRefreshLayout.setDefaultRefreshInitializer(new DefaultRefreshInitializer() {
             @Override
@@ -80,6 +92,6 @@ public class MyApp extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         // you must install multiDex whatever tinker is installed!
-//        MultiDex.install(base);
+        MultiDex.install(base);
     }
 }

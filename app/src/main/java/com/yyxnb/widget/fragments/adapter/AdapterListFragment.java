@@ -2,16 +2,15 @@ package com.yyxnb.widget.fragments.adapter;
 
 
 import android.os.Bundle;
+
 import com.yyxnb.arch.annotations.BindRes;
-import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.widget.R;
-import com.yyxnb.widget.adapter.StringListAdapter;
-import com.yyxnb.widget.data.DataConfig;
+import com.yyxnb.widget.base.BaseFragment;
 
 /**
  * Adapter 列表.
  */
-@BindRes(layoutRes = R.layout.fragment_adapter_list, swipeBack = 1)
+@BindRes(layoutRes = R.layout.fragment_adapter_list)
 public class AdapterListFragment extends BaseFragment {
     @Override
     public void initView(Bundle savedInstanceState) {

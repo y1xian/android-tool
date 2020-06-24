@@ -4,12 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * @date: on 2019-11-13
- * @author: a112233
- * @email: mxnzp_life@163.com
  * @desc: 添加描述
  */
-public class FanPermissionConfig implements Parcelable {
+public class PermissionConfig implements Parcelable {
     //必须要所有的权限都通过才能通过
     private boolean forceAllPermissionsGranted;
     //设置用户点击不再提示之后的弹窗文案
@@ -19,14 +16,14 @@ public class FanPermissionConfig implements Parcelable {
         return forceDeniedPermissionTips;
     }
 
-    public FanPermissionConfig setForceDeniedPermissionTips(String forceDeniedPermissionTips) {
+    public PermissionConfig setForceDeniedPermissionTips(String forceDeniedPermissionTips) {
         this.forceDeniedPermissionTips = forceDeniedPermissionTips;
         return this;
     }
 
-    private FanPermissionUtils check;
+    private PermissionUtils check;
 
-    public FanPermissionConfig(FanPermissionUtils check) {
+    public PermissionConfig(PermissionUtils check) {
         this.check = check;
     }
 
@@ -34,12 +31,12 @@ public class FanPermissionConfig implements Parcelable {
         return forceAllPermissionsGranted;
     }
 
-    public FanPermissionConfig setForceAllPermissionsGranted(boolean forceAllPermissionsGranted) {
+    public PermissionConfig setForceAllPermissionsGranted(boolean forceAllPermissionsGranted) {
         this.forceAllPermissionsGranted = forceAllPermissionsGranted;
         return this;
     }
 
-    public FanPermissionUtils buildConfig() {
+    public PermissionUtils buildConfig() {
         return check;
     }
 
@@ -55,20 +52,20 @@ public class FanPermissionConfig implements Parcelable {
         dest.writeString(this.forceDeniedPermissionTips);
     }
 
-    protected FanPermissionConfig(Parcel in) {
+    protected PermissionConfig(Parcel in) {
         this.forceAllPermissionsGranted = in.readByte() != 0;
         this.forceDeniedPermissionTips = in.readString();
     }
 
-    public static final Creator<FanPermissionConfig> CREATOR = new Creator<FanPermissionConfig>() {
+    public static final Creator<PermissionConfig> CREATOR = new Creator<PermissionConfig>() {
         @Override
-        public FanPermissionConfig createFromParcel(Parcel source) {
-            return new FanPermissionConfig(source);
+        public PermissionConfig createFromParcel(Parcel source) {
+            return new PermissionConfig(source);
         }
 
         @Override
-        public FanPermissionConfig[] newArray(int size) {
-            return new FanPermissionConfig[size];
+        public PermissionConfig[] newArray(int size) {
+            return new PermissionConfig[size];
         }
     };
 }

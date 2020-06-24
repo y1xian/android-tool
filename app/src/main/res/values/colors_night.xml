@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="status_bar_color_night">#00000000</color>
+
+    <color name="colorPrimary_night">#3C3F41</color>
+    <color name="colorPrimaryDark_night">#323232</color>
+    <color name="colorAccent_night">#30336b</color>
+    <color name="colorBackground_night">#2B2B2B</color>
+    <color name="colorBackgroundItem_night">#383838</color>
+    <color name="colorTitle_night">#95a5a6</color>
+    <color name="colorText_night">#ffffff</color>
+    <color name="colorHint_night">#3D3D3D</color>
+    <color name="colorLine_night">#3D3D3D</color>
+
+
+</resources>

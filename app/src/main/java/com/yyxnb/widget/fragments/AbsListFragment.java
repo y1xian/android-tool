@@ -6,15 +6,14 @@ import android.arch.paging.PagedListAdapter;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
-
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.yyxnb.adapter.ItemDecoration;
-import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.http.BasePagedViewModel;
 import com.yyxnb.widget.R;
+import com.yyxnb.widget.base.BaseFragment;
 import com.yyxnb.widget.databinding.LayoutRefreshViewBinding;
 
 import java.lang.reflect.ParameterizedType;

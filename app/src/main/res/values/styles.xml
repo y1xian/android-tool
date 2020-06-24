@@ -18,30 +18,30 @@
 -->
 
     <!-- 日间 -->
-    <style name="DayTheme" parent="BaseAppTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <!-- 自定义 -->
-        <item name="colorBackground">@color/colorBackground</item>
-        <item name="colorBackgroundItem">@color/colorBackgroundItem</item>
-        <item name="colorTitle">@color/colorTitle</item>
-        <item name="colorText">@color/colorText</item>
-        <item name="colorHint">@color/colorHint</item>
-    </style>
+<!--    <style name="DayTheme" parent="BaseAppTheme">-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+<!--        &lt;!&ndash; 自定义 &ndash;&gt;-->
+<!--        <item name="colorBackground">@color/colorBackground</item>-->
+<!--        <item name="colorBackgroundItem">@color/colorBackgroundItem</item>-->
+<!--        <item name="colorTitle">@color/colorTitle</item>-->
+<!--        <item name="colorText">@color/colorText</item>-->
+<!--        <item name="colorHint">@color/colorHint</item>-->
+<!--    </style>-->
 
-    <!-- 夜间 -->
-    <style name="NightTheme" parent="DayTheme">
-        <item name="colorPrimary">@color/colorPrimaryNight</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
-        <item name="colorAccent">@color/colorAccentNight</item>
-        <!-- 自定义 -->
-        <item name="colorBackground">@color/colorBackgroundNight</item>
-        <item name="colorBackgroundItem">@color/colorBackgroundItemNight</item>
-        <item name="colorTitle">@color/colorTitleNight</item>
-        <item name="colorText">@color/colorTextNight</item>
-        <item name="colorHint">@color/colorHintNight</item>
-    </style>
+<!--    &lt;!&ndash; 夜间 &ndash;&gt;-->
+<!--    <style name="NightTheme" parent="DayTheme">-->
+<!--        <item name="colorPrimary">@color/colorPrimaryNight</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>-->
+<!--        <item name="colorAccent">@color/colorAccentNight</item>-->
+<!--        &lt;!&ndash; 自定义 &ndash;&gt;-->
+<!--        <item name="colorBackground">@color/colorBackgroundNight</item>-->
+<!--        <item name="colorBackgroundItem">@color/colorBackgroundItemNight</item>-->
+<!--        <item name="colorTitle">@color/colorTitleNight</item>-->
+<!--        <item name="colorText">@color/colorTextNight</item>-->
+<!--        <item name="colorHint">@color/colorHintNight</item>-->
+<!--    </style>-->
 
 
 </resources>

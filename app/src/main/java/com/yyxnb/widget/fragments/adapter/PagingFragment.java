@@ -2,20 +2,10 @@ package com.yyxnb.widget.fragments.adapter;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import com.yyxnb.arch.annotations.BindRes;
-import com.yyxnb.arch.annotations.BindViewModel;
-import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.common.AppConfig;
-import com.yyxnb.common.log.LogUtils;
-import com.yyxnb.widget.R;
-import com.yyxnb.widget.adapter.RecyclerAdapter2;
-import com.yyxnb.widget.bean.TestData;
-import com.yyxnb.widget.data.DataConfig;
-import com.yyxnb.widget.databinding.FragmentPagingBinding;
-import com.yyxnb.widget.vm.PagingViewModel;
 
-import java.util.Random;
+import com.yyxnb.arch.annotations.BindRes;
+import com.yyxnb.widget.R;
+import com.yyxnb.widget.base.BaseFragment;
 
 /**
  * paging.

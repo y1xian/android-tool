@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
     android:id="@+id/mItemLayout"
     android:layout_width="match_parent"
-    android:background="?attr/colorBackgroundItem"
-    android:layout_height="50dp">
+    android:layout_height="50dp"
+    android:background="@color/colorBackgroundItem"
+    skin:enable="true">
 
     <TextView
         android:id="@+id/tvText"
@@ -12,6 +14,8 @@
         android:background="@drawable/shape_r25_gradient_bg"
         android:gravity="center"
         android:text="sss"
-        android:textColor="?attr/colorText" />
+        android:textColor="@color/colorText"
+        skin:attrs="textColor"
+        skin:enable="true" />
 
 </LinearLayout>

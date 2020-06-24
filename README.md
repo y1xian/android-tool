@@ -31,5 +31,7 @@ dependencies {
     implementation 'com.github.y1xian.Widget:lib_adapter:+'
     // 主题切换
     implementation 'com.github.y1xian.Widget:lib_skin:+'
+    // 插件换肤
+    implementation 'com.github.y1xian.Widget:lib_skinloader:+'
 }
 ```

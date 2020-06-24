@@ -1,7 +1,6 @@
 package com.yyxnb.widget.data;
 
 import com.yyxnb.common.AppConfig;
-import com.yyxnb.common.log.LogUtils;
 import com.yyxnb.http.utils.GsonUtils;
 import com.yyxnb.utils.FileUtils;
 import com.yyxnb.widget.bean.MainBean;
@@ -10,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataConfig {
+
+    public static final String SKIN_PATH = "SKIN_PATH";
 
     private volatile static List<MainBean> mainBeans;
 

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <color name="colorPrimary">#008577</color>-->
-<!--    <color name="colorPrimaryDark">#00574B</color>-->
-<!--    <color name="colorAccent">#D81B60</color>-->
-
     <color name="color_333333">#333333</color>
 
+    <color name="status_bar_color">#00000000</color>
 
-    <!-- 亮 -->
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#dff9fb</color>
@@ -16,16 +12,16 @@
     <color name="colorTitle">#1F2336</color>
     <color name="colorText">#878B99</color>
     <color name="colorHint">#888888</color>
+    <color name="colorLine">#ff0000</color>
 
-    <!-- 暗 -->
-    <color name="colorPrimaryNight">#3C3F41</color>
-    <color name="colorPrimaryDarkNight">#323232</color>
-    <color name="colorAccentNight">#30336b</color>
-    <color name="colorBackgroundNight">#2B2B2B</color>
-    <color name="colorBackgroundItemNight">#383838</color>
-    <color name="colorTitleNight">#95a5a6</color>
-    <color name="colorTextNight">#ffffff</color>
-    <color name="colorHintNight">#3D3D3D</color>
+<!--    <color name="colorPrimaryNight">#3C3F41</color>-->
+<!--    <color name="colorPrimaryDarkNight">#323232</color>-->
+<!--    <color name="colorAccentNight">#30336b</color>-->
+<!--    <color name="colorBackgroundNight">#2B2B2B</color>-->
+<!--    <color name="colorBackgroundItemNight">#383838</color>-->
+<!--    <color name="colorTitleNight">#95a5a6</color>-->
+<!--    <color name="colorTextNight">#ffffff</color>-->
+<!--    <color name="colorHintNight">#3D3D3D</color>-->
 
 
 </resources>

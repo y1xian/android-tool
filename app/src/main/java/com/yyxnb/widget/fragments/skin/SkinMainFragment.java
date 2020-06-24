@@ -8,19 +8,22 @@ import android.support.v7.widget.RecyclerView;
 
 import com.yyxnb.adapter.ItemDecoration;
 import com.yyxnb.arch.annotations.BindRes;
-import com.yyxnb.arch.base.BaseFragment;
-import com.yyxnb.arch.common.Bus;
-import com.yyxnb.arch.common.MsgEvent;
+import com.yyxnb.common.SPUtils;
 import com.yyxnb.common.log.LogUtils;
-import com.yyxnb.lib_skin.RecyclerViewSetter;
-import com.yyxnb.lib_skin.SkinTheme;
+import com.yyxnb.skinloader.SkinManager;
+import com.yyxnb.skinloader.util.AssetFileUtils;
 import com.yyxnb.widget.R;
 import com.yyxnb.widget.adapter.StringListAdapter;
+import com.yyxnb.widget.base.BaseFragment;
 import com.yyxnb.widget.data.DataConfig;
 import com.yyxnb.widget.databinding.FragmentSkinMainBinding;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.yyxnb.widget.data.DataConfig.SKIN_PATH;
+
 
 /**
  * 换肤.
@@ -36,27 +39,33 @@ public class SkinMainFragment extends BaseFragment {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+
         binding = getBinding();
         mRecyclerView = binding.mRecyclerView;
-
+//        SkinManager.get().setWindowStatusBarColor(getActivity().getWindow(), R.color.colorPrimary);
 //        ViewGroupSetter recyclerViewSetter = new ViewGroupSetter(mRecyclerView);
-        RecyclerViewSetter recyclerViewSetter = new RecyclerViewSetter(mRecyclerView);
+//        RecyclerViewSetter recyclerViewSetter = new RecyclerViewSetter(mRecyclerView);
 
-        recyclerViewSetter
-                .childViewBgColor(R.id.mItemLayout, R.attr.colorBackgroundItem)
-                .childViewTextColor(R.id.tvTitle, R.attr.colorTitle)
-                .childViewTextColor(R.id.tvText, R.attr.colorText)
-                .childViewTextColor(R.id.tvHint, R.attr.colorHint);
+//        recyclerViewSetter
+//                .childViewBgColor(R.id.mItemLayout, R.attr.colorBackgroundItem)
+//                .childViewTextColor(R.id.tvTitle, R.attr.colorTitle)
+//                .childViewTextColor(R.id.tvText, R.attr.colorText)
+//                .childViewTextColor(R.id.tvHint, R.attr.colorHint);
 
         // 构建对象
-        SkinTheme theme = new SkinTheme.Builder(getActivity())
-                .backgroundColor(R.id.mLayout, R.attr.colorBackground) // 设置view的背景图片
-//                .backgroundColor(R.id.change_btn, R.attr.btn_bg) // 设置按钮的背景色
-                .textColor(R.id.tvTitle, R.attr.colorTitle) // 设置文本颜色
-                .textColor(R.id.tvText, R.attr.colorText) // 设置文本颜色
-                .textColor(R.id.tvHint, R.attr.colorHint) // 设置文本颜色
-                .setter(recyclerViewSetter)           // 手动设置setter
-                .build();
+//        SkinTheme theme = new SkinTheme.Builder(getActivity())
+//                .backgroundColor(R.id.mLayout, R.attr.colorBackground) // 设置view的背景图片
+////                .backgroundColor(R.id.change_btn, R.attr.btn_bg) // 设置按钮的背景色
+//                .textColor(R.id.tvTitle, R.attr.colorTitle) // 设置文本颜色
+//                .textColor(R.id.tvText, R.attr.colorText) // 设置文本颜色
+//                .textColor(R.id.tvHint, R.attr.colorHint) // 设置文本颜色
+//                .setter(recyclerViewSetter)           // 手动设置setter
+//                .build();
+
+//        SkinManager.get().setViewBackground(binding.mLayout, R.color.colorBackground);
+//        SkinManager.get().setTextViewColor(binding.tvTitle, R.color.colorTitle);
+//        SkinManager.get().setTextViewColor(binding.tvText, R.color.colorText);
+//        SkinManager.get().setTextViewColor(binding.tvHint, R.color.colorHint);
 
         mAdapter = new StringListAdapter();
         ItemDecoration decoration = new ItemDecoration(getContext());
@@ -69,20 +78,17 @@ public class SkinMainFragment extends BaseFragment {
         mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setAdapter(mAdapter);
 
-//        getActivity().setTheme(R.style.NightTheme);
-
-        LogUtils.w(" SkinTheme.getCurrentThemeId() " + SkinTheme.getCurrentThemeId() + " ， " + R.style.NightTheme + " ， "
-                + (SkinTheme.getCurrentThemeId() == R.style.NightTheme));
-        binding.checkBox.setChecked(SkinTheme.getCurrentThemeId() == R.style.NightTheme);
+        binding.checkBox.setChecked(!SkinManager.get().isUsingDefaultSkin());
 
         binding.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
-                theme.setTheme(R.style.DayTheme);
+                SkinManager.get().restoreToDefaultSkin();
+                SPUtils.clear(SKIN_PATH);
             } else {
-                theme.setTheme(R.style.NightTheme);
+                changeSkin();
             }
-            Bus.post(new MsgEvent(0x11, SkinTheme.getCurrentThemeId()));
         });
+
     }
 
     @Override
@@ -100,5 +106,22 @@ public class SkinMainFragment extends BaseFragment {
             return false;
         }
     });
+
+    @SuppressWarnings("ConstantConditions")
+    private void changeSkin() {
+        //将assets目录下的皮肤文件拷贝到data/data/.../cache目录下
+        String saveDir = getActivity().getCacheDir().getAbsolutePath() + "/skins";
+        //将打包生成的apk文件, 重命名为'xxx.skin', 防止apk结尾的文件造成混淆.
+        String savefileName = "/night.skin";
+        String asset_dir = "skins/night.skin";
+        File file = new File(saveDir + File.separator + savefileName);
+        if (!file.exists()) {
+            AssetFileUtils.copyAssetFile(getActivity(), asset_dir, saveDir, savefileName);
+        }
+        LogUtils.w(" " + file.getAbsolutePath());
+        SPUtils.setParam(SKIN_PATH,file.getAbsolutePath());
+        SkinManager.get().loadSkin(file.getAbsolutePath());
+//        SkinLoader.getDefault().loadSkin("com.yyxnb.widget","skin_night.apk","night");
+    }
 
 }

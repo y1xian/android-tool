@@ -18,19 +18,25 @@ android {
         }
 
     }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
 }
 
 dependencies {
-
-    implementation 'com.android.support:support-v4:28.0.0'
-    def b_v = "1.0.2.3"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation 'com.android.support:support-v4:28.0.0'
+    def b_v = "1.0.3"
     implementation 'com.github.y1xian.Amazing:lib_arch:' + b_v
     implementation 'com.github.y1xian.Amazing:lib_rxhttp:' + b_v
-    implementation project(':lib_common')
+//    implementation project(':lib_common')
     implementation project(':lib_utils')
     implementation project(':lib_view')
     implementation project(':lib_adapter')
-    implementation project(':lib_skin')
+//    implementation project(':lib_skin')
+    implementation project(':lib_skinloader')
 //    annotationProcessor project(':lib_compiler')
 
     implementation libs.arch_comp_room
@@ -47,14 +53,19 @@ dependencies {
     //https://github.com/JavaNoober/BackgroundLibrary
     implementation 'com.noober.background:core:1.6.3'
     //https://github.com/scwang90/SmartRefreshLayout
-    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
-    implementation 'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
-    implementation 'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
+    implementation 'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
 
     debugImplementation libs.leak_canary_debug
     releaseImplementation libs.leak_canary_release
     // Optional, if you use support library fragments:
     debugImplementation libs.leak_canary_debug_support
+
+    //https://github.com/JessYanCoding/AndroidAutoSize
+    implementation libs.autosize
+    //侧滑
+    implementation libs.parallaxbacklayout
 
 //    api 'com.alibaba:fastjson:1.2.59'
 }

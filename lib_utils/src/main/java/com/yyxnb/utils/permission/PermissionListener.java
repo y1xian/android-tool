@@ -3,7 +3,7 @@ package com.yyxnb.utils.permission;
 /**
  * @desc: 授权反馈事件
  */
-public interface FanPermissionListener {
+public interface PermissionListener {
     /*
      * 授权全部通过
      */

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:skin="http://schemas.android.com/android/skin"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -11,7 +12,8 @@
         android:id="@+id/mLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorBackground"
+        android:background="@color/colorBackground"
+        skin:enable="true"
         tools:context=".fragments.skin.SkinMainFragment">
 
         <TextView
@@ -20,10 +22,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="我是标题"
-            android:textColor="?attr/colorTitle"
+            android:textColor="@color/colorTitle"
             android:textSize="40dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            skin:enable="true" />
 
         <TextView
             android:id="@+id/tvText"
@@ -31,10 +34,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="我是内容"
-            android:textColor="?attr/colorText"
+            android:textColor="@color/colorText"
             android:textSize="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            skin:enable="true" />
 
         <TextView
             android:id="@+id/tvHint"
@@ -42,10 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="我是子内容"
-            android:textColor="?attr/colorHint"
+            android:textColor="@color/colorHint"
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvText" />
+            app:layout_constraintTop_toBottomOf="@+id/tvText"
+            skin:enable="true" />
 
         <CheckBox
             android:id="@+id/checkBox"

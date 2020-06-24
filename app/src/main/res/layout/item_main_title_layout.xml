@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:id="@+id/mLayout"
-    android:background="?attr/colorBackground"
+    android:background="@color/colorBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textColor="?attr/colorText"
+        android:textColor="@color/colorText"
         android:text="123" />
 
 </LinearLayout>

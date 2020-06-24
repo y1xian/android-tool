@@ -15,7 +15,6 @@ import com.yyxnb.adapter.MultiItemTypeAdapter;
 import com.yyxnb.arch.annotations.BindRes;
 import com.yyxnb.arch.base.IFragment;
 import com.yyxnb.common.AppConfig;
-import com.yyxnb.lib_skin.SkinTheme;
 import com.yyxnb.view.popup.Popup;
 import com.yyxnb.view.titlebar.TitleBar;
 import com.yyxnb.widget.R;
@@ -173,9 +172,9 @@ public class DialogFragment extends Fragment implements IFragment {
             }
         });
 
-        new SkinTheme.Builder(getActivity())
-                .backgroundColor(R.id.mLayout, R.attr.colorBackground) // 设置view的背景图片
-                .build();
+//        new SkinTheme.Builder(getActivity())
+//                .backgroundColor(R.id.mLayout, R.attr.colorBackground) // 设置view的背景图片
+//                .build();
 
     }
 

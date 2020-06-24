@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.yyxnb.arch.annotations.BindRes;
-import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.view.titlebar.TitleBar;
 import com.yyxnb.widget.R;
+import com.yyxnb.widget.base.BaseFragment;
 
 
 /**

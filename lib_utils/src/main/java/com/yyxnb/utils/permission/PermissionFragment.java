@@ -11,10 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -23,31 +19,34 @@ import android.text.TextUtils;
 
 import com.yyxnb.utils.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FanPermissionFragment extends Fragment {
+public class PermissionFragment extends Fragment {
     private String[] permissions = null;
     public static final int PERMISSION_REQUEST_CODE = 1001;
     public static final int REQUEST_PERMISSION_SETTING = 1002;
-    private FanPermissionListener permissionCheckListener;
+    private PermissionListener permissionCheckListener;
     private Activity mContext;
 
-    private FanPermissionConfig checkConfig;
+    private PermissionConfig checkConfig;
 
     private String forceDeniedPermissionTips = "";
 
-    public FanPermissionFragment setPermissionCheckListener(FanPermissionListener listener) {
+    public PermissionFragment setPermissionCheckListener(PermissionListener listener) {
         this.permissionCheckListener = listener;
         return this;
     }
 
-    public static FanPermissionFragment newInstance(String[] permissions, FanPermissionConfig checkConfig) {
+    public static PermissionFragment newInstance(String[] permissions, PermissionConfig checkConfig) {
         Bundle args = new Bundle();
         args.putStringArray("permissions", permissions);
         args.putParcelable("config", checkConfig);
-        FanPermissionFragment fragment = new FanPermissionFragment();
+        PermissionFragment fragment = new PermissionFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,7 +68,7 @@ public class FanPermissionFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        forceDeniedPermissionTips = "请前往设置->应用->【" + FanPermissionUtils.getAppName(mContext) + "】->权限中打开相关权限，否则功能无法正常运行！";
+        forceDeniedPermissionTips = "请前往设置->应用->【" + PermissionUtils.getAppName(mContext) + "】->权限中打开相关权限，否则功能无法正常运行！";
 
         //获取传输过来的权限
         permissions = this.getArguments().getStringArray("permissions");

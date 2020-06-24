@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:skin="http://schemas.android.com/android/skin"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:orientation="vertical"
+    skin:enable="true"
     tools:context=".ButtonActivity">
 
     <com.yyxnb.view.titlebar.TitleBar
         android:id="@+id/mTitleBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btnShow"
-        android:layout_margin="10dp"
         android:layout_width="100dp"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="我是啥颜色"
+        android:textColor="@color/colorTitle"
+        android:textSize="20sp"
+        skin:enable="true" />
 
 </LinearLayout>

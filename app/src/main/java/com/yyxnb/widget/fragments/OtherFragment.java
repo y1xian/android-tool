@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yyxnb.arch.base.BaseFragment;
 import com.yyxnb.widget.R;
+import com.yyxnb.widget.base.BaseFragment;
 
 
 /**
