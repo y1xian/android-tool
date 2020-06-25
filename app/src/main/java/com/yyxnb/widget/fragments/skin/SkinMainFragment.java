@@ -113,11 +113,11 @@ public class SkinMainFragment extends BaseFragment {
         String saveDir = getActivity().getCacheDir().getAbsolutePath() + "/skins";
         //将打包生成的apk文件, 重命名为'xxx.skin', 防止apk结尾的文件造成混淆.
         String savefileName = "/night.skin";
-        String asset_dir = "skins/night.skin";
+        String asset_dir = "skins/night.apk";
         File file = new File(saveDir + File.separator + savefileName);
-        if (!file.exists()) {
+//        if (!file.exists()) {
             AssetFileUtils.copyAssetFile(getActivity(), asset_dir, saveDir, savefileName);
-        }
+//        }
         LogUtils.w(" " + file.getAbsolutePath());
         SPUtils.setParam(SKIN_PATH,file.getAbsolutePath());
         SkinManager.get().loadSkin(file.getAbsolutePath());

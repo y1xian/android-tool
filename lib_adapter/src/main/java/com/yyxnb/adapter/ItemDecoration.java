@@ -36,7 +36,7 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
     private int dividerHeight;
     private int dividerWidth;
     private int paddingTop = 0, paddingBottom = 0, paddingLeft = 0, paddingRight = 0;
-    private int dividerColor = R.color.item_div_bg;
+    private int dividerColor = R.color.colorLine;
     private static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
     private static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
     /**

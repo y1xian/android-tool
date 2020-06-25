@@ -93,7 +93,7 @@ public class CenterListPopup extends CenterPopup {
                         holder.setImageResource(R.id.ivCheck, iconCheckId);
                     }
                     holder.<TextView>getView(R.id.tvText).setTextColor(position == checkedPosition ?
-                            Popup.getPrimaryColor() : getResources().getColor(R.color.title_color));
+                            Popup.getPrimaryColor() : getResources().getColor(R.color.colorTitle));
                 }
                 if (position == (data.length - 1)) {
                     holder.getView(R.id.mDivider).setVisibility(INVISIBLE);

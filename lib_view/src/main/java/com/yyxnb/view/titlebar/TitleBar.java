@@ -120,12 +120,12 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         titleBarHeight = (int) array.getDimension(R.styleable.TitleBar_tb_titleBarHeight, DpUtils.dp2px(context, 48));
 
         showBottomLine = array.getBoolean(R.styleable.TitleBar_tb_showBottomLine, true);
-        bottomLineColor = array.getColor(R.styleable.TitleBar_tb_bottomLineColor, getResources().getColor(R.color.item_div_bg));
+        bottomLineColor = array.getColor(R.styleable.TitleBar_tb_bottomLineColor, getResources().getColor(R.color.colorLine));
 
         leftType = array.getInt(R.styleable.TitleBar_tb_leftType, TYPE_LEFT_IMAGEBUTTON);
         if (leftType == TYPE_LEFT_TEXTVIEW) {
             leftText = array.getString(R.styleable.TitleBar_tb_leftText);
-            leftTextColor = array.getColor(R.styleable.TitleBar_tb_leftTextColor, getResources().getColor(R.color.title_color));
+            leftTextColor = array.getColor(R.styleable.TitleBar_tb_leftTextColor, getResources().getColor(R.color.colorTitle));
             leftTextSize = array.getDimension(R.styleable.TitleBar_tb_leftTextSize, DpUtils.dp2px(context, 16));
             leftDrawable = array.getResourceId(R.styleable.TitleBar_tb_leftDrawable, 0);
             leftDrawablePadding = array.getDimension(R.styleable.TitleBar_tb_leftDrawablePadding, 5);
@@ -138,7 +138,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         rightType = array.getInt(R.styleable.TitleBar_tb_rightType, TYPE_RIGHT_NONE);
         if (rightType == TYPE_RIGHT_TEXTVIEW) {
             rightText = array.getString(R.styleable.TitleBar_tb_rightText);
-            rightTextColor = array.getColor(R.styleable.TitleBar_tb_rightTextColor, getResources().getColor(R.color.title_color));
+            rightTextColor = array.getColor(R.styleable.TitleBar_tb_rightTextColor, getResources().getColor(R.color.colorTitle));
             rightTextSize = array.getDimension(R.styleable.TitleBar_tb_rightTextSize, DpUtils.dp2px(context, 16));
         } else if (rightType == TYPE_RIGHT_IMAGEBUTTON) {
             rightImageResource = array.getResourceId(R.styleable.TitleBar_tb_rightImageResource, 0);
@@ -149,11 +149,11 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         centerType = array.getInt(R.styleable.TitleBar_tb_centerType, TYPE_CENTER_TEXTVIEW);
         if (centerType == TYPE_CENTER_TEXTVIEW) {
             centerText = array.getString(R.styleable.TitleBar_tb_centerText);
-            centerTextColor = array.getColor(R.styleable.TitleBar_tb_centerTextColor, getResources().getColor(R.color.title_color));
+            centerTextColor = array.getColor(R.styleable.TitleBar_tb_centerTextColor, getResources().getColor(R.color.colorTitle));
             centerTextSize = array.getDimension(R.styleable.TitleBar_tb_centerTextSize, DpUtils.dp2px(context, 20));
             centerTextMarquee = array.getBoolean(R.styleable.TitleBar_tb_centerTextMarquee, true);
             centerSubText = array.getString(R.styleable.TitleBar_tb_centerSubText);
-            centerSubTextColor = array.getColor(R.styleable.TitleBar_tb_centerSubTextColor, getResources().getColor(R.color.auxiliary_color));
+            centerSubTextColor = array.getColor(R.styleable.TitleBar_tb_centerSubTextColor, getResources().getColor(R.color.colorHint));
             centerSubTextSize = array.getDimension(R.styleable.TitleBar_tb_centerSubTextSize, DpUtils.dp2px(context, 12));
         } else if (centerType == TYPE_CENTER_CUSTOM_VIEW) {
             centerCustomViewRes = array.getResourceId(R.styleable.TitleBar_tb_centerCustomView, 0);
