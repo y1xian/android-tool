@@ -1,0 +1,10 @@
+apply from: rootProject.file('lib-util.gradle')
+
+dependencies {
+    api libs.lib_core, libs.lib_app
+    // 约束
+    api libs.constraint
+    // bus
+    api libs.live_event_bus
+    implementation libs.startup
+}

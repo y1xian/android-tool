@@ -1,11 +1,98 @@
-include ':skin_night'
-include ':app',
-        ':lib_view',
-        ':lib_common',
-        ':lib_annotation',
-        ':lib_compiler',
-        ':lib_utils',
-        ':lib_adapter',
-        ':lib_skin',
-        ':lib_skinloader'
-rootProject.name = 'Widget'
+include ':app'
+
+//============ 功能、控件
+
+// 通用控件
+// 视频
+include ':widgets:lib-video',
+        // 音乐
+        ':widgets:lib-music',
+        // dialog
+        ':widgets:lib-dialog',
+        // popup
+        ':widgets:lib-popup',
+        // 本地服务
+        ':widgets:lib-localservice',
+        // 自定义控件
+        ':widgets:lib-view',
+        // web
+        ':widgets:lib-webview',
+        // 悬浮框
+        ':widgets:lib-floatwindow',
+        // 换肤
+        ':widgets:lib-skinloader',
+        // 文件上传
+        ':widgets:lib-upload',
+        // 文件下载
+        ':widgets:lib-download'
+
+//============ 无业务逻辑的常用工具
+
+// app相关
+include ':utils:lib-app',
+        // 核心
+        ':utils:lib-core',
+        // 缓存
+        ':utils:lib-cache',
+        // 简单实现okhttp
+        ':utils:lib-okhttp',
+        // 网络请求
+        ':utils:lib-retrofit',
+        // 网络管理
+        ':utils:lib-network',
+        // 适配器
+        ':utils:lib-adapter',
+        // 图片框架
+        ':utils:lib-image',
+        // 媒体
+        ':utils:lib-media',
+        // 加密
+        ':utils:lib-encrypt',
+        // 文件
+        ':utils:lib-file',
+        // rxjava封装
+        ':utils:lib-rxtool',
+        // 系统相关
+        ':utils:lib-system',
+        // 任务队列
+        ':utils:lib-task',
+        // 多语言
+        ':utils:lib-language',
+        // 权限
+        ':utils:lib-permission',
+        // 通知栏
+        ':utils:lib-notification',
+        // 封装服务
+        ':utils:lib-service',
+        // SnackBar
+        ':utils:lib-snackbar',
+        // 动画
+        ':utils:lib-anim',
+        // 通讯录
+        ':utils:lib-contact',
+        // aop
+        ':utils:lib-aop',
+        // 分享
+        ':utils:lib-share',
+        // 日志
+        ':utils:lib-log',
+        // 不常用工具，未分类的
+        ':utils:lib-utils'
+
+//============ JetPack
+
+// jetpack架构
+include ':jetpack:lib-arch',
+        // Room数据库
+        ':jetpack:lib-room',
+        // Paging分页库
+        ':jetpack:lib-paging',
+        // Binding
+        ':jetpack:lib-binding',
+        // 可延迟的异步任务
+        ':jetpack:lib-workmanager',
+        // 导航
+        ':jetpack:lib-navigation'
+
+
+rootProject.name = 'Oh'
