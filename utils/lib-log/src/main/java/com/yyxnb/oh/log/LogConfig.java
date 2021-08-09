@@ -2,14 +2,14 @@ package com.yyxnb.oh.log;
 
 import android.text.TextUtils;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 
 
 public class LogConfig {
 
     private boolean showThreadInfo = true;
-    private boolean debug = AppUtils.isDebug();
-    private String tag = ">----what---->";
+    private boolean debug = ApplicationUtils.isDebug();
+    private String tag = ">----oh---->";
     private boolean write = false;
 
 
