@@ -29,7 +29,8 @@ include ':widgets:lib-video',
 //============ 无业务逻辑的常用工具
 
 // app相关
-include ':utils:lib-app',
+include ':utils:lib-application',
+        ':utils:lib-app',
         // 核心
         ':utils:lib-core',
         // 缓存

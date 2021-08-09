@@ -191,7 +191,9 @@ ext {
             // Binding
             lib_binding              : project(':jetpack:lib-binding'),
 
-            // app相关
+            // application相关
+            lib_application          : project(':utils:lib-application'),
+            // app信息
             lib_app                  : project(':utils:lib-app'),
             // 核心
             lib_core                 : project(':utils:lib-core'),
