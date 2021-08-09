@@ -1,4 +1,4 @@
-package com.yyxnb.oh.app;
+package com.yyxnb.oh.application;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
