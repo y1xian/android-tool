@@ -6,7 +6,7 @@ import android.util.LruCache;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 import com.yyxnb.oh.arch.helper.ActivityHelper;
 
 /**
@@ -18,7 +18,7 @@ import com.yyxnb.oh.arch.helper.ActivityHelper;
  * 描    述：Activity 注册监听生命周期
  * ================================================
  */
-public class ActivityLifecycle extends AppUtils.ActivityLifecycleCallbacks {
+public class ActivityLifecycle extends ApplicationUtils.ActivityLifecycleCallbacks {
 
     private static volatile ActivityLifecycle mInstance = null;
 

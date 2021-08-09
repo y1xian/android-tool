@@ -1,9 +1,11 @@
 package com.yyxnb.simple.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.yyxnb.oh.core.UITask;
 import com.yyxnb.simple.R;
 
 /**
@@ -19,5 +21,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        UITask.run(() -> {
+
+            Log.w("---->", "io " + Thread.currentThread());
+
+            UITask.post(() -> {
+                Log.w("---->", "main " +Thread.currentThread());
+            });
+
+        });
     }
 }

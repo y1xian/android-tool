@@ -8,10 +8,10 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.startup.Initializer;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationManager;
+import com.yyxnb.oh.application.ApplicationUtils;
 import com.yyxnb.oh.arch.lifecycle.ActivityLifecycle;
 import com.yyxnb.oh.core.CoreInitializer;
-import com.yyxnb.oh.core.CoreManager;
 
 import java.util.List;
 
@@ -31,17 +31,17 @@ public class ArchInitializer implements Initializer<Void> {
     @NonNull
     @Override
     public Void create(@NonNull Context context) {
-        Log.e("ArchInitializer", "第二个初始化的存在");
+        Log.e("ArchInitializer", "ArchInitializer初始化");
 
         // 系统会在每个 Activity 执行完对应的生命周期后都调用这个实现类中对应的方法
-        CoreManager.getInstance().setLifecycleCallbacks(ActivityLifecycle.getInstance());
+        ApplicationManager.getInstance().setLifecycleCallbacks(ActivityLifecycle.getInstance());
 
         // 应用监听
         ProcessLifecycleOwner.get().getLifecycle().addObserver(AppLifeObserver.getInstance());
 
         LiveEventBus
                 .config()
-                .enableLogger(AppUtils.isDebug());
+                .enableLogger(ApplicationUtils.isDebug());
         return null;
     }
 

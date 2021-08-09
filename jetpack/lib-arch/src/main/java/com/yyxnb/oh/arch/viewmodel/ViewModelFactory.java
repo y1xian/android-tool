@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -30,13 +30,13 @@ public class ViewModelFactory implements Serializable {
      */
     @MainThread
     public static <T extends BaseViewModel> T createViewModel(Fragment fragment, Field field) {
-        Class<T> viewModelClass = AppUtils.getFiledClazz(field);
+        Class<T> viewModelClass = ApplicationUtils.getFiledClazz(field);
         return createViewModel(fragment, viewModelClass);
     }
 
     @MainThread
     public static <T extends BaseViewModel> T createViewModel(FragmentActivity activity, Field field) {
-        Class<T> viewModel = AppUtils.getFiledClazz(field);
+        Class<T> viewModel = ApplicationUtils.getFiledClazz(field);
         return createViewModel(activity, viewModel);
     }
 

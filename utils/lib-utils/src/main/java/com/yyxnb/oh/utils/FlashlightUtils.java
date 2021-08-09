@@ -5,7 +5,7 @@ import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.util.Log;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 import com.yyxnb.oh.log.LogUtils;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ public final class FlashlightUtils {
      * @return {@code true}: yes<br>{@code false}: no
      */
     public static boolean isFlashlightEnable() {
-        return AppUtils.getApp()
+        return ApplicationUtils.getApp()
                 .getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }

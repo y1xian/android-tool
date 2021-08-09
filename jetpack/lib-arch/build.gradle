@@ -1,7 +1,7 @@
 apply from: rootProject.file('lib-util.gradle')
 
 dependencies {
-    api libs.lib_core, libs.lib_app
+    api libs.lib_core, libs.lib_application
     // 约束
     api libs.constraint
     // bus

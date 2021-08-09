@@ -1,4 +1,4 @@
 
 -dontwarn com.yyxnb.oh.utils.**
 -keep class com.yyxnb.oh.utils.** {*;}
--keep class com.yyxnb.oh.app.** {*;}
+-keep class com.yyxnb.oh.application.** {*;}

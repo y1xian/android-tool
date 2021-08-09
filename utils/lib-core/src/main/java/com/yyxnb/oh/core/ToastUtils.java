@@ -16,7 +16,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 
 import java.io.Serializable;
 
@@ -31,7 +31,7 @@ public class ToastUtils implements Serializable {
 
     private static final String TOAST_TYPEFACE = "sans-serif-condensed";
 
-    private static Context context = AppUtils.getApp();
+    private static Context context = ApplicationUtils.getApp();
 
     /**
      * Toast对象

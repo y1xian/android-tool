@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import androidx.core.app.ActivityCompat;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 import com.yyxnb.oh.okhttp.annotation.CacheType;
 import com.yyxnb.oh.okhttp.interceptor.CacheInterceptor;
 import com.yyxnb.oh.okhttp.interceptor.GzipRequestInterceptor;
@@ -59,7 +59,7 @@ public abstract class AbsOkHttp {
      * 缓存目录
      */
     protected File cachedDir() {
-        return new File(AppUtils.getApp().getExternalCacheDir().getAbsolutePath() + "/okHttp_cache");
+        return new File(ApplicationUtils.getApp().getExternalCacheDir().getAbsolutePath() + "/okHttp_cache");
     }
 
     /**
@@ -231,7 +231,7 @@ public abstract class AbsOkHttp {
         }
 
         //检测是否有写的权限
-        int permission = ActivityCompat.checkSelfPermission(AppUtils.getApp(),
+        int permission = ActivityCompat.checkSelfPermission(ApplicationUtils.getApp(),
                 "android.permission.WRITE_EXTERNAL_STORAGE");
         if (permission == PackageManager.PERMISSION_GRANTED && null != cachedDir()) {
             builder.cache(new Cache(cachedDir(), maxCacheSize()));

@@ -5,7 +5,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 import com.yyxnb.oh.room.DateConverter;
 
 /**
@@ -31,7 +31,7 @@ public abstract class CacheDatabase extends RoomDatabase {
                             //创建一个内存数据库
                             //但是这种数据库的数据只存在于内存中，也就是进程被杀之后，数据随之丢失
                             //Room.inMemoryDatabaseBuilder()
-                            Room.databaseBuilder(AppUtils.getApp(), CacheDatabase.class, "net_cache.db")
+                            Room.databaseBuilder(ApplicationUtils.getApp(), CacheDatabase.class, "net_cache.db")
                                     //是否允许在主线程进行查询
                                     .allowMainThreadQueries()
                                     //数据库创建和打开后的回调

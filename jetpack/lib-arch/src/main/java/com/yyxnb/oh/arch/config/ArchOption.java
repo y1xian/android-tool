@@ -2,7 +2,7 @@ package com.yyxnb.oh.arch.config;
 
 import android.graphics.Color;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 import com.yyxnb.oh.arch.R;
 import com.yyxnb.oh.arch.annotation.BarStyle;
 import com.yyxnb.oh.arch.annotation.SwipeStyle;
@@ -77,9 +77,9 @@ public class ArchOption implements Serializable {
         private boolean statusBarTranslucent = true;
         private boolean fitsSystemWindows = false;
         private int statusBarStyle = BarStyle.DARK_CONTENT;
-        private int statusBarColor = AppUtils.getApp().getResources().getColor(R.color.statusBar);
+        private int statusBarColor = ApplicationUtils.getApp().getResources().getColor(R.color.statusBar);
         private int shouldAdjustForWhiteStatusBar = Color.parseColor("#4A4A4A");
-        private int navigationBarColor = AppUtils.getApp().getResources().getColor(R.color.statusBar);
+        private int navigationBarColor = ApplicationUtils.getApp().getResources().getColor(R.color.statusBar);
         private int navigationBarStyle = BarStyle.DARK_CONTENT;
         private String containerActivityClassName;
 

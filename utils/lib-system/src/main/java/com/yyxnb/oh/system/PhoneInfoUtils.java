@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 
 /**
  * ================================================
@@ -27,7 +27,7 @@ public class PhoneInfoUtils {
     private static String NetworkOperator;
 
     public PhoneInfoUtils() {
-        telephonyManager = (TelephonyManager) AppUtils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager = (TelephonyManager) ApplicationUtils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
     }
 
     //获取sim卡iccid
@@ -42,7 +42,7 @@ public class PhoneInfoUtils {
     @SuppressLint({"MissingPermission", "HardwareIds"})
     @Deprecated
     public static String getNativePhoneNumber() {
-        TelephonyManager tm = (TelephonyManager) AppUtils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) ApplicationUtils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
         String nativePhoneNumber = "N/A";
         nativePhoneNumber = tm.getLine1Number();
         return nativePhoneNumber;
@@ -67,7 +67,7 @@ public class PhoneInfoUtils {
 
     @SuppressLint({"MissingPermission", "HardwareIds"})
     public static String getPhoneInfo() {
-        TelephonyManager tm = (TelephonyManager) AppUtils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) ApplicationUtils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
         StringBuffer sb = new StringBuffer();
 
         sb.append(" \nLine1Number = " + tm.getLine1Number());

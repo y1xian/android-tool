@@ -14,9 +14,6 @@
             android:exported="false"
             tools:node="merge">
             <meta-data
-                android:name="com.yyxnb.oh.core.CoreInitializer"
-                android:value="@string/androidx_startup" />
-            <meta-data
                 android:name="com.yyxnb.oh.arch.ArchInitializer"
                 android:value="@string/androidx_startup" />
         </provider>

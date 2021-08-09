@@ -7,7 +7,7 @@ import android.content.ServiceConnection;
 
 import androidx.annotation.NonNull;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 import com.yyxnb.oh.log.LogUtils;
 
 import java.util.HashSet;
@@ -27,7 +27,7 @@ public final class ServiceUtils {
      * 获取所有运行的服务
      */
     public static Set getAllRunningServices() {
-        ActivityManager am = (ActivityManager) AppUtils.getApp().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) ApplicationUtils.getApp().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> info = am.getRunningServices(0x7FFFFFFF);
         Set<String> names = new HashSet<>();
         if (info == null || info.size() == 0) {
@@ -54,8 +54,8 @@ public final class ServiceUtils {
      * 启动服务
      */
     public static void startService(@NonNull final Class<?> cls) {
-        Intent intent = new Intent(AppUtils.getApp(), cls);
-        AppUtils.getApp().startService(intent);
+        Intent intent = new Intent(ApplicationUtils.getApp(), cls);
+        ApplicationUtils.getApp().startService(intent);
     }
 
     /**
@@ -76,8 +76,8 @@ public final class ServiceUtils {
      * 停止服务
      */
     public static boolean stopService(@NonNull final Class<?> cls) {
-        Intent intent = new Intent(AppUtils.getApp(), cls);
-        return AppUtils.getApp().stopService(intent);
+        Intent intent = new Intent(ApplicationUtils.getApp(), cls);
+        return ApplicationUtils.getApp().stopService(intent);
     }
 
     /**
@@ -117,15 +117,15 @@ public final class ServiceUtils {
     public static void bindService(@NonNull final Class<?> cls,
                                    @NonNull final ServiceConnection conn,
                                    final int flags) {
-        Intent intent = new Intent(AppUtils.getApp(), cls);
-        AppUtils.getApp().bindService(intent, conn, flags);
+        Intent intent = new Intent(ApplicationUtils.getApp(), cls);
+        ApplicationUtils.getApp().bindService(intent, conn, flags);
     }
 
     /**
      * 解绑服务
      */
     public static void unbindService(@NonNull final ServiceConnection conn) {
-        AppUtils.getApp().unbindService(conn);
+        ApplicationUtils.getApp().unbindService(conn);
     }
 
     /**
@@ -139,7 +139,7 @@ public final class ServiceUtils {
      * 判断服务是否运行
      */
     public static boolean isServiceRunning(@NonNull final String className) {
-        ActivityManager am = (ActivityManager) AppUtils.getApp().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) ApplicationUtils.getApp().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> info = am.getRunningServices(0x7FFFFFFF);
         if (info == null || info.size() == 0) {
             return false;

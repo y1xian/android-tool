@@ -23,7 +23,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 import com.yyxnb.oh.log.LogUtils;
 
 import java.io.BufferedInputStream;
@@ -660,7 +660,7 @@ public class ImageUtils {
         if (isEmptyBitmap(src)) return null;
         RenderScript rs = null;
         try {
-            rs = RenderScript.create(AppUtils.getApp());
+            rs = RenderScript.create(ApplicationUtils.getApp());
             rs.setMessageHandler(new RenderScript.RSMessageHandler());
             Allocation input = Allocation.createFromBitmap(rs, src, Allocation.MipmapControl.MIPMAP_NONE, Allocation
                     .USAGE_SCRIPT);

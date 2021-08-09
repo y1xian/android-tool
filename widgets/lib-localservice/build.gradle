@@ -3,6 +3,6 @@ apply from: rootProject.file('lib-util.gradle')
 dependencies {
     api libs.glide
     annotationProcessor libs.glide_compiler
-    implementation libs.lib_image, libs.lib_app
+    implementation libs.lib_image, libs.lib_application
     implementation libs.recyclerview
 }

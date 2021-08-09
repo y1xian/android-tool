@@ -16,6 +16,7 @@ import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshInitializer;
 import com.squareup.leakcanary.LeakCanary;
+import com.yyxnb.oh.log.LogUtils;
 
 import me.jessyan.autosize.AutoSizeConfig;
 
@@ -24,6 +25,10 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        LogUtils.init()
+                .setDebug(true)
+                .setShowThreadInfo(false);
 //        SkinConfig.DEBUG = true;
 //        SkinManager.get().init(getApplicationContext());
 //        SkinManager.get().loadSkin((String) SPUtils.getParam(SKIN_PATH,""));

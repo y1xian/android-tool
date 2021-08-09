@@ -81,7 +81,7 @@ dependencies {
 
     // 轻量级工具
     implementation(
-            libs.lib_app, libs.lib_core, libs.lib_permission, libs.lib_anim, libs.lib_image, libs.lib_log,
+            libs.lib_application, libs.lib_core, libs.lib_permission, libs.lib_anim, libs.lib_image, libs.lib_log,
             libs.lib_arch, libs.lib_room, libs.lib_binding, libs.lib_workmanager,
             libs.lib_adapter, libs.lib_paging,
             libs.lib_dialog

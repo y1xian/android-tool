@@ -2,7 +2,7 @@ package com.yyxnb.oh.core;
 
 
 import com.yyxnb.oh.log.LogUtils;
-import com.yyxnb.oh.app.AppUtils;
+import com.yyxnb.oh.application.ApplicationUtils;
 
 /**
  * 常用管理
@@ -33,13 +33,13 @@ public class CommonManager {
     }
 
     public void log(String tag, String s) {
-        if (AppUtils.isDebug()) {
+        if (ApplicationUtils.isDebug()) {
             LogUtils.w(s, tag);
         }
     }
 
     public void log(String s) {
-        if (AppUtils.isDebug()) {
+        if (ApplicationUtils.isDebug()) {
             log("------AppConfig------", s);
         }
     }
