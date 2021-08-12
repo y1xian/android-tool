@@ -1,33 +1,49 @@
 package com.yyxnb.oh.service;
 
-import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleService;
 
 /**
  * ================================================
  * 作    者：yyx
  * 日    期：2021/03/12
- * 描    述：BaseService
+ * 描    述：监听Service的生命周期
+ * <p>
+ * 通过 startService()方法启动的服务于调用者没有关系,即使调用者关闭了,服务仍然运行想停止服务要调用
+ * Context.stopService(),此时系统会调用onDestory(),使用此方法启动时,服务首次启动系统先调用服务的
+ * <p>
+ * onCreate()-->onStart(),如果服务已经启动再次调用只会触发onStart()方法
+ * <p>
+ * 使用 bindService()启动的服务与调用者绑定,只要调用者关闭服务就终止,使用此方法启动时,服务首次启动
+ * 系统先调用服务的 onCreate()-->onBind(),如果服务已经启动再次调用不会再触发这2个方法,调用者退出时系统
+ * <p>
+ * 会调用服务的 onUnbind()-->onDestory(),想主动解除绑定可使用Contex.unbindService(),系统依次调用
+ * <p>
+ * onUnbind()-->onDestory();
  * ================================================
  */
-public abstract class BaseService extends Service {
+public abstract class BaseService extends LifecycleService {
 
     private static final String TAG = "BaseService";
 
     /**
      * 绑定服务时才会调用,必须要实现的方法
      * 创建Binder对象，返回给客户端即Activity使用，提供数据交换的接口
+     * <p>
+     * 无论调用几次bindService，onCreate和onBind只会调用一次
      *
      * @param intent
      * @return
      */
     @Nullable
     @Override
-    public IBinder onBind(Intent intent) {
+    public IBinder onBind(@NonNull Intent intent) {
+        super.onBind(intent);
         return null;
     }
 
@@ -37,8 +53,14 @@ public abstract class BaseService extends Service {
      */
     @Override
     public void onCreate() {
-        Log.d(TAG, "onCreate invoke");
         super.onCreate();
+        Log.d(TAG, "onCreate invoke");
+    }
+
+    @Override
+    public void onStart(@Nullable Intent intent, int startId) {
+        super.onStart(intent, startId);
+        Log.d(TAG, "onStart invoke");
     }
 
     /**
@@ -59,11 +81,24 @@ public abstract class BaseService extends Service {
     }
 
     /**
+     * 解除绑定时调用
+     * <p>
+     * 先onUnbind才到onDestroy
+     *
+     * @return
+     */
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.i(TAG, "onUnbind is invoke");
+        return super.onUnbind(intent);
+    }
+
+    /**
      * 当服务不再使用且将被销毁时，系统将调用此方法。服务应该实现此方法来清理所有资源，如线程、注册的侦听器、接收器等，这是服务接收的最后一个调用。
      */
     @Override
     public void onDestroy() {
-        Log.d(TAG, "onDestroy invoke");
         super.onDestroy();
+        Log.d(TAG, "onDestroy invoke");
     }
 }

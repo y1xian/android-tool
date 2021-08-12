@@ -3,7 +3,9 @@
     package="com.yyxnb.oh.service">
 
     <application>
-        <service android:name="com.yyxnb.oh.service.BaseService" />
+        <service
+            android:name="com.yyxnb.oh.service.BaseService"
+            android:exported="false" />
     </application>
 
 </manifest>
