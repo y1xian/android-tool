@@ -4,7 +4,13 @@ import android.text.TextUtils;
 
 import com.yyxnb.oh.application.ApplicationUtils;
 
-
+/**
+ * ================================================
+ * 作    者：yyx
+ * 日    期：2021/08/14
+ * 描    述：LogConfig
+ * ================================================
+ */
 public class LogConfig {
 
     private boolean showThreadInfo = true;
@@ -30,12 +36,12 @@ public class LogConfig {
         return this;
     }
 
-    public LogConfig setWrite(boolean write) {
+    public LogConfig setWriteLocal(boolean write) {
         this.write = write;
         return this;
     }
 
-    public boolean isWrite() {
+    public boolean isWriteLocal() {
         return write;
     }
 

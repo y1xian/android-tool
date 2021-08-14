@@ -23,7 +23,7 @@ import javax.xml.transform.stream.StreamSource;
  * ================================================
  * 作    者：yyx
  * 日    期：2021/07/09
- * 描    述：实现
+ * 描    述：实现ILog
  * ================================================
  */
 public class LoggerImpl implements ILog {
@@ -176,7 +176,7 @@ public class LoggerImpl implements ILog {
      */
     @SuppressWarnings("rawtypes")
     @Override
-    public void map(Map map) {
+    public void map(Map<?, ?> map) {
         if (map != null) {
             StringBuilder stringBuilder = new StringBuilder();
             for (Object entry : map.entrySet()) {
@@ -193,9 +193,8 @@ public class LoggerImpl implements ILog {
     /**
      * 格式化List集合
      */
-    @SuppressWarnings("rawtypes")
     @Override
-    public void list(List list) {
+    public void list(List<?> list) {
         if (list != null) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < list.size(); i++) {
@@ -247,8 +246,8 @@ public class LoggerImpl implements ILog {
     /**
      * 打印
      *
-     * @param priority
-     * @param chunk
+     * @param priority 优先级
+     * @param chunk    内容
      */
     private void logChunk(int priority, String chunk) {
         logStr.append(LINE_SEPARATOR);
@@ -275,7 +274,8 @@ public class LoggerImpl implements ILog {
                 Log.d(tag, chunk);
                 break;
         }
-        if (CONFIG.isWrite()) {
+        if (CONFIG.isWriteLocal()) {
+            // 判断Log是否写入本地
             WriteLogHelper.writeLog(priority, chunk);
         }
     }

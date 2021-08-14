@@ -1,5 +1,7 @@
 package com.yyxnb.oh.log;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,13 +14,18 @@ import java.util.Map;
  */
 public class LogUtils {
 
-    private static final ILog LOGGER_PRINTER = new LoggerImpl();
+    private static ILog LOGGER_PRINTER = null;
 
     private LogUtils() {
     }
 
-    public static LogConfig init() {
+    public static LogConfig init(@NonNull ILog iLog) {
+        LOGGER_PRINTER = iLog;
         return LOGGER_PRINTER.init();
+    }
+
+    public static LogConfig init() {
+        return init(new LoggerImpl());
     }
 
     public static String getLastLog() {
@@ -61,11 +68,11 @@ public class LogUtils {
         LOGGER_PRINTER.xml(xml);
     }
 
-    public static void map(Map map) {
+    public static void map(Map<?, ?> map) {
         LOGGER_PRINTER.map(map);
     }
 
-    public static void list(List list) {
+    public static void list(List<?> list) {
         LOGGER_PRINTER.list(list);
     }
 
