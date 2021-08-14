@@ -34,7 +34,7 @@ public class LoggerImpl implements ILog {
      */
     private static final int CHUNK_SIZE = 2000;
     /**
-     * log settings
+     * log 配置
      */
     private static final LogConfig CONFIG = new LogConfig();
     /**
@@ -73,7 +73,7 @@ public class LoggerImpl implements ILog {
     /**
      * 返回最后一次格式化的打印结果样式
      *
-     * @return
+     * @return 内容
      */
     @Override
     public String getLastLog() {
@@ -83,6 +83,7 @@ public class LoggerImpl implements ILog {
     @Override
     public void d(String message, Object... args) {
         log(Log.DEBUG, message, args);
+        printListener(Log.DEBUG, message, args);
     }
 
     @Override
@@ -102,26 +103,31 @@ public class LoggerImpl implements ILog {
             message = "message/exception 为空！";
         }
         log(Log.ERROR, message, args);
+        printListener(Log.ERROR, message, args);
     }
 
     @Override
     public void w(String message, Object... args) {
         log(Log.WARN, message, args);
+        printListener(Log.WARN, message, args);
     }
 
     @Override
     public void i(String message, Object... args) {
         log(Log.INFO, message, args);
+        printListener(Log.INFO, message, args);
     }
 
     @Override
     public void v(String message, Object... args) {
         log(Log.VERBOSE, message, args);
+        printListener(Log.VERBOSE, message, args);
     }
 
     @Override
     public void a(String message, Object... args) {
         log(Log.ASSERT, message, args);
+        printListener(Log.ASSERT, message, args);
     }
 
     /**
@@ -210,7 +216,7 @@ public class LoggerImpl implements ILog {
      * 同步日志打印顺序
      */
     private synchronized void log(int priority, String msg, Object... args) {
-        if (!CONFIG.isDebug()) {
+        if (!CONFIG.isShowLog()) {
             return;
         }
         logStr.delete(0, logStr.length());
@@ -236,6 +242,24 @@ public class LoggerImpl implements ILog {
         logChunk(priority, BOTTOM_BORDER);
     }
 
+    /**
+     * 同步日志打印监听顺序
+     */
+    private synchronized void printListener(int priority, String msg, Object... args) {
+        if (null != CONFIG.getLogPrintListener()) {
+            logStr.delete(0, logStr.length());
+            String message = args.length == 0 ? msg : String.format(msg, args);
+            // 监听log主体日志
+            CONFIG.getLogPrintListener().log(priority, message);
+        }
+    }
+
+    /**
+     * 日志主体
+     *
+     * @param priority 优先级
+     * @param chunk    内容
+     */
     private void logContent(int priority, String chunk) {
         String[] lines = chunk.split(LINE_SEPARATOR);
         for (String line : lines) {
@@ -273,10 +297,6 @@ public class LoggerImpl implements ILog {
             default:
                 Log.d(tag, chunk);
                 break;
-        }
-        if (CONFIG.isWriteLocal()) {
-            // 判断Log是否写入本地
-            WriteLogHelper.writeLog(priority, chunk);
         }
     }
 

@@ -110,4 +110,17 @@ public interface ILog {
      * @param list list数据
      */
     void list(List<?> list);
+
+    /**
+     * log监听
+     */
+    interface ILogPrintListener {
+        /**
+         * 日志输出
+         *
+         * @param priority 日志优先级
+         * @param content  日志内容
+         */
+        void log(int priority, String content);
+    }
 }

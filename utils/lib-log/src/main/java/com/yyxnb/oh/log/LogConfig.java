@@ -13,10 +13,27 @@ import com.yyxnb.oh.application.ApplicationUtils;
  */
 public class LogConfig {
 
+    /**
+     * 打印堆栈信息
+     */
     private boolean showThreadInfo = true;
-    private boolean debug = ApplicationUtils.isDebug();
-    private String tag = ">----oh---->";
-    private boolean write = false;
+    /**
+     * 是否打印日志
+     */
+    private boolean showLog = ApplicationUtils.isDebug();
+    /**
+     * tag标识
+     */
+    private String tag = ">----Oh---->";
+    /**
+     * Log监听、可在其操作日志存储
+     */
+    private ILog.ILogPrintListener logPrintListener = null;
+
+    public LogConfig setLogWriteListener(ILog.ILogPrintListener logPrintListener) {
+        this.logPrintListener = logPrintListener;
+        return this;
+    }
 
 
     public LogConfig setTag(String tag) {
@@ -31,29 +48,24 @@ public class LogConfig {
         return this;
     }
 
-    public LogConfig setDebug(boolean debug) {
-        this.debug = debug;
+    public LogConfig setShowLog(boolean showLog) {
+        this.showLog = showLog;
         return this;
-    }
-
-    public LogConfig setWriteLocal(boolean write) {
-        this.write = write;
-        return this;
-    }
-
-    public boolean isWriteLocal() {
-        return write;
     }
 
     public String getTag() {
         return tag;
     }
 
-    public boolean isDebug() {
-        return debug;
+    public boolean isShowLog() {
+        return showLog;
     }
 
     public boolean isShowThreadInfo() {
         return showThreadInfo;
+    }
+
+    public ILog.ILogPrintListener getLogPrintListener() {
+        return logPrintListener;
     }
 }
