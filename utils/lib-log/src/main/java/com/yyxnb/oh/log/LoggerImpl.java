@@ -83,7 +83,6 @@ public class LoggerImpl implements ILog {
     @Override
     public void d(String message, Object... args) {
         log(Log.DEBUG, message, args);
-        printListener(Log.DEBUG, message, args);
     }
 
     @Override
@@ -103,31 +102,26 @@ public class LoggerImpl implements ILog {
             message = "message/exception 为空！";
         }
         log(Log.ERROR, message, args);
-        printListener(Log.ERROR, message, args);
     }
 
     @Override
     public void w(String message, Object... args) {
         log(Log.WARN, message, args);
-        printListener(Log.WARN, message, args);
     }
 
     @Override
     public void i(String message, Object... args) {
         log(Log.INFO, message, args);
-        printListener(Log.INFO, message, args);
     }
 
     @Override
     public void v(String message, Object... args) {
         log(Log.VERBOSE, message, args);
-        printListener(Log.VERBOSE, message, args);
     }
 
     @Override
     public void a(String message, Object... args) {
         log(Log.ASSERT, message, args);
-        printListener(Log.ASSERT, message, args);
     }
 
     /**
@@ -216,11 +210,12 @@ public class LoggerImpl implements ILog {
      * 同步日志打印顺序
      */
     private synchronized void log(int priority, String msg, Object... args) {
+        logStr.delete(0, logStr.length());
+        String message = args.length == 0 ? msg : String.format(msg, args);
+        printListener(priority, message);
         if (!CONFIG.isShowLog()) {
             return;
         }
-        logStr.delete(0, logStr.length());
-        String message = args.length == 0 ? msg : String.format(msg, args);
         logChunk(priority, TOP_BORDER);
         if (CONFIG.isShowThreadInfo()) {
             //打印线程
@@ -243,12 +238,10 @@ public class LoggerImpl implements ILog {
     }
 
     /**
-     * 同步日志打印监听顺序
+     * 日志打印监听
      */
-    private synchronized void printListener(int priority, String msg, Object... args) {
+    private void printListener(int priority, String message) {
         if (null != CONFIG.getLogPrintListener()) {
-            logStr.delete(0, logStr.length());
-            String message = args.length == 0 ? msg : String.format(msg, args);
             // 监听log主体日志
             CONFIG.getLogPrintListener().log(priority, message);
         }
