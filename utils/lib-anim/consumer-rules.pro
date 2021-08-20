@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.anim.**
--keep class com.yyxnb.oh.anim.** {*;}
+-dontwarn com.yyxnb.what.anim.**
+-keep class com.yyxnb.what.anim.** {*;}

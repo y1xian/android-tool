@@ -1,7 +1,5 @@
 package com.yyxnb.simple.helper;
 
-import android.util.Log;
-
 /**
  * ================================================
  * 作    者：yyx
@@ -18,7 +16,7 @@ public class WriteLogHelper {
      * @param content  内容
      */
     public static void writeLog(int priority, String content) {
-        Log.w("----->", String.format("priority %s ,chunk %s", priority, content));
+//        Log.w("----->", String.format("priority %s ,chunk %s", priority, content));
     }
 
 }

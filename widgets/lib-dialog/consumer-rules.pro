@@ -1,4 +1,4 @@
 
 #
--dontwarn com.yyxnb.oh.dialog.**
--keep class com.yyxnb.oh.dialog.** { *;}
+-dontwarn com.yyxnb.what.dialog.**
+-keep class com.yyxnb.what.dialog.** { *;}

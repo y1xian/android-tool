@@ -1,4 +1,4 @@
 
 #
--dontwarn com.yyxnb.oh.download.**
--keep class com.yyxnb.oh.download.** { *;}
+-dontwarn com.yyxnb.what.download.**
+-keep class com.yyxnb.what.download.** { *;}

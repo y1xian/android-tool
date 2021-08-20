@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.skinloader.**
--keep class com.yyxnb.oh.skinloader.** {*;}
+-dontwarn com.yyxnb.what.skinloader.**
+-keep class com.yyxnb.what.skinloader.** {*;}

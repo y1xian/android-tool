@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.system.**
--keep class com.yyxnb.oh.system.** {*;}
+-dontwarn com.yyxnb.what.system.**
+-keep class com.yyxnb.what.system.** {*;}

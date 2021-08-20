@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.snackbar.**
--keep class com.yyxnb.oh.snackbar.** {*;}
+-dontwarn com.yyxnb.what.snackbar.**
+-keep class com.yyxnb.what.snackbar.** {*;}

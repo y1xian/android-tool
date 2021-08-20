@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.navigation.**
--keep class com.yyxnb.oh.navigation.** {*;}
+-dontwarn com.yyxnb.what.navigation.**
+-keep class com.yyxnb.what.navigation.** {*;}

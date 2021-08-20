@@ -1,4 +1,4 @@
 
 #
--dontwarn com.yyxnb.oh.encrypt.**
--keep class com.yyxnb.oh.encrypt.** { *;}
+-dontwarn com.yyxnb.what.encrypt.**
+-keep class com.yyxnb.what.encrypt.** { *;}

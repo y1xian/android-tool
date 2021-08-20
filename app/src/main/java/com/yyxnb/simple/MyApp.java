@@ -2,6 +2,9 @@ package com.yyxnb.simple;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkRequest;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
@@ -9,26 +12,33 @@ import androidx.multidex.MultiDex;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-import com.scwang.smart.refresh.layout.api.RefreshFooter;
-import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
-import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshInitializer;
 import com.squareup.leakcanary.LeakCanary;
-import com.yyxnb.oh.log.LogUtils;
+import com.yyxnb.what.log.LogUtils;
+import com.yyxnb.simple.helper.WriteLogHelper;
+import com.yyxnb.simple.utils.NetworkCallbackImpl;
 
 import me.jessyan.autosize.AutoSizeConfig;
 
 public class MyApp extends Application {
+
+    private final NetworkCallbackImpl networkCallback = new NetworkCallbackImpl();
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         LogUtils.init()
-                .setDebug(true)
-                .setShowThreadInfo(false);
+                .setShowLog(true)
+                .setShowThreadInfo(false)
+                .setLogWriteListener(WriteLogHelper::writeLog);
+
+//        registerNetworkCallback();
+        initServices();
+
+        initGlobalRefreshHeaderAndFooter();
+
 //        SkinConfig.DEBUG = true;
 //        SkinManager.get().init(getApplicationContext());
 //        SkinManager.get().loadSkin((String) SPUtils.getParam(SKIN_PATH,""));
@@ -45,6 +55,13 @@ public class MyApp extends Application {
             return;
         }
         LeakCanary.install(this);
+    }
+
+    /**
+     * 初始化服务
+     */
+    private void initServices() {
+
     }
 
 
@@ -67,24 +84,46 @@ public class MyApp extends Application {
             }
         });
 
-        //设置全局的Header构建器
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
 
-            @Override
-            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.black);//全局设置主题颜色
-                return new ClassicsHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+    }
+
+    /**
+     * 初始化SmartRefreshLayout
+     */
+    private void initGlobalRefreshHeaderAndFooter() {
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
+            layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.black);//全局设置主题颜色
+            return new ClassicsHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
 //                return new MaterialHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
-            }
         });
         //设置全局的Footer构建器
-        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
-            @Override
-            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                //指定为经典Footer，默认是 BallPulseFooter
-                return new ClassicsFooter(context).setDrawableSize(20);
-            }
+        SmartRefreshLayout.setDefaultRefreshFooterCreator((context, layout) -> {
+            //指定为经典Footer，默认是 BallPulseFooter
+            return new ClassicsFooter(context).setDrawableSize(20);
         });
+    }
+
+    /**
+     * 注册网络监听
+     */
+    private void registerNetworkCallback() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            connectivityManager.registerDefaultNetworkCallback(networkCallback);
+        } else {
+            NetworkRequest.Builder builder = new NetworkRequest.Builder();
+            NetworkRequest request = builder.build();
+            connectivityManager.registerNetworkCallback(request, networkCallback);
+        }
+    }
+
+    /**
+     * 注销网络监听
+     */
+    private void unregisterNetworkCallback() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        connectivityManager.unregisterNetworkCallback(networkCallback);
     }
 
     @Override
@@ -92,5 +131,11 @@ public class MyApp extends Application {
         super.attachBaseContext(base);
         // you must install multiDex whatever tinker is installed!
         MultiDex.install(base);
+    }
+
+    @Override
+    public void onTerminate() {
+        unregisterNetworkCallback();
+        super.onTerminate();
     }
 }

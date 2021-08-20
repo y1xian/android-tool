@@ -5,7 +5,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-
     }
     dependencies {
         classpath build_plugins.android_gradle
@@ -22,11 +21,48 @@ allprojects {
         mavenCentral()
         maven { url "https://jitpack.io" }
     }
-    //解决 JavaDoc 中文注释生成失败的问题
+    // 解决 JavaDoc 中文注释生成失败的问题
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')
         options.addStringOption('encoding', 'UTF-8')
         options { enabled = false }
+    }
+
+    // 强制版本
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'androidx.appcompat') {
+                details.useVersion versions.appcompat
+            }
+            if (requested.group == 'androidx.core') {
+                details.useVersion versions.core
+            }
+            if (requested.group == 'androidx.lifecycle') {
+                details.useVersion versions.lifecycle
+            }
+            if (requested.group == 'androidx.paging') {
+                details.useVersion versions.paging
+            }
+            if (requested.group == 'androidx.recyclerview') {
+                details.useVersion versions.recyclerview
+            }
+            if (requested.group == 'androidx.fragment') {
+                details.useVersion versions.fragment
+            }
+            if (requested.group == 'androidx.multidex') {
+                details.useVersion versions.multidex
+            }
+            if (requested.group == 'androidx.collection') {
+                details.useVersion versions.collection
+            }
+            if (requested.group == 'androidx.annotation') {
+                details.useVersion versions.annotation
+            }
+            if (requested.group == 'junit') {
+                details.useVersion versions.junit
+            }
+        }
     }
 }
 

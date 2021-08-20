@@ -1,4 +1,4 @@
 
 #
--dontwarn com.yyxnb.oh.task.**
--keep class com.yyxnb.oh.task.** { *;}
+-dontwarn com.yyxnb.what.task.**
+-keep class com.yyxnb.what.task.** { *;}

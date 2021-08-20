@@ -1,7 +1,7 @@
 
 #
--dontwarn com.yyxnb.oh.image.**
--keep class com.yyxnb.oh.image.** { *;}
+-dontwarn com.yyxnb.what.image.**
+-keep class com.yyxnb.what.image.** { *;}
 
 # glide
 -keep public class * implements com.bumptech.glide.module.GlideModule

@@ -1,6 +1,6 @@
 #
--dontwarn com.yyxnb.oh.room.**
--keep class com.yyxnb.oh.room.** {*;}
+-dontwarn com.yyxnb.what.room.**
+-keep class com.yyxnb.what.room.** {*;}
 
 # room
 -dontwarn android.arch.persistence.room.**

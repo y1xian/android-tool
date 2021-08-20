@@ -1,4 +1,4 @@
 
 
--dontwarn com.yyxnb.oh.permission.**
--keep class com.yyxnb.oh.permission.** {*;}
+-dontwarn com.yyxnb.what.permission.**
+-keep class com.yyxnb.what.permission.** {*;}

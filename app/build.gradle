@@ -71,7 +71,8 @@ dependencies {
 
     implementation libs.appcompat
     implementation libs.material
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation libs.constraint
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation libs.junit
     androidTestImplementation libs.test_junit
     androidTestImplementation libs.test_espresso
@@ -79,14 +80,15 @@ dependencies {
             libs.cardview, libs.multidex
     )
 
-    // 轻量级工具
+    // 轻量级工具、无UI
     implementation(
             libs.lib_application, libs.lib_core, libs.lib_permission, libs.lib_anim, libs.lib_image, libs.lib_log,
             libs.lib_arch, libs.lib_room, libs.lib_binding, libs.lib_workmanager,
+            libs.lib_network, libs.lib_okhttp, libs.lib_retrofit,
             libs.lib_adapter, libs.lib_paging,
             libs.lib_dialog
     )
-    // 自定义组件
+    // 自定义组件、有UI
     implementation(
             libs.lib_view
     )

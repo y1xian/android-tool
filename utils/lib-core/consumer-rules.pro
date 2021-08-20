@@ -1,4 +1,4 @@
 
 #
--dontwarn com.yyxnb.oh.core.**
--keep class com.yyxnb.oh.core.** { *;}
+-dontwarn com.yyxnb.what.core.**
+-keep class com.yyxnb.what.core.** { *;}

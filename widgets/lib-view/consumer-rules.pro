@@ -1,4 +1,4 @@
 
 #
--dontwarn com.yyxnb.oh.view.**
--keep class com.yyxnb.oh.view.** {*;}
+-dontwarn com.yyxnb.what.view.**
+-keep class com.yyxnb.what.view.** {*;}

@@ -1,4 +1,4 @@
 
--dontwarn com.yyxnb.oh.service.**
--keep class com.yyxnb.oh.service.** {*;}
--keep class com.yyxnb.oh.application.** {*;}
+-dontwarn com.yyxnb.what.service.**
+-keep class com.yyxnb.what.service.** {*;}
+-keep class com.yyxnb.what.application.** {*;}

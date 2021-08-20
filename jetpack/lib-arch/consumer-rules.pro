@@ -1,12 +1,12 @@
 
 # arch
--dontwarn com.yyxnb.oh.arch.**
--keep class com.yyxnb.oh.arch.** {*;}
+-dontwarn com.yyxnb.what.arch.**
+-keep class com.yyxnb.what.arch.** {*;}
 
--keep @com.yyxnb.oh.arch.annotation.* class * {*;}
+-keep @com.yyxnb.what.arch.annotation.* class * {*;}
 -keep class * {
-    @com.yyxnb.oh.arch.annotation.* <fields>;
+    @com.yyxnb.what.arch.annotation.* <fields>;
 }
 -keepclassmembers class * {
-    @com.yyxnb.oh.arch.annotation.* <methods>;
+    @com.yyxnb.what.arch.annotation.* <methods>;
 }

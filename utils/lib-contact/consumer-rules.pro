@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.contact.**
--keep class com.yyxnb.oh.contact.** {*;}
+-dontwarn com.yyxnb.what.contact.**
+-keep class com.yyxnb.what.contact.** {*;}

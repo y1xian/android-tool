@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.app.**
--keep class com.yyxnb.oh.app.** {*;}
+-dontwarn com.yyxnb.what.app.**
+-keep class com.yyxnb.what.app.** {*;}

@@ -57,7 +57,7 @@ ext {
 
             material      : '1.4.0',
 
-            hutool        : '5.7.1'
+            hutool        : '5.6.0'
     ]
 
     build_plugins = [
@@ -78,6 +78,7 @@ ext {
             startup                  : [group: 'androidx.startup', name: 'startup-runtime', version: versions.startup],
 
             lifecycle                : [group: 'androidx.lifecycle', name: 'lifecycle-extensions', version: versions.lifecycle],
+            lifecycle_service        : [group: 'androidx.lifecycle', name: 'lifecycle-service', version: versions.lifecycle],
             lifecycle_java8          : [group: 'androidx.lifecycle', name: 'lifecycle-common-java8', version: versions.lifecycle],
 
             navigation               : [group: 'androidx.navigation', name: 'navigation-runtime', version: versions.navigation],

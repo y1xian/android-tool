@@ -1,5 +1,5 @@
 
--dontwarn com.yyxnb.oh.workmanager.**
--keep class com.yyxnb.oh.workmanager.** {*;}
+-dontwarn com.yyxnb.what.workmanager.**
+-keep class com.yyxnb.what.workmanager.** {*;}
 
 -keep class com.google.common.** {*;}

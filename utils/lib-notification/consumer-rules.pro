@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.notification.**
--keep class com.yyxnb.oh.notification.** {*;}
+-dontwarn com.yyxnb.what.notification.**
+-keep class com.yyxnb.what.notification.** {*;}

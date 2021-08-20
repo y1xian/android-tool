@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.share.**
--keep class com.yyxnb.oh.share.** {*;}
+-dontwarn com.yyxnb.what.share.**
+-keep class com.yyxnb.what.share.** {*;}

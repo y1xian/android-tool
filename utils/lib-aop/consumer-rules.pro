@@ -1,11 +1,11 @@
 
--dontwarn com.yyxnb.oh.aop.**
--keep class com.yyxnb.oh.aop.** {*;}
+-dontwarn com.yyxnb.what.aop.**
+-keep class com.yyxnb.what.aop.** {*;}
 
--keep @com.yyxnb.oh.aop.annotation.* class * {*;}
+-keep @com.yyxnb.what.aop.annotation.* class * {*;}
 -keep class * {
-    @com.yyxnb.oh.aop.annotation.* <fields>;
+    @com.yyxnb.what.aop.annotation.* <fields>;
 }
 -keepclassmembers class * {
-    @com.yyxnb.oh.aop.annotation.* <methods>;
+    @com.yyxnb.what.aop.annotation.* <methods>;
 }

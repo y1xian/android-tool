@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.upload.**
--keep class com.yyxnb.oh.upload.** {*;}
+-dontwarn com.yyxnb.what.upload.**
+-keep class com.yyxnb.what.upload.** {*;}

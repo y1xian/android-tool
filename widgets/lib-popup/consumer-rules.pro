@@ -1,4 +1,4 @@
 
 #
--dontwarn com.yyxnb.oh.popup.**
--keep class com.yyxnb.oh.popup.** {*;}
+-dontwarn com.yyxnb.what.popup.**
+-keep class com.yyxnb.what.popup.** {*;}

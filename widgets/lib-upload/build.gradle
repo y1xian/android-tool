@@ -1,5 +1,5 @@
 apply from: rootProject.file('lib-util.gradle')
 
 dependencies {
-    implementation libs.lib_application, libs.lib_okhttp, libs.lib_file
+    implementation libs.lib_application, libs.lib_okhttp
 }

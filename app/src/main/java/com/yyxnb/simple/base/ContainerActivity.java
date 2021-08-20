@@ -31,6 +31,11 @@ public class ContainerActivity extends BaseActivity {
         setContentView(mFrameLayout);
     }
 
+    @Override
+    protected int initLayoutResId() {
+        return 0;
+    }
+
     public Fragment initBaseFragment() {
         return null;
     }

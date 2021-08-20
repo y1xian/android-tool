@@ -1,7 +1,7 @@
 
 #
--dontwarn com.yyxnb.oh.retrofit.**
--keep class com.yyxnb.oh.retrofit.** {*;}
+-dontwarn com.yyxnb.what.retrofit.**
+-keep class com.yyxnb.what.retrofit.** {*;}
 
 # Retrofit
 -keep class retrofit2.** { *; }

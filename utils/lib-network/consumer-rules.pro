@@ -1,4 +1,4 @@
 
 #
--dontwarn com.yyxnb.oh.network.**
--keep class com.yyxnb.oh.network.** {*;}
+-dontwarn com.yyxnb.what.network.**
+-keep class com.yyxnb.what.network.** {*;}

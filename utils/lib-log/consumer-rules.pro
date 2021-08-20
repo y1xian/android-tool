@@ -1,3 +1,3 @@
 
--dontwarn com.yyxnb.oh.log.**
--keep class com.yyxnb.oh.log.** {*;}
+-dontwarn com.yyxnb.what.log.**
+-keep class com.yyxnb.what.log.** {*;}

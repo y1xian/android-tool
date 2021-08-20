@@ -1,7 +1,7 @@
 
 #
--dontwarn com.yyxnb.oh.cache.**
--keep class com.yyxnb.oh.cache.** { *;}
+-dontwarn com.yyxnb.what.cache.**
+-keep class com.yyxnb.what.cache.** { *;}
 
 -keep class cn.hutool.core.** { *; }
 -keep class cn.hutool.cache.** { *; }
