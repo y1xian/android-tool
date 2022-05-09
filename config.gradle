@@ -14,9 +14,7 @@ ext {
     TEST_MAVEN_GROUP = "${JITPACK_GROUP}.Oh" // 测试插件的 group
     TEST_MAVEN_VERSION = "3.0.1-SNAPSHOT" // 测试的 version , 版本高于正式
     // 是否开启 maven 测试仓库（注意：开启后 https://jitpack.io/ 插件失效，只在本地测试时才开启）
-    TEST_MAVEN_ENABLE = true
-    // 是否开启 测试插件（控制是否使用本地测试插件，或是远端正式发布的插件）
-    TEST_PLUGIN_ENABLE = false
+    TEST_MAVEN_ENABLE = false
     // 当前仓库版本 （upload本地版本，需要sync project）
     LIB_VERSION = TEST_MAVEN_ENABLE ? TEST_MAVEN_VERSION : RELEASE_MAVEN_VERSION
 
