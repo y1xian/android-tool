@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <dimen name="top_bar_height">52dp</dimen>
+    <dimen name="tab_height">48dp</dimen>
+
+    <dimen name="margin_tiny">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_mini">12dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_normal">24dp</dimen>
+    <dimen name="margin_big">32dp</dimen>
+    <dimen name="margin_giant">48dp</dimen>
+    <dimen name="margin_huge">64dp</dimen>
+
+    <dimen name="padding_tinier">2dp</dimen>
+    <dimen name="padding_tiny">4dp</dimen>
+    <dimen name="padding_smaller">8dp</dimen>
+    <dimen name="padding_small">12dp</dimen>
+    <dimen name="padding_middle">14dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_normal">24dp</dimen>
+    <dimen name="padding_big">32dp</dimen>
+
+    <dimen name="text_size_title">20sp</dimen>
+    <dimen name="text_size_menu">16sp</dimen>
+    <dimen name="text_size_edit_text">18sp</dimen>
+    <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="text_size_body">14sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_tiny">8sp</dimen>
+
+    <dimen name="dialog_radius">8dp</dimen>
+
+</resources>

@@ -1,6 +1,0 @@
-ext.relyOnLogLibrary = false
-apply from: rootProject.file('lib-util.gradle')
-
-dependencies {
-    api libs.appcompat
-}

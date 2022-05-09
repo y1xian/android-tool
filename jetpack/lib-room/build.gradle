@@ -1,6 +1,0 @@
-apply from: rootProject.file('lib-util.gradle')
-
-dependencies {
-    api libs.lib_application, libs.room
-    annotationProcessor libs.room_compiler
-}

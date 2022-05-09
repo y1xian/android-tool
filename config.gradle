@@ -1,24 +1,93 @@
-ext {
+// 供根目录的build.gradle使用
+static def isMacOsX() {
+    return org.gradle.internal.os.OperatingSystem.current().isMacOsX()
+}
 
-    build_version = [
+// 全局配置
+ext {
+    // 库group
+    JITPACK_GROUP = "com.github.y1xian"
+    RELEASE_MAVEN_VERSION = "1.0.0" // 正式发布的 version
+
+    // maven 测试仓库的位置
+    TEST_MAVEN_DIR = isMacOsX() ? '/Users/yyx/maven/maven_repo' : 'D:\\maven\\maven_repo'
+    TEST_MAVEN_GROUP = "${JITPACK_GROUP}.Oh" // 测试插件的 group
+    TEST_MAVEN_VERSION = "1.0.1-SNAPSHOT" // 测试的 version , 版本高于正式
+    // 是否开启 maven 测试仓库（注意：开启后 https://jitpack.io/ 插件失效，只在本地测试时才开启）
+    TEST_MAVEN_ENABLE = true
+    // 是否开启 测试插件（控制是否使用本地测试插件，或是远端正式发布的插件）
+    TEST_PLUGIN_ENABLE = false
+    // 当前仓库版本 （upload本地版本，需要sync project）
+    LIB_VERSION = TEST_MAVEN_ENABLE ? TEST_MAVEN_VERSION : RELEASE_MAVEN_VERSION
+
+    // 统一仓库
+    repositoriesExt = {
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url "https://jitpack.io" }
+        maven { url 'http://developer.huawei.com/repo' }
+        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
+        // 本地仓库
+        maven { url uri(TEST_MAVEN_DIR) }
+        mavenCentral()
+        google()
+    }
+
+    androidExt = [
             compileSdkVersion: 30,
             buildToolsVersion: '30.0.3',
-            minSdkVersion    : 21,
-            applicationId    : "com.yyxnb.simple",
-            targetSdkVersion : 28,
+            minSdkVersion    : 24,
+            applicationId    : "com.yyxnb.what",
+            targetSdkVersion : 30,
             versionCode      : 1,
-            versionName      : '1.0.1',
+            versionName      : '2022.0509.1600',
             minifyEnabled    : false,
             shrinkResources  : false,
             zipAlignEnabled  : false
     ]
 
+    compileOptionsExt_1_8 = {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // 代码编译打包成dex
+    dexOptionsExt = {
+        // 使用增量模式构建
+        incremental true
+        // 最大堆内存
+        javaMaxHeapSize "8g"
+        // 是否支持大工程模式
+        jumboMode = true
+        // 预编译 dex 库。在我们build的时候会快些，但clean时便会慢，默认开启
+        preDexLibraries = true
+        // 线程数
+        threadCount = 8
+    }
+
+    // 发现代码质量问题
+    lintOptionsExt = {
+        // true--关闭lint报告的分析进度
+        quiet true
+        //  true--所有正式版构建执行规则生成崩溃的lint检查，如果有崩溃问题将停止构建
+        checkReleaseBuilds true
+        // true--错误发生后停止gradle构建
+        abortOnError false
+        // true--只报告error
+        ignoreWarnings true
+        // true--忽略有错误的文件的全/绝对路径(默认是true)
+        absolutePaths true
+        // true--检查所有问题点，包含其他默认关闭项
+        checkAllWarnings true
+        // true--所有warning当做error
+        warningsAsErrors true
+    }
+
     versions = [
-            android_plugin: '4.1.3',
+            android_plugin: '4.2.0',
 
             appcompat     : "1.2.0",
-            core          : "1.3.2",
-            fragment      : "1.2.5",
+            core          : "1.5.0",
+            fragment      : "1.2.0",
             annotation    : "1.1.0",
             recyclerview  : "1.1.0",
             constraint    : "2.0.4",
@@ -29,12 +98,14 @@ ext {
 
             lifecycle     : '2.2.0',
             room          : '2.2.6',
-            navigation    : '2.3.0',
-            paging        : '2.1.2',
-            work          : '2.4.0',
+            navigation    : '2.1.0',
+            paging        : '2.1.0',
+            work          : '2.2.0',
             hilt          : '2.28-alpha',
 
             multidex      : '2.0.1',
+
+            arouter       : '1.5.2',
 
             retrofit      : '2.5.0',
             okhttp        : '3.12.13',
@@ -51,21 +122,19 @@ ext {
 
             leakcanary    : '1.6.3',
 
-            espresso      : '3.3.0',
+            espresso      : '3.4.0',
             robolectric   : '3.3.2',
             junit         : '4.13.2',
 
-            material      : '1.4.0',
+            material      : '1.4.0'
 
-            hutool        : '5.6.0'
     ]
 
-    build_plugins = [
-            android_gradle : [group: 'com.android.tools.build', name: 'gradle', version: versions.android_plugin],
-            //https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
-            aspectjx_gradle: [group: 'com.hujiang.aspectjx', name: 'gradle-android-plugin-aspectjx', version: '2.0.10']
+    classpathExt = [
+            android_gradle: [group: 'com.android.tools.build', name: 'gradle', version: versions.android_plugin],
     ]
-    libs = [
+
+    dependenciesExt = [
             appcompat                : [group: 'androidx.appcompat', name: 'appcompat', version: versions.appcompat],
             core                     : [group: 'androidx.core', name: 'core', version: versions.core],
             fragment                 : [group: 'androidx.fragment', name: 'fragment', version: versions.fragment],
@@ -80,9 +149,12 @@ ext {
             lifecycle                : [group: 'androidx.lifecycle', name: 'lifecycle-extensions', version: versions.lifecycle],
             lifecycle_service        : [group: 'androidx.lifecycle', name: 'lifecycle-service', version: versions.lifecycle],
             lifecycle_java8          : [group: 'androidx.lifecycle', name: 'lifecycle-common-java8', version: versions.lifecycle],
+            lifecycle_process        : [group: 'androidx.lifecycle', name: 'lifecycle-process', version: versions.lifecycle],
 
             navigation               : [group: 'androidx.navigation', name: 'navigation-runtime', version: versions.navigation],
             navigation_common        : [group: 'androidx.navigation', name: 'navigation-common', version: versions.navigation],
+            navigation_ui            : [group: 'androidx.navigation', name: 'navigation-ui', version: versions.navigation],
+            navigation_fragment      : [group: 'androidx.navigation', name: 'navigation-fragment', version: versions.navigation],
 
             work                     : [group: 'androidx.work', name: 'work-runtime', version: versions.work],
 
@@ -95,8 +167,8 @@ ext {
             hilt_compiler            : [group: 'com.google.dagger', name: 'hilt-android-compiler', version: versions.hilt],
 
             //阿里路由框架    https://github.com/alibaba/ARouter
-            "arouter_api"            : "com.alibaba:arouter-api:1.5.0",
-            "arouter_compiler"       : "com.alibaba:arouter-compiler:1.2.2",
+            arouter_api              : "com.alibaba:arouter-api:$versions.arouter",
+            arouter_compiler         : "com.alibaba:arouter-compiler:$versions.arouter",
 
             //glide     https://github.com/bumptech/glide
             glide                    : [group: 'com.github.bumptech.glide', name: 'glide', version: versions.glide],
@@ -141,7 +213,7 @@ ext {
 
             junit                    : [group: 'junit', name: 'junit', version: versions.junit],
 
-            test_junit               : [group: 'androidx.test.ext', name: 'junit', version: '1.1.2'],
+            test_junit               : [group: 'androidx.test.ext', name: 'junit', version: '1.1.3'],
             test_espresso            : [group: 'androidx.test.espresso', name: 'espresso-core', version: versions.espresso],
 
             multidex                 : [group: 'androidx.multidex', name: 'multidex', version: versions.multidex],
@@ -165,109 +237,34 @@ ext {
 
             material                 : [group: 'com.google.android.material', name: 'material', version: versions.material],
 
+            // 通过标签直接生成shape，无需再写shape.xml  https://github.com/JavaNoober/BackgroundLibrary
+            background               : [group: 'com.github.JavaNoober.BackgroundLibrary', name: 'libraryx', version: '1.7.4'],
+
             //https://github.com/JessYanCoding/AndroidAutoSize
             autosize                 : [group: 'me.jessyan', name: 'autosize', version: '1.2.1'],
 
-            // AOP 插件库：https://mvnrepository.com/artifact/org.aspectj/aspectjrt
-            aspectjrt                : [group: 'org.aspectj', name: 'aspectjrt', version: '1.9.6'],
 
-            // java工具类 https://hutool.cn/docs/#/
-            hutool_all               : [group: 'cn.hutool', name: 'hutool-all', version: versions.hutool],
-            hutool_core              : [group: 'cn.hutool', name: 'hutool-core', version: versions.hutool],
-            hutool_cache             : [group: 'cn.hutool', name: 'hutool-cache', version: versions.hutool],
-            hutool_crypto            : [group: 'cn.hutool', name: 'hutool-crypto', version: versions.hutool],
-            hutool_http              : [group: 'cn.hutool', name: 'hutool-http', version: versions.hutool],
-
+            // 封装脚手架
+            lib_arch                 : "com.github.y1xian.What:lib-arch:$LIB_VERSION",
+            // 封装jetpack
+            lib_jetpack              : "com.github.y1xian.What:lib-jetpack:$LIB_VERSION",
+            // android库，无业务
+            lib_android              : "com.github.y1xian.What:lib-android:$LIB_VERSION",
+            // java库，无业务
+            lib_java                 : "com.github.y1xian.What:lib-java:$LIB_VERSION",
 
             // 底层框架 Lifecycle、LiveData、ViewModel
-            lib_arch                 : project(':jetpack:lib-arch'),
-            // Room数据库
-            lib_room                 : project(':jetpack:lib-room'),
-            // Paging分页库
-            lib_paging               : project(':jetpack:lib-paging'),
-            // 可延迟的异步任务
-            lib_workmanager          : project(':jetpack:lib-workmanager'),
-            // 导航
-            lib_navigation           : project(':jetpack:lib-navigation'),
-            // Binding
-            lib_binding              : project(':jetpack:lib-binding'),
-
-            // application相关
-            lib_application          : project(':utils:lib-application'),
-            // app信息
-            lib_app                  : project(':utils:lib-app'),
-            // 核心
-            lib_core                 : project(':utils:lib-core'),
-            // 缓存
-            lib_cache                : project(':utils:lib-cache'),
-            // 简单实现okhttp
-            lib_okhttp               : project(':utils:lib-okhttp'),
-            // 网络管理
-            lib_network              : project(':utils:lib-network'),
-            // 网络请求
-            lib_retrofit             : project(':utils:lib-retrofit'),
-            // 适配器
-            lib_adapter              : project(':utils:lib-adapter'),
-            // 图片框架
-            lib_image                : project(':utils:lib-image'),
-            // 媒体
-            lib_media                : project(':utils:lib-media'),
-            // 加密
-            lib_encrypt              : project(':utils:lib-encrypt'),
-            // 文件
-            lib_file                 : project(':utils:lib-file'),
-            // rxjava封装
-            lib_rxtool               : project(':utils:lib-rxtool'),
-            // 系统相关
-            lib_system               : project(':utils:lib-system'),
-            // 任务队列
-            lib_task                 : project(':utils:lib-task'),
-            // 多语言
-            lib_language             : project(':utils:lib-language'),
-            // 权限
-            lib_permission           : project(':utils:lib-permission'),
-            // 通知栏
-            lib_notification         : project(':utils:lib-notification'),
-            // 封装服务
-            lib_service              : project(':utils:lib-service'),
-            // 动画
-            lib_anim                 : project(':utils:lib-anim'),
-            // SnackBar
-            lib_snackbar             : project(':utils:lib-snackbar'),
-            // 通讯录
-            lib_contact              : project(':utils:lib-contact'),
-            // aop
-            lib_aop                  : project(':utils:lib-aop'),
-            // 分享
-            lib_share                : project(':utils:lib-share'),
-            // 日志
-            lib_log                  : project(':utils:lib-log'),
-            // 不常用工具，未分类的
-            lib_utils                : project(':utils:lib-utils'),
-
-            // 视频
-            lib_video                : project(':widgets:lib-video'),
-            // 音乐
-            lib_music                : project(':widgets:lib-music'),
-            // dialog
-            lib_dialog               : project(':widgets:lib-dialog'),
-            // popup
-            lib_popup                : project(':widgets:lib-popup'),
-            // 本地服务
-            lib_localservice         : project(':widgets:lib-localservice'),
-            // 自定义控件
-            lib_view                 : project(':widgets:lib-view'),
-            // web
-            lib_webview              : project(':widgets:lib-webview'),
-            // 悬浮框
-            lib_floatwindow          : project(':widgets:lib-floatwindow'),
-            // 换肤
-            lib_skinloader           : project(':widgets:lib-skinloader'),
-            // 文件下载
-            lib_download             : project(':widgets:lib-download'),
-            // 文件上传
-            lib_upload               : project(':widgets:lib-upload')
-
+//            lib_arch                 : project(':libs:jetpack:lib-arch'),
+//            // Room数据库
+//            lib_room                 : project(':libs:jetpack:lib-room'),
+//            // Paging分页库
+//            lib_paging               : project(':libs:jetpack:lib-paging'),
+//            // 可延迟的异步任务
+//            lib_workmanager          : project(':libs:jetpack:lib-workmanager'),
+//            // 导航
+//            lib_navigation           : project(':libs:jetpack:lib-navigation'),
+//            // Binding
+//            lib_binding              : project(':libs:jetpack:lib-binding'),
 
     ]
 
