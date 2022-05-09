@@ -23,39 +23,33 @@ allprojects {
 
     // 强制版本
     configurations.all {
-//        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-//            def requested = details.requested
-//            if (requested.group == 'androidx.appcompat') {
-//                details.useVersion versions.appcompat
-//            }
-//            if (requested.group == 'androidx.core') {
-//                details.useVersion versions.core
-//            }
-//            if (requested.group == 'androidx.lifecycle') {
-//                details.useVersion versions.lifecycle
-//            }
-//            if (requested.group == 'androidx.paging') {
-//                details.useVersion versions.paging
-//            }
-//            if (requested.group == 'androidx.recyclerview') {
-//                details.useVersion versions.recyclerview
-//            }
-//            if (requested.group == 'androidx.fragment') {
-//                details.useVersion versions.fragment
-//            }
-//            if (requested.group == 'androidx.multidex') {
-//                details.useVersion versions.multidex
-//            }
-//            if (requested.group == 'androidx.collection') {
-//                details.useVersion versions.collection
-//            }
-//            if (requested.group == 'androidx.annotation') {
-//                details.useVersion versions.annotation
-//            }
-//            if (requested.group == 'junit') {
-//                details.useVersion versions.junit
-//            }
-//        }
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'androidx.appcompat') {
+                details.useVersion versions.appcompat
+            }
+            if (requested.group == 'androidx.core') {
+                details.useVersion versions.core
+            }
+            if (requested.group == 'androidx.lifecycle') {
+                details.useVersion versions.lifecycle
+            }
+            if (requested.group == 'androidx.recyclerview') {
+                details.useVersion versions.recyclerview
+            }
+            if (requested.group == 'androidx.fragment') {
+                details.useVersion versions.fragment
+            }
+            if (requested.group == 'androidx.multidex') {
+                details.useVersion versions.multidex
+            }
+            if (requested.group == 'androidx.collection') {
+                details.useVersion versions.collection
+            }
+            if (requested.group == 'androidx.annotation') {
+                details.useVersion versions.annotation
+            }
+        }
         // 干掉测试
         exclude group: 'junit'
         exclude group: 'androidx.test.ext'
