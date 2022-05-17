@@ -1,3 +1,4 @@
 rootProject.name = 'Oh'
 include ':lib-java'
 include ':lib-android'
+include ':lib-module'

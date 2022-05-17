@@ -7,7 +7,7 @@ ext {
     // maven 测试仓库的位置
     TEST_MAVEN_DIR = '/Users/yyx/maven/maven_repo'
     TEST_MAVEN_GROUP = "${JITPACK_GROUP}.Oh" // 测试插件的 group
-    TEST_MAVEN_VERSION = "3.0.1-SNAPSHOT" // 测试的 version , 版本高于正式
+    TEST_MAVEN_VERSION = "3.0.1.1-SNAPSHOT" // 测试的 version , 版本高于正式
     // 是否开启 maven 测试仓库（注意：开启后 https://jitpack.io/ 插件失效，只在本地测试时才开启）
     TEST_MAVEN_ENABLE = false
     // 当前仓库版本 （upload本地版本，需要sync project）
@@ -78,8 +78,8 @@ ext {
     versions = [
             android_plugin: '3.4.3',
 
-            appcompat     : "1.2.0",
-            core          : "1.5.0",
+            appcompat     : "1.4.1",
+            core          : "1.7.0",
             fragment      : "1.2.0",
             annotation    : "1.1.0",
             recyclerview  : "1.1.0",

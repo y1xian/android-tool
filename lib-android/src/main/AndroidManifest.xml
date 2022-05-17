@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.yyxnb.lib.andorid">
+    package="com.yyxnb.android">
 
     <application>
         <provider
@@ -10,7 +10,7 @@
             android:exported="false"
             tools:node="merge">
             <meta-data
-                android:name="com.yyxnb.lib.andorid.app.AppInitializer"
+                android:name="com.yyxnb.android.app.AppInitializer"
                 android:value="@string/androidx_startup" />
         </provider>
     </application>
