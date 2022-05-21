@@ -7,7 +7,7 @@ ext {
     // maven 测试仓库的位置
     TEST_MAVEN_DIR = '/Users/yyx/maven/maven_repo'
     TEST_MAVEN_GROUP = "${JITPACK_GROUP}.Oh" // 测试插件的 group
-    TEST_MAVEN_VERSION = "3.0.1.1-SNAPSHOT" // 测试的 version , 版本高于正式
+    TEST_MAVEN_VERSION = "3.0.1.2-SNAPSHOT" // 测试的 version , 版本高于正式
     // 是否开启 maven 测试仓库（注意：开启后 https://jitpack.io/ 插件失效，只在本地测试时才开启）
     TEST_MAVEN_ENABLE = false
     // 当前仓库版本 （upload本地版本，需要sync project）
@@ -78,8 +78,8 @@ ext {
     versions = [
             android_plugin: '3.4.3',
 
-            appcompat     : "1.4.1",
-            core          : "1.7.0",
+            appcompat     : "1.3.1",
+            core          : "1.6.0",
             fragment      : "1.2.0",
             annotation    : "1.1.0",
             recyclerview  : "1.1.0",
@@ -89,7 +89,7 @@ ext {
             startup       : "1.0.0",
             collection    : "1.1.0",
 
-            lifecycle     : '2.2.0',
+            lifecycle     : '2.3.1',
 
             multidex      : '2.0.1',
 
@@ -113,7 +113,7 @@ ext {
 
             startup                  : [group: 'androidx.startup', name: 'startup-runtime', version: versions.startup],
 
-            lifecycle                : [group: 'androidx.lifecycle', name: 'lifecycle-extensions', version: versions.lifecycle],
+            lifecycle                : [group: 'androidx.lifecycle', name: 'lifecycle-runtime', version: versions.lifecycle],
             lifecycle_service        : [group: 'androidx.lifecycle', name: 'lifecycle-service', version: versions.lifecycle],
             lifecycle_java8          : [group: 'androidx.lifecycle', name: 'lifecycle-common-java8', version: versions.lifecycle],
             lifecycle_process        : [group: 'androidx.lifecycle', name: 'lifecycle-process', version: versions.lifecycle],
