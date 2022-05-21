@@ -2,7 +2,7 @@
 ext {
     // 库group
     JITPACK_GROUP = "com.github.y1xian"
-    RELEASE_MAVEN_VERSION = "3.0.0" // 正式发布的 version
+    RELEASE_MAVEN_VERSION = "3.0.1" // 正式发布的 version
 
     // maven 测试仓库的位置
     TEST_MAVEN_DIR = '/Users/yyx/maven/maven_repo'
