@@ -7,8 +7,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 
+import com.yyxnb.android.Oh;
 import com.yyxnb.android.app.AppUtil;
-import com.yyxnb.android.log.LogUtil;
 
 import java.lang.reflect.Method;
 import java.net.InetAddress;
@@ -123,7 +123,7 @@ public class NetworkUtil {
 				return (boolean) getMobileDataEnabledMethod.invoke(tm);
 			}
 		} catch (Exception e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		return false;
 	}
@@ -142,7 +142,7 @@ public class NetworkUtil {
 				setMobileDataEnabledMethod.invoke(tm, enabled);
 			}
 		} catch (Exception e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 	}
 
@@ -329,7 +329,7 @@ public class NetworkUtil {
 				}
 			}
 		} catch (SocketException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		return null;
 	}
@@ -352,14 +352,14 @@ public class NetworkUtil {
 						inetAddress = InetAddress.getByName(domain);
 						return inetAddress.getHostAddress();
 					} catch (UnknownHostException e) {
-						LogUtil.e(e.getMessage());
+						Oh.log().e(e.getMessage());
 					}
 					return null;
 				}
 			});
 			return fs.get();
 		} catch (InterruptedException | ExecutionException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		return null;
 	}
@@ -389,7 +389,7 @@ public class NetworkUtil {
 		try {
 			enumeration = NetworkInterface.getNetworkInterfaces();
 		} catch (SocketException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		if (enumeration != null) {
 			while (enumeration.hasMoreElements()) {

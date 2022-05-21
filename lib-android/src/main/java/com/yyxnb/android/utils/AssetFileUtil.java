@@ -2,7 +2,7 @@ package com.yyxnb.android.utils;
 
 import android.content.Context;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -49,20 +49,20 @@ public class AssetFileUtil {
 			bos.flush();
 			return true;
 		} catch (Exception e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		} finally {
 			if (null != is) {
 				try {
 					is.close();
 				} catch (IOException e) {
-					LogUtil.e(e.getMessage());
+					Oh.log().e(e.getMessage());
 				}
 			}
 			if (null != bos) {
 				try {
 					bos.close();
 				} catch (IOException e) {
-					LogUtil.e(e.getMessage());
+					Oh.log().e(e.getMessage());
 				}
 			}
 		}

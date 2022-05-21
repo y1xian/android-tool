@@ -3,6 +3,8 @@ package com.yyxnb.android.log;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.yyxnb.android.interfaces.ILog;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -60,6 +62,10 @@ public class LoggerImpl implements ILog {
 	public static String LINE_SEPARATOR = System.getProperty("line.separator");
 
 	private final StringBuilder logStr = new StringBuilder();
+
+	public LoggerImpl() {
+		init();
+	}
 
 	/**
 	 * 初始化

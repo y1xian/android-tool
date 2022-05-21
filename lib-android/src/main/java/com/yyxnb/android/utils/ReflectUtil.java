@@ -2,7 +2,7 @@ package com.yyxnb.android.utils;
 
 import android.text.TextUtils;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -32,7 +32,7 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 			field.setAccessible(true);
 			return field.get(receiver);
 		} catch (Throwable e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		return null;
 	}
@@ -44,7 +44,7 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 			try {
 				clazz = Class.forName(className);
 			} catch (ClassNotFoundException e) {
-				LogUtil.e(e.getMessage());
+				Oh.log().e(e.getMessage());
 			}
 		} else {
 			if (receiver != null) {
@@ -63,11 +63,11 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 			field.setAccessible(true);
 			return field.get(receiver);
 		} catch (IllegalAccessException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		} catch (IllegalArgumentException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		} catch (NullPointerException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		return null;
 	}
@@ -84,9 +84,9 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 			field.set(receiver, value);
 			return old;
 		} catch (IllegalAccessException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		} catch (IllegalArgumentException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		return null;
 	}
@@ -103,9 +103,9 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 			field.set(receiver, value);
 			return old;
 		} catch (IllegalAccessException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		} catch (IllegalArgumentException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		return null;
 	}
@@ -127,11 +127,11 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 			field.set(receiver, value);
 			return old;
 		} catch (IllegalAccessException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		} catch (IllegalArgumentException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		} catch (ClassNotFoundException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		return null;
 	}
@@ -151,7 +151,7 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 			method.setAccessible(true);
 			return method.invoke(receiver, params);
 		} catch (Throwable e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		return null;
 	}
@@ -162,7 +162,7 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 			try {
 				clazz = Class.forName(className);
 			} catch (ClassNotFoundException e) {
-				LogUtil.e(e.getMessage());
+				Oh.log().e(e.getMessage());
 			}
 		} else {
 			if (receiver != null) {
@@ -180,11 +180,11 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 			method.setAccessible(true);
 			return method.invoke(receiver, params);
 		} catch (IllegalArgumentException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		} catch (IllegalAccessException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		} catch (InvocationTargetException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 		}
 		return null;
 	}
@@ -265,7 +265,7 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 			return clazz.getDeclaredField(name);
 		} catch (NoSuchFieldException e) {
 			if (clazz.equals(Object.class)) {
-				LogUtil.e(e.getMessage());
+				Oh.log().e(e.getMessage());
 				return null;
 			}
 			Class<?> base = clazz.getSuperclass();
@@ -309,7 +309,7 @@ public class ReflectUtil extends com.yyxnb.java.ReflectUtil {
 		try {
 			field = clazz.getDeclaredField(name);
 		} catch (NoSuchFieldException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 			return null;
 		}
 		field.setAccessible(true);

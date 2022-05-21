@@ -1,4 +1,6 @@
-package com.yyxnb.android.log;
+package com.yyxnb.android.interfaces;
+
+import com.yyxnb.android.log.LogConfig;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +11,7 @@ import java.util.Map;
  * @author yyx
  * @date 2022/4/6
  */
-public interface ILog {
+public interface ILog extends IModule {
 
 	/**
 	 * 配置项

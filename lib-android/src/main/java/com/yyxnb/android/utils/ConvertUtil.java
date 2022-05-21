@@ -1,6 +1,6 @@
 package com.yyxnb.android.utils;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 import com.yyxnb.java.StrUtil;
 import com.yyxnb.java.io.IoUtil;
 
@@ -87,7 +87,7 @@ public class ConvertUtil {
 			}
 			return os;
 		} catch (IOException e) {
-			LogUtil.e(e, "转换异常");
+			Oh.log().e(e, "转换异常");
 			return null;
 		} finally {
 			IoUtil.close(is);
@@ -108,7 +108,7 @@ public class ConvertUtil {
 			}
 			return baos.toString(getSafeCharset(charsetName));
 		} catch (UnsupportedEncodingException e) {
-			LogUtil.e(e, "转换异常");
+			Oh.log().e(e, "转换异常");
 			return "";
 		}
 	}

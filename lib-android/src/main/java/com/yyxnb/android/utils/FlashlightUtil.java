@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 
 import java.io.IOException;
 
@@ -70,7 +70,7 @@ public final class FlashlightUtil {
 					parameters.setFlashMode(FLASH_MODE_TORCH);
 					mCamera.setParameters(parameters);
 				} catch (IOException e) {
-					LogUtil.e(e.getMessage());
+					Oh.log().e(e.getMessage());
 				}
 			}
 		} else {
@@ -99,12 +99,12 @@ public final class FlashlightUtil {
 				mCamera = Camera.open(0);
 				mSurfaceTexture = new SurfaceTexture(0);
 			} catch (Throwable t) {
-				LogUtil.e("init failed: ", t);
+				Oh.log().e("init failed: ", t);
 				return false;
 			}
 		}
 		if (mCamera == null) {
-			LogUtil.e("init failed.");
+			Oh.log().e("init failed.");
 			return false;
 		}
 		return true;

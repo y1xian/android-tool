@@ -17,7 +17,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -167,7 +167,7 @@ public class ScreenUtil {
 			x = Integer.parseInt(field.get(obj).toString());
 			statusBarHeight = context.getResources().getDimensionPixelSize(x);
 		} catch (Exception e1) {
-			LogUtil.e(e1.getMessage());
+			Oh.log().e(e1.getMessage());
 		}
 		return statusBarHeight;
 	}
@@ -246,7 +246,7 @@ public class ScreenUtil {
 				m.setAccessible(true);
 				sNavBarOverride = (String) m.invoke(null, "qemu.hw.mainkeys");
 			} catch (Exception e) {
-				LogUtil.e(e.getMessage());
+				Oh.log().e(e.getMessage());
 			}
 		}
 		return sNavBarOverride;

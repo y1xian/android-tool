@@ -1,12 +1,13 @@
 package com.yyxnb.android.app;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 import androidx.startup.Initializer;
+
+import com.yyxnb.android.Oh;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,9 +42,7 @@ public class AppInitializer implements Initializer<Void> {
                 "     \\   \\ ;    |   ,/      `--''                        \n" +
                 "      '---\"     '---'                                    \n" +
                 "                                                          \n\n");
-        AppUtil.init((Application) context);
-        // 注册生命周期
-        ApplicationManager.getInstance().init(AppUtil.getApp());
+        Oh.init(context);
         // 突破65535的限制
         MultiDex.install(context);
         return null;

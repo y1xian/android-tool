@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.yyxnb.android.utils.DpUtil;
+import com.yyxnb.android.utils.DisplayUtil;
 
 
 
@@ -596,22 +596,22 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
 	}
 
 	public ItemDecoration setPaddingTop(int paddingTop) {
-		this.paddingTop = DpUtil.dp2px(mContext, paddingTop);
+		this.paddingTop = DisplayUtil.dp2px(mContext, paddingTop);
 		return this;
 	}
 
 	public ItemDecoration setPaddingBottom(int paddingBottom) {
-		this.paddingBottom = DpUtil.dp2px(mContext, paddingBottom);
+		this.paddingBottom = DisplayUtil.dp2px(mContext, paddingBottom);
 		return this;
 	}
 
 	public ItemDecoration setPaddingLeft(int paddingLeft) {
-		this.paddingLeft = DpUtil.dp2px(mContext, paddingLeft);
+		this.paddingLeft = DisplayUtil.dp2px(mContext, paddingLeft);
 		return this;
 	}
 
 	public ItemDecoration setPaddingRight(int paddingRight) {
-		this.paddingRight = DpUtil.dp2px(mContext, paddingRight);
+		this.paddingRight = DisplayUtil.dp2px(mContext, paddingRight);
 		return this;
 	}
 
@@ -627,7 +627,7 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
 	 * 分割线高度
 	 */
 	public ItemDecoration setDividerHeight(int dividerHeight) {
-		this.dividerHeight = DpUtil.dp2px(mContext, dividerHeight);
+		this.dividerHeight = DisplayUtil.dp2px(mContext, dividerHeight);
 		return this;
 	}
 
@@ -635,7 +635,7 @@ public class ItemDecoration extends RecyclerView.ItemDecoration {
 	 * 分割线宽度 网格
 	 */
 	public ItemDecoration setDividerWidth(int dividerWidth) {
-		this.dividerWidth = DpUtil.dp2px(mContext, dividerWidth);
+		this.dividerWidth = DisplayUtil.dp2px(mContext, dividerWidth);
 		return this;
 	}
 

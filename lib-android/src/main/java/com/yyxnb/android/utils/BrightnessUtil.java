@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 
 /**
  * 亮度相关
@@ -40,7 +40,7 @@ public final class BrightnessUtil {
 			);
 			return mode == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
 		} catch (Settings.SettingNotFoundException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 			return false;
 		}
 	}
@@ -73,7 +73,7 @@ public final class BrightnessUtil {
 					Settings.System.SCREEN_BRIGHTNESS
 			);
 		} catch (Settings.SettingNotFoundException e) {
-			LogUtil.e(e.getMessage());
+			Oh.log().e(e.getMessage());
 			return 0;
 		}
 	}

@@ -2,7 +2,7 @@ package com.yyxnb.android.utils;
 
 import android.graphics.Color;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 
 /**
  * 颜色相关工具
@@ -30,7 +30,7 @@ public class ColorUtil {
 			}
 			color = Color.parseColor(rgb);
 		} catch (Exception e) {
-			LogUtil.e(e, "颜色无法识别");
+			Oh.log().e(e, "颜色无法识别");
 		}
 		return color;
 	}

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 import com.yyxnb.java.io.FileUtil;
 import com.yyxnb.java.io.IoUtil;
 
@@ -52,7 +52,7 @@ public class UriUtil {
 					file = cache;
 					IoUtil.close(fos, is);
 				} catch (Exception e) {
-					LogUtil.e("复制文件异常", e);
+					Oh.log().e("复制文件异常", e);
 				}
 			}
 		}

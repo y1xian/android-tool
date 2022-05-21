@@ -6,7 +6,7 @@ package com.yyxnb.android.interfaces;
  * @param <T>
  * @author yyx
  */
-public interface IData<T> {
+public interface IData<T> extends IModule {
 
 	default int id() {
 		return hashCode();

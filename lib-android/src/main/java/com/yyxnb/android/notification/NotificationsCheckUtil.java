@@ -10,7 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -58,7 +58,7 @@ public class NotificationsCheckUtil {
             return ((Integer) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) ==
                     AppOpsManager.MODE_ALLOWED);
         } catch (Exception e) {
-            LogUtil.e(e.getMessage());
+            Oh.log().e(e.getMessage());
         }
         return false;
     }

@@ -23,11 +23,11 @@ public class LogConfig {
 	/**
 	 * 简洁
 	 */
-	private boolean simpleLog = true;
+	private boolean simpleLog = false;
 	/**
 	 * tag标识
 	 */
-	private String tag = ">----What---->";
+	private String tag = ">----Oh---->";
 
 	public LogConfig setTag(String tag) {
 		if (!TextUtils.isEmpty(tag)) {

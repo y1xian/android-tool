@@ -11,7 +11,7 @@ import android.content.Context;
  * @author yyx
  * @date 2022/4/6
  */
-public class DpUtil {
+public class DisplayUtil {
 
 	/**
 	 * 将px值转换为dip或dp值，保证尺寸大小不变
@@ -29,6 +29,15 @@ public class DpUtil {
 	public static int dp2px(Context context, float dipValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (dipValue * scale + 0.5f);
+	}
+
+	/**
+	 * 将dip或dp值转换为px值，保证尺寸大小不变
+	 * DisplayMetrics类中属性density
+	 */
+	public static int dp2px(Context context, double dipValue) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (dipValue * scale + 0.5d);
 	}
 
 	/**

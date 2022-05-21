@@ -1,7 +1,6 @@
 package com.yyxnb.android.app;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
@@ -13,10 +12,9 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.util.Log;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,34 +72,6 @@ public class AppUtil {
 		}
 	}
 
-	/**
-	 * 全局生命周期回调
-	 */
-	public static class ActivityLifecycleCallbacks {
-
-		public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-		}
-
-		public void onActivityStarted(Activity activity) {
-		}
-
-		public void onActivityResumed(Activity activity) {
-		}
-
-		public void onActivityPaused(Activity activity) {
-		}
-
-		public void onActivityStopped(Activity activity) {
-		}
-
-		public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-		}
-
-		public void onActivityDestroyed(Activity activity) {
-		}
-
-	}
-
 	// ----------------------------------------------------------------------- 当前app信息
 
 	/**
@@ -156,7 +126,7 @@ public class AppUtil {
 			int labelRes = packageInfo.applicationInfo.labelRes;
 			return context.getResources().getString(labelRes);
 		} catch (Exception e) {
-			LogUtil.e(e, "获取异常");
+			Oh.log().e(e, "获取异常");
 		}
 		return null;
 	}
@@ -174,7 +144,7 @@ public class AppUtil {
 					context.getPackageName(), 0);
 			return packageInfo.packageName;
 		} catch (Exception e) {
-			LogUtil.e(e, "获取异常");
+			Oh.log().e(e, "获取异常");
 		}
 		return null;
 	}
@@ -257,7 +227,7 @@ public class AppUtil {
 			intent.setComponent(cn);
 			context.startActivity(intent);
 		} catch (Exception e) {
-			LogUtil.e(e, "启动异常");
+			Oh.log().e(e, "启动异常");
 		}
 	}
 

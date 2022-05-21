@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.yyxnb.android.interfaces.IPermissionListener;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.List;
                 .addPermissions(Manifest.permission.ACCESS_WIFI_STATE)
                 .addPermissions(Manifest.permission.CAMERA)
                 //添加权限申请回调监听 如果申请失败 会返回已申请成功的权限列表，用户拒绝的权限列表和用户点击了不再提醒的永久拒绝的权限列表
-                .setPermissionsCheckListener(new PermissionListener() {
+                .setPermissionsCheckListener(new IPermissionListener() {
                     @Override
                     public void permissionRequestSuccess() {
                     //所有权限授权成功才会回调这里
@@ -56,98 +58,98 @@ import java.util.List;
  */
 public class PermissionUtil {
 
-    public static final String[] VOICE_REQUIRE_PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-    public static final String[] CAMERA_REQUIRE_PERMISSIONS = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-    public static final String[] FILE_REQUIRE_PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    public static final String[] CALL_PERMISSIONS = {Manifest.permission.CALL_PHONE};
-    public static final String[] LOCATION_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-    public static final String[] READ_PHONE_STATE_PERMISSIONS = {Manifest.permission.READ_PHONE_STATE};
-    public static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
+	public static final String[] VOICE_REQUIRE_PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+	public static final String[] CAMERA_REQUIRE_PERMISSIONS = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+	public static final String[] FILE_REQUIRE_PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+	public static final String[] CALL_PERMISSIONS = {Manifest.permission.CALL_PHONE};
+	public static final String[] LOCATION_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+	public static final String[] READ_PHONE_STATE_PERMISSIONS = {Manifest.permission.READ_PHONE_STATE};
+	public static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
 
-    //宿主Activity
-    private final WeakReference<FragmentActivity> mContext;
-    //回调监听
-    private PermissionListener listener;
-    //存储所有的权限列表
-    private List<String> permissions = new ArrayList<>();
+	//宿主Activity
+	private final WeakReference<FragmentActivity> mContext;
+	//回调监听
+	private IPermissionListener listener;
+	//存储所有的权限列表
+	private List<String> permissions = new ArrayList<>();
 
-    private PermissionConfig checkConfig;
+	private PermissionConfig checkConfig;
 
-    private PermissionUtil(FragmentActivity mContext) {
-        this.mContext = new WeakReference<>(mContext);
-    }
+	private PermissionUtil(FragmentActivity mContext) {
+		this.mContext = new WeakReference<>(mContext);
+	}
 
-    public static PermissionUtil with(FragmentActivity context) {
-        return new PermissionUtil(context);
-    }
+	public static PermissionUtil with(FragmentActivity context) {
+		return new PermissionUtil(context);
+	}
 
-    /**
-     * 生成配置
-     */
-    public PermissionConfig createConfig() {
-        checkConfig = new PermissionConfig(this);
-        return checkConfig;
-    }
+	/**
+	 * 生成配置
+	 */
+	public PermissionConfig createConfig() {
+		checkConfig = new PermissionConfig(this);
+		return checkConfig;
+	}
 
-    /**
-     * 默认配置
-     */
-    public PermissionUtil defaultConfig() {
-        checkConfig = new PermissionConfig(this);
-        checkConfig.setForceAllPermissionsGranted(true);
-        checkConfig.buildConfig();
-        startCheckPermission();
-        return this;
-    }
+	/**
+	 * 默认配置
+	 */
+	public PermissionUtil defaultConfig() {
+		checkConfig = new PermissionConfig(this);
+		checkConfig.setForceAllPermissionsGranted(true);
+		checkConfig.buildConfig();
+		startCheckPermission();
+		return this;
+	}
 
-    /**
-     * 添加权限
-     *
-     * @param permission
-     */
-    public PermissionUtil addPermissions(String... permission) {
-        for (String p : permission) {
-            if (!permissions.contains(p)) {
-                permissions.add(p);
-            }
-        }
-        return this;
-    }
+	/**
+	 * 添加权限
+	 *
+	 * @param permission
+	 */
+	public PermissionUtil addPermissions(String... permission) {
+		for (String p : permission) {
+			if (!permissions.contains(p)) {
+				permissions.add(p);
+			}
+		}
+		return this;
+	}
 
-    /**
-     * 判断是否已开启权限
-     *
-     * @param context
-     * @param permission
-     */
-    public static boolean hasPermission(Context context, String permission) {
-        return ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
-    }
+	/**
+	 * 判断是否已开启权限
+	 *
+	 * @param context
+	 * @param permission
+	 */
+	public static boolean hasPermission(Context context, String permission) {
+		return ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+	}
 
-    public static boolean hasPermissions(Context context, String... permissions) {
-        boolean hasPermissions = true;
-        for (String permission : permissions) {
-            hasPermissions = hasPermissions && hasPermission(context, permission);
-        }
-        return hasPermissions;
-    }
+	public static boolean hasPermissions(Context context, String... permissions) {
+		boolean hasPermissions = true;
+		for (String permission : permissions) {
+			hasPermissions = hasPermissions && hasPermission(context, permission);
+		}
+		return hasPermissions;
+	}
 
-    /**
-     * 添加监听
-     *
-     * @param listener
-     */
-    public PermissionUtil setPermissionsCheckListener(PermissionListener listener) {
-        this.listener = listener;
-        return this;
-    }
+	/**
+	 * 添加监听
+	 *
+	 * @param listener
+	 */
+	public PermissionUtil setPermissionsCheckListener(IPermissionListener listener) {
+		this.listener = listener;
+		return this;
+	}
 
-    /**
-     * 开始申请权限
-     */
-    public void startCheckPermission() {
-        PermissionFragment.newInstance(permissions.toArray(new String[permissions.size()]), checkConfig)
-                .setPermissionCheckListener(listener).start(mContext.get());
-    }
+	/**
+	 * 开始申请权限
+	 */
+	public void startCheckPermission() {
+		PermissionFragment.newInstance(permissions.toArray(new String[permissions.size()]), checkConfig)
+				.setPermissionCheckListener(listener).start(mContext.get());
+	}
 
 }

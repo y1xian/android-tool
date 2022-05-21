@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 
-import com.yyxnb.android.log.LogUtil;
+import com.yyxnb.android.Oh;
 
 import java.util.HashSet;
 import java.util.List;
@@ -74,7 +74,7 @@ public class ServiceUtil {
             Intent intent = new Intent(context, Class.forName(className));
             return context.stopService(intent);
         } catch (Exception e) {
-            LogUtil.e("停止服务" + e.getMessage());
+            Oh.log().e("停止服务" + e.getMessage());
             return false;
         }
     }
