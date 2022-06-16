@@ -2,7 +2,6 @@ package com.yyxnb.android;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -55,12 +54,10 @@ public class Oh {
 	// -----------------------------------------------------------------------
 
 	public static ILog log() {
-//		return sModuleLoader == null ? AndroidLog.getInstance() : module(ILog2.class);
-		Log.e(TAG,"sModuleLoader : " + sModuleLoader);
-		if (sModuleLoader == null){
+		if (sModuleLoader == null) {
 			return AndroidLog.getInstance();
-		}else {
-			return  module(ILog.class);
+		} else {
+			return module(ILog.class);
 		}
 	}
 

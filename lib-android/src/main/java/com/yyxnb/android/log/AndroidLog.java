@@ -128,7 +128,7 @@ public class AndroidLog implements ILog {
 	 */
 	@Override
 	public void json(String json) {
-
+		i(json);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class AndroidLog implements ILog {
 	 */
 	@Override
 	public void xml(String xml) {
-
+		i(xml);
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class AndroidLog implements ILog {
 	 */
 	@Override
 	public void map(Map<?, ?> map) {
-
+		i(map.toString());
 	}
 
 	/**
@@ -158,6 +158,6 @@ public class AndroidLog implements ILog {
 	 */
 	@Override
 	public void list(List<?> list) {
-
+		i(list.toString());
 	}
 }
