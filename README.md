@@ -3,7 +3,7 @@
 ## 使用方式
 
 #### 下载或添加依赖
-[最新版本](https://github.com/y1xian/Oh/releases) [![](https://jitpack.io/v/y1xian/Oh.svg)](https://jitpack.io/#y1xian/Oh)
+[最新版本](https://github.com/y1xian/android-tool/releases) [![](https://jitpack.io/v/y1xian/Oh.svg)](https://jitpack.io/#y1xian/android-tool)
 
 ```
 allprojects {
@@ -21,6 +21,6 @@ compileOptions {
 }
 
 dependencies {
-    implementation 'com.github.y1xian.Oh:lib-xx:+'
+    implementation 'com.github.y1xian.android-tool:xx:+'
 }
 ```

@@ -1,17 +1,12 @@
-// 供lib的build.gradle使用
+// 供lib的build.gradle使用，样板代码
 
 // 是否发布，默认发布
 def isPublish = ext.find('isPublish') == null
 isPublish = isPublish ? true : ext.isPublish
 
-println("是否发布 $isPublish")
-
-// 是否依赖log库，默认依赖
-def relyOnLogLibrary = ext.find('relyOnLogLibrary') == null
-relyOnLogLibrary = relyOnLogLibrary ? true : ext.relyOnLogLibrary
+println("是否发布: $isPublish  $LIB_VERSION")
 
 //--------------->-------------->--------------
-
 apply plugin: 'com.android.library'
 
 // 发布
@@ -21,12 +16,11 @@ if (isPublish) {
 
 android {
     //版本配置
-    compileSdkVersion androidExt.compileSdkVersion
-//    buildToolsVersion androidExt.buildToolsVersion
+    compileSdk androidExt.compileSdk
 
     defaultConfig {
-        minSdkVersion androidExt.minSdkVersion
-        targetSdkVersion androidExt.targetSdkVersion
+        minSdk androidExt.minSdk
+        targetSdk androidExt.targetSdk
         versionCode androidExt.versionCode
         versionName androidExt.versionName
         multiDexEnabled true

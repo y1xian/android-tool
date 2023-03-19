@@ -1,4 +1,3 @@
-rootProject.name = 'Oh'
-include ':lib-java'
-include ':lib-android'
-include ':lib-module'
+rootProject.name = 'android-tool'
+include ':core'
+include ':core-api'
