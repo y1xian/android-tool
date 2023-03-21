@@ -46,10 +46,10 @@ ext {
     }
 
     androidExt = [
-            compileSdk     : 32,
+            compileSdk     : 33,
             minSdk         : 24,
             applicationId  : "com.yyxnb.android",
-            targetSdk      : 32,
+            targetSdk      : 33,
             versionCode    : 1,
             versionName    : '2023.0320.0100',
             minifyEnabled  : false,
