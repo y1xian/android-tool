@@ -1,4 +1,4 @@
-package com.yyxnb.android.intf;
+package com.yyxnb.android.model;
 
 /**
  * 责任链接口

@@ -1,4 +1,4 @@
-package com.yyxnb.android.intf;
+package com.yyxnb.android.model;
 
 /**
  * 编辑器接口，常用于对于集合中的元素做统一编辑<br>

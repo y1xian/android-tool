@@ -1,4 +1,4 @@
-package com.yyxnb.android.intf;
+package com.yyxnb.android.model;
 
 /**
  * 匹配接口、匹配的对象类型

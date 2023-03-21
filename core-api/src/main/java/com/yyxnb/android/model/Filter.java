@@ -1,4 +1,4 @@
-package com.yyxnb.android.intf;
+package com.yyxnb.android.model;
 
 /**
  * 过滤器接口
