@@ -1,7 +1,7 @@
 package com.yyxnb.android.utils;
 
 import com.yyxnb.android.constant.StringConstants;
-import com.yyxnb.android.intf.Filter;
+import com.yyxnb.android.model.Filter;
 
 import java.io.StringReader;
 import java.io.StringWriter;

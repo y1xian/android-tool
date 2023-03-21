@@ -19,7 +19,7 @@ import com.yyxnb.android.modules.IModule;
  */
 public class ModuleManager {
 	private static final String TAG = ModuleManager.class.getSimpleName();
-	private static ModuleLoader sModuleLoader;
+	private volatile static ModuleLoader sModuleLoader;
 
 	/**
 	 * 全局初始化
@@ -58,6 +58,13 @@ public class ModuleManager {
 		return sModuleLoader.getModule(clazz);
 	}
 
+	// ----------------------------------------------- 实现模块
+
+	/**
+	 * log
+	 *
+	 * @return 实现ILog
+	 */
 	public static ILog log() {
 		// 工具之间使用，还未初始化，使用默认log
 		if (sModuleLoader == null) {

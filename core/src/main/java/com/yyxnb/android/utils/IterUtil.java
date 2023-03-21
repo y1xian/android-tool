@@ -1,8 +1,8 @@
 package com.yyxnb.android.utils;
 
 import com.yyxnb.android.func.Func1;
-import com.yyxnb.android.intf.Filter;
-import com.yyxnb.android.intf.Matcher;
+import com.yyxnb.android.model.Filter;
+import com.yyxnb.android.model.Matcher;
 
 import java.util.Collection;
 import java.util.HashMap;

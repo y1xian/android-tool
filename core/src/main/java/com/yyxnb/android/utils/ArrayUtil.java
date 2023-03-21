@@ -3,9 +3,9 @@ package com.yyxnb.android.utils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.yyxnb.android.intf.Editor;
-import com.yyxnb.android.intf.Filter;
-import com.yyxnb.android.intf.Matcher;
+import com.yyxnb.android.model.Editor;
+import com.yyxnb.android.model.Filter;
+import com.yyxnb.android.model.Matcher;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
