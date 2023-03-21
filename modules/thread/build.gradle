@@ -1,0 +1,10 @@
+apply from: rootProject.file('config-lib.gradle')
+
+android {
+    namespace 'com.yyxnb.android.thread'
+}
+
+dependencies {
+    implementation dependenciesExt.appcompat
+    api dependenciesExt.core_api
+}
