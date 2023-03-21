@@ -24,11 +24,11 @@ ext {
     // jitpack库group
     JITPACK_GROUP = "com.github.y1xian"
     // 正式发布的 version
-    RELEASE_MAVEN_VERSION = "1.0.0"
+    RELEASE_MAVEN_VERSION = "1.0.1"
     // 测试插件的 group
     LOCAL_MAVEN_GROUP = "${JITPACK_GROUP}.android-tool"
     // 测试的 version , 版本高于正式
-    LOCAL_MAVEN_VERSION = "1.0.1-SNAPSHOT"
+    LOCAL_MAVEN_VERSION = "1.0.2-SNAPSHOT"
     // 当前仓库版本 （upload本地版本，需要sync project）
     LIB_VERSION = LOCAL_MAVEN_ENABLE ? LOCAL_MAVEN_VERSION : RELEASE_MAVEN_VERSION
     println("是否开启本地仓库：$LOCAL_MAVEN_ENABLE  存放路径：$LOCAL_MAVEN_DIR 版本：$LIB_VERSION")

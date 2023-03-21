@@ -6,9 +6,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import com.yyxnb.android.constant.BuildVersion;
 import com.yyxnb.android.modules.IModule;
 import com.yyxnb.android.utils.StrUtil;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,14 +65,22 @@ final class ModuleLoader {
 	// ----------------------------------------------- 模块<meta>注册
 
 	/**
-	 * 获取 <meta name> 的值
+	 * 读取<application>中的<meta-data>
 	 *
 	 * @param context 上下文
 	 */
 	private synchronized void metaModuleConfigs(Context context) {
 		try {
-			Bundle bundle = context.getPackageManager().getPackageInfo(context.getPackageName(),
-					PackageManager.GET_META_DATA).applicationInfo.metaData;
+			Bundle bundle;
+			if (BuildVersion.isOver13()) {
+				bundle = context.getPackageManager().getApplicationInfo(context.getPackageName(),
+						PackageManager.ApplicationInfoFlags.of(PackageManager.GET_META_DATA)
+				).metaData;
+			} else {
+				bundle = context.getPackageManager().getApplicationInfo(context.getPackageName(),
+						PackageManager.GET_META_DATA
+				).metaData;
+			}
 			for (String s : bundle.keySet()) {
 				String value;
 				if ((value = s).startsWith(MODULE_KEY_PREFIX)) {
@@ -130,7 +140,7 @@ final class ModuleLoader {
 	 * @param <T>         是否注册成功
 	 */
 	public synchronized <T extends IModule> void registerMetaModule(
-			@NonNull Class<T> moduleClass, @NonNull Class<? extends T> implClass) {
+			@NonNull Class<? extends T> moduleClass, @NonNull Class<? extends T> implClass) {
 		this.mLoadModuleClasses.put(moduleClass, implClass);
 	}
 
@@ -169,7 +179,9 @@ final class ModuleLoader {
 		Class<?> localImplClass = mLoadModuleClasses.get(moduleClass);
 		if (implClass == null && localImplClass != null) {
 			try {
-				implClass = (T) localImplClass.getConstructor().newInstance();
+				Constructor<?> constructor = localImplClass.getConstructor();
+				constructor.setAccessible(true);
+				implClass = (T) constructor.newInstance();
 				this.registerModule(moduleClass, implClass);
 			} catch (InvocationTargetException | NoSuchMethodException
 					 | IllegalAccessException | InstantiationException e) {
