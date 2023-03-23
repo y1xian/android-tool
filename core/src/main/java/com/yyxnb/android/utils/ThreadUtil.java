@@ -2,6 +2,7 @@ package com.yyxnb.android.utils;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.SparseArray;
 
 import androidx.annotation.CallSuper;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -42,7 +44,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ThreadUtil {
 
-	private static final Handler HANDLER = new Handler(Looper.getMainLooper());
+	private static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
 
 	private static final SparseArray<SparseArray<ExecutorService>> TYPE_PRIORITY_POOLS = new SparseArray<>();
 
@@ -59,55 +61,132 @@ public class ThreadUtil {
 
 	private static Executor sDeliver;
 
-	public static boolean isMainThread() {
-		return HANDLER.getLooper() == Looper.myLooper();
-	}
-
-	public static Handler getMainHandler() {
-		return HANDLER;
-	}
-
 	private ThreadUtil() {
 	}
 
+	/**
+	 * 判断当前是否在UI线程
+	 *
+	 * @return 是否UI线程
+	 */
+	public static boolean isInUiThread() {
+		return MAIN_HANDLER.getLooper() == Looper.myLooper();
+	}
+
+	/**
+	 * 在UI线程执行任务
+	 *
+	 * @param runnable runnable
+	 */
 	public static void runOnUiThread(final Runnable runnable) {
 		runOnUiThread(runnable, false);
 	}
 
-	public static void runOnUiThread(final Runnable runnable, boolean taskGet) {
-
-		if (isMainThread()) {
+	/**
+	 * 在UI线程执行任务，等待任务完成位置
+	 *
+	 * @param runnable        runnable
+	 * @param waitUntilFinish 等待直到完成
+	 */
+	public static void runOnUiThread(final Runnable runnable, boolean waitUntilFinish) {
+		if (isInUiThread()) {
 			runnable.run();
 		} else {
 			FutureTask<?> futureTask = new FutureTask<>(runnable, null);
-			HANDLER.post(futureTask);
-			if (taskGet) {
+			MAIN_HANDLER.post(futureTask);
+			if (waitUntilFinish) {
 				getTaskResult(futureTask);
 			}
 		}
 	}
 
+	/**
+	 * 在UI线程执行任务
+	 *
+	 * @param runnable    runnable
+	 * @param delayMillis 延迟时间，毫秒单位
+	 */
 	public static void runOnUiThreadDelayed(final Runnable runnable, long delayMillis) {
 		runOnUiThreadDelayed(runnable, delayMillis, false);
 	}
 
-	public static void runOnUiThreadDelayed(final Runnable runnable, long delayMillis, boolean taskGet) {
+	/**
+	 * 在UI线程执行任务
+	 *
+	 * @param runnable        runnable
+	 * @param delayMillis     延迟时间，毫秒单位
+	 * @param waitUntilFinish 等待直到完成
+	 */
+	public static void runOnUiThreadDelayed(final Runnable runnable, long delayMillis, boolean waitUntilFinish) {
 		FutureTask<?> futureTask = new FutureTask<>(runnable, null);
-		HANDLER.postDelayed(futureTask, delayMillis);
-		if (taskGet) {
+		MAIN_HANDLER.postDelayed(futureTask, delayMillis);
+		if (waitUntilFinish) {
 			getTaskResult(futureTask);
 		}
 	}
 
-	public static void sleepSilently(long millis) {
+	/**
+	 * 在UI线程执行任务
+	 *
+	 * @param callable callable
+	 * @return T
+	 */
+	public <T> T executeOnUiThread(final Callable<T> callable) {
+		if (isInUiThread()) {
+			try {
+				return callable.call();
+			} catch (Exception ex) {
+				throw new UtilException(ex);
+			}
+		} else {
+			FutureTask<T> futureTask = new FutureTask<>(callable);
+			MAIN_HANDLER.post(futureTask);
+			return getTaskResult(futureTask);
+		}
+	}
+
+	/**
+	 * 在后台线程执行任务，根据Cpu创建线程池
+	 *
+	 * @param runnable runnable
+	 */
+	public void postOnBackground(final Runnable runnable) {
+		getCpuPool().execute(runnable);
+	}
+
+	/**
+	 * 在后台线程执行任务，根据Cpu创建线程池
+	 *
+	 * @param callable callable
+	 * @return T
+	 */
+	public <T> T executeOnBackground(Callable<T> callable) {
+		FutureTask<T> futureTask = new FutureTask<>(callable);
+		getCpuPool().execute(futureTask);
+		return getTaskResult(futureTask);
+	}
+
+	/**
+	 * 线程休眠时间
+	 *
+	 * @param millisecond 毫秒单位
+	 */
+	public static void sleepSilently(long millisecond) {
 		try {
-			Thread.sleep(millis);
+			Thread.sleep(millisecond);
 		} catch (InterruptedException ex) {
 			ModuleManager.log().e(ex.getMessage());
 			Thread.currentThread().interrupt();
 		}
 	}
 
+	/**
+	 * 获取任务结果
+	 *
+	 * @param task 任务
+	 * @param <T>  T
+	 * @return T
+	 */
 	public static <T> T getTaskResult(FutureTask<T> task) {
 		while (true) {
 			try {
@@ -125,6 +204,14 @@ public class ThreadUtil {
 		}
 	}
 
+	// ----------------------------------------------- 线程池
+
+	/**
+	 * 获取固定线程池，需要时创建
+	 *
+	 * @param size 线程大小
+	 * @return 固定线程池
+	 */
 	public static ExecutorService getFixedPool(@IntRange(from = 1) final int size) {
 		return getPoolByTypeAndPriority(size);
 	}
@@ -132,38 +219,6 @@ public class ThreadUtil {
 	public static ExecutorService getFixedPool(@IntRange(from = 1) final int size,
 											   @IntRange(from = 1, to = 10) final int priority) {
 		return getPoolByTypeAndPriority(size, priority);
-	}
-
-	public static ExecutorService getSinglePool() {
-		return getPoolByTypeAndPriority(TYPE_SINGLE);
-	}
-
-	public static ExecutorService getSinglePool(@IntRange(from = 1, to = 10) final int priority) {
-		return getPoolByTypeAndPriority(TYPE_SINGLE, priority);
-	}
-
-	public static ExecutorService getCachedPool() {
-		return getPoolByTypeAndPriority(TYPE_CACHED);
-	}
-
-	public static ExecutorService getCachedPool(@IntRange(from = 1, to = 10) final int priority) {
-		return getPoolByTypeAndPriority(TYPE_CACHED, priority);
-	}
-
-	public static ExecutorService getIoPool() {
-		return getPoolByTypeAndPriority(TYPE_IO);
-	}
-
-	public static ExecutorService getIoPool(@IntRange(from = 1, to = 10) final int priority) {
-		return getPoolByTypeAndPriority(TYPE_IO, priority);
-	}
-
-	public static ExecutorService getCpuPool() {
-		return getPoolByTypeAndPriority(TYPE_CPU);
-	}
-
-	public static ExecutorService getCpuPool(@IntRange(from = 1, to = 10) final int priority) {
-		return getPoolByTypeAndPriority(TYPE_CPU, priority);
 	}
 
 	public static <T> void executeByFixed(@IntRange(from = 1) final int size, final Task<T> task) {
@@ -175,6 +230,136 @@ public class ThreadUtil {
 										  @IntRange(from = 1, to = 10) final int priority) {
 		execute(getPoolByTypeAndPriority(size, priority), task);
 	}
+
+	public static <T> void executeByFixedAtFixRate(@IntRange(from = 1) final int size,
+												   final Task<T> task,
+												   long initialDelay,
+												   final long period,
+												   final TimeUnit unit) {
+		executeAtFixedRate(getPoolByTypeAndPriority(size), task, initialDelay, period, unit);
+	}
+
+	public static <T> void executeByFixedAtFixRate(@IntRange(from = 1) final int size,
+												   final Task<T> task,
+												   long initialDelay,
+												   final long period,
+												   final TimeUnit unit,
+												   @IntRange(from = 1, to = 10) final int priority) {
+		executeAtFixedRate(getPoolByTypeAndPriority(size, priority), task, initialDelay, period, unit);
+	}
+
+	/**
+	 * 独立线程池，需要时创建
+	 *
+	 * @return 线程池
+	 */
+	public static ExecutorService getSinglePool() {
+		return getPoolByTypeAndPriority(TYPE_SINGLE);
+	}
+
+	public static ExecutorService getSinglePool(@IntRange(from = 1, to = 10) final int priority) {
+		return getPoolByTypeAndPriority(TYPE_SINGLE, priority);
+	}
+
+	/**
+	 * 缓存线程池，重用
+	 *
+	 * @return 缓存线程池
+	 */
+	public static ExecutorService getCachedPool() {
+		return getPoolByTypeAndPriority(TYPE_CACHED);
+	}
+
+	public static ExecutorService getCachedPool(@IntRange(from = 1, to = 10) final int priority) {
+		return getPoolByTypeAndPriority(TYPE_CACHED, priority);
+	}
+
+	/**
+	 * IO线程池，数量为（2 * CPU_COUNT + 1）
+	 *
+	 * @return IO线程池
+	 */
+	public static ExecutorService getIoPool() {
+		return getPoolByTypeAndPriority(TYPE_IO);
+	}
+
+	public static ExecutorService getIoPool(@IntRange(from = 1, to = 10) final int priority) {
+		return getPoolByTypeAndPriority(TYPE_IO, priority);
+	}
+
+	/**
+	 * Cpu线程池，数量为（CPU_COUNT + 1）
+	 *
+	 * @return Cpu线程池
+	 */
+	public static ExecutorService getCpuPool() {
+		return getPoolByTypeAndPriority(TYPE_CPU);
+	}
+
+	public static ExecutorService getCpuPool(@IntRange(from = 1, to = 10) final int priority) {
+		return getPoolByTypeAndPriority(TYPE_CPU, priority);
+	}
+
+	/**
+	 * 自定义线程池
+	 *
+	 * @param pool ExecutorService
+	 * @param task 任务
+	 * @param <T>  任务结果
+	 */
+	public static <T> void executeByCustom(final ExecutorService pool, final Task<T> task) {
+		execute(pool, task);
+	}
+
+	public static <T> void executeByCustomWithDelay(final ExecutorService pool,
+													final Task<T> task,
+													final long delay,
+													final TimeUnit unit) {
+		executeWithDelay(pool, task, delay, unit);
+	}
+
+	public static <T> void executeByCustomAtFixRate(final ExecutorService pool,
+													final Task<T> task,
+													long initialDelay,
+													final long period,
+													final TimeUnit unit) {
+		executeAtFixedRate(pool, task, initialDelay, period, unit);
+	}
+
+	// ----------------------------------------------- 取消task
+
+	public static void cancel(final Task<?> task) {
+		if (task == null) {
+			return;
+		}
+		task.cancel();
+	}
+
+	public static void cancel(final Task<?>... tasks) {
+		if (tasks == null || tasks.length == 0) {
+			return;
+		}
+		for (Task<?> task : tasks) {
+			if (task == null) {
+				continue;
+			}
+			task.cancel();
+		}
+	}
+
+	public static void cancel(ExecutorService executorService) {
+		if (executorService instanceof ThreadPoolExecutor4Util) {
+			for (Map.Entry<Task<?>, ExecutorService> taskTaskInfoEntry : TASK_POOL_MAP.entrySet()) {
+				if (taskTaskInfoEntry.getValue() == executorService) {
+					cancel(taskTaskInfoEntry.getKey());
+				}
+			}
+		} else {
+			UtilInner.e("ThreadUtil", "The executorService is not ThreadUtil's pool.");
+		}
+	}
+
+	// -----------------------------------------------
 
 	private static <T> void execute(final ExecutorService pool, final Task<T> task) {
 		execute(pool, task, 0, 0, null);
@@ -392,7 +577,7 @@ public class ThreadUtil {
 					try {
 						super.run();
 					} catch (Throwable t) {
-						UtilInner.e("ThreadUtils", "Request threw uncaught throwable", t);
+						UtilInner.e("ThreadUtil", "Request threw uncaught throwable", t);
 					}
 				}
 			};
@@ -455,7 +640,7 @@ public class ThreadUtil {
 					}
 					runner = Thread.currentThread();
 					if (mTimeoutListener != null) {
-						UtilInner.d("ThreadUtils", "Scheduled task doesn't support timeout.");
+						UtilInner.d("ThreadUtil", "Scheduled task doesn't support timeout.");
 					}
 				} else {
 					if (state.get() != RUNNING) {
@@ -657,5 +842,13 @@ public class ThreadUtil {
 			sDeliver = ThreadUtil::runOnUiThread;
 		}
 		return sDeliver;
+	}
+
+	public static Handler getMainHandler() {
+		return MAIN_HANDLER;
+	}
+
+	public static void removeCallbacksAndMessages() {
+		MAIN_HANDLER.removeCallbacksAndMessages(null);
 	}
 }
