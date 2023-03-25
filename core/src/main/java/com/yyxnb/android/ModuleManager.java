@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.yyxnb.android.log.AndroidLog;
+import com.yyxnb.android.log.LogImpl;
 import com.yyxnb.android.modules.ILog;
 import com.yyxnb.android.modules.IModule;
 
@@ -30,7 +30,7 @@ public class ModuleManager {
 		// 初始化ModuleLoader
 		sModuleLoader = new ModuleLoader(context);
 		// 先注册本地，最低优先级
-		sModuleLoader.registerMetaModule(ILog.class, AndroidLog.class);
+		sModuleLoader.registerMetaModule(ILog.class, LogImpl.class);
 		// 再注册meta下的，第二优先级
 		sModuleLoader.initMeta();
 	}
@@ -68,10 +68,10 @@ public class ModuleManager {
 	public static ILog log() {
 		// 工具之间使用，还未初始化，使用默认log
 		if (sModuleLoader == null) {
-			return AndroidLog.getInstance();
+			return new LogImpl();
 		} else {
 			if (!sModuleLoader.hasRegister(ILog.class)) {
-				return AndroidLog.getInstance();
+				return new LogImpl();
 			}
 			return module(ILog.class);
 		}

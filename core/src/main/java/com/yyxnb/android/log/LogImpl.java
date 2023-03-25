@@ -17,27 +17,12 @@ import com.yyxnb.android.modules.ILog;
  * @date 2022/12/2
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-public class AndroidLog implements ILog {
+public class LogImpl implements ILog {
 
-	private static final String TAG = AndroidLog.class.getSimpleName();
+	private static final String TAG = LogImpl.class.getSimpleName();
 	private static final String DOUBLE_DIVIDER = "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
 	private static final String SINGLE_DIVIDER = "──────────────────────────────────────────────";
 	public static String LINE_SEPARATOR = StringConstants.CRLF;
-	private static volatile AndroidLog sInstance = null;
-
-	public AndroidLog() {
-	}
-
-	public static AndroidLog getInstance() {
-		if (null == sInstance) {
-			synchronized (AndroidLog.class) {
-				if (null == sInstance) {
-					sInstance = new AndroidLog();
-				}
-			}
-		}
-		return sInstance;
-	}
 
 	/**
 	 * Log.VERBOSE 全部日志

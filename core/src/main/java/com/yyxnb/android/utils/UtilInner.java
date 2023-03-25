@@ -177,8 +177,8 @@ public final class UtilInner {
 		KeyboardUtil.fixSoftInputLeaks(activity);
 	}
 
-	static void closeIo(final Closeable... closeables) {
-		FileIoUtil.closeIo(closeables);
+	static void closeSecure(final Closeable... closeables) {
+		IOUtil.closeSecure(closeables);
 	}
 
 	static void d(Object... contents) {
