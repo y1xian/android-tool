@@ -1,7 +1,14 @@
 rootProject.name = 'android-tool'
-include ':core'
+
+// 核心tool
 include ':core-api'
+include ':core'
+
+// 扩展tool
+include ':expand-tool',
+        // 加密
+        ':expand-tool:encrypt'
 
 // 实现module
 include 'modules'
-include ':modules:thread'
+
