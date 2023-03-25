@@ -1,0 +1,11 @@
+apply from: rootProject.file('config-lib.gradle')
+
+android {
+    namespace 'com.yyxnb.android.encrypt'
+}
+
+dependencies {
+    compileOnly dependenciesExt.appcompat
+    compileOnly 'org.bouncycastle:bcpg-jdk15to18:1.71'
+    api project(':core')
+}
