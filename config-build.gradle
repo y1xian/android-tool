@@ -48,7 +48,7 @@ ext {
 
     androidExt = [
             compileSdk     : 33,
-            minSdk         : 24,
+            minSdk         : 21,
             applicationId  : "com.yyxnb.android",
             targetSdk      : 33,
             versionCode    : 1,
