@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.yyxnb.android.skin.attr.ISkinType;
 import com.yyxnb.android.skin.attr.SkinAttrHolder;
-import com.yyxnb.android.skin.attr.SkinType;
+import com.yyxnb.android.skin.attr.SkinTypeImpl;
 import com.yyxnb.android.skin.callback.OnSkinChangeCallback;
 import com.yyxnb.android.skin.config.SkinConfig;
 import com.yyxnb.android.skin.config.SkinUtil;
@@ -67,7 +67,7 @@ public class SkinManager {
 			mPageSkinAttrHolders = new HashMap<>();
 		}
 		if (mSkinTypeClazz == null) {
-			mSkinTypeClazz = SkinType.class;
+			mSkinTypeClazz = SkinTypeImpl.class;
 		}
 
 		String currSkinPath = SkinUtil.getInstance(mContext).getSkinPath();
@@ -172,9 +172,21 @@ public class SkinManager {
 			return SkinConfig.SKIN_EXCHANGE_FILE_DAMAGE;
 		}
 
-		// TODO: 2019/2/19 校验签名
-
 		return SkinConfig.SKIN_EXCHANGE_FILE_VALID;
+	}
+
+	/**
+	 * 是否已换肤
+	 *
+	 * @return
+	 */
+	public boolean isChangeSkin() {
+		String currSkinPath = SkinUtil.getInstance(mContext).getSkinPath();
+		if (!TextUtils.isEmpty(currSkinPath)) {
+			// 当前设置了皮肤
+			return checkSkinFileValid(currSkinPath) == SkinConfig.SKIN_EXCHANGE_FILE_VALID;
+		}
+		return false;
 	}
 
 	/**

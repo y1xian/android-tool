@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,11 +45,11 @@ import java.util.Map;
  * @date 2023/3/27
  */
 public class SkinCompatViewInflater {
-	private static final Class<?>[] sConstructorSignature = new Class[]{
+	private static final Class<?>[] S_CONSTRUCTOR_SIGNATURE = new Class[]{
 			Context.class, AttributeSet.class};
-	private static final int[] sOnClickAttrs = new int[]{android.R.attr.onClick};
+	private static final int[] S_ON_CLICK_ATTRS = new int[]{android.R.attr.onClick};
 
-	private static final String[] sClassPrefixList = {
+	private static final String[] S_CLASS_PREFIX_LIST = {
 			"android.widget.",
 			"android.view.",
 			"android.webkit."
@@ -58,7 +57,7 @@ public class SkinCompatViewInflater {
 
 	private static final String LOG_TAG = "AppCompatViewInflater";
 
-	private static final Map<String, Constructor<? extends View>> sConstructorMap
+	private static final Map<String, Constructor<? extends View>> STRING_CONSTRUCTOR_MAP
 			= new ArrayMap<>();
 
 	private final Object[] mConstructorArgs = new Object[2];
@@ -149,7 +148,7 @@ public class SkinCompatViewInflater {
 	}
 
 	private View createViewFromTag(Context context, String name, AttributeSet attrs) {
-		if (name.equals("view")) {
+		if ("view".equals(name)) {
 			name = attrs.getAttributeValue(null, "class");
 		}
 
@@ -158,8 +157,8 @@ public class SkinCompatViewInflater {
 			mConstructorArgs[1] = attrs;
 
 			if (-1 == name.indexOf('.')) {
-				for (int i = 0; i < sClassPrefixList.length; i++) {
-					final View view = createView(context, name, sClassPrefixList[i]);
+				for (String s : S_CLASS_PREFIX_LIST) {
+					final View view = createView(context, name, s);
 					if (view != null) {
 						return view;
 					}
@@ -195,7 +194,7 @@ public class SkinCompatViewInflater {
 			return;
 		}
 
-		final TypedArray a = context.obtainStyledAttributes(attrs, sOnClickAttrs);
+		final TypedArray a = context.obtainStyledAttributes(attrs, S_ON_CLICK_ATTRS);
 		final String handlerName = a.getString(0);
 		if (handlerName != null) {
 			view.setOnClickListener(new DeclaredOnClickListener(view, handlerName));
@@ -204,8 +203,8 @@ public class SkinCompatViewInflater {
 	}
 
 	private View createView(Context context, String name, String prefix)
-			throws ClassNotFoundException, InflateException {
-		Constructor<? extends View> constructor = sConstructorMap.get(name);
+			throws InflateException {
+		Constructor<? extends View> constructor = STRING_CONSTRUCTOR_MAP.get(name);
 
 		try {
 			if (constructor == null) {
@@ -213,8 +212,8 @@ public class SkinCompatViewInflater {
 				Class<? extends View> clazz = context.getClassLoader().loadClass(
 						prefix != null ? (prefix + name) : name).asSubclass(View.class);
 
-				constructor = clazz.getConstructor(sConstructorSignature);
-				sConstructorMap.put(name, constructor);
+				constructor = clazz.getConstructor(S_CONSTRUCTOR_SIGNATURE);
+				STRING_CONSTRUCTOR_MAP.put(name, constructor);
 			}
 			constructor.setAccessible(true);
 			return constructor.newInstance(mConstructorArgs);

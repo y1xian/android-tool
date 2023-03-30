@@ -1,5 +1,6 @@
 package com.yyxnb.android.skin.attr;
 
+import android.util.AttributeSet;
 import android.view.View;
 
 /**
@@ -13,20 +14,23 @@ import android.view.View;
  */
 public class SkinAttr {
 
-    /**
-     * 资源属性的名称
-     */
-    private String mResName;
+	/**
+	 * 资源属性的名称
+	 */
+	private final String mResName;
 
-    private ISkinType mSkinType;
+	private final ISkinType mSkinType;
 
-    public SkinAttr(String resName, ISkinType skinType) {
-        this.mResName = resName;
-        this.mSkinType = skinType;
-    }
+	private final AttributeSet mAttrs;
 
-    public void skin(View view) {
-        mSkinType.skin(view, mResName);
-    }
+	public SkinAttr(String resName, ISkinType skinType, AttributeSet attrs) {
+		this.mResName = resName;
+		this.mSkinType = skinType;
+		this.mAttrs = attrs;
+	}
+
+	public void skin(View view) {
+		mSkinType.skin(view, mResName, mAttrs);
+	}
 
 }

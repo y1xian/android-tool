@@ -19,8 +19,8 @@ public interface OnSkinChangeCallback {
 	/**
 	 * 换肤的回调,用于扩展自定义View的换肤功能
 	 *
-	 * @param view
-	 * @param skinResource
+	 * @param view         view
+	 * @param skinResource skinResource
 	 */
 	void onSkinChange(View view, SkinResource skinResource);
 

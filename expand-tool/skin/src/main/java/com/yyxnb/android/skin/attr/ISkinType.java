@@ -1,5 +1,6 @@
 package com.yyxnb.android.skin.attr;
 
+import android.util.AttributeSet;
 import android.view.View;
 
 /**
@@ -13,20 +14,21 @@ import android.view.View;
  */
 public interface ISkinType {
 
-    /**
-     * 换肤
-     *
-     * @param view
-     * @param resName View的属性值ID对应的名称
-     */
-    void skin(View view, String resName);
+	/**
+	 * 换肤
+	 *
+	 * @param view    view
+	 * @param resName View的属性值ID对应的名称
+	 * @param attrs   attrs
+	 */
+	void skin(View view, String resName, AttributeSet attrs);
 
-    /**
-     * 判断是否是需要换肤的属性
-     *
-     * @param attrName View的属性的名称
-     * @return
-     */
-    boolean isSkinType(String attrName);
+	/**
+	 * 判断是否是需要换肤的属性
+	 *
+	 * @param attrName View的属性的名称
+	 * @return
+	 */
+	boolean isSkinType(String attrName);
 
 }

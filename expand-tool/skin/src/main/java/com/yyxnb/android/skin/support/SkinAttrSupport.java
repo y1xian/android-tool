@@ -26,7 +26,6 @@ public class SkinAttrSupport {
     /**
      * 解析当前View声明的属性列表,转换为SkinAttr对象
      *
-     * @param context
      * @param attrs
      * @return
      */
@@ -50,7 +49,7 @@ public class SkinAttrSupport {
                     continue;
                 }
                 // 封装属性
-                SkinAttr skinAttr = new SkinAttr(resName, skinType);
+                SkinAttr skinAttr = new SkinAttr(resName, skinType, attrs);
                 skinAttrs.add(skinAttr);
             }
         }

@@ -15,12 +15,12 @@ import java.util.List;
  */
 public class SkinAttrHolder {
 
-    private View mView;
+    private final View mView;
 
     /**
      * 当前控件需要换肤的属性列表
      */
-    private List<SkinAttr> mSkinAttr;
+    private final List<SkinAttr> mSkinAttr;
 
     public SkinAttrHolder(View view, List<SkinAttr> skinAttrs) {
         this.mView = view;

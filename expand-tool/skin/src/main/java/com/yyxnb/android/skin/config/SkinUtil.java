@@ -14,73 +14,73 @@ import android.content.pm.PackageManager;
  */
 public class SkinUtil {
 
-    private static volatile SkinUtil mInstance;
+	private static volatile SkinUtil mInstance;
 
-    private Context mContext;
+	private final Context mContext;
 
-    private SkinUtil(Context context) {
-        mContext = context.getApplicationContext();
-    }
+	private SkinUtil(Context context) {
+		mContext = context.getApplicationContext();
+	}
 
-    public static SkinUtil getInstance(Context context) {
-        if (mInstance == null) {
-            synchronized (SkinUtil.class) {
-                if (mInstance == null) {
-                    mInstance = new SkinUtil(context);
-                }
-            }
-        }
-        return mInstance;
-    }
+	public static SkinUtil getInstance(Context context) {
+		if (mInstance == null) {
+			synchronized (SkinUtil.class) {
+				if (mInstance == null) {
+					mInstance = new SkinUtil(context);
+				}
+			}
+		}
+		return mInstance;
+	}
 
-    /**
-     * 缓存皮肤路径
-     *
-     * @param skinPath
-     */
-    public void updateSkinPath(String skinPath) {
-        mContext.getSharedPreferences(SkinConfig.SKIN_INFO_NAME, Context.MODE_PRIVATE)
-                .edit()
-                .putString(SkinConfig.SKIN_PATH_NAME, skinPath)
-                .commit();
+	/**
+	 * 缓存皮肤路径
+	 *
+	 * @param skinPath 皮肤路径
+	 */
+	public void updateSkinPath(String skinPath) {
+		mContext.getSharedPreferences(SkinConfig.SKIN_INFO_NAME, Context.MODE_PRIVATE)
+				.edit()
+				.putString(SkinConfig.SKIN_PATH_NAME, skinPath)
+				.commit();
 
-    }
+	}
 
-    /**
-     * 清除缓存的皮肤路径
-     */
-    public void clearSkinPath() {
-        updateSkinPath("");
-    }
+	/**
+	 * 清除缓存的皮肤路径
+	 */
+	public void clearSkinPath() {
+		updateSkinPath("");
+	}
 
-    /**
-     * 获取皮肤路径
-     *
-     * @return
-     */
-    public String getSkinPath() {
-        return mContext.getSharedPreferences(SkinConfig.SKIN_INFO_NAME, Context.MODE_PRIVATE)
-                .getString(SkinConfig.SKIN_PATH_NAME, "");
+	/**
+	 * 获取皮肤路径
+	 *
+	 * @return 皮肤路径
+	 */
+	public String getSkinPath() {
+		return mContext.getSharedPreferences(SkinConfig.SKIN_INFO_NAME, Context.MODE_PRIVATE)
+				.getString(SkinConfig.SKIN_PATH_NAME, "");
 
-    }
+	}
 
-    /**
-     * 获取目标文件的包名
-     *
-     * @param skinPath
-     * @return
-     */
-    public String getPackageName(String skinPath) {
-        return mContext.getPackageManager().getPackageArchiveInfo(skinPath, PackageManager.GET_ACTIVITIES).packageName;
-    }
+	/**
+	 * 获取目标文件的包名
+	 *
+	 * @param skinPath 皮肤路径
+	 * @return 包名
+	 */
+	public String getPackageName(String skinPath) {
+		return mContext.getPackageManager().getPackageArchiveInfo(skinPath, PackageManager.GET_ACTIVITIES).packageName;
+	}
 
-    /**
-     * 获取当前安装APP的APK文件路径
-     *
-     * @return
-     */
-    public String getCurrApkPath() {
-        return mContext.getPackageResourcePath();
-    }
+	/**
+	 * 获取当前安装APP的APK文件路径
+	 *
+	 * @return 文件路径
+	 */
+	public String getCurrApkPath() {
+		return mContext.getPackageResourcePath();
+	}
 
 }

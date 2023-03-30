@@ -69,7 +69,7 @@ public class SkinCompat {
 			String viewInflaterClassName = a.getString(androidx.appcompat.R.styleable.AppCompatTheme_viewInflaterClass);
 			if (viewInflaterClassName != null && !AppCompatViewInflater.class.getName().equals(viewInflaterClassName)) {
 				try {
-					Class viewInflaterClass = Class.forName(viewInflaterClassName);
+					Class<?> viewInflaterClass = Class.forName(viewInflaterClassName);
 					this.mAppCompatViewInflater = (SkinCompatViewInflater) viewInflaterClass.getDeclaredConstructor().newInstance();
 				} catch (Throwable var8) {
 					Log.i("AppCompatDelegate", "Failed to instantiate custom view inflater " + viewInflaterClassName + ". Falling back to default.", var8);
