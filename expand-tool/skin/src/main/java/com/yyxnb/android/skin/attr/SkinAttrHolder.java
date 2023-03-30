@@ -15,26 +15,26 @@ import java.util.List;
  */
 public class SkinAttrHolder {
 
-    private final View mView;
+	private final View mView;
 
-    /**
-     * 当前控件需要换肤的属性列表
-     */
-    private final List<SkinAttr> mSkinAttr;
+	/**
+	 * 当前控件需要换肤的属性列表
+	 */
+	private final List<SkinAttr> mSkinAttr;
 
-    public SkinAttrHolder(View view, List<SkinAttr> skinAttrs) {
-        this.mView = view;
-        this.mSkinAttr = skinAttrs;
-    }
+	public SkinAttrHolder(View view, List<SkinAttr> skinAttrs) {
+		this.mView = view;
+		this.mSkinAttr = skinAttrs;
+	}
 
-    public void skin() {
-        for (SkinAttr attr : mSkinAttr) {
-            attr.skin(mView);
-        }
-    }
+	public void skin() {
+		for (SkinAttr attr : mSkinAttr) {
+			attr.skin(mView, attr);
+		}
+	}
 
-    public View getView() {
-        return mView;
-    }
+	public View getView() {
+		return mView;
+	}
 
 }

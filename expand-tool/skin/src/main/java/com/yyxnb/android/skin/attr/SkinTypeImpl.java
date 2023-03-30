@@ -28,22 +28,22 @@ public class SkinTypeImpl implements ISkinType {
 
 	@CallSuper
 	@Override
-	public void skin(View view, String resName, AttributeSet attrs) {
+	public void skin(View view, SkinAttr skinAttr, AttributeSet attrs) {
 		if (mExchangeAttr == null) {
 			return;
 		}
 		switch (mExchangeAttr) {
 			case TEXT_COLOR:
 				// 设置文本颜色
-				setTextColor(view, resName);
+				setTextColor(view, skinAttr.attrValueRefName);
 				break;
 			case BACKGROUND:
 				// 设置背景颜色
-				setBackground(view, resName);
+				setBackground(view, skinAttr.attrValueRefName);
 				break;
 			case SRC:
 				// 设置图片资源
-				setSrc(view, resName);
+				setSrc(view, skinAttr.attrValueRefName);
 				break;
 			default:
 				break;

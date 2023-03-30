@@ -17,17 +17,17 @@ public interface ISkinType {
 	/**
 	 * 换肤
 	 *
-	 * @param view    view
-	 * @param resName View的属性值ID对应的名称
-	 * @param attrs   attrs
+	 * @param view     view
+	 * @param skinAttr skinAttr
+	 * @param attrs    attrs
 	 */
-	void skin(View view, String resName, AttributeSet attrs);
+	void skin(View view, SkinAttr skinAttr, AttributeSet attrs);
 
 	/**
 	 * 判断是否是需要换肤的属性
 	 *
-	 * @param attrName View的属性的名称
-	 * @return
+	 * @param attrName View的属性的名称，如android:background="@color/xxx"的background
+	 * @return 是否需要换肤
 	 */
 	boolean isSkinType(String attrName);
 

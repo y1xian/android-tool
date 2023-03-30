@@ -23,7 +23,12 @@ import java.lang.reflect.Method;
 public class SkinResource {
 
 	/**
-	 * 实际获取本地apk资源的对象
+	 * 实际获取本地皮肤apk资源的对象
+	 */
+	private Resources mSkinResources;
+
+	/**
+	 * 当前资源对象
 	 */
 	private Resources mResources;
 
@@ -32,9 +37,10 @@ public class SkinResource {
 	 */
 	private String mPackageName;
 
+	@SuppressWarnings("deprecation")
 	public SkinResource(Context context, String skinPath) {
 		try {
-			Resources superRes = context.getResources();
+			mResources = context.getResources();
 			// 创建 AssetManager
 			AssetManager asset = AssetManager.class.newInstance();
 			// 反射执行 添加本地下载好的皮肤资源的方法
@@ -42,7 +48,7 @@ public class SkinResource {
 			method.setAccessible(true);
 			method.invoke(asset, skinPath);
 			// 创建读取本地的皮肤资源(zip/apk)的Resources对象
-			mResources = new Resources(asset, superRes.getDisplayMetrics(), superRes.getConfiguration());
+			mSkinResources = new Resources(asset, mResources.getDisplayMetrics(), mResources.getConfiguration());
 
 			// 获取皮肤包的包名
 			mPackageName = SkinUtil.getInstance(context).getPackageName(skinPath);
@@ -54,16 +60,16 @@ public class SkinResource {
 	/**
 	 * 根据资源名称获取Drawable对象
 	 *
-	 * @param resName
-	 * @return
+	 * @param resName 属性值refrence id对应的名称，如R.color.XX，则此值为"XX"
+	 * @return Drawable
 	 */
 	public Drawable getDrawableByName(String resName) {
 		try {
-			int resId = mResources.getIdentifier(resName, "drawable", mPackageName);
+			int resId = mSkinResources.getIdentifier(resName, "drawable", mPackageName);
 			if (resId == 0) {
-				resId = mResources.getIdentifier(resName, "mipmap", mPackageName);
+				resId = mSkinResources.getIdentifier(resName, "mipmap", mPackageName);
 			}
-			return mResources.getDrawable(resId, null);
+			return mSkinResources.getDrawable(resId, null);
 		} catch (Exception e) {
 			Log.e("getDrawableByName", "resName:" + resName + "， " + e.getMessage());
 		}
@@ -71,17 +77,49 @@ public class SkinResource {
 	}
 
 	/**
+	 * 根据资源名称获取Drawable对象
+	 *
+	 * @param resId 如R.drawable.XX
+	 * @return Drawable
+	 */
+	public Drawable getDrawableById(int resId) {
+		try {
+			String resName = mResources.getResourceEntryName(resId);
+			return getDrawableByName(resName);
+		} catch (Exception e) {
+			Log.e("getDrawableById", "resId:" + resId + "， " + e.getMessage());
+		}
+		return null;
+	}
+
+	/**
 	 * 根据资源名称获取Color对象
 	 *
-	 * @param resName
-	 * @return
+	 * @param resName 属性值refrence id对应的名称，如R.color.XX，则此值为"XX"
+	 * @return ColorStateList
 	 */
 	public ColorStateList getColorByName(String resName) {
 		try {
-			int resId = mResources.getIdentifier(resName, "color", mPackageName);
-			return mResources.getColorStateList(resId);
+			int resId = mSkinResources.getIdentifier(resName, "color", mPackageName);
+			return mSkinResources.getColorStateList(resId);
 		} catch (Exception e) {
 			Log.e("getColorByName", "resName:" + resName + "， " + e.getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * 根据资源id获取Color对象
+	 *
+	 * @param resId 如R.color.XX
+	 * @return ColorStateList
+	 */
+	public ColorStateList getColorById(int resId) {
+		try {
+			String resName = mResources.getResourceEntryName(resId);
+			return getColorByName(resName);
+		} catch (Exception e) {
+			Log.e("getColorById", "resId:" + resId + "， " + e.getMessage());
 		}
 		return null;
 	}
