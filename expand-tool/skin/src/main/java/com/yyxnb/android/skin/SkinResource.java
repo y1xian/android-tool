@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
+import com.yyxnb.android.skin.config.SkinConfig;
 import com.yyxnb.android.skin.config.SkinUtil;
 
 import java.lang.reflect.Method;
@@ -65,9 +66,9 @@ public class SkinResource {
 	 */
 	public Drawable getDrawableByName(String resName) {
 		try {
-			int resId = mSkinResources.getIdentifier(resName, "drawable", mPackageName);
+			int resId = mSkinResources.getIdentifier(resName, SkinConfig.RES_TYPE_NAME_DRAWABLE, mPackageName);
 			if (resId == 0) {
-				resId = mSkinResources.getIdentifier(resName, "mipmap", mPackageName);
+				resId = mSkinResources.getIdentifier(resName, SkinConfig.RES_TYPE_NAME_MIPMAP, mPackageName);
 			}
 			return mSkinResources.getDrawable(resId, null);
 		} catch (Exception e) {
@@ -100,7 +101,7 @@ public class SkinResource {
 	 */
 	public ColorStateList getColorByName(String resName) {
 		try {
-			int resId = mSkinResources.getIdentifier(resName, "color", mPackageName);
+			int resId = mSkinResources.getIdentifier(resName, SkinConfig.RES_TYPE_NAME_COLOR, mPackageName);
 			return mSkinResources.getColorStateList(resId);
 		} catch (Exception e) {
 			Log.e("getColorByName", "resName:" + resName + "， " + e.getMessage());
