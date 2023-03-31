@@ -35,11 +35,13 @@ ext {
 
     // 统一仓库
     repositoriesExt = {
-        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
-        maven { url 'https://developer.huawei.com/repo/' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url "https://jitpack.io" }
         mavenCentral()
-        google()
         if (LOCAL_MAVEN_ENABLE) {
             // 本地仓库
             maven { url uri(LOCAL_MAVEN_DIR) }

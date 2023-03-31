@@ -66,11 +66,15 @@ public class SkinResource {
 	 */
 	public Drawable getDrawableByName(String resName) {
 		try {
-			int resId = mSkinResources.getIdentifier(resName, SkinConfig.RES_TYPE_NAME_DRAWABLE, mPackageName);
-			if (resId == 0) {
-				resId = mSkinResources.getIdentifier(resName, SkinConfig.RES_TYPE_NAME_MIPMAP, mPackageName);
+			Resources originResources = mSkinResources;
+			if (originResources == null) {
+				originResources = mResources;
 			}
-			return mSkinResources.getDrawable(resId, null);
+			int resId = originResources.getIdentifier(resName, SkinConfig.RES_TYPE_NAME_DRAWABLE, mPackageName);
+			if (resId == 0) {
+				resId = originResources.getIdentifier(resName, SkinConfig.RES_TYPE_NAME_MIPMAP, mPackageName);
+			}
+			return originResources.getDrawable(resId, null);
 		} catch (Exception e) {
 			Log.e("getDrawableByName", "resName:" + resName + "， " + e.getMessage());
 		}
@@ -101,8 +105,12 @@ public class SkinResource {
 	 */
 	public ColorStateList getColorByName(String resName) {
 		try {
-			int resId = mSkinResources.getIdentifier(resName, SkinConfig.RES_TYPE_NAME_COLOR, mPackageName);
-			return mSkinResources.getColorStateList(resId);
+			Resources originResources = mSkinResources;
+			if (originResources == null) {
+				originResources = mResources;
+			}
+			int resId = originResources.getIdentifier(resName, SkinConfig.RES_TYPE_NAME_COLOR, mPackageName);
+			return originResources.getColorStateList(resId);
 		} catch (Exception e) {
 			Log.e("getColorByName", "resName:" + resName + "， " + e.getMessage());
 		}
