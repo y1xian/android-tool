@@ -313,6 +313,224 @@ public class SafeIntent extends Intent {
 	}
 
 
+
+	@Override
+	public CharSequence[] getCharSequenceArrayExtra(String name) {
+		try {
+			return super.getCharSequenceArrayExtra(name);
+		} catch (Throwable e) {
+			return new CharSequence[0];
+		}
+
+	}
+
+	public CharSequence[] getCharSequenceArrayExtraReturnNotNull(String name) {
+		CharSequence[] result;
+		try {
+			result = super.getCharSequenceArrayExtra(name);
+		} catch (Throwable e) {
+			return new CharSequence[0];
+		}
+		if (result == null) {
+			return new CharSequence[0];
+		}
+		return result;
+	}
+
+	@Override
+	public double[] getDoubleArrayExtra(String name) {
+		try {
+			return super.getDoubleArrayExtra(name);
+		} catch (Throwable e) {
+			return new double[0];
+		}
+	}
+
+	public double[] getDoubleArrayExtraReturnNotNull(String name) {
+		double[] result;
+		try {
+			result = super.getDoubleArrayExtra(name);
+		} catch (Throwable e) {
+			return new double[0];
+		}
+		if (result == null) {
+			return new double[0];
+		}
+		return result;
+	}
+
+	@Override
+	public float[] getFloatArrayExtra(String name) {
+		try {
+			return super.getFloatArrayExtra(name);
+		} catch (Throwable e) {
+			return new float[0];
+		}
+	}
+
+	public float[] getFloatArrayExtraReturnNotNull(String name) {
+		float[] result;
+		try {
+			result = super.getFloatArrayExtra(name);
+		} catch (Throwable e) {
+			return new float[0];
+		}
+		if (result == null) {
+			return new float[0];
+		}
+		return result;
+	}
+
+	@Override
+	public int[] getIntArrayExtra(String name) {
+		try {
+			return super.getIntArrayExtra(name);
+		} catch (Throwable e) {
+			return new int[0];
+		}
+	}
+
+	public int[] getIntArrayExtraReturnNotNull(String name) {
+		int[] result;
+		try {
+			result = super.getIntArrayExtra(name);
+		} catch (Throwable e) {
+			return new int[0];
+		}
+		if (result == null) {
+			return new int[0];
+		}
+		return result;
+	}
+
+	@Override
+	public long[] getLongArrayExtra(String name) {
+		try {
+			return super.getLongArrayExtra(name);
+		} catch (Throwable e) {
+			return new long[0];
+		}
+	}
+
+	public long[] getLongArrayExtraReturnNotNull(String name) {
+		long[] result;
+		try {
+			result = super.getLongArrayExtra(name);
+		} catch (Throwable e) {
+			return new long[0];
+		}
+		if (result == null) {
+			return new long[0];
+		}
+		return result;
+	}
+
+	@Override
+	public Parcelable[] getParcelableArrayExtra(String name) {
+		try {
+			return super.getParcelableArrayExtra(name);
+		} catch (Throwable e) {
+			return new Parcelable[0];
+		}
+	}
+
+	public Parcelable[] getParcelableArrayExtraReturnNotNull(String name) {
+		Parcelable[] result;
+		try {
+			result = super.getParcelableArrayExtra(name);
+		} catch (Throwable e) {
+			return new Parcelable[0];
+		}
+		if (result == null) {
+			return new Parcelable[0];
+		}
+		return result;
+	}
+
+	@Override
+	public String[] getStringArrayExtra(String name) {
+
+		try {
+			return super.getStringArrayExtra(name);
+		} catch (Throwable e) {
+			return new String[0];
+		}
+	}
+
+	public String[] getStringArrayExtraReturnNotNull(String name) {
+		String[] result;
+		try {
+			result = super.getStringArrayExtra(name);
+		} catch (Throwable e) {
+			return new String[0];
+		}
+		if (result == null) {
+			return new String[0];
+		}
+		return result;
+	}
+
+	@Override
+	public short getShortExtra(String name, short defaultValue) {
+		try {
+			return super.getShortExtra(name, defaultValue);
+		} catch (Throwable e) {
+			return defaultValue;
+		}
+	}
+
+	@Override
+	public short[] getShortArrayExtra(String name) {
+		try {
+			return super.getShortArrayExtra(name);
+		} catch (Throwable e) {
+			return new short[0];
+		}
+	}
+
+	public short[] getShortArrayExtraReturnNotNull(String name) {
+		short[] result;
+		try {
+			result = super.getShortArrayExtra(name);
+		} catch (Throwable e) {
+			return new short[0];
+		}
+		if (result == null) {
+			return new short[0];
+		}
+		return result;
+	}
+
+	@Override
+	public boolean hasExtra(String name) {
+		try {
+			return super.hasExtra(name);
+		} catch (Throwable e) {
+			return false;
+		}
+	}
+
+	@Deprecated
+	@Override
+	public String toURI() {
+		try {
+			return super.toURI();
+		} catch (Throwable e) {
+			LogUtil.e(TAG, "toURI: exception " + e.getMessage(), true);
+			return "";
+		}
+	}
+
+	@Nullable
+	@Override
+	public String getScheme() {
+		try {
+			return super.getScheme();
+		} catch (Throwable e) {
+			return null;
+		}
+	}
+
 	@Nullable
 	@Override
 	public Uri getData() {
