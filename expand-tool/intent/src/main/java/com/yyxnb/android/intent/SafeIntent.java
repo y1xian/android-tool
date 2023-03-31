@@ -349,6 +349,19 @@ public class SafeIntent extends Intent {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+
+	@Override
+	public Serializable getSerializableExtra(String name) {
+		try {
+			return super.getSerializableExtra(name);
+		} catch (Throwable e) {
+			return null;
+		}
+	}
+
 
 	@Override
 	public ArrayList<CharSequence> getCharSequenceArrayListExtra(String name) {
