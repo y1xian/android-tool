@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 
-
 import com.yyxnb.android.skin.attr.ISkinType;
 import com.yyxnb.android.skin.attr.SkinAttrHolder;
 import com.yyxnb.android.skin.attr.SkinTypeImpl;
@@ -229,6 +228,9 @@ public class SkinManager {
 	 * @return
 	 */
 	public SkinResource getSkinResource() {
+		if (mSkinResource == null) {
+			mSkinResource = new SkinResource(mContext, "");
+		}
 		return mSkinResource;
 	}
 

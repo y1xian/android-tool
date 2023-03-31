@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.yyxnb.android.skin.config.SkinConfig;
@@ -42,6 +43,11 @@ public class SkinResource {
 	public SkinResource(Context context, String skinPath) {
 		try {
 			mResources = context.getResources();
+			if (TextUtils.isEmpty(skinPath)) {
+				mSkinResources = null;
+				mPackageName = context.getPackageName();
+				return;
+			}
 			// 创建 AssetManager
 			AssetManager asset = AssetManager.class.newInstance();
 			// 反射执行 添加本地下载好的皮肤资源的方法
@@ -50,7 +56,6 @@ public class SkinResource {
 			method.invoke(asset, skinPath);
 			// 创建读取本地的皮肤资源(zip/apk)的Resources对象
 			mSkinResources = new Resources(asset, mResources.getDisplayMetrics(), mResources.getConfiguration());
-
 			// 获取皮肤包的包名
 			mPackageName = SkinUtil.getInstance(context).getPackageName(skinPath);
 		} catch (Exception e) {
