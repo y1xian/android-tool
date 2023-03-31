@@ -349,7 +349,50 @@ public class SafeIntent extends Intent {
 		}
 	}
 
-	
+
+	@Override
+	public ArrayList<CharSequence> getCharSequenceArrayListExtra(String name) {
+		try {
+			return super.getCharSequenceArrayListExtra(name);
+		} catch (Throwable e) {
+			return new ArrayList<>();
+		}
+	}
+
+	public ArrayList<CharSequence> getCharSequenceArrayListExtraReturnNotNull(String name) {
+		ArrayList<CharSequence> result;
+		try {
+			result = super.getCharSequenceArrayListExtra(name);
+		} catch (Throwable e) {
+			return new ArrayList<>();
+		}
+		if (result == null) {
+			return new ArrayList<>();
+		}
+		return result;
+	}
+
+	@Override
+	public ArrayList<Integer> getIntegerArrayListExtra(String name) {
+		try {
+			return super.getIntegerArrayListExtra(name);
+		} catch (Throwable e) {
+			return new ArrayList<>();
+		}
+	}
+
+	public ArrayList<Integer> getIntegerArrayListExtraReturnNotNull(String name) {
+		ArrayList<Integer> result;
+		try {
+			result = super.getIntegerArrayListExtra(name);
+		} catch (Throwable e) {
+			return new ArrayList<>();
+		}
+		if (result == null) {
+			return new ArrayList<>();
+		}
+		return result;
+	}
 
 	@Override
 	public ArrayList<String> getStringArrayListExtra(String name) {
