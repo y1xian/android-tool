@@ -312,6 +312,41 @@ public class SafeIntent extends Intent {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public long getLongExtra(String name, long defaultValue) {
+		try {
+			return super.getLongExtra(name, defaultValue);
+		} catch (Throwable e) {
+			return defaultValue;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public float getFloatExtra(String name, float defaultValue) {
+		try {
+			return super.getFloatExtra(name, defaultValue);
+		} catch (Throwable e) {
+			return defaultValue;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public double getDoubleExtra(String name, double defaultValue) {
+		try {
+			return super.getDoubleExtra(name, defaultValue);
+		} catch (Throwable e) {
+			return defaultValue;
+		}
+	}
 
 
 	@Override
