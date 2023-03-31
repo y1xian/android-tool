@@ -54,12 +54,31 @@ public class FileUtil {
 		return file.getAbsolutePath();
 	}
 
+	/**
+	 * 获取规范的绝对路径
+	 *
+	 * @param file 文件
+	 * @return 规范绝对路径，如果传入file为null，返回null
+	 */
+	public static String getCanonicalPath(File file) {
+		if (null == file) {
+			return null;
+		}
+		try {
+			return file.getCanonicalPath();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static File getFileByPath(final String filePath) {
 		return UtilInner.isSpace(filePath) ? null : new File(filePath);
 	}
 
 	public static boolean isFileExists(final File file) {
-		if (file == null) return false;
+		if (file == null) {
+			return false;
+		}
 		if (file.exists()) {
 			return true;
 		}
@@ -180,7 +199,9 @@ public class FileUtil {
 													  final Comparator<File> comparator) {
 		List<File> files = listFilesInDirWithFilterInner(dir, filter, isRecursive);
 		if (comparator != null) {
-			files.sort(comparator);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+				files.sort(comparator);
+			}
 		}
 		return files;
 	}

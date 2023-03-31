@@ -1,6 +1,6 @@
 package com.yyxnb.android.constant;
 
-import com.yyxnb.android.core.R;
+import com.yyxnb.android.R;
 
 public interface AnimKeys {
 
