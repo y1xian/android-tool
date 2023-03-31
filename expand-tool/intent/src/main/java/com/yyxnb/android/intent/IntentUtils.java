@@ -521,11 +521,11 @@ public class IntentUtils {
 	 * 从bundle中获取序列化数据，并将其转换成给定的类，如果不属于给定的类，则返回null
 	 * 可以防止两类异常：1、反序列化异常 2、类型转换异常
 	 *
-	 * @param bundle
-	 * @param key
-	 * @param tClass
-	 * @param <T>
-	 * @return
+	 * @param bundle bundle
+	 * @param key    key
+	 * @param tClass tClass
+	 * @param <T>    T
+	 * @return T
 	 */
 	public static <T extends Serializable> T safeGetSerializable(Bundle bundle, String key, Class<T> tClass) {
 		try {
@@ -543,11 +543,11 @@ public class IntentUtils {
 	 * 从 intent 中获取序列化数据，并将其转换成给定的类，如果不属于给定的类，则返回null
 	 * 可以防止两类异常：1、反序列化异常 2、类型转换异常
 	 *
-	 * @param intent
-	 * @param key
-	 * @param tClass
-	 * @param <T>
-	 * @return
+	 * @param intent intent
+	 * @param key    key
+	 * @param tClass tClass
+	 * @param <T>    T
+	 * @return T
 	 */
 	public static <T extends Parcelable> T safeGetParcelableExtra(Intent intent, String key, Class<T> tClass) {
 		try {
@@ -565,11 +565,11 @@ public class IntentUtils {
 	 * 从 intent 中获取序列化数据，并将其转换成给定的类，如果不属于给定的类，则返回null
 	 * 可以防止两类异常：1、反序列化异常 2、类型转换异常
 	 *
-	 * @param intent
-	 * @param key
-	 * @param tClass
-	 * @param <T>
-	 * @return
+	 * @param intent intent
+	 * @param key    key
+	 * @param tClass tClass
+	 * @param <T>    T
+	 * @return T
 	 */
 	public static <T extends Serializable> T safeGetSerializableExtra(Intent intent, String key, Class<T> tClass) {
 		try {
@@ -586,7 +586,7 @@ public class IntentUtils {
 	/**
 	 * 过滤intent，对应测试指导：http://wisebox.cloud.huawei.com/auto_measure/auto_info_desc/?pk=40&type=subcategory
 	 *
-	 * @param intent
+	 * @param intent intent
 	 */
 	public static void filterIntent(Intent intent) {
 		if (intent == null) {
@@ -621,9 +621,9 @@ public class IntentUtils {
 	/**
 	 * 安全转换uri为intent。对应测试指导：http://wisebox.cloud.huawei.com/auto_measure/auto_info_desc/?pk=40&type=subcategory
 	 *
-	 * @param uri
-	 * @return
-	 * @throws URISyntaxException
+	 * @param uri uri
+	 * @return Intent
+	 * @throws URISyntaxException URISyntaxException
 	 */
 	public static Intent safeParseUri(String uri, int flag) throws URISyntaxException {
 		if (uri == null) {
