@@ -2,6 +2,7 @@ package com.yyxnb.android.intent;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
@@ -348,6 +349,158 @@ public class SafeIntent extends Intent {
 		}
 	}
 
+	
+
+	@Override
+	public ArrayList<String> getStringArrayListExtra(String name) {
+		try {
+			return super.getStringArrayListExtra(name);
+		} catch (Throwable e) {
+			return new ArrayList<>();
+		}
+	}
+
+	public ArrayList<String> getStringArrayListExtraReturnNotNull(String name) {
+		ArrayList<String> result;
+		try {
+			result = super.getStringArrayListExtra(name);
+		} catch (Throwable e) {
+			return new ArrayList<>();
+		}
+		if (result == null) {
+			return new ArrayList<>();
+		}
+		return result;
+	}
+
+	@Override
+	public <T extends Parcelable> ArrayList<T> getParcelableArrayListExtra(String name) {
+		try {
+			return super.getParcelableArrayListExtra(name);
+		} catch (Throwable e) {
+			return null;
+		}
+	}
+
+	@Override
+	public boolean[] getBooleanArrayExtra(String name) {
+		try {
+			return super.getBooleanArrayExtra(name);
+		} catch (Throwable e) {
+			return new boolean[0];
+		}
+	}
+
+	public boolean[] getBooleanArrayExtraReturnNotNull(String name) {
+		boolean[] result;
+		try {
+			result = super.getBooleanArrayExtra(name);
+		} catch (Throwable e) {
+			return new boolean[0];
+		}
+		if (result == null) {
+			return new boolean[0];
+		}
+		return result;
+	}
+
+	@Override
+	public Bundle getBundleExtra(String name) {
+		try {
+			return super.getBundleExtra(name);
+		} catch (Throwable e) {
+			return new Bundle();
+		}
+	}
+
+	public Bundle getBundleExtraReturnNotNull(String name) {
+		Bundle bundle;
+		try {
+			bundle = super.getBundleExtra(name);
+		} catch (Throwable e) {
+			return new Bundle();
+		}
+		if (bundle == null) {
+			return new Bundle();
+		}
+		return bundle;
+	}
+
+	@Override
+	public Bundle getExtras() {
+		try {
+			return super.getExtras();
+		} catch (Throwable e) {
+			return new Bundle();
+		}
+	}
+
+	public Bundle getExtrasReturnNotNull() {
+		Bundle bundle;
+		try {
+			bundle = super.getExtras();
+		} catch (Throwable e) {
+			return new Bundle();
+		}
+		if (bundle == null) {
+			return new Bundle();
+		}
+		return bundle;
+	}
+
+	@Override
+	public Intent putExtra(String name, Bundle value) {
+		try {
+			return super.putExtra(name, value);
+		} catch (Throwable e) {
+			return this;
+		}
+	}
+
+	@Override
+	public byte[] getByteArrayExtra(String name) {
+		try {
+			return super.getByteArrayExtra(name);
+		} catch (Throwable e) {
+			return new byte[0];
+		}
+	}
+
+
+	public byte[] getByteArrayExtraReturnNotNull(String name) {
+		byte[] result;
+		try {
+			result = super.getByteArrayExtra(name);
+		} catch (Throwable e) {
+			return new byte[0];
+		}
+		if (result == null) {
+			return new byte[0];
+		}
+		return result;
+	}
+
+	@Override
+	public char[] getCharArrayExtra(String name) {
+		try {
+			return super.getCharArrayExtra(name);
+		} catch (Throwable e) {
+			return new char[0];
+		}
+	}
+
+	public char[] getCharArrayExtraReturnNotNull(String name) {
+		char[] result;
+		try {
+			result = super.getCharArrayExtra(name);
+		} catch (Throwable e) {
+			return new char[0];
+		}
+		if (result == null) {
+			return new char[0];
+		}
+		return result;
+	}
 
 	@Override
 	public CharSequence[] getCharSequenceArrayExtra(String name) {
