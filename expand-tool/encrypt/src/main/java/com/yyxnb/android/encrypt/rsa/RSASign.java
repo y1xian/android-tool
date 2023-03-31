@@ -4,8 +4,8 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.encrypt.EncryptUtil;
+import com.yyxnb.android.encrypt.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
@@ -22,7 +22,6 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.MGF1ParameterSpec;
 import java.security.spec.PSSParameterSpec;
 import java.util.Arrays;
-
 
 /**
  * RSA签名和验签。高于 23 的版本应使用安全的签名和验签算法（SHA256WithRSA/PSS）
@@ -71,7 +70,7 @@ public abstract class RSASign {
 
 	public static String newSign(String content, String privateKey) {
 		if (!isBuildVersionHigherThan23()) {
-			ModuleManager.log().eTag(TAG, "sdk version is too low");
+			LogUtil.e(TAG, "sdk version is too low");
 			return EMPTY;
 		}
 		return sign(content, privateKey, true);
@@ -79,7 +78,7 @@ public abstract class RSASign {
 
 	private static String sign(String content, String privateKey, boolean isNewSign) {
 		if (TextUtils.isEmpty(content) || TextUtils.isEmpty(privateKey)) {
-			ModuleManager.log().eTag(TAG, "sign content or key is null");
+			LogUtil.e(TAG, "sign content or key is null");
 			return EMPTY;
 		}
 		PrivateKey priKey = EncryptUtil.getPrivateKey(privateKey);
@@ -112,7 +111,7 @@ public abstract class RSASign {
 
 	public static String newSign(String content, PrivateKey privateKey) {
 		if (!isBuildVersionHigherThan23()) {
-			ModuleManager.log().eTag(TAG, "sdk version is too low");
+			LogUtil.e(TAG, "sdk version is too low");
 			return EMPTY;
 		}
 		return sign(content, privateKey, true);
@@ -122,7 +121,7 @@ public abstract class RSASign {
 		try {
 			return Base64.encodeToString(sign(content.getBytes(CHARSET), privateKey, isNewSign), Base64.DEFAULT);
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "sign UnsupportedEncodingException: " + e.getMessage());
+			LogUtil.e(TAG, "sign UnsupportedEncodingException: " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -130,7 +129,7 @@ public abstract class RSASign {
 	public static byte[] sign(byte[] content, PrivateKey privateKey, boolean isNewSign) {
 		byte[] result = new byte[0];
 		if (content == null || privateKey == null || !RSAEncrypt.isPrivateKeyLengthRight((RSAPrivateKey) privateKey)) {
-			ModuleManager.log().eTag(TAG, "content or privateKey is null , or length is too short");
+			LogUtil.e(TAG, "content or privateKey is null , or length is too short");
 			return result;
 		}
 		Signature signature;
@@ -145,15 +144,15 @@ public abstract class RSASign {
 			signature.update(content);
 			result = signature.sign();
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "sign NoSuchAlgorithmException: " + e.getMessage());
+			LogUtil.e(TAG, "sign NoSuchAlgorithmException: " + e.getMessage());
 		} catch (InvalidKeyException e) {
-			ModuleManager.log().eTag(TAG, "sign InvalidKeyException: " + e.getMessage());
+			LogUtil.e(TAG, "sign InvalidKeyException: " + e.getMessage());
 		} catch (SignatureException e) {
-			ModuleManager.log().eTag(TAG, "sign SignatureException: " + e.getMessage());
+			LogUtil.e(TAG, "sign SignatureException: " + e.getMessage());
 		} catch (InvalidAlgorithmParameterException e) {
-			ModuleManager.log().eTag(TAG, "sign InvalidAlgorithmParameterException: " + e.getMessage());
+			LogUtil.e(TAG, "sign InvalidAlgorithmParameterException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "sign Exception: " + e.getMessage());
+			LogUtil.e(TAG, "sign Exception: " + e.getMessage());
 		}
 		return result;
 	}
@@ -161,7 +160,7 @@ public abstract class RSASign {
 	public static byte[] sign(ByteBuffer content, PrivateKey privateKey, boolean isNewSign) {
 		byte[] result = new byte[0];
 		if (content == null || privateKey == null || !RSAEncrypt.isPrivateKeyLengthRight((RSAPrivateKey) privateKey)) {
-			ModuleManager.log().eTag(TAG, "content or privateKey is null , or length is too short");
+			LogUtil.e(TAG, "content or privateKey is null , or length is too short");
 			return result;
 		}
 		Signature signature;
@@ -175,17 +174,17 @@ public abstract class RSASign {
 			signature.initSign(privateKey);
 			signature.update(content);
 			result = signature.sign();
-			ModuleManager.log().iTag(TAG, "result is : " + Arrays.toString(result));
+			LogUtil.i(TAG, "result is : " + Arrays.toString(result));
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "sign NoSuchAlgorithmException: " + e.getMessage());
+			LogUtil.e(TAG, "sign NoSuchAlgorithmException: " + e.getMessage());
 		} catch (InvalidKeyException e) {
-			ModuleManager.log().eTag(TAG, "sign InvalidKeyException: " + e.getMessage());
+			LogUtil.e(TAG, "sign InvalidKeyException: " + e.getMessage());
 		} catch (SignatureException e) {
-			ModuleManager.log().eTag(TAG, "sign SignatureException: " + e.getMessage());
+			LogUtil.e(TAG, "sign SignatureException: " + e.getMessage());
 		} catch (InvalidAlgorithmParameterException e) {
-			ModuleManager.log().eTag(TAG, "sign InvalidAlgorithmParameterException: " + e.getMessage());
+			LogUtil.e(TAG, "sign InvalidAlgorithmParameterException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "sign Exception: " + e.getMessage());
+			LogUtil.e(TAG, "sign Exception: " + e.getMessage());
 		}
 		return result;
 	}
@@ -214,7 +213,7 @@ public abstract class RSASign {
 
 	public static boolean newVerifySign(String content, String signVal, String publicKey) {
 		if (!isBuildVersionHigherThan23()) {
-			ModuleManager.log().eTag(TAG, "sdk version is too low");
+			LogUtil.e(TAG, "sdk version is too low");
 			return false;
 		}
 		return verifySign(content, signVal, publicKey, true);
@@ -223,7 +222,7 @@ public abstract class RSASign {
 	private static boolean verifySign(String content, String signVal, String publicKey, boolean isNewVerify) {
 
 		if (TextUtils.isEmpty(content) || TextUtils.isEmpty(publicKey) || TextUtils.isEmpty(signVal)) {
-			ModuleManager.log().eTag(TAG, "content or public key or sign value is null");
+			LogUtil.e(TAG, "content or public key or sign value is null");
 			return false;
 		}
 		PublicKey pubKey = EncryptUtil.getPublicKey(publicKey);
@@ -258,7 +257,7 @@ public abstract class RSASign {
 
 	public static boolean newVerifySign(String content, String signVal, PublicKey publicKey) {
 		if (!isBuildVersionHigherThan23()) {
-			ModuleManager.log().eTag(TAG, "sdk version is too low");
+			LogUtil.e(TAG, "sdk version is too low");
 			return false;
 		}
 		return verifySign(content, signVal, publicKey, true);
@@ -269,9 +268,9 @@ public abstract class RSASign {
 			return verifySign(content.getBytes(CHARSET), Base64.decode(signVal, Base64.DEFAULT), publicKey,
 					isNewVerifySign);
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "verifySign UnsupportedEncodingException: " + e.getMessage());
+			LogUtil.e(TAG, "verifySign UnsupportedEncodingException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "base64 decode Exception : " + e.getMessage());
+			LogUtil.e(TAG, "base64 decode Exception : " + e.getMessage());
 		}
 		return false;
 	}
@@ -279,7 +278,7 @@ public abstract class RSASign {
 	public static boolean verifySign(byte[] content, byte[] signVal, PublicKey publicKey, boolean isNewVerifySign) {
 		if (content == null || publicKey == null || signVal == null
 				|| !RSAEncrypt.isPublicKeyLengthRight((RSAPublicKey) publicKey)) {
-			ModuleManager.log().eTag(TAG, "content or publicKey is null , or length is too short");
+			LogUtil.e(TAG, "content or publicKey is null , or length is too short");
 			return false;
 		}
 		Signature signature;
@@ -294,9 +293,9 @@ public abstract class RSASign {
 			signature.update(content);
 			return signature.verify(signVal);
 		} catch (GeneralSecurityException e) {
-			ModuleManager.log().eTag(TAG, "check sign exception: " + e.getMessage());
+			LogUtil.e(TAG, "check sign exception: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "exception : " + e.getMessage());
+			LogUtil.e(TAG, "exception : " + e.getMessage());
 		}
 		return false;
 	}
@@ -304,7 +303,7 @@ public abstract class RSASign {
 	public static boolean verifySign(ByteBuffer content, byte[] signVal, PublicKey publicKey, boolean isNewVerifySign) {
 		if (content == null || publicKey == null || signVal == null
 				|| !RSAEncrypt.isPublicKeyLengthRight((RSAPublicKey) publicKey)) {
-			ModuleManager.log().eTag(TAG, "content or publicKey is null , or length is too short");
+			LogUtil.e(TAG, "content or publicKey is null , or length is too short");
 			return false;
 		}
 		Signature signature;
@@ -319,9 +318,9 @@ public abstract class RSASign {
 			signature.update(content);
 			return signature.verify(signVal);
 		} catch (GeneralSecurityException e) {
-			ModuleManager.log().eTag(TAG, "check sign exception: " + e.getMessage());
+			LogUtil.e(TAG, "check sign exception: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "exception : " + e.getMessage());
+			LogUtil.e(TAG, "exception : " + e.getMessage());
 		}
 		return false;
 	}

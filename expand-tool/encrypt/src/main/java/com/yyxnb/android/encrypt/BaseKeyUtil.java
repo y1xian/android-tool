@@ -2,7 +2,6 @@ package com.yyxnb.android.encrypt;
 
 import android.annotation.SuppressLint;
 
-import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.encrypt.hash.PBKDF2;
 
 /**
@@ -134,10 +133,10 @@ public class BaseKeyUtil {
 
 		// https://developer.android.com/reference/javax/crypto/SecretKeyFactory
 		if (!isSHA256) {
-			ModuleManager.log().iTag(TAG, "exportRootKey: sha1");
+			LogUtil.i(TAG, "exportRootKey: sha1");
 			return PBKDF2.pbkdf2(combined, salt, iteration, exportLen * 8);
 		} else {
-			ModuleManager.log().iTag(TAG, "exportRootKey: sha256");
+			LogUtil.i(TAG, "exportRootKey: sha256");
 			return PBKDF2.pbkdf2SHA256(combined, salt, iteration, exportLen * 8);
 		}
 	}

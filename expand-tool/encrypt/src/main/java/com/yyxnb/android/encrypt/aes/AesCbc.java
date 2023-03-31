@@ -2,9 +2,9 @@ package com.yyxnb.android.encrypt.aes;
 
 import android.text.TextUtils;
 
-import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.encrypt.EncryptUtil;
 import com.yyxnb.android.encrypt.HexUtil;
+import com.yyxnb.android.encrypt.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
@@ -60,17 +60,17 @@ public final class AesCbc {
 	 */
 	public static String encrypt(String content, String key) {
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "encrypt 1 content is null");
+			LogUtil.e(TAG, "encrypt 1 content is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(key)) {
-			ModuleManager.log().eTag(TAG, "encrypt 1 key is null");
+			LogUtil.e(TAG, "encrypt 1 key is null");
 			return EMPTY;
 		}
 
 		byte[] secretkey = HexUtil.hexStr2ByteArray(key);
 		if (secretkey.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 1 key error: 1 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 1 key error: 1 key length less than 16 bytes.");
 			return EMPTY;
 		}
 		return encrypt(content, secretkey);
@@ -85,17 +85,17 @@ public final class AesCbc {
 	 */
 	public static String decrypt(String content, String key) {
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "decrypt 1 content is null");
+			LogUtil.e(TAG, "decrypt 1 content is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(key)) {
-			ModuleManager.log().eTag(TAG, "decrypt 1 key is null");
+			LogUtil.e(TAG, "decrypt 1 key is null");
 			return EMPTY;
 		}
 
 		byte[] secretkey = HexUtil.hexStr2ByteArray(key);
 		if (secretkey.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 1 key error: 1 key length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 1 key error: 1 key length less than 16 bytes.");
 			return EMPTY;
 		}
 		return decrypt(content, secretkey);
@@ -110,15 +110,15 @@ public final class AesCbc {
 	 */
 	public static String encrypt(String content, byte[] key) {
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "encrypt 2 content is null");
+			LogUtil.e(TAG, "encrypt 2 content is null");
 			return EMPTY;
 		}
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 2 key is null");
+			LogUtil.e(TAG, "encrypt 2 key is null");
 			return EMPTY;
 		}
 		if (key.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 2 key error: 2 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 2 key error: 2 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
@@ -141,15 +141,15 @@ public final class AesCbc {
 	 */
 	public static String decrypt(String content, byte[] key) {
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "decrypt 2 content is null");
+			LogUtil.e(TAG, "decrypt 2 content is null");
 			return EMPTY;
 		}
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 2 key is null");
+			LogUtil.e(TAG, "decrypt 2 key is null");
 			return EMPTY;
 		}
 		if (key.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 2 key error: 2 key length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 2 key error: 2 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
@@ -158,12 +158,12 @@ public final class AesCbc {
 		String encrypedWord = getEncryptWord(content);
 
 		if (TextUtils.isEmpty(ivParameter)) {
-			ModuleManager.log().eTag(TAG, "decrypt 2 iv is null");
+			LogUtil.e(TAG, "decrypt 2 iv is null");
 			return EMPTY;
 		}
 
 		if (TextUtils.isEmpty(encrypedWord)) {
-			ModuleManager.log().eTag(TAG, "decrypt 2 encrypt content is null");
+			LogUtil.e(TAG, "decrypt 2 encrypt content is null");
 			return EMPTY;
 		}
 		return decrypt(encrypedWord, key, HexUtil.hexStr2ByteArray(ivParameter));
@@ -180,27 +180,27 @@ public final class AesCbc {
 	public static String encrypt(String content, String key, String ivParameter) {
 
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 content is null");
+			LogUtil.e(TAG, "encrypt 3 content is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(key)) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 key is null");
+			LogUtil.e(TAG, "encrypt 3 key is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(ivParameter)) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 iv is null");
+			LogUtil.e(TAG, "encrypt 3 iv is null");
 			return EMPTY;
 		}
 
 		byte[] secretkey = HexUtil.hexStr2ByteArray(key);
 		byte[] ivParameterBytes = HexUtil.hexStr2ByteArray(ivParameter);
 		if (secretkey.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 key error: 3 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 3 key error: 3 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (ivParameterBytes.length < AES_128_CBC_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 iv error: 3 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 3 iv error: 3 iv length less than 16 bytes.");
 			return EMPTY;
 		}
 
@@ -217,15 +217,15 @@ public final class AesCbc {
 	 */
 	public static String decrypt(String content, String key, String ivParameter) {
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 content is null");
+			LogUtil.e(TAG, "decrypt 3 content is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(key)) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 key is null");
+			LogUtil.e(TAG, "decrypt 3 key is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(ivParameter)) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 iv is null");
+			LogUtil.e(TAG, "decrypt 3 iv is null");
 			return EMPTY;
 		}
 
@@ -233,12 +233,12 @@ public final class AesCbc {
 		byte[] ivParameterBytes = HexUtil.hexStr2ByteArray(ivParameter);
 
 		if (secretkey.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 key error: 3 key length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 3 key error: 3 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (ivParameterBytes.length < AES_128_CBC_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 iv error: 3 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 3 iv error: 3 iv length less than 16 bytes.");
 			return EMPTY;
 		}
 
@@ -255,24 +255,24 @@ public final class AesCbc {
 	 */
 	public static String encrypt(String content, byte[] key, byte[] ivParameter) {
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "encrypt 4 content is null");
+			LogUtil.e(TAG, "encrypt 4 content is null");
 			return EMPTY;
 		}
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 4 key is null");
+			LogUtil.e(TAG, "encrypt 4 key is null");
 			return EMPTY;
 		}
 		if (key.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 4 key error: 4 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 4 key error: 4 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (ivParameter == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 4 iv is null");
+			LogUtil.e(TAG, "encrypt 4 iv is null");
 			return EMPTY;
 		}
 		if (ivParameter.length < AES_128_CBC_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 4 iv error: 4 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 4 iv error: 4 iv length less than 16 bytes.");
 			return EMPTY;
 		}
 		return HexUtil.byteArray2HexStr(encryptNotHex(content, key, ivParameter));
@@ -289,31 +289,31 @@ public final class AesCbc {
 	private static byte[] encryptNotHex(String content, byte[] key, byte[] ivParameter) {
 
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 content is null");
+			LogUtil.e(TAG, "encrypt 5 content is null");
 			return new byte[0];
 		}
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 key is null");
+			LogUtil.e(TAG, "encrypt 5 key is null");
 			return new byte[0];
 		}
 		if (key.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 key error: 5 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 5 key error: 5 key length less than 16 bytes.");
 			return new byte[0];
 		}
 
 		if (ivParameter == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 iv is null");
+			LogUtil.e(TAG, "encrypt 5 iv is null");
 			return new byte[0];
 		}
 		if (ivParameter.length < AES_128_CBC_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 iv error: 5 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 5 iv error: 5 iv length less than 16 bytes.");
 			return new byte[0];
 		}
 
 		try {
 			return encrypt(content.getBytes("UTF-8"), key, ivParameter);
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, " cbc encrypt data error" + e.getMessage());
+			LogUtil.e(TAG, " cbc encrypt data error" + e.getMessage());
 		}
 		return new byte[0];
 	}
@@ -328,24 +328,24 @@ public final class AesCbc {
 	 */
 	public static String decrypt(String content, byte[] key, byte[] ivParameter) {
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 content is null");
+			LogUtil.e(TAG, "decrypt 4 content is null");
 			return EMPTY;
 		}
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 key is null");
+			LogUtil.e(TAG, "decrypt 4 key is null");
 			return EMPTY;
 		}
 		if (key.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 key error: 4 key length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 4 key error: 4 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (ivParameter == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 iv is null");
+			LogUtil.e(TAG, "decrypt 4 iv is null");
 			return EMPTY;
 		}
 		if (ivParameter.length < AES_128_CBC_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 iv error: 4 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 4 iv error: 4 iv length less than 16 bytes.");
 			return EMPTY;
 		}
 
@@ -353,7 +353,7 @@ public final class AesCbc {
 			byte[] decrypted = decrypt(HexUtil.hexStr2ByteArray(content), key, ivParameter);
 			return new String(decrypted, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, " cbc decrypt data error" + e.getMessage());
+			LogUtil.e(TAG, " cbc decrypt data error" + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -384,7 +384,7 @@ public final class AesCbc {
 			buffer.append(cryptWord.substring(16)); // 密文（剩余部分）
 			return buffer.toString();
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "mix exception: " + e.getMessage());
+			LogUtil.e(TAG, "mix exception: " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -400,30 +400,30 @@ public final class AesCbc {
 	public static byte[] encrypt(byte[] content, byte[] key, byte[] ivParameter) {
 
 		if (content == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 content is null");
+			LogUtil.e(TAG, "encrypt 6 content is null");
 			return new byte[0];
 		}
 		if (content.length == 0) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 content length is 0");
+			LogUtil.e(TAG, "encrypt 6 content length is 0");
 			return new byte[0];
 		}
 
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 key is null");
+			LogUtil.e(TAG, "encrypt 6 key is null");
 			return new byte[0];
 		}
 
 		if (key.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 key error: 6 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 6 key error: 6 key length less than 16 bytes.");
 			return new byte[0];
 		}
 
 		if (ivParameter == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 iv is null");
+			LogUtil.e(TAG, "encrypt 6 iv is null");
 			return new byte[0];
 		}
 		if (ivParameter.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 iv error: 6 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 6 iv error: 6 iv length less than 16 bytes.");
 			return new byte[0];
 		}
 
@@ -435,19 +435,19 @@ public final class AesCbc {
 			cipher.init(Cipher.ENCRYPT_MODE, secretkey, ivparam);
 			return cipher.doFinal(content);
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException: " + e.getMessage());
 		} catch (NoSuchPaddingException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchPaddingException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchPaddingException: " + e.getMessage());
 		} catch (InvalidKeyException e) {
-			ModuleManager.log().eTag(TAG, "InvalidKeyException: " + e.getMessage());
+			LogUtil.e(TAG, "InvalidKeyException: " + e.getMessage());
 		} catch (InvalidAlgorithmParameterException e) {
-			ModuleManager.log().eTag(TAG, "InvalidAlgorithmParameterException: " + e.getMessage());
+			LogUtil.e(TAG, "InvalidAlgorithmParameterException: " + e.getMessage());
 		} catch (IllegalBlockSizeException e) {
-			ModuleManager.log().eTag(TAG, "IllegalBlockSizeException: " + e.getMessage());
+			LogUtil.e(TAG, "IllegalBlockSizeException: " + e.getMessage());
 		} catch (BadPaddingException e) {
-			ModuleManager.log().eTag(TAG, "BadPaddingException: " + e.getMessage());
+			LogUtil.e(TAG, "BadPaddingException: " + e.getMessage());
 		} catch (NullPointerException e) {
-			ModuleManager.log().eTag(TAG, "NullPointerException: " + e.getMessage());
+			LogUtil.e(TAG, "NullPointerException: " + e.getMessage());
 		}
 		return new byte[0];
 	}
@@ -463,30 +463,30 @@ public final class AesCbc {
 	public static byte[] decrypt(byte[] content, byte[] key, byte[] ivParameter) {
 
 		if (content == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 content is null");
+			LogUtil.e(TAG, "decrypt 6 content is null");
 			return new byte[0];
 		}
 		if (content.length == 0) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 content length is 0");
+			LogUtil.e(TAG, "decrypt 6 content length is 0");
 			return new byte[0];
 		}
 
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 key is null");
+			LogUtil.e(TAG, "decrypt 6 key is null");
 			return new byte[0];
 		}
 
 		if (key.length < AES_128_CBC_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 key error: 6 key length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 6 key error: 6 key length less than 16 bytes.");
 			return new byte[0];
 		}
 
 		if (ivParameter == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 iv is null");
+			LogUtil.e(TAG, "decrypt 6 iv is null");
 			return new byte[0];
 		}
 		if (ivParameter.length < AES_128_CBC_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 iv error: 6 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 6 iv error: 6 iv length less than 16 bytes.");
 			return new byte[0];
 		}
 		SecretKeySpec secretkey = new SecretKeySpec(key, AES_ALGORITHM);
@@ -497,20 +497,20 @@ public final class AesCbc {
 			cipher.init(Cipher.DECRYPT_MODE, secretkey, ivparam);
 			return cipher.doFinal(content);
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException: " + e.getMessage());
 		} catch (NoSuchPaddingException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchPaddingException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchPaddingException: " + e.getMessage());
 		} catch (InvalidKeyException e) {
-			ModuleManager.log().eTag(TAG, "InvalidKeyException: " + e.getMessage());
+			LogUtil.e(TAG, "InvalidKeyException: " + e.getMessage());
 		} catch (InvalidAlgorithmParameterException e) {
-			ModuleManager.log().eTag(TAG, "InvalidAlgorithmParameterException: " + e.getMessage());
+			LogUtil.e(TAG, "InvalidAlgorithmParameterException: " + e.getMessage());
 		} catch (IllegalBlockSizeException e) {
-			ModuleManager.log().eTag(TAG, "IllegalBlockSizeException: " + e.getMessage());
+			LogUtil.e(TAG, "IllegalBlockSizeException: " + e.getMessage());
 		} catch (BadPaddingException e) {
-			ModuleManager.log().eTag(TAG, "BadPaddingException: " + e.getMessage());
-			ModuleManager.log().eTag(TAG, "key is not right");
+			LogUtil.e(TAG, "BadPaddingException: " + e.getMessage());
+			LogUtil.e(TAG, "key is not right");
 		} catch (NullPointerException e) {
-			ModuleManager.log().eTag(TAG, "NullPointerException: " + e.getMessage());
+			LogUtil.e(TAG, "NullPointerException: " + e.getMessage());
 		}
 		return new byte[0];
 	}
@@ -578,7 +578,7 @@ public final class AesCbc {
 			iv.append(src.substring(32, 48));
 			return iv.toString();
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "getIv exception : " + e.getMessage());
+			LogUtil.e(TAG, "getIv exception : " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -602,7 +602,7 @@ public final class AesCbc {
 			word.append(src.substring(48));
 			return word.toString();
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "get encryptword exception : " + e.getMessage());
+			LogUtil.e(TAG, "get encryptword exception : " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -633,7 +633,7 @@ public final class AesCbc {
 		try {
 			encryptStr = new String(encryptText, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "stripCryptHead: exception : " + e.getMessage());
+			LogUtil.e(TAG, "stripCryptHead: exception : " + e.getMessage());
 		}
 
 		if (!encryptStr.startsWith(KEY_HEAD)) {
@@ -670,7 +670,7 @@ public final class AesCbc {
 			iv = HexUtil.hexStr2ByteArray(subContent.substring(0, index));
 			cipherText = HexUtil.hexStr2ByteArray(subContent.substring(index + 1));
 		} else {
-			ModuleManager.log().eTag(TAG, " cbc cipherText data missing colon");
+			LogUtil.e(TAG, " cbc cipherText data missing colon");
 			return EMPTY;
 		}
 
@@ -690,7 +690,7 @@ public final class AesCbc {
 		try {
 			return new String(decryptWithCryptHeadReturnByte(content, key), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "decryptWithCryptHead UnsupportedEncodingException ");
+			LogUtil.e(TAG, "decryptWithCryptHead UnsupportedEncodingException ");
 		}
 		return "";
 	}
@@ -712,7 +712,7 @@ public final class AesCbc {
 			cipherText = new byte[cipherTextLen];
 			System.arraycopy(subContent, index + 1, cipherText, 0, cipherTextLen);
 		} else {
-			ModuleManager.log().eTag(TAG, " cbc cipherText data missing colon");
+			LogUtil.e(TAG, " cbc cipherText data missing colon");
 			return new byte[0];
 		}
 		return decrypt(cipherText, key, iv);

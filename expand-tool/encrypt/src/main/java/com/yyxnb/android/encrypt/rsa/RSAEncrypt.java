@@ -3,8 +3,8 @@ package com.yyxnb.android.encrypt.rsa;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.encrypt.EncryptUtil;
+import com.yyxnb.android.encrypt.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -53,7 +53,7 @@ public abstract class RSAEncrypt {
 	 */
 	public static String encrypt(String data, String publicKeyStr) {
 		if (TextUtils.isEmpty(data) || TextUtils.isEmpty(publicKeyStr)) {
-			ModuleManager.log().eTag(TAG, "content or public key is null");
+			LogUtil.e(TAG, "content or public key is null");
 			return EMPTY;
 		}
 		PublicKey publicKey = EncryptUtil.getPublicKey(publicKeyStr);
@@ -69,7 +69,7 @@ public abstract class RSAEncrypt {
 	 */
 	public static String decrypt(String data, String privateKeyStr) {
 		if (TextUtils.isEmpty(data) || TextUtils.isEmpty(privateKeyStr)) {
-			ModuleManager.log().eTag(TAG, "content or private key is null");
+			LogUtil.e(TAG, "content or private key is null");
 			return EMPTY;
 		}
 		PrivateKey privateKey = EncryptUtil.getPrivateKey(privateKeyStr);
@@ -85,15 +85,15 @@ public abstract class RSAEncrypt {
 	 */
 	public static String encrypt(String data, PublicKey publicKey) {
 		if (TextUtils.isEmpty(data) || publicKey == null || !isPublicKeyLengthRight((RSAPublicKey) publicKey)) {
-			ModuleManager.log().eTag(TAG, "content or PublicKey is null , or length is too short");
+			LogUtil.e(TAG, "content or PublicKey is null , or length is too short");
 			return EMPTY;
 		}
 		try {
 			return Base64.encodeToString(encrypt(data.getBytes(CHARSET), publicKey), Base64.DEFAULT);
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "encrypt: UnsupportedEncodingException");
+			LogUtil.e(TAG, "encrypt: UnsupportedEncodingException");
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "exception : " + e.getMessage());
+			LogUtil.e(TAG, "exception : " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -107,15 +107,15 @@ public abstract class RSAEncrypt {
 	 */
 	public static String decrypt(String data, PrivateKey privateKey) {
 		if (TextUtils.isEmpty(data) || privateKey == null || !isPrivateKeyLengthRight((RSAPrivateKey) privateKey)) {
-			ModuleManager.log().eTag(TAG, "content or privateKey is null , or length is too short");
+			LogUtil.e(TAG, "content or privateKey is null , or length is too short");
 			return EMPTY;
 		}
 		try {
 			return new String(decrypt(Base64.decode(data, Base64.DEFAULT), privateKey), CHARSET);
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "RSA decrypt exception : " + e.getMessage());
+			LogUtil.e(TAG, "RSA decrypt exception : " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "exception : " + e.getMessage());
+			LogUtil.e(TAG, "exception : " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -130,7 +130,7 @@ public abstract class RSAEncrypt {
 	public static byte[] encrypt(byte[] data, PublicKey publicKey) {
 		byte[] result = new byte[0];
 		if (data == null || publicKey == null || !isPublicKeyLengthRight((RSAPublicKey) publicKey)) {
-			ModuleManager.log().eTag(TAG, "content or PublicKey is null , or length is too short");
+			LogUtil.e(TAG, "content or PublicKey is null , or length is too short");
 			return result;
 		}
 		try {
@@ -138,7 +138,7 @@ public abstract class RSAEncrypt {
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 			return cipher.doFinal(data);
 		} catch (GeneralSecurityException e) {
-			ModuleManager.log().eTag(TAG, "RSA encrypt exception : " + e.getMessage());
+			LogUtil.e(TAG, "RSA encrypt exception : " + e.getMessage());
 		}
 		return result;
 	}
@@ -153,7 +153,7 @@ public abstract class RSAEncrypt {
 	public static byte[] decrypt(byte[] data, PrivateKey privateKey) {
 		byte[] result = new byte[0];
 		if (data == null || privateKey == null || !isPrivateKeyLengthRight((RSAPrivateKey) privateKey)) {
-			ModuleManager.log().eTag(TAG, "content or privateKey is null , or length is too short");
+			LogUtil.e(TAG, "content or privateKey is null , or length is too short");
 			return result;
 		}
 		try {
@@ -161,7 +161,7 @@ public abstract class RSAEncrypt {
 			cipher.init(Cipher.DECRYPT_MODE, privateKey);
 			result = cipher.doFinal(data);
 		} catch (GeneralSecurityException e) {
-			ModuleManager.log().eTag(TAG, "RSA decrypt exception : " + e.getMessage());
+			LogUtil.e(TAG, "RSA decrypt exception : " + e.getMessage());
 		}
 		return result;
 	}
@@ -202,7 +202,7 @@ public abstract class RSAEncrypt {
 	public static Map<String, Key> generateRSAKeyPair(int length) throws NoSuchAlgorithmException {
 		Map<String, Key> map = new HashMap<>(2);
 		if (length < KEY_LENGTH) {
-			ModuleManager.log().eTag(TAG, "generateRSAKeyPair: key length is too short");
+			LogUtil.e(TAG, "generateRSAKeyPair: key length is too short");
 			return map;
 		}
 		SecureRandom sr = EncryptUtil.genSecureRandom();

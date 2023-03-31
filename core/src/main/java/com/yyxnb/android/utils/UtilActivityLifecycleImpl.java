@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author yyx
  * @date 2022/11/7
  */
-@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 final class UtilActivityLifecycleImpl implements Application.ActivityLifecycleCallbacks {
 
 	static final UtilActivityLifecycleImpl INSTANCE = new UtilActivityLifecycleImpl();

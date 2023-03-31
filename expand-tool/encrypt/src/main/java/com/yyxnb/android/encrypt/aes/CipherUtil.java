@@ -1,12 +1,13 @@
 package com.yyxnb.android.encrypt.aes;
 
-import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.encrypt.EncryptUtil;
 import com.yyxnb.android.encrypt.HexUtil;
+import com.yyxnb.android.encrypt.LogUtil;
 
 import java.security.GeneralSecurityException;
 import java.security.spec.AlgorithmParameterSpec;
 
+import javax.crypto.AEADBadTagException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -35,7 +36,7 @@ public class CipherUtil {
 
 	public static Cipher getAesGcmEncryptCipher(byte[] key) {
 		byte[] iv = EncryptUtil.generateSecureRandom(AES_GCM_IV_LEN);
-		ModuleManager.log().dTag(TAG, "getEncryptCipher: iv is : " + HexUtil.byteArray2HexStr(iv));
+		LogUtil.d(TAG, "getEncryptCipher: iv is : " + HexUtil.byteArray2HexStr(iv));
 		return getAesGcmEncryptCipher(key, iv);
 	}
 
@@ -132,7 +133,7 @@ public class CipherUtil {
 	private static Cipher getCipher(byte[] key, byte[] ivParameter, int mode, String algorithm) {
 		if (key == null || key.length < AES_GCM_KEY_LEN || ivParameter == null || ivParameter.length < AES_GCM_IV_LEN
 				|| !AesGcm.isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "gcm encrypt param is not right");
+			LogUtil.e(TAG, "gcm encrypt param is not right");
 			return null;
 		}
 		try {
@@ -147,7 +148,7 @@ public class CipherUtil {
 			cipher.init(mode, secretkey, algorithmParameterSpec);
 			return cipher;
 		} catch (GeneralSecurityException e) {
-			ModuleManager.log().eTag(TAG, "GCM encrypt data error" + e.getMessage());
+			LogUtil.e(TAG, "GCM encrypt data error" + e.getMessage());
 		}
 		return null;
 	}
@@ -168,18 +169,18 @@ public class CipherUtil {
 	 */
 	public static int getContent(Cipher cipher, byte[] input, byte[] output) {
 		if (cipher == null || input == null) {
-			ModuleManager.log().eTag(TAG, "getEncryptCOntent: cipher is null or content is null");
+			LogUtil.e(TAG, "getEncryptCOntent: cipher is null or content is null");
 			return -1;
 		}
 
 		try {
 			return cipher.doFinal(input, 0, input.length, output);
 		} catch (BadPaddingException e) {
-			ModuleManager.log().eTag(TAG, "getContent: BadPaddingException");
+			LogUtil.e(TAG, "getContent: BadPaddingException");
 		} catch (IllegalBlockSizeException e) {
-			ModuleManager.log().eTag(TAG, "getContent: IllegalBlockSizeException");
+			LogUtil.e(TAG, "getContent: IllegalBlockSizeException");
 		} catch (ShortBufferException e) {
-			ModuleManager.log().eTag(TAG, "getContent: ShortBufferException");
+			LogUtil.e(TAG, "getContent: ShortBufferException");
 		}
 		return -1;
 	}
@@ -249,7 +250,7 @@ public class CipherUtil {
 	public static int getContent(Cipher cipher, byte[] input, int inputOffset, int inputLen, byte[] output,
 								 int outputOffset) throws BadPaddingException, IllegalBlockSizeException, ShortBufferException {
 		if (cipher == null || input == null) {
-			ModuleManager.log().eTag(TAG, "getEncryptCOntent: cipher is null or content is null");
+			LogUtil.e(TAG, "getEncryptCOntent: cipher is null or content is null");
 			return -1;
 		}
 		return cipher.doFinal(input, inputOffset, inputLen, output, outputOffset);
@@ -257,16 +258,16 @@ public class CipherUtil {
 
 	public static byte[] getContent(Cipher cipher, byte[] input) {
 		if (cipher == null || input == null) {
-			ModuleManager.log().eTag(TAG, "getEncryptCOntent: cipher is null or content is null");
+			LogUtil.e(TAG, "getEncryptCOntent: cipher is null or content is null");
 			return new byte[0];
 		}
 
 		try {
 			return cipher.doFinal(input, 0, input.length);
 		} catch (BadPaddingException e) {
-			ModuleManager.log().eTag(TAG, "getContent: BadPaddingException");
+			LogUtil.e(TAG, "getContent: BadPaddingException");
 		} catch (IllegalBlockSizeException e) {
-			ModuleManager.log().eTag(TAG, "getContent: IllegalBlockSizeException");
+			LogUtil.e(TAG, "getContent: IllegalBlockSizeException");
 		}
 		return new byte[0];
 	}

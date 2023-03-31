@@ -6,7 +6,9 @@ import android.security.keystore.KeyProperties;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import com.yyxnb.android.ModuleManager;
+import androidx.annotation.RequiresApi;
+
+import com.yyxnb.android.encrypt.LogUtil;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -66,7 +68,7 @@ public abstract class RSAEncryptKS {
 			try {
 				return Base64.encodeToString(encrypt(alias, plaintext.getBytes("UTF-8")), Base64.DEFAULT);
 			} catch (UnsupportedEncodingException e) {
-				ModuleManager.log().eTag(TAG, "UnsupportedEncodingException: " + e.getMessage());
+				LogUtil.e(TAG, "UnsupportedEncodingException: " + e.getMessage());
 			}
 		}
 		return EMPTY;
@@ -84,9 +86,9 @@ public abstract class RSAEncryptKS {
 		try {
 			return new String(decrpyt(alias, Base64.decode(encrypted, Base64.DEFAULT)), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "UnsupportedEncodingException: " + e.getMessage());
+			LogUtil.e(TAG, "UnsupportedEncodingException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -115,17 +117,17 @@ public abstract class RSAEncryptKS {
 	public static byte[] decrpyt(String alias, byte[] encrypted) {
 		byte[] result = new byte[0];
 		if (TextUtils.isEmpty(alias) || encrypted == null) {
-			ModuleManager.log().eTag(TAG, "alias or encrypted content is null");
+			LogUtil.e(TAG, "alias or encrypted content is null");
 			return result;
 		}
 		if (!isBuildVersionHigherThan22()) {
-			ModuleManager.log().eTag(TAG, "sdk version is too low");
+			LogUtil.e(TAG, "sdk version is too low");
 			return result;
 		}
 
 		PrivateKey privateKey = getPrivateKey(alias);
 		if (privateKey == null) {
-			ModuleManager.log().eTag(TAG, "Private key is null");
+			LogUtil.e(TAG, "Private key is null");
 			return result;
 		}
 		Cipher cipher = null;
@@ -136,19 +138,19 @@ public abstract class RSAEncryptKS {
 			cipher.init(Cipher.DECRYPT_MODE, privateKey, sp);
 			return cipher.doFinal(encrypted);
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException: " + e.getMessage());
 		} catch (NoSuchPaddingException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchPaddingException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchPaddingException: " + e.getMessage());
 		} catch (InvalidKeyException e) {
-			ModuleManager.log().eTag(TAG, "InvalidKeyException: " + e.getMessage());
+			LogUtil.e(TAG, "InvalidKeyException: " + e.getMessage());
 		} catch (InvalidAlgorithmParameterException e) {
-			ModuleManager.log().eTag(TAG, "InvalidAlgorithmParameterException: " + e.getMessage());
+			LogUtil.e(TAG, "InvalidAlgorithmParameterException: " + e.getMessage());
 		} catch (IllegalBlockSizeException e) {
-			ModuleManager.log().eTag(TAG, "IllegalBlockSizeException: " + e.getMessage());
+			LogUtil.e(TAG, "IllegalBlockSizeException: " + e.getMessage());
 		} catch (BadPaddingException e) {
-			ModuleManager.log().eTag(TAG, "BadPaddingException: " + e.getMessage());
+			LogUtil.e(TAG, "BadPaddingException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		return result;
 	}
@@ -165,7 +167,7 @@ public abstract class RSAEncryptKS {
 			try {
 				return Base64.encodeToString(encryptNew(alias, plaintext.getBytes("UTF-8")), Base64.DEFAULT);
 			} catch (UnsupportedEncodingException e) {
-				ModuleManager.log().eTag(TAG, "UnsupportedEncodingException: " + e.getMessage());
+				LogUtil.e(TAG, "UnsupportedEncodingException: " + e.getMessage());
 			}
 		}
 		return EMPTY;
@@ -182,9 +184,9 @@ public abstract class RSAEncryptKS {
 		try {
 			return new String(decrpytNew(alias, Base64.decode(encrypted, Base64.DEFAULT)), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "UnsupportedEncodingException: " + e.getMessage());
+			LogUtil.e(TAG, "UnsupportedEncodingException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -215,17 +217,17 @@ public abstract class RSAEncryptKS {
 	private static byte[] encrypt(String alias, byte[] plaintext, boolean is3072) {
 		byte[] result = new byte[0];
 		if (TextUtils.isEmpty(alias) || plaintext == null) {
-			ModuleManager.log().eTag(TAG, "alias or content is null");
+			LogUtil.e(TAG, "alias or content is null");
 			return result;
 		}
 		if (!isBuildVersionHigherThan22()) {
-			ModuleManager.log().eTag(TAG, "sdk version is too low");
+			LogUtil.e(TAG, "sdk version is too low");
 			return result;
 		}
 
 		PublicKey publicKey = getPublicKey(alias, is3072);
 		if (publicKey == null) {
-			ModuleManager.log().eTag(TAG, "Public key is null");
+			LogUtil.e(TAG, "Public key is null");
 			return result;
 		}
 		Cipher cipher = null;
@@ -237,19 +239,19 @@ public abstract class RSAEncryptKS {
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey, sp);
 			return cipher.doFinal(plaintext);
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException: " + e.getMessage());
 		} catch (NoSuchPaddingException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchPaddingException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchPaddingException: " + e.getMessage());
 		} catch (InvalidKeyException e) {
-			ModuleManager.log().eTag(TAG, "InvalidKeyException: " + e.getMessage());
+			LogUtil.e(TAG, "InvalidKeyException: " + e.getMessage());
 		} catch (InvalidAlgorithmParameterException e) {
-			ModuleManager.log().eTag(TAG, "InvalidAlgorithmParameterException: " + e.getMessage());
+			LogUtil.e(TAG, "InvalidAlgorithmParameterException: " + e.getMessage());
 		} catch (IllegalBlockSizeException e) {
-			ModuleManager.log().eTag(TAG, "IllegalBlockSizeException: " + e.getMessage());
+			LogUtil.e(TAG, "IllegalBlockSizeException: " + e.getMessage());
 		} catch (BadPaddingException e) {
-			ModuleManager.log().eTag(TAG, "BadPaddingException: " + e.getMessage());
+			LogUtil.e(TAG, "BadPaddingException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		return result;
 	}
@@ -261,15 +263,16 @@ public abstract class RSAEncryptKS {
 	 * @param alias keystore别名
 	 * @return 公私钥对
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.M)
 	private synchronized static KeyPair generateKeyPair(String alias, boolean is3072) {
 		if (keyPairExists(alias)) {
-			ModuleManager.log().eTag(TAG, "Key pair exits");
+			LogUtil.e(TAG, "Key pair exits");
 			return null;
 		}
 		KeyPairGenerator keyPairGenerator;
 		KeyPair keyPair = null;
 
-		ModuleManager.log().iTag(TAG, "generate key pair.");
+		LogUtil.i(TAG, "generate key pair.");
 		try {
 			keyPairGenerator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, ANDROID_KEY_STORE);
 			if (!is3072) {
@@ -287,13 +290,13 @@ public abstract class RSAEncryptKS {
 			}
 			keyPair = keyPairGenerator.generateKeyPair();
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException: " + e.getMessage());
 		} catch (NoSuchProviderException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchProviderException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchProviderException: " + e.getMessage());
 		} catch (InvalidAlgorithmParameterException e) {
-			ModuleManager.log().eTag(TAG, "InvalidAlgorithmParameterException: " + e.getMessage());
+			LogUtil.e(TAG, "InvalidAlgorithmParameterException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		return keyPair;
 	}
@@ -304,6 +307,7 @@ public abstract class RSAEncryptKS {
 	 * @param alias 别名
 	 * @return 公钥
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.M)
 	private static PublicKey getPublicKey(String alias, boolean is3072) {
 		if (!keyPairExists(alias)) {
 			generateKeyPair(alias, is3072);
@@ -331,15 +335,15 @@ public abstract class RSAEncryptKS {
 			keyStore.load(null);
 			certificate = keyStore.getCertificate(alias);
 		} catch (KeyStoreException e) {
-			ModuleManager.log().eTag(TAG, "KeyStoreException: " + e.getMessage());
+			LogUtil.e(TAG, "KeyStoreException: " + e.getMessage());
 		} catch (CertificateException e) {
-			ModuleManager.log().eTag(TAG, "CertificateException: " + e.getMessage());
+			LogUtil.e(TAG, "CertificateException: " + e.getMessage());
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException: " + e.getMessage());
 		} catch (IOException e) {
-			ModuleManager.log().eTag(TAG, "IOException: " + e.getMessage());
+			LogUtil.e(TAG, "IOException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		return certificate;
 	}
@@ -362,17 +366,17 @@ public abstract class RSAEncryptKS {
 			keyStore.load(null);
 			privateKey = (PrivateKey) keyStore.getKey(alias, null);
 		} catch (KeyStoreException e) {
-			ModuleManager.log().eTag(TAG, "KeyStoreException: " + e.getMessage());
+			LogUtil.e(TAG, "KeyStoreException: " + e.getMessage());
 		} catch (CertificateException e) {
-			ModuleManager.log().eTag(TAG, "CertificateException: " + e.getMessage());
+			LogUtil.e(TAG, "CertificateException: " + e.getMessage());
 		} catch (UnrecoverableKeyException e) {
-			ModuleManager.log().eTag(TAG, "UnrecoverableKeyException: " + e.getMessage());
+			LogUtil.e(TAG, "UnrecoverableKeyException: " + e.getMessage());
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException: " + e.getMessage());
 		} catch (IOException e) {
-			ModuleManager.log().eTag(TAG, "IOException: " + e.getMessage());
+			LogUtil.e(TAG, "IOException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		return privateKey;
 	}
@@ -400,17 +404,17 @@ public abstract class RSAEncryptKS {
 			keyStore.load(null);
 			return (keyStore.getKey(alias, null) != null);
 		} catch (KeyStoreException e) {
-			ModuleManager.log().eTag(TAG, "KeyStoreException: " + e.getMessage());
+			LogUtil.e(TAG, "KeyStoreException: " + e.getMessage());
 		} catch (CertificateException e) {
-			ModuleManager.log().eTag(TAG, "CertificateException: " + e.getMessage());
+			LogUtil.e(TAG, "CertificateException: " + e.getMessage());
 		} catch (UnrecoverableKeyException e) {
-			ModuleManager.log().eTag(TAG, "UnrecoverableKeyException: " + e.getMessage());
+			LogUtil.e(TAG, "UnrecoverableKeyException: " + e.getMessage());
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException: " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException: " + e.getMessage());
 		} catch (IOException e) {
-			ModuleManager.log().eTag(TAG, "IOException: " + e.getMessage());
+			LogUtil.e(TAG, "IOException: " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		return false;
 	}

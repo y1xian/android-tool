@@ -5,7 +5,6 @@ android {
 }
 
 dependencies {
-    compileOnly dependenciesExt.appcompat
-    compileOnly 'org.bouncycastle:bcpg-jdk15to18:1.71'
-    api project(':core')
+    implementation dependenciesExt.appcompat
+    implementation 'org.bouncycastle:bcpg-jdk15to18:1.71'
 }

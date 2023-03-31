@@ -3,9 +3,9 @@ package com.yyxnb.android.encrypt.aes;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.encrypt.EncryptUtil;
 import com.yyxnb.android.encrypt.HexUtil;
+import com.yyxnb.android.encrypt.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -61,23 +61,23 @@ public final class AesGcm {
 
 	public static String encrypt(String content, String key) {
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "encrypt 1 content is null");
+			LogUtil.e(TAG, "encrypt 1 content is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(key)) {
-			ModuleManager.log().eTag(TAG, "encrypt 1 key is null");
+			LogUtil.e(TAG, "encrypt 1 key is null");
 			return EMPTY;
 		}
 
 
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "encrypt 1 build version not higher than 19");
+			LogUtil.e(TAG, "encrypt 1 build version not higher than 19");
 			return EMPTY;
 		}
 
 		byte[] secretkey = HexUtil.hexStr2ByteArray(key);
 		if (secretkey.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt key error: key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt key error: key length less than 16 bytes.");
 			return EMPTY;
 		}
 		return encrypt(content, secretkey);
@@ -94,21 +94,21 @@ public final class AesGcm {
 	public static String decrypt(String content, String key) {
 
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "decrypt 1 content is null");
+			LogUtil.e(TAG, "decrypt 1 content is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(key)) {
-			ModuleManager.log().eTag(TAG, "decrypt 1 key is null");
+			LogUtil.e(TAG, "decrypt 1 key is null");
 			return EMPTY;
 		}
 
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "decrypt 1 build version not higher than 19");
+			LogUtil.e(TAG, "decrypt 1 build version not higher than 19");
 			return EMPTY;
 		}
 		byte[] secretkey = HexUtil.hexStr2ByteArray(key);
 		if (secretkey.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 1 key error: 1 key length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 1 key error: 1 key length less than 16 bytes.");
 			return EMPTY;
 		}
 		return decrypt(content, secretkey);
@@ -124,20 +124,20 @@ public final class AesGcm {
 
 	public static String encrypt(String content, byte[] key) {
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "encrypt 2 content is null");
+			LogUtil.e(TAG, "encrypt 2 content is null");
 			return EMPTY;
 		}
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 2 key is null");
+			LogUtil.e(TAG, "encrypt 2 key is null");
 			return EMPTY;
 		}
 		if (key.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 2 key error: 2 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 2 key error: 2 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "encrypt 2 build version not higher than 19");
+			LogUtil.e(TAG, "encrypt 2 build version not higher than 19");
 			return EMPTY;
 		}
 
@@ -163,20 +163,20 @@ public final class AesGcm {
 	public static String decrypt(String content, byte[] key) {
 
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "decrypt 2 content is null");
+			LogUtil.e(TAG, "decrypt 2 content is null");
 			return EMPTY;
 		}
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 2 key is null");
+			LogUtil.e(TAG, "decrypt 2 key is null");
 			return EMPTY;
 		}
 		if (key.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 2 key error: 2 key length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 2 key error: 2 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "decrypt 2 build version not higher than 19");
+			LogUtil.e(TAG, "decrypt 2 build version not higher than 19");
 			return EMPTY;
 		}
 		try {
@@ -188,12 +188,12 @@ public final class AesGcm {
 			String encrypedWord = getEncryptWord(content);
 
 			if (TextUtils.isEmpty(ivParameter)) {
-				ModuleManager.log().eTag(TAG, "decrypt 2 iv is null");
+				LogUtil.e(TAG, "decrypt 2 iv is null");
 				return EMPTY;
 			}
 
 			if (TextUtils.isEmpty(encrypedWord)) {
-				ModuleManager.log().eTag(TAG, "decrypt 2 encrypt content is null");
+				LogUtil.e(TAG, "decrypt 2 encrypt content is null");
 				return EMPTY;
 			}
 
@@ -203,7 +203,7 @@ public final class AesGcm {
 			return new String(decrypted, "UTF-8");
 
 		} catch (NullPointerException | GeneralSecurityException | UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "GCM decrypt data exception: " + e.getMessage());
+			LogUtil.e(TAG, "GCM decrypt data exception: " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -220,32 +220,32 @@ public final class AesGcm {
 	public static String encrypt(String content, String key, String iv) {
 
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 content is null");
+			LogUtil.e(TAG, "encrypt 3 content is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(key)) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 key is null");
+			LogUtil.e(TAG, "encrypt 3 key is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(iv)) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 iv is null");
+			LogUtil.e(TAG, "encrypt 3 iv is null");
 			return EMPTY;
 		}
 
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 build version not higher than 19");
+			LogUtil.e(TAG, "encrypt 3 build version not higher than 19");
 			return EMPTY;
 		}
 		byte[] secretkey = HexUtil.hexStr2ByteArray(key);
 		byte[] ivParameter = HexUtil.hexStr2ByteArray(iv);
 
 		if (secretkey.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 key error: 3 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 3 key error: 3 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (ivParameter.length < AES_GCM_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 iv error: 3 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 3 iv error: 3 iv length less than 16 bytes.");
 			return EMPTY;
 		}
 		return encrypt(content, secretkey, ivParameter);
@@ -263,32 +263,32 @@ public final class AesGcm {
 	public static String decrypt(String content, String key, String iv) {
 
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 content is null");
+			LogUtil.e(TAG, "decrypt 3 content is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(key)) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 key is null");
+			LogUtil.e(TAG, "decrypt 3 key is null");
 			return EMPTY;
 		}
 		if (TextUtils.isEmpty(iv)) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 iv is null");
+			LogUtil.e(TAG, "decrypt 3 iv is null");
 			return EMPTY;
 		}
 
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 build version not higher than 19");
+			LogUtil.e(TAG, "decrypt 3 build version not higher than 19");
 			return EMPTY;
 		}
 		byte[] secretkey = HexUtil.hexStr2ByteArray(key);
 		byte[] ivParameter = HexUtil.hexStr2ByteArray(iv);
 
 		if (secretkey.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 key error: 3 key length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 3 key error: 3 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (ivParameter.length < AES_GCM_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 3 iv error: 3 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 3 iv error: 3 iv length less than 16 bytes.");
 			return EMPTY;
 		}
 
@@ -307,29 +307,29 @@ public final class AesGcm {
 	public static String encrypt(String content, byte[] key, byte[] ivParameter) {
 
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "encrypt 4 content is null");
+			LogUtil.e(TAG, "encrypt 4 content is null");
 			return EMPTY;
 		}
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 4 key is null");
+			LogUtil.e(TAG, "encrypt 4 key is null");
 			return EMPTY;
 		}
 		if (key.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 4 key error: 3 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 4 key error: 3 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (ivParameter == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 4 iv is null");
+			LogUtil.e(TAG, "encrypt 4 iv is null");
 			return EMPTY;
 		}
 		if (ivParameter.length < AES_GCM_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 3 iv error: 3 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 3 iv error: 3 iv length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "encrypt 4 build version not higher than 19");
+			LogUtil.e(TAG, "encrypt 4 build version not higher than 19");
 			return EMPTY;
 		}
 		return HexUtil.byteArray2HexStr(encryptNotHex(content, key, ivParameter));
@@ -346,28 +346,28 @@ public final class AesGcm {
 
 	public static String decrypt(String content, byte[] key, byte[] ivParameter) {
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 content is null");
+			LogUtil.e(TAG, "decrypt 4 content is null");
 			return EMPTY;
 		}
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 key is null");
+			LogUtil.e(TAG, "decrypt 4 key is null");
 			return EMPTY;
 		}
 		if (key.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 key error: 4 key length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 4 key error: 4 key length less than 16 bytes.");
 			return EMPTY;
 		}
 
 		if (ivParameter == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 iv is null");
+			LogUtil.e(TAG, "decrypt 4 iv is null");
 			return EMPTY;
 		}
 		if (ivParameter.length < AES_GCM_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 iv error: 4 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 4 iv error: 4 iv length less than 16 bytes.");
 			return EMPTY;
 		}
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "decrypt 4 build version not higher than 19");
+			LogUtil.e(TAG, "decrypt 4 build version not higher than 19");
 			return EMPTY;
 		}
 
@@ -376,7 +376,7 @@ public final class AesGcm {
 			byte[] decryptContent = decrypt(encryptContent, key, ivParameter);
 			return new String(decryptContent, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "GCM decrypt data exception: " + e.getMessage());
+			LogUtil.e(TAG, "GCM decrypt data exception: " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -393,35 +393,35 @@ public final class AesGcm {
 	private static byte[] encryptNotHex(String content, byte[] key, byte[] ivParameter) {
 
 		if (TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 content is null");
+			LogUtil.e(TAG, "encrypt 5 content is null");
 			return new byte[0];
 		}
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 key is null");
+			LogUtil.e(TAG, "encrypt 5 key is null");
 			return new byte[0];
 		}
 		if (key.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 key error: 5 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 5 key error: 5 key length less than 16 bytes.");
 			return new byte[0];
 		}
 
 		if (ivParameter == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 iv is null");
+			LogUtil.e(TAG, "encrypt 5 iv is null");
 			return new byte[0];
 		}
 		if (ivParameter.length < AES_GCM_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 iv error: 5 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 5 iv error: 5 iv length less than 16 bytes.");
 			return new byte[0];
 		}
 
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "encrypt 5 build version not higher than 19");
+			LogUtil.e(TAG, "encrypt 5 build version not higher than 19");
 			return new byte[0];
 		}
 		try {
 			return encrypt(content.getBytes("UTF-8"), key, ivParameter);
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "GCM encrypt data error" + e.getMessage());
+			LogUtil.e(TAG, "GCM encrypt data error" + e.getMessage());
 		}
 		return new byte[0];
 	}
@@ -430,35 +430,35 @@ public final class AesGcm {
 	public static byte[] encrypt(byte[] content, byte[] key, byte[] ivParameter) {
 
 		if (content == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 content is null");
+			LogUtil.e(TAG, "encrypt 6 content is null");
 			return new byte[0];
 		}
 		if (content.length == 0) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 content length is 0");
+			LogUtil.e(TAG, "encrypt 6 content length is 0");
 			return new byte[0];
 		}
 
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 key is null");
+			LogUtil.e(TAG, "encrypt 6 key is null");
 			return new byte[0];
 		}
 
 		if (key.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 key error: 6 key length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 6 key error: 6 key length less than 16 bytes.");
 			return new byte[0];
 		}
 
 		if (ivParameter == null) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 iv is null");
+			LogUtil.e(TAG, "encrypt 6 iv is null");
 			return new byte[0];
 		}
 		if (ivParameter.length < AES_GCM_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 iv error: 6 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "encrypt 6 iv error: 6 iv length less than 16 bytes.");
 			return new byte[0];
 		}
 
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "encrypt 6 build version not higher than 19");
+			LogUtil.e(TAG, "encrypt 6 build version not higher than 19");
 			return new byte[0];
 		}
 
@@ -469,9 +469,9 @@ public final class AesGcm {
 			cipher.init(Cipher.ENCRYPT_MODE, secretkey, algorithmParameterSpec);
 			return cipher.doFinal(content);
 		} catch (GeneralSecurityException e) {
-			ModuleManager.log().eTag(TAG, "GCM encrypt data error" + e.getMessage());
+			LogUtil.e(TAG, "GCM encrypt data error" + e.getMessage());
 		} catch (NullPointerException e) {
-			ModuleManager.log().eTag(TAG, "GCM encrypt data error" + e.getMessage());
+			LogUtil.e(TAG, "GCM encrypt data error" + e.getMessage());
 		}
 		return new byte[0];
 	}
@@ -480,35 +480,35 @@ public final class AesGcm {
 	public static byte[] decrypt(byte[] encryptContent, byte[] key, byte[] ivParameter) {
 
 		if (encryptContent == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 content is null");
+			LogUtil.e(TAG, "decrypt 6 content is null");
 			return new byte[0];
 		}
 		if (encryptContent.length == 0) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 content length is 0");
+			LogUtil.e(TAG, "decrypt 6 content length is 0");
 			return new byte[0];
 		}
 
 		if (key == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 key is null");
+			LogUtil.e(TAG, "decrypt 6 key is null");
 			return new byte[0];
 		}
 
 		if (key.length < AES_GCM_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 key error: 6 key length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 6 key error: 6 key length less than 16 bytes.");
 			return new byte[0];
 		}
 
 		if (ivParameter == null) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 iv is null");
+			LogUtil.e(TAG, "decrypt 6 iv is null");
 			return new byte[0];
 		}
 		if (ivParameter.length < AES_GCM_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 iv error: 6 iv length less than 16 bytes.");
+			LogUtil.e(TAG, "decrypt 6 iv error: 6 iv length less than 16 bytes.");
 			return new byte[0];
 		}
 
 		if (!isBuildVersionHigherThan19()) {
-			ModuleManager.log().eTag(TAG, "decrypt 6 build version not higher than 19");
+			LogUtil.e(TAG, "decrypt 6 build version not higher than 19");
 			return new byte[0];
 		}
 
@@ -519,7 +519,7 @@ public final class AesGcm {
 			cipher.init(Cipher.DECRYPT_MODE, secretkey, algorithmParameterSpec);
 			return cipher.doFinal(encryptContent);
 		} catch (GeneralSecurityException e) {
-			ModuleManager.log().eTag(TAG, "GCM decrypt data exception: " + e.getMessage());
+			LogUtil.e(TAG, "GCM decrypt data exception: " + e.getMessage());
 		}
 		return new byte[0];
 	}
@@ -566,7 +566,7 @@ public final class AesGcm {
 	 */
 	private static String getIv(String src) {
 		if (TextUtils.isEmpty(src) || src.length() < AES_GCM_IV_LEN * TIMES) {
-			ModuleManager.log().eTag(TAG, "IV is invalid.");
+			LogUtil.e(TAG, "IV is invalid.");
 			return EMPTY;
 		}
 		return src.substring(0, AES_GCM_IV_LEN * TIMES);
@@ -617,7 +617,7 @@ public final class AesGcm {
 			iv = HexUtil.hexStr2ByteArray(subContent.substring(0, index));
 			cipherText = HexUtil.hexStr2ByteArray(subContent.substring(index + 1));
 		} else {
-			ModuleManager.log().eTag(TAG, " gcm cipherText data missing colon");
+			LogUtil.e(TAG, " gcm cipherText data missing colon");
 			return EMPTY;
 		}
 		return decrypt(HexUtil.byteArray2HexStr(cipherText), key, iv);
@@ -636,7 +636,7 @@ public final class AesGcm {
 		try {
 			return new String(decryptWithCryptHeadReturnByte(content, key), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "UnsupportedEncodingException");
+			LogUtil.e(TAG, "UnsupportedEncodingException");
 		}
 		return "";
 	}
@@ -667,7 +667,7 @@ public final class AesGcm {
 			cipherText = new byte[cipherTextLen];
 			System.arraycopy(subContent, index + 1, cipherText, 0, cipherTextLen);
 		} else {
-			ModuleManager.log().eTag(TAG, " gcm cipherText data missing colon");
+			LogUtil.e(TAG, " gcm cipherText data missing colon");
 			return new byte[0];
 		}
 		return decrypt(cipherText, key, iv);

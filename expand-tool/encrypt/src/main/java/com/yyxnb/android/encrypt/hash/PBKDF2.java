@@ -3,9 +3,9 @@ package com.yyxnb.android.encrypt.hash;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.encrypt.EncryptUtil;
 import com.yyxnb.android.encrypt.HexUtil;
+import com.yyxnb.android.encrypt.LogUtil;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -86,22 +86,22 @@ public abstract class PBKDF2 {
 	@Deprecated
 	public static String pbkdf2Encrypt(String password, byte[] salt, int iterations, int cipherLen) {
 		if (TextUtils.isEmpty(password)) {
-			ModuleManager.log().eTag(TAG, "pwd is null.");
+			LogUtil.e(TAG, "pwd is null.");
 			return EMPTY;
 		}
 
 		if (iterations < PBKDF2_MIN_ITERATIONS_TIMES) {
-			ModuleManager.log().eTag(TAG, "iterations times is not enough.");
+			LogUtil.e(TAG, "iterations times is not enough.");
 			return EMPTY;
 		}
 
 		if (salt == null || salt.length < SALT_LEN) {
-			ModuleManager.log().eTag(TAG, "salt parameter is null or length is not enough");
+			LogUtil.e(TAG, "salt parameter is null or length is not enough");
 			return EMPTY;
 		}
 
 		if (cipherLen < HASH_BYTE_SIZE) {
-			ModuleManager.log().eTag(TAG, "cipherLen length is not enough");
+			LogUtil.e(TAG, "cipherLen length is not enough");
 			return EMPTY;
 		}
 
@@ -162,7 +162,7 @@ public abstract class PBKDF2 {
 	public static byte[] pbkdf2SHA256(char[] password, byte[] salt, int iterations, int bytes) {
 		byte[] result = new byte[0];
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-			ModuleManager.log().eTag(TAG, "system version not high than 26");
+			LogUtil.e(TAG, "system version not high than 26");
 			return result;
 		}
 		return pbkdf(password, salt, iterations, bytes, true);
@@ -179,7 +179,7 @@ public abstract class PBKDF2 {
 			}
 			return skf.generateSecret(spec).getEncoded();
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			ModuleManager.log().eTag(TAG, "pbkdf exception : " + e.getMessage());
+			LogUtil.e(TAG, "pbkdf exception : " + e.getMessage());
 		}
 		return new byte[0];
 	}
@@ -234,32 +234,32 @@ public abstract class PBKDF2 {
 	 */
 	public static String pbkdf2EncryptNew(String password, byte[] salt, int iterations, int cipherLen) {
 		if (TextUtils.isEmpty(password)) {
-			ModuleManager.log().eTag(TAG, "pwd is null.");
+			LogUtil.e(TAG, "pwd is null.");
 			return EMPTY;
 		}
 
 		if (iterations < PBKDF2_MIN_ITERATIONS_TIMES) {
-			ModuleManager.log().eTag(TAG, "iterations times is not enough.");
+			LogUtil.e(TAG, "iterations times is not enough.");
 			return EMPTY;
 		}
 
 		if (salt == null || salt.length < NEW_SALT_LEN) {
-			ModuleManager.log().eTag(TAG, "salt parameter is null or length is not enough");
+			LogUtil.e(TAG, "salt parameter is null or length is not enough");
 			return EMPTY;
 		}
 
 		if (cipherLen < HASH_BYTE_SIZE) {
-			ModuleManager.log().eTag(TAG, "cipherLen length is not enough");
+			LogUtil.e(TAG, "cipherLen length is not enough");
 			return EMPTY;
 		}
 
 		byte[] hash;
 		// https://developer.android.com/reference/javax/crypto/SecretKeyFactory
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-			ModuleManager.log().iTag(TAG, "sha 1");
+			LogUtil.i(TAG, "sha 1");
 			hash = pbkdf2(password.toCharArray(), salt, iterations, cipherLen * 8);
 		} else {
-			ModuleManager.log().iTag(TAG, "sha 256");
+			LogUtil.i(TAG, "sha 256");
 			hash = pbkdf2SHA256(password.toCharArray(), salt, iterations, cipherLen * 8);
 		}
 		return HexUtil.byteArray2HexStr(salt) + HexUtil.byteArray2HexStr(hash);

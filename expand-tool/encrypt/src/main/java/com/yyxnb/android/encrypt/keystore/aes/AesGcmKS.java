@@ -5,8 +5,10 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.text.TextUtils;
 
-import com.yyxnb.android.ModuleManager;
+import androidx.annotation.RequiresApi;
+
 import com.yyxnb.android.encrypt.HexUtil;
+import com.yyxnb.android.encrypt.LogUtil;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -73,13 +75,13 @@ public class AesGcmKS {
 
 	public static String encrypt(String alias, String content) {
 		if (TextUtils.isEmpty(alias) || TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "alias or encrypt content is null");
+			LogUtil.e(TAG, "alias or encrypt content is null");
 			return EMPTY;
 		}
 		try {
 			return HexUtil.byteArray2HexStr(encrypt(alias, content.getBytes("UTF-8")));
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "encrypt: UnsupportedEncodingException : " + e.getMessage());
+			LogUtil.e(TAG, "encrypt: UnsupportedEncodingException : " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -94,13 +96,13 @@ public class AesGcmKS {
 
 	public static String decrypt(String alias, String content) {
 		if (TextUtils.isEmpty(alias) || TextUtils.isEmpty(content)) {
-			ModuleManager.log().eTag(TAG, "alias or encrypt content is null");
+			LogUtil.e(TAG, "alias or encrypt content is null");
 			return EMPTY;
 		}
 		try {
 			return new String(decrypt(alias, HexUtil.hexStr2ByteArray(content)), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "decrypt: UnsupportedEncodingException : " + e.getMessage());
+			LogUtil.e(TAG, "decrypt: UnsupportedEncodingException : " + e.getMessage());
 		}
 		return EMPTY;
 	}
@@ -111,8 +113,9 @@ public class AesGcmKS {
 	 * @param alias keystore别名
 	 * @return 返回SecretKey
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.M)
 	private static SecretKey generateKey(String alias) {
-		ModuleManager.log().iTag(TAG, "load key");
+		LogUtil.i(TAG, "load key");
 		SecretKey secretKey = null;
 		KeyStore keyStore = null;
 		try {
@@ -122,7 +125,7 @@ public class AesGcmKS {
 			if (key instanceof SecretKey) {
 				secretKey = (SecretKey) key;
 			} else {
-				ModuleManager.log().iTag(TAG, "generate key");
+				LogUtil.i(TAG, "generate key");
 				KeyGenerator keyGenerator =
 						KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE);
 				keyGenerator.init(new KeyGenParameterSpec.Builder(alias,
@@ -134,21 +137,21 @@ public class AesGcmKS {
 				secretKey = keyGenerator.generateKey();
 			}
 		} catch (KeyStoreException e) {
-			ModuleManager.log().eTag(TAG, "KeyStoreException : " + e.getMessage());
+			LogUtil.e(TAG, "KeyStoreException : " + e.getMessage());
 		} catch (IOException e) {
-			ModuleManager.log().eTag(TAG, "IOException : " + e.getMessage());
+			LogUtil.e(TAG, "IOException : " + e.getMessage());
 		} catch (CertificateException e) {
-			ModuleManager.log().eTag(TAG, "CertificateException : " + e.getMessage());
+			LogUtil.e(TAG, "CertificateException : " + e.getMessage());
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException : " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException : " + e.getMessage());
 		} catch (UnrecoverableKeyException e) {
-			ModuleManager.log().eTag(TAG, "UnrecoverableKeyException : " + e.getMessage());
+			LogUtil.e(TAG, "UnrecoverableKeyException : " + e.getMessage());
 		} catch (InvalidAlgorithmParameterException e) {
-			ModuleManager.log().eTag(TAG, "InvalidAlgorithmParameterException : " + e.getMessage());
+			LogUtil.e(TAG, "InvalidAlgorithmParameterException : " + e.getMessage());
 		} catch (NoSuchProviderException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchProviderException : " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchProviderException : " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		keyMap.put(alias, secretKey);
 		return secretKey;
@@ -165,12 +168,12 @@ public class AesGcmKS {
 	public static byte[] encrypt(String alias, byte[] content) {
 		byte[] result = new byte[0];
 		if (TextUtils.isEmpty(alias) || content == null) {
-			ModuleManager.log().eTag(TAG, "alias or encrypt content is null");
+			LogUtil.e(TAG, "alias or encrypt content is null");
 			return result;
 		}
 
 		if (!isBuildVersionHigherThan22()) {
-			ModuleManager.log().eTag(TAG, "sdk version is too low");
+			LogUtil.e(TAG, "sdk version is too low");
 			return result;
 		}
 		SecretKey secretKey = getKey(alias);
@@ -187,16 +190,16 @@ public class AesGcmKS {
 	public static byte[] encrypt(SecretKey secretKey, byte[] content) {
 		byte[] result = new byte[0];
 		if (content == null) {
-			ModuleManager.log().eTag(TAG, "content is null");
+			LogUtil.e(TAG, "content is null");
 			return result;
 		}
 
 		if (secretKey == null) {
-			ModuleManager.log().eTag(TAG, "secret key is null");
+			LogUtil.e(TAG, "secret key is null");
 			return result;
 		}
 		if (!isBuildVersionHigherThan22()) {
-			ModuleManager.log().eTag(TAG, "sdk version is too low");
+			LogUtil.e(TAG, "sdk version is too low");
 			return result;
 		}
 
@@ -208,23 +211,23 @@ public class AesGcmKS {
 
 			byte[] iv = cipher.getIV();
 			if (iv == null || iv.length != AES_GCM_IV_LEN) {
-				ModuleManager.log().eTag(TAG, "IV is invalid.");
+				LogUtil.e(TAG, "IV is invalid.");
 				return result;
 			}
 			result = Arrays.copyOf(iv, iv.length + encryptBytes.length);
 			System.arraycopy(encryptBytes, 0, result, iv.length, encryptBytes.length);
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException : " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException : " + e.getMessage());
 		} catch (NoSuchPaddingException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchPaddingException : " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchPaddingException : " + e.getMessage());
 		} catch (BadPaddingException e) {
-			ModuleManager.log().eTag(TAG, "BadPaddingException : " + e.getMessage());
+			LogUtil.e(TAG, "BadPaddingException : " + e.getMessage());
 		} catch (IllegalBlockSizeException e) {
-			ModuleManager.log().eTag(TAG, "IllegalBlockSizeException : " + e.getMessage());
+			LogUtil.e(TAG, "IllegalBlockSizeException : " + e.getMessage());
 		} catch (InvalidKeyException e) {
-			ModuleManager.log().eTag(TAG, "InvalidKeyException : " + e.getMessage());
+			LogUtil.e(TAG, "InvalidKeyException : " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		return result;
 	}
@@ -239,16 +242,16 @@ public class AesGcmKS {
 	public static byte[] decrypt(String alias, byte[] content) {
 		byte[] decryptedData = new byte[0];
 		if (TextUtils.isEmpty(alias) || content == null) {
-			ModuleManager.log().eTag(TAG, "alias or encrypt content is null");
+			LogUtil.e(TAG, "alias or encrypt content is null");
 			return decryptedData;
 		}
 		if (!isBuildVersionHigherThan22()) {
-			ModuleManager.log().eTag(TAG, "sdk version is too low");
+			LogUtil.e(TAG, "sdk version is too low");
 			return decryptedData;
 		}
 
 		if (content.length <= AES_GCM_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "Decrypt source data is invalid.");
+			LogUtil.e(TAG, "Decrypt source data is invalid.");
 			return decryptedData;
 		}
 
@@ -266,21 +269,21 @@ public class AesGcmKS {
 	public static byte[] decrypt(SecretKey secretKey, byte[] content) {
 		byte[] decryptedData = new byte[0];
 		if (secretKey == null) {
-			ModuleManager.log().eTag(TAG, "Decrypt secret key is null");
+			LogUtil.e(TAG, "Decrypt secret key is null");
 			return decryptedData;
 		}
 		if (content == null) {
-			ModuleManager.log().eTag(TAG, "content is null");
+			LogUtil.e(TAG, "content is null");
 			return decryptedData;
 		}
 
 		if (!isBuildVersionHigherThan22()) {
-			ModuleManager.log().eTag(TAG, "sdk version is too low");
+			LogUtil.e(TAG, "sdk version is too low");
 			return decryptedData;
 		}
 
 		if (content.length <= AES_GCM_IV_LEN) {
-			ModuleManager.log().eTag(TAG, "Decrypt source data is invalid.");
+			LogUtil.e(TAG, "Decrypt source data is invalid.");
 			return decryptedData;
 		}
 
@@ -292,19 +295,19 @@ public class AesGcmKS {
 			cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmParameterSpec);
 			decryptedData = cipher.doFinal(content, AES_GCM_IV_LEN, content.length - AES_GCM_IV_LEN);
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException : " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchAlgorithmException : " + e.getMessage());
 		} catch (NoSuchPaddingException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchPaddingException : " + e.getMessage());
+			LogUtil.e(TAG, "NoSuchPaddingException : " + e.getMessage());
 		} catch (InvalidKeyException e) {
-			ModuleManager.log().eTag(TAG, "InvalidKeyException : " + e.getMessage());
+			LogUtil.e(TAG, "InvalidKeyException : " + e.getMessage());
 		} catch (InvalidAlgorithmParameterException e) {
-			ModuleManager.log().eTag(TAG, "InvalidAlgorithmParameterException : " + e.getMessage());
+			LogUtil.e(TAG, "InvalidAlgorithmParameterException : " + e.getMessage());
 		} catch (IllegalBlockSizeException e) {
-			ModuleManager.log().eTag(TAG, "IllegalBlockSizeException : " + e.getMessage());
+			LogUtil.e(TAG, "IllegalBlockSizeException : " + e.getMessage());
 		} catch (BadPaddingException e) {
-			ModuleManager.log().eTag(TAG, "BadPaddingException : " + e.getMessage());
+			LogUtil.e(TAG, "BadPaddingException : " + e.getMessage());
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "Exception: " + e.getMessage());
+			LogUtil.e(TAG, "Exception: " + e.getMessage());
 		}
 		return decryptedData;
 	}
@@ -324,6 +327,7 @@ public class AesGcmKS {
 	 * @param alias
 	 * @return
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.M)
 	private static SecretKey getKey(String alias) {
 		if (TextUtils.isEmpty(alias)) {
 			return null;

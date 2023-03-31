@@ -2,8 +2,6 @@ package com.yyxnb.android.encrypt;
 
 import android.text.TextUtils;
 
-import com.yyxnb.android.ModuleManager;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
@@ -19,7 +17,7 @@ import java.util.Locale;
 public final class HexUtil {
 	private static final String EMPTY = "";
 
-	private static final String TAG = "HexUtil";
+	private static final String TAG = HexUtil.class.getSimpleName();
 
 	/**
 	 * 私有构造方法
@@ -65,7 +63,7 @@ public final class HexUtil {
 		try {
 			resultStr = byteArray2HexStr(sourceStr.getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
-			ModuleManager.log().eTag(TAG, "byte array 2 hex string exception : " + e.getMessage());
+			LogUtil.e(TAG, "byte array 2 hex string exception : " + e.getMessage());
 		}
 		return resultStr;
 	}
@@ -83,7 +81,7 @@ public final class HexUtil {
 		try {
 			str = str.toUpperCase(Locale.ENGLISH);
 		} catch (Throwable throwable) {
-			ModuleManager.log().eTag(TAG, "hex string toUpperCase exception : " + throwable.getMessage());
+			LogUtil.e(TAG, "hex string toUpperCase exception : " + throwable.getMessage());
 			return new byte[0];
 		}
 		byte[] bytes = new byte[str.length() / 2];
@@ -97,7 +95,7 @@ public final class HexUtil {
 				bytes[i] = (byte) (bh ^ bl);
 			}
 		} catch (UnsupportedEncodingException | NumberFormatException e) {
-			ModuleManager.log().eTag(TAG, "hex string 2 byte array exception : " + e.getMessage());
+			LogUtil.e(TAG, "hex string 2 byte array exception : " + e.getMessage());
 			return new byte[0];
 		}
 		return bytes;

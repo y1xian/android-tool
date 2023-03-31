@@ -3,8 +3,6 @@ package com.yyxnb.android.encrypt;
 import android.annotation.SuppressLint;
 import android.os.Build;
 
-import com.yyxnb.android.ModuleManager;
-
 /**
  * 根密钥导出工具
  * 根据三段根密钥组件和一段盐值，使用PBKDF算法导出根密钥对象，用于对工作密钥进行加解密
@@ -78,10 +76,10 @@ public class RootKeyUtil {
 	@SuppressLint("NewApi")
 	private void initRootKey(String first, String second, String third, byte[] salt) {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-			ModuleManager.log().iTag(TAG, "initRootKey: sha1");
+			LogUtil.i(TAG, "initRootKey: sha1");
 			rootKey = BaseKeyUtil.exportRootKey(first, second, third, salt, false);
 		} else {
-			ModuleManager.log().iTag(TAG, "initRootKey: sha256");
+			LogUtil.i(TAG, "initRootKey: sha256");
 			rootKey = BaseKeyUtil.exportRootKey(first, second, third, salt, true);
 		}
 	}

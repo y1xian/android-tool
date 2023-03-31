@@ -23,7 +23,7 @@ import java.util.Objects;
  * @author yyx
  * @date 2022/11/7
  */
-@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class UtilInner {
 
 	static void init(Application app) {

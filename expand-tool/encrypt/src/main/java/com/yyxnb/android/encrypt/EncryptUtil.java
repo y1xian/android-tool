@@ -3,8 +3,6 @@ package com.yyxnb.android.encrypt;
 import android.os.Build;
 import android.util.Base64;
 
-import com.yyxnb.android.ModuleManager;
-
 import org.bouncycastle.crypto.BlockCipher;
 import org.bouncycastle.crypto.engines.AESEngine;
 import org.bouncycastle.crypto.prng.SP800SecureRandomBuilder;
@@ -48,7 +46,7 @@ public class EncryptUtil {
 					random = SecureRandom.getInstanceStrong();
 				}
 			} catch (NoSuchAlgorithmException e) {
-				ModuleManager.log().eTag(TAG, "getSecureRandomBytes: NoSuchAlgorithmException");
+				LogUtil.e(TAG, "getSecureRandomBytes: NoSuchAlgorithmException");
 			}
 
 			try {
@@ -58,9 +56,9 @@ public class EncryptUtil {
 				random.nextBytes(randomBytes);
 				return randomBytes;
 			} catch (NoSuchAlgorithmException e) {
-				ModuleManager.log().eTag(TAG, "getSecureRandomBytes getInstance: NoSuchAlgorithmException");
+				LogUtil.e(TAG, "getSecureRandomBytes getInstance: NoSuchAlgorithmException");
 			} catch (Exception e) {
-				ModuleManager.log().eTag(TAG, "getSecureRandomBytes getInstance: exception : " + e.getMessage());
+				LogUtil.e(TAG, "getSecureRandomBytes getInstance: exception : " + e.getMessage());
 			}
 		} else {
 			return generateSecureRandomNew(len);
@@ -92,7 +90,7 @@ public class EncryptUtil {
 					source = SecureRandom.getInstance("SHA1PRNG");
 				}
 			} catch (NoSuchAlgorithmException e) {
-				ModuleManager.log().eTag(TAG, "genSecureRandom: NoSuchAlgorithmException");
+				LogUtil.e(TAG, "genSecureRandom: NoSuchAlgorithmException");
 			}
 			return source;
 		} else {
@@ -107,7 +105,7 @@ public class EncryptUtil {
 	 */
 
 	private static SecureRandom genSecureRandomNew() {
-		ModuleManager.log().iTag(TAG, "generateSecureRandomNew ");
+		LogUtil.i(TAG, "generateSecureRandomNew ");
 		SecureRandom source = null;
 		try {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -115,7 +113,7 @@ public class EncryptUtil {
 				source = SecureRandom.getInstanceStrong();
 			}
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "getSecureRandomBytes: NoSuchAlgorithmException");
+			LogUtil.e(TAG, "getSecureRandomBytes: NoSuchAlgorithmException");
 		}
 
 		try {
@@ -135,11 +133,11 @@ public class EncryptUtil {
 			return new SP800SecureRandomBuilder(source, predictionResistant)
 					.setEntropyBitsRequired(entropyBitesRequired).buildCTR(cipher, cipherLen, nonce, reSeed);
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "NoSuchAlgorithmException");
+			LogUtil.e(TAG, "NoSuchAlgorithmException");
 		} catch (Throwable e) {
 			// 如果没有引入bc库，会报类找不到的错误，需要捕获异常，否则会导致应用crash
 			if (isLogError) {
-				ModuleManager.log().eTag(TAG, "exception : " + e.getMessage() + " , you should implementation bcprov-jdk15on library");
+				LogUtil.e(TAG, "exception : " + e.getMessage() + " , you should implementation bcprov-jdk15on library");
 				isLogError = false;
 			}
 		}
@@ -161,7 +159,7 @@ public class EncryptUtil {
 	}
 
 	public static void setBouncycastleFlag(boolean bouncycastleFlag) {
-		ModuleManager.log().iTag(TAG, "setBouncycastleFlag: " + bouncycastleFlag);
+		LogUtil.i(TAG, "setBouncycastleFlag: " + bouncycastleFlag);
 		EncryptUtil.bouncycastleFlag = bouncycastleFlag;
 	}
 
@@ -178,10 +176,10 @@ public class EncryptUtil {
 		try {
 			publicKey = Base64.decode(publicKeyStr, Base64.DEFAULT);
 		} catch (IllegalArgumentException e) {
-			ModuleManager.log().eTag(TAG, "base64 decode IllegalArgumentException");
+			LogUtil.e(TAG, "base64 decode IllegalArgumentException");
 			return null;
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "base64 decode Exception" + e.getMessage());
+			LogUtil.e(TAG, "base64 decode Exception" + e.getMessage());
 			return null;
 		}
 		try {
@@ -189,7 +187,7 @@ public class EncryptUtil {
 			X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKey);
 			return (RSAPublicKey) keyFactory.generatePublic(keySpec);
 		} catch (GeneralSecurityException e) {
-			ModuleManager.log().eTag(TAG, "load Key Exception:" + e.getMessage());
+			LogUtil.e(TAG, "load Key Exception:" + e.getMessage());
 		}
 		return null;
 	}
@@ -204,10 +202,10 @@ public class EncryptUtil {
 		try {
 			privatekey = Base64.decode(privateKeyStr, Base64.DEFAULT);
 		} catch (IllegalArgumentException e) {
-			ModuleManager.log().eTag(TAG, "base64 decode IllegalArgumentException");
+			LogUtil.e(TAG, "base64 decode IllegalArgumentException");
 			return null;
 		} catch (Exception e) {
-			ModuleManager.log().eTag(TAG, "base64 decode Exception" + e.getMessage());
+			LogUtil.e(TAG, "base64 decode Exception" + e.getMessage());
 			return null;
 		}
 		try {
@@ -215,7 +213,7 @@ public class EncryptUtil {
 			KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
 			return keyFactory.generatePrivate(keySpec);
 		} catch (GeneralSecurityException e) {
-			ModuleManager.log().eTag(TAG, "load Key Exception:" + e.getMessage());
+			LogUtil.e(TAG, "load Key Exception:" + e.getMessage());
 		}
 		return null;
 	}

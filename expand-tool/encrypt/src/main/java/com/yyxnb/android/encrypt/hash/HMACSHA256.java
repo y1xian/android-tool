@@ -2,9 +2,8 @@ package com.yyxnb.android.encrypt.hash;
 
 import android.text.TextUtils;
 
-import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.encrypt.HexUtil;
-import com.yyxnb.android.utils.StrUtil;
+import com.yyxnb.android.encrypt.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -59,12 +58,12 @@ public abstract class HMACSHA256 {
 	 * @return 哈希结果 （十六进制形式字符串）
 	 */
 	public static String hmacSHA256Encrypt(String content, byte[] key) {
-		if (StrUtil.isEmpty(content) || key == null) {
+		if (TextUtils.isEmpty(content) || key == null) {
 			return EMPTY;
 		}
 
 		if (key.length < HMACSHA256_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "hmac key length is not right");
+			LogUtil.e(TAG, "hmac key length is not right");
 			return EMPTY;
 		}
 		byte[] contentBytes;
@@ -72,7 +71,7 @@ public abstract class HMACSHA256 {
 			contentBytes = content.getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			contentBytes = new byte[0];
-			ModuleManager.log().eTag(TAG, "hmacsha256 encrypt exception" + e.getMessage());
+			LogUtil.e(TAG, "hmacsha256 encrypt exception" + e.getMessage());
 		}
 		byte[] encrypt = hmacEncrypt(contentBytes, key);
 		return HexUtil.byteArray2HexStr(encrypt);
@@ -87,11 +86,11 @@ public abstract class HMACSHA256 {
 	 */
 	public static byte[] hmacEncrypt(byte[] content, byte[] key) {
 		if (content == null || key == null) {
-			ModuleManager.log().eTag(TAG, "content or key is null.");
+			LogUtil.e(TAG, "content or key is null.");
 			return new byte[0];
 		}
 		if (key.length < HMACSHA256_KEY_LEN) {
-			ModuleManager.log().eTag(TAG, "hmac key length is not right");
+			LogUtil.e(TAG, "hmac key length is not right");
 			return new byte[0];
 		}
 		try {
@@ -100,7 +99,7 @@ public abstract class HMACSHA256 {
 			mac.init(secretKey);
 			return mac.doFinal(content);
 		} catch (InvalidKeyException | NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "hmacsha256 encrypt exception" + e.getMessage());
+			LogUtil.e(TAG, "hmacsha256 encrypt exception" + e.getMessage());
 			return new byte[0];
 		}
 	}

@@ -2,13 +2,12 @@ package com.yyxnb.android.encrypt.hash;
 
 import android.text.TextUtils;
 
-import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.encrypt.HexUtil;
+import com.yyxnb.android.encrypt.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 
 /**
  * SHA算法
@@ -52,11 +51,11 @@ public final class SHA {
 	public static String shaEncrypt(String content, String algorithm) {
 
 		if (TextUtils.isEmpty(content) || TextUtils.isEmpty(algorithm)) {
-			ModuleManager.log().eTag(TAG, "content or algorithm is null.");
+			LogUtil.e(TAG, "content or algorithm is null.");
 			return EMPTY;
 		}
 		if (!isLegalAlgorithm(algorithm)) {
-			ModuleManager.log().eTag(TAG, "algorithm is not safe or legal");
+			LogUtil.e(TAG, "algorithm is not safe or legal");
 			return EMPTY;
 		}
 		byte[] contentBytes;
@@ -64,7 +63,7 @@ public final class SHA {
 			contentBytes = content.getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			contentBytes = new byte[0];
-			ModuleManager.log().eTag(TAG, "Error in generate SHA UnsupportedEncodingException");
+			LogUtil.e(TAG, "Error in generate SHA UnsupportedEncodingException");
 		}
 		byte[] encrypt = shaEncryptByte(contentBytes, algorithm);
 		return HexUtil.byteArray2HexStr(encrypt);
@@ -79,11 +78,11 @@ public final class SHA {
 	 */
 	public static byte[] shaEncryptByte(byte[] content, String algorithm) {
 		if (content == null || TextUtils.isEmpty(algorithm)) {
-			ModuleManager.log().eTag(TAG, "content or algorithm is null.");
+			LogUtil.e(TAG, "content or algorithm is null.");
 			return new byte[0];
 		}
 		if (!isLegalAlgorithm(algorithm)) {
-			ModuleManager.log().eTag(TAG, "algorithm is not safe or legal");
+			LogUtil.e(TAG, "algorithm is not safe or legal");
 			return new byte[0];
 		}
 		try {
@@ -91,7 +90,7 @@ public final class SHA {
 			messageDigest.update(content);
 			return messageDigest.digest();
 		} catch (NoSuchAlgorithmException e) {
-			ModuleManager.log().eTag(TAG, "Error in generate SHA NoSuchAlgorithmException");
+			LogUtil.e(TAG, "Error in generate SHA NoSuchAlgorithmException");
 		}
 		return new byte[0];
 	}
