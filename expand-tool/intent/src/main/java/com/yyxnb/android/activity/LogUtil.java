@@ -3,6 +3,7 @@ package com.yyxnb.android.activity;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.RestrictTo;
 import androidx.multidex.BuildConfig;
 
 import java.util.regex.Pattern;
@@ -16,6 +17,7 @@ import java.util.regex.Pattern;
  * @author yyx
  * @date 2023/4/1
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 public class LogUtil {
 	/**
 	 * 数字，英文字母（大小写），中文汉字 正则表达式。
