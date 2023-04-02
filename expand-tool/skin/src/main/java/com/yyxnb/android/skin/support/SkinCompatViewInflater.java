@@ -30,9 +30,16 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.TintContextWrapper;
 import androidx.core.view.ViewCompat;
 
+import com.yyxnb.android.skin.SkinManager;
+import com.yyxnb.android.skin.attr.SkinAttr;
+import com.yyxnb.android.skin.attr.SkinAttrHolder;
+import com.yyxnb.android.skin.callback.OnSkinChangeCallback;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,7 +72,7 @@ public class SkinCompatViewInflater {
 	@SuppressLint("RestrictedApi")
 	public final View createView(View parent, final String name, @NonNull Context context,
 								 @NonNull AttributeSet attrs, boolean inheritContext,
-								 boolean readAndroidTheme, boolean readAppTheme, boolean wrapContext) {
+								 boolean readAndroidTheme, boolean readAppTheme, boolean wrapContext, OnSkinChangeCallback callback) {
 
 		// We can emulate Lollipop's android:theme attribute propagating down the view hierarchy
 		// by using the parent's context
@@ -127,11 +134,10 @@ public class SkinCompatViewInflater {
 				break;
 		}
 
-//        if (view == null && originalContext != context) {
-//            // If the original context does not equal our themed context, then we need to manually
-//            // inflate it using the name so that android:theme takes effect.
-//            view = createViewFromTag(context, name, attrs);
-//        }
+		List<SkinAttr> skinAttrList = SkinAttrSupport.getSkinAttr(context, attrs);
+		if (skinAttrList.isEmpty()) {
+			return view;
+		}
 
 		if (view == null) {
 			// If the original context does not equal our themed context, then we need to manually
@@ -144,19 +150,28 @@ public class SkinCompatViewInflater {
 			checkOnClickListener(view, attrs);
 		}
 
+		if (callback != null && skinAttrList.size() != 0) {
+			List<SkinAttrHolder> skinAttrHolders = SkinManager.getInstance().getSkinAttrHolders(callback);
+			if (skinAttrHolders == null) {
+				skinAttrHolders = new ArrayList<>();
+				// 注册
+				SkinManager.getInstance().register(callback, skinAttrHolders);
+			}
+			SkinAttrHolder skinAttrHolder = new SkinAttrHolder(view, skinAttrList);
+			skinAttrHolders.add(skinAttrHolder);
+			SkinManager.getInstance().checkSkin(callback, view, skinAttrHolder);
+		}
 		return view;
 	}
 
 	private View createViewFromTag(Context context, String name, AttributeSet attrs) {
-		if ("view".equals(name)) {
-			name = attrs.getAttributeValue(null, "class");
-		}
-
 		try {
 			mConstructorArgs[0] = context;
 			mConstructorArgs[1] = attrs;
-
 			if (-1 == name.indexOf('.')) {
+				if ("view".equals(name)) {
+					name = attrs.getAttributeValue(null, "class");
+				}
 				for (String s : S_CLASS_PREFIX_LIST) {
 					final View view = createView(context, name, s);
 					if (view != null) {

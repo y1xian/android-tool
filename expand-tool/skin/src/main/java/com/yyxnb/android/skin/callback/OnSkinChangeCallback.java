@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.yyxnb.android.skin.SkinResource;
 
-
 /**
  * 换肤回调,用于扩展自定义View的属性
  *

@@ -44,6 +44,11 @@ public class SkinManager {
 	 */
 	private Class<? extends ISkinType> mSkinTypeClazz;
 
+	/**
+	 * 资源前缀
+	 */
+	private String mSkinPrefix = "";
+
 	private SkinManager() {
 	}
 
@@ -59,6 +64,10 @@ public class SkinManager {
 	}
 
 	public void init(Context context) {
+		init(context, "");
+	}
+
+	public void init(Context context, String skinPrefix) {
 		if (mContext == null) {
 			mContext = context.getApplicationContext();
 		}
@@ -68,6 +77,7 @@ public class SkinManager {
 		if (mSkinTypeClazz == null) {
 			mSkinTypeClazz = SkinTypeImpl.class;
 		}
+		this.mSkinPrefix = skinPrefix;
 
 		String currSkinPath = SkinUtil.getInstance(mContext).getSkinPath();
 		if (!TextUtils.isEmpty(currSkinPath)) {
@@ -85,7 +95,7 @@ public class SkinManager {
 	/**
 	 * 加载皮肤
 	 *
-	 * @param skinPath
+	 * @param skinPath 皮肤路径
 	 * @return
 	 */
 	public int loadSkin(String skinPath) {
@@ -155,7 +165,7 @@ public class SkinManager {
 	/**
 	 * 检测皮肤文件是否完整有效
 	 *
-	 * @param skinPath
+	 * @param skinPath 皮肤路径
 	 * @return
 	 */
 	private int checkSkinFileValid(String skinPath) {
@@ -191,10 +201,10 @@ public class SkinManager {
 	/**
 	 * 获取skinChangeCallback对应页面的皮肤属性列表
 	 *
-	 * @param skinChangeCallback
+	 * @param skinChangeCallback OnSkinChangeCallback
 	 * @return
 	 */
-	public List<SkinAttrHolder> getSkinAttrHolders(OnSkinChangeCallback skinChangeCallback) {
+	public final List<SkinAttrHolder> getSkinAttrHolders(OnSkinChangeCallback skinChangeCallback) {
 		return mPageSkinAttrHolders.get(skinChangeCallback);
 	}
 
@@ -225,7 +235,7 @@ public class SkinManager {
 	/**
 	 * 获取当前的皮肤资源管理器
 	 *
-	 * @return
+	 * @return SkinResource
 	 */
 	public SkinResource getSkinResource() {
 		if (mSkinResource == null) {
@@ -237,7 +247,7 @@ public class SkinManager {
 	/**
 	 * 这里支持扩展通用的自定义属性
 	 *
-	 * @param skinTypeClazz
+	 * @param skinTypeClazz skinTypeClazz
 	 */
 	public void exchangeSkinType(Class<? extends ISkinType> skinTypeClazz) {
 		this.mSkinTypeClazz = skinTypeClazz;
@@ -247,4 +257,12 @@ public class SkinManager {
 		return mSkinTypeClazz;
 	}
 
+	/**
+	 * attrName前缀
+	 *
+	 * @return 前缀值
+	 */
+	public String getSkinPrefix() {
+		return mSkinPrefix;
+	}
 }

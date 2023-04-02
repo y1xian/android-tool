@@ -6,23 +6,23 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewParent;
-import android.view.Window;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatViewInflater;
 import androidx.appcompat.widget.VectorEnabledTintResources;
+import androidx.core.view.LayoutInflaterCompat;
 import androidx.core.view.ViewCompat;
 
 import com.yyxnb.android.skin.SkinManager;
-import com.yyxnb.android.skin.attr.SkinAttrHolder;
 import com.yyxnb.android.skin.callback.OnSkinChangeCallback;
 
 import org.xmlpull.v1.XmlPullParser;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.ref.WeakReference;
 
 /**
  * SkinCompat
@@ -38,13 +38,15 @@ public class SkinCompat {
 	// 复制系统的拦截View兼容的对象
 	private SkinCompatViewInflater mAppCompatViewInflater;
 
-	private Context mContext;
+	private final WeakReference<AppCompatActivity> mActivity;
 
-	private Window mWindow;
+	private OnSkinChangeCallback mCallback;
 
-	public SkinCompat(Context context, Window window) {
-		this.mContext = context;
-		this.mWindow = window;
+	public SkinCompat(@NonNull AppCompatActivity activity, @NonNull OnSkinChangeCallback callback) {
+		LayoutInflater layoutInflater = LayoutInflater.from(activity);
+		LayoutInflaterCompat.setFactory2(layoutInflater, activity);
+		this.mActivity = new WeakReference<>(activity);
+		this.mCallback = callback;
 	}
 
 	public void release(OnSkinChangeCallback callback) {
@@ -55,8 +57,8 @@ public class SkinCompat {
 	}
 
 	public void release() {
-		mContext = null;
-		mWindow = null;
+		mActivity.clear();
+		mCallback = null;
 	}
 
 	// region ----------- AppCompatDelegateImpl -----------
@@ -64,9 +66,9 @@ public class SkinCompat {
 	@SuppressLint("RestrictedApi")
 	public View createView(View parent, String name, @NonNull Context context, @NonNull AttributeSet attrs) {
 		if (this.mAppCompatViewInflater == null) {
-
-			TypedArray a = mContext.obtainStyledAttributes(androidx.appcompat.R.styleable.AppCompatTheme);
+			TypedArray a = mActivity.get().obtainStyledAttributes(androidx.appcompat.R.styleable.AppCompatTheme);
 			String viewInflaterClassName = a.getString(androidx.appcompat.R.styleable.AppCompatTheme_viewInflaterClass);
+			a.recycle();
 			if (viewInflaterClassName != null && !AppCompatViewInflater.class.getName().equals(viewInflaterClassName)) {
 				try {
 					Class<?> viewInflaterClass = Class.forName(viewInflaterClassName);
@@ -85,14 +87,14 @@ public class SkinCompat {
 			inheritContext = attrs instanceof XmlPullParser ? ((XmlPullParser) attrs).getDepth() > 1 : this.shouldInheritContext((ViewParent) parent);
 		}
 
-		return this.mAppCompatViewInflater.createView(parent, name, context, attrs, inheritContext, Build.VERSION.SDK_INT < 21, true, VectorEnabledTintResources.shouldBeUsed());
+		return this.mAppCompatViewInflater.createView(parent, name, context, attrs, inheritContext, Build.VERSION.SDK_INT < 21, true, VectorEnabledTintResources.shouldBeUsed(), mCallback);
 	}
 
 	private boolean shouldInheritContext(ViewParent parent) {
 		if (parent == null) {
 			return false;
 		} else {
-			for (View windowDecor = mWindow.getDecorView(); parent != null; parent = parent.getParent()) {
+			for (View windowDecor = mActivity.get().getWindow().getDecorView(); parent != null; parent = parent.getParent()) {
 				if (parent == windowDecor || !(parent instanceof View) || ViewCompat.isAttachedToWindow((View) parent)) {
 					return false;
 				}
@@ -100,25 +102,6 @@ public class SkinCompat {
 
 			return true;
 		}
-	}
-
-	// endregion ---------------------------------
-
-	/**
-	 * 管理SkinView
-	 *
-	 * @param callback
-	 * @param skinAttrHolder
-	 */
-	public void managerSkinView(OnSkinChangeCallback callback, SkinAttrHolder skinAttrHolder) {
-		// 获取对callback页面的SkinConvert列表
-		List<SkinAttrHolder> skinAttrHolders = SkinManager.getInstance().getSkinAttrHolders(callback);
-		if (skinAttrHolders == null) {
-			skinAttrHolders = new ArrayList<>();
-			// 注册
-			SkinManager.getInstance().register(callback, skinAttrHolders);
-		}
-		skinAttrHolders.add(skinAttrHolder);
 	}
 
 }
