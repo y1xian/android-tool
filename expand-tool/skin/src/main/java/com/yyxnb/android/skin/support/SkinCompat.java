@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewParent;
@@ -19,6 +18,7 @@ import androidx.core.view.ViewCompat;
 
 import com.yyxnb.android.skin.SkinManager;
 import com.yyxnb.android.skin.callback.OnSkinChangeCallback;
+import com.yyxnb.android.utils.LogUtil;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -34,6 +34,8 @@ import java.lang.ref.WeakReference;
  * @date 2023/3/27
  */
 public class SkinCompat {
+
+	private static final String TAG = SkinCompat.class.getSimpleName();
 
 	// 复制系统的拦截View兼容的对象
 	private SkinCompatViewInflater mAppCompatViewInflater;
@@ -74,7 +76,7 @@ public class SkinCompat {
 					Class<?> viewInflaterClass = Class.forName(viewInflaterClassName);
 					this.mAppCompatViewInflater = (SkinCompatViewInflater) viewInflaterClass.getDeclaredConstructor().newInstance();
 				} catch (Throwable var8) {
-					Log.i("AppCompatDelegate", "Failed to instantiate custom view inflater " + viewInflaterClassName + ". Falling back to default.", var8);
+					LogUtil.e(TAG, "createView", var8);
 					this.mAppCompatViewInflater = new SkinCompatViewInflater();
 				}
 			} else {
@@ -99,7 +101,6 @@ public class SkinCompat {
 					return false;
 				}
 			}
-
 			return true;
 		}
 	}

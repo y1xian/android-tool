@@ -6,10 +6,10 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.yyxnb.android.skin.config.SkinConfig;
 import com.yyxnb.android.skin.config.SkinUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.lang.reflect.Method;
 
@@ -23,6 +23,8 @@ import java.lang.reflect.Method;
  * @date 2023/3/27
  */
 public class SkinResource {
+
+	private static final String TAG = SkinResource.class.getSimpleName();
 
 	/**
 	 * 实际获取本地皮肤apk资源的对象
@@ -59,7 +61,7 @@ public class SkinResource {
 			// 获取皮肤包的包名
 			mPackageName = SkinUtil.getInstance(context).getPackageName(skinPath);
 		} catch (Exception e) {
-			Log.e("SkinResource", "skinPath:" + skinPath + "， " + e.getMessage());
+			LogUtil.e(TAG, "skinPath:" + skinPath, e);
 		}
 	}
 
@@ -81,7 +83,7 @@ public class SkinResource {
 			}
 			return originResources.getDrawable(resId, null);
 		} catch (Exception e) {
-			Log.e("getDrawableByName", "resName:" + resName + "， " + e.getMessage());
+			LogUtil.e(TAG, "resName:" + resName, e);
 		}
 		return null;
 	}
@@ -97,7 +99,7 @@ public class SkinResource {
 			String resName = mResources.getResourceEntryName(resId);
 			return getDrawableByName(resName);
 		} catch (Exception e) {
-			Log.e("getDrawableById", "resId:" + resId + "， " + e.getMessage());
+			LogUtil.e(TAG, "resId:" + resId, e);
 		}
 		return null;
 	}
@@ -117,7 +119,7 @@ public class SkinResource {
 			int resId = originResources.getIdentifier(resName, SkinConfig.RES_TYPE_NAME_COLOR, mPackageName);
 			return originResources.getColorStateList(resId);
 		} catch (Exception e) {
-			Log.e("getColorByName", "resName:" + resName + "， " + e.getMessage());
+			LogUtil.e(TAG, "resName:" + resName, e);
 		}
 		return null;
 	}
@@ -133,7 +135,7 @@ public class SkinResource {
 			String resName = mResources.getResourceEntryName(resId);
 			return getColorByName(resName);
 		} catch (Exception e) {
-			Log.e("getColorById", "resId:" + resId + "， " + e.getMessage());
+			LogUtil.e(TAG, "resId:" + resId, e);
 		}
 		return null;
 	}

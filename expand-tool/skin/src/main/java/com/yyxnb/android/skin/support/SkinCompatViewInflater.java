@@ -7,7 +7,6 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.InflateException;
 import android.view.View;
 
@@ -34,6 +33,7 @@ import com.yyxnb.android.skin.SkinManager;
 import com.yyxnb.android.skin.attr.SkinAttr;
 import com.yyxnb.android.skin.attr.SkinAttrHolder;
 import com.yyxnb.android.skin.callback.OnSkinChangeCallback;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -52,6 +52,9 @@ import java.util.Map;
  * @date 2023/3/27
  */
 public class SkinCompatViewInflater {
+
+	private static final String TAG = SkinCompatViewInflater.class.getSimpleName();
+
 	private static final Class<?>[] S_CONSTRUCTOR_SIGNATURE = new Class[]{
 			Context.class, AttributeSet.class};
 	private static final int[] S_ON_CLICK_ATTRS = new int[]{android.R.attr.onClick};
@@ -61,8 +64,6 @@ public class SkinCompatViewInflater {
 			"android.view.",
 			"android.webkit."
 	};
-
-	private static final String LOG_TAG = "AppCompatViewInflater";
 
 	private static final Map<String, Constructor<? extends View>> STRING_CONSTRUCTOR_MAP
 			= new ArrayMap<>();
@@ -255,7 +256,7 @@ public class SkinCompatViewInflater {
 			themeId = a.getResourceId(androidx.appcompat.R.styleable.View_theme, 0);
 
 			if (themeId != 0) {
-				Log.i(LOG_TAG, "app:theme is now deprecated. "
+				LogUtil.i(TAG, "app:theme is now deprecated. "
 						+ "Please move to using android:theme instead.");
 			}
 		}
