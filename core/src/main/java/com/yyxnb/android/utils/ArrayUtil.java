@@ -640,7 +640,7 @@ public class ArrayUtil {
 	public static <T> int indexOf(T[] array, Object value) {
 		if (null != array) {
 			for (int i = 0; i < array.length; i++) {
-				if (ObjectUtil.equal(value, array[i])) {
+				if (UtilInner.equals(value, array[i])) {
 					return i;
 				}
 			}
@@ -695,7 +695,7 @@ public class ArrayUtil {
 	public static <T> int lastIndexOf(T[] array, Object value) {
 		if (null != array) {
 			for (int i = array.length - 1; i >= 0; i--) {
-				if (ObjectUtil.equal(value, array[i])) {
+				if (UtilInner.equals(value, array[i])) {
 					return i;
 				}
 			}

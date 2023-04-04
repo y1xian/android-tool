@@ -6,6 +6,7 @@ import androidx.annotation.RestrictTo;
 
 import com.yyxnb.android.constant.StringConstants;
 import com.yyxnb.android.modules.ILog;
+import com.yyxnb.android.utils.LogUtil;
 
 /**
  * 框架默认打印
@@ -153,21 +154,19 @@ public class LogImpl implements ILog {
 			sb.append(LINE_SEPARATOR);
 			body = sb.toString();
 			switch (priority) {
-				case Log.VERBOSE:
-					Log.v(tag, body);
-					break;
 				case Log.INFO:
-					Log.i(tag, body);
+					LogUtil.i(tag, body);
 					break;
 				case Log.WARN:
-					Log.w(tag, body);
+					LogUtil.w(tag, body);
 					break;
 				case Log.ERROR:
-					Log.e(tag, body);
+					LogUtil.e(tag, body);
 					break;
 				case Log.DEBUG:
+				case Log.VERBOSE:
 				default:
-					Log.d(tag, body);
+					LogUtil.d(tag, body);
 					break;
 			}
 		}

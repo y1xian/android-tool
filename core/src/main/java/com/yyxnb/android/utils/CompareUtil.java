@@ -25,14 +25,11 @@ public class CompareUtil {
 	public static int compareVersion(String version1, String version2) {
 		version1 = StrUtil.str(version1);
 		version2 = StrUtil.str(version2);
-
-		if (ObjectUtil.equal(version1, version2)) {
+		// null视为最小版本，排在前
+		if (UtilInner.equals(version1, version2)) {
 			return 0;
 		}
-		// null视为最小版本，排在前
-		if (version1 == null && version2 == null) {
-			return 0;
-		} else if (version1 == null) {
+		if (version1 == null) {
 			return -1;
 		} else if (version2 == null) {
 			return 1;
