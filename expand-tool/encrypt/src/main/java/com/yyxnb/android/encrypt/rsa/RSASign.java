@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.yyxnb.android.encrypt.EncryptUtil;
-import com.yyxnb.android.encrypt.LogUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;

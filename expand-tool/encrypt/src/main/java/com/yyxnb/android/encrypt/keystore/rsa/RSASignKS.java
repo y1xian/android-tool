@@ -8,7 +8,7 @@ import android.util.Base64;
 
 import androidx.annotation.RequiresApi;
 
-import com.yyxnb.android.encrypt.LogUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

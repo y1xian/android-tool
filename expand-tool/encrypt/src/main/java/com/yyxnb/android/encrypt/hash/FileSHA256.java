@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.yyxnb.android.encrypt.HexUtil;
 import com.yyxnb.android.encrypt.IOUtil;
-import com.yyxnb.android.encrypt.LogUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -3,7 +3,7 @@ package com.yyxnb.android.encrypt.hash;
 import android.text.TextUtils;
 
 import com.yyxnb.android.encrypt.HexUtil;
-import com.yyxnb.android.encrypt.LogUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;

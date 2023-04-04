@@ -3,6 +3,8 @@ package com.yyxnb.android.encrypt;
 import android.annotation.SuppressLint;
 import android.os.Build;
 
+import com.yyxnb.android.utils.LogUtil;
+
 /**
  * 根密钥导出工具
  * 根据三段根密钥组件和一段盐值，使用PBKDF算法导出根密钥对象，用于对工作密钥进行加解密

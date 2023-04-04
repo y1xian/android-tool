@@ -3,6 +3,7 @@ package com.yyxnb.android.encrypt;
 import android.annotation.SuppressLint;
 
 import com.yyxnb.android.encrypt.hash.PBKDF2;
+import com.yyxnb.android.utils.LogUtil;
 
 /**
  * 导出根密钥基础类

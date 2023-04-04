@@ -2,7 +2,7 @@ package com.yyxnb.android.encrypt.aes;
 
 import com.yyxnb.android.encrypt.EncryptUtil;
 import com.yyxnb.android.encrypt.HexUtil;
-import com.yyxnb.android.encrypt.LogUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.security.GeneralSecurityException;
 import java.security.spec.AlgorithmParameterSpec;

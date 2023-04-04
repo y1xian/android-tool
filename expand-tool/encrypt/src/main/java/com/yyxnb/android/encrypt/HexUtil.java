@@ -2,6 +2,8 @@ package com.yyxnb.android.encrypt;
 
 import android.text.TextUtils;
 
+import com.yyxnb.android.utils.LogUtil;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 

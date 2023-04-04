@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import androidx.annotation.RequiresApi;
 
 import com.yyxnb.android.encrypt.HexUtil;
-import com.yyxnb.android.encrypt.LogUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

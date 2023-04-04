@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.yyxnb.android.encrypt.EncryptUtil;
 import com.yyxnb.android.encrypt.HexUtil;
-import com.yyxnb.android.encrypt.LogUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
