@@ -1,5 +1,11 @@
 // 发布配置 https://developer.android.google.cn/studio/build/maven-publish-plugin?hl=en#groovy
 apply plugin: 'maven-publish'
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "source"
+}
+
 afterEvaluate {
     publishing {
         if (LOCAL_MAVEN_ENABLE) {
