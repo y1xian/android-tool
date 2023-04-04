@@ -15,7 +15,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.TransactionTooLargeException;
 
-import com.yyxnb.android.activity.LogUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.io.Serializable;
 import java.net.URISyntaxException;

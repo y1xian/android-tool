@@ -8,7 +8,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 
-import com.yyxnb.android.activity.LogUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -362,17 +362,17 @@ public class SafeIntent extends Intent {
 		}
 	}
 
-	public <T extends Serializable> T getSerializableExtra(String key, Class<T> tClass) {
-		try {
-			Serializable serializable = super.getSerializableExtra(key);
-			if (tClass.isInstance(serializable)) {
-				return tClass.cast(serializable);
-			}
-		} catch (Throwable e) {
-			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage(), true);
-		}
-		return null;
-	}
+//	public <T extends Serializable> T getSerializableExtra(String key, Class<T> tClass) {
+//		try {
+//			Serializable serializable = super.getSerializableExtra(key);
+//			if (tClass.isInstance(serializable)) {
+//				return tClass.cast(serializable);
+//			}
+//		} catch (Throwable e) {
+//			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage(), true);
+//		}
+//		return null;
+//	}
 
 	@Override
 	public ArrayList<CharSequence> getCharSequenceArrayListExtra(String name) {

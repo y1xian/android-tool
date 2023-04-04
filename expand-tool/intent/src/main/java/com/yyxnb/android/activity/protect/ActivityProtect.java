@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.yyxnb.android.activity.LogUtil;
+import com.yyxnb.android.utils.LogUtil;
 
 import java.lang.reflect.Field;
 
