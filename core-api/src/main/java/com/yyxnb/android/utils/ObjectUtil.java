@@ -1,9 +1,11 @@
 package com.yyxnb.android.utils;
 
+import android.os.Build;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 
+import androidx.annotation.RequiresApi;
 import androidx.collection.SimpleArrayMap;
 
 import java.lang.reflect.Array;
@@ -18,7 +20,6 @@ import java.util.function.Supplier;
  * 对象工具类
  *
  * <pre>
- *     对象工具类
  * </pre>
  *
  * @author yyx
@@ -26,27 +27,13 @@ import java.util.function.Supplier;
  */
 public class ObjectUtil {
 
+	private static final String TAG = ObjectUtil.class.getSimpleName();
 
-	/**
-	 * 比较两个对象是否相等，此方法是 {@link #equal(Object, Object)}的别名方法。<br>
-	 * 相同的条件有两个，满足其一即可：<br>
-	 * <ol>
-	 * <li>obj1 == null &amp;&amp; obj2 == null</li>
-	 * <li>obj1.equals(obj2)</li>
-	 * <li>如果是BigDecimal比较，0 == obj1.compareTo(obj2)</li>
-	 * </ol>
-	 *
-	 * @param obj1 对象1
-	 * @param obj2 对象2
-	 * @return 是否相等
-	 * @see #equal(Object, Object)
-	 */
-	public static boolean equals(Object obj1, Object obj2) {
-		return equal(obj1, obj2);
+	private ObjectUtil() {
 	}
 
 	/**
-	 * 比较两个对象是否相等。<br>
+	 * 比较两个对象是否相等<br>
 	 * 相同的条件有两个，满足其一即可：<br>
 	 * <ol>
 	 * <li>obj1 == null &amp;&amp; obj2 == null</li>
@@ -57,10 +44,9 @@ public class ObjectUtil {
 	 * @param obj1 对象1
 	 * @param obj2 对象2
 	 * @return 是否相等
-	 * @see Objects#equals(Object, Object)
 	 */
-	public static boolean equal(Object obj1, Object obj2) {
-		return UtilInner.equals(obj1, obj2);
+	public static boolean equals(Object obj1, Object obj2) {
+		return Objects.equals(obj1, obj2);
 	}
 
 	/**
@@ -150,10 +136,10 @@ public class ObjectUtil {
 		}
 
 		if (obj instanceof Iterator) {
-			Iterator<?> iter = (Iterator<?>) obj;
-			while (iter.hasNext()) {
-				Object o = iter.next();
-				if (equal(o, element)) {
+			Iterator<?> inter = (Iterator<?>) obj;
+			while (inter.hasNext()) {
+				Object o = inter.next();
+				if (equals(o, element)) {
 					return true;
 				}
 			}
@@ -163,7 +149,7 @@ public class ObjectUtil {
 			Enumeration<?> enumeration = (Enumeration<?>) obj;
 			while (enumeration.hasMoreElements()) {
 				Object o = enumeration.nextElement();
-				if (equal(o, element)) {
+				if (equals(o, element)) {
 					return true;
 				}
 			}
@@ -173,7 +159,7 @@ public class ObjectUtil {
 			int len = Array.getLength(obj);
 			for (int i = 0; i < len; i++) {
 				Object o = Array.get(obj, i);
-				if (equal(o, element)) {
+				if (equals(o, element)) {
 					return true;
 				}
 			}
@@ -200,8 +186,8 @@ public class ObjectUtil {
 			return true;
 		} else if (obj.getClass().isArray() && Array.getLength(obj) == 0) {
 			return true;
-		} else if (obj instanceof CharSequence && obj.toString().length() == 0) {
-			return true;
+		} else if (obj instanceof CharSequence) {
+			return isBlank((CharSequence) obj);
 		} else if (obj instanceof Collection && ((Collection<?>) obj).isEmpty()) {
 			return true;
 		} else if (obj instanceof Map && ((Map<?, ?>) obj).isEmpty()) {
@@ -220,27 +206,38 @@ public class ObjectUtil {
 			return true;
 		} else if (obj instanceof Enumeration && !((Enumeration<?>) obj).hasMoreElements()) {
 			return true;
-		} else {
-			return false;
 		}
+		LogUtil.d(TAG, "未匹配的类型：" + obj.getClass());
+		return true;
 	}
 
 	/**
-	 * 判断指定对象是否为非空，支持：
+	 * <p>字符串是否为空白，空白的定义如下：</p>
+	 * <ol>
+	 *     <li>{@code null}</li>
+	 *     <li>空字符串：{@code ""}</li>
+	 *     <li>空格、全角空格、制表符、换行符，等不可见字符</li>
+	 * </ol>
 	 *
-	 * <pre>
-	 * 1. CharSequence
-	 * 2. Map
-	 * 3. Iterable
-	 * 4. Iterator
-	 * 5. Array
-	 * </pre>
-	 *
-	 * @param obj 被判断的对象
-	 * @return 是否为空，如果类型不支持，返回true
+	 * @param str 被检测的字符串
+	 * @return 若为空白，则返回 true
 	 */
-	public static boolean isNotEmpty(Object obj) {
-		return !isEmpty(obj);
+	public static boolean isBlank(CharSequence str) {
+		int length;
+		if ((str == null) || ((length = str.length()) == 0)) {
+			return true;
+		}
+		for (int i = 0; i < length; i++) {
+			// 只要有一个非空字符即为非空字符串
+			char c = str.charAt(i);
+			if (!(Character.isWhitespace(c)
+					|| Character.isSpaceChar(c)
+					|| c == '\ufeff'
+					|| c == '\u202a')) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -272,6 +269,7 @@ public class ObjectUtil {
 	 * @return 被检查对象为{@code null}返回默认值，否则返回自定义handle处理后的返回值
 	 * @throws NullPointerException {@code defaultValueSupplier == null} 时，抛出
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	public static <T> T defaultIfNull(T source, Supplier<? extends T> defaultValueSupplier) {
 		if (isEmpty(source)) {
 			return defaultValueSupplier.get();
@@ -288,8 +286,9 @@ public class ObjectUtil {
 	 * @param <T>          被检查对象为{@code null}返回默认值，否则返回自定义handle处理后的返回值
 	 * @return 处理后的返回值
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	public static <T> T defaultIfNull(Object source, Supplier<? extends T> handle, final T defaultValue) {
-		if (isNotEmpty(source)) {
+		if (!isEmpty(source)) {
 			return handle.get();
 		}
 		return defaultValue;
