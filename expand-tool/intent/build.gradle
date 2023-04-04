@@ -6,4 +6,5 @@ android {
 
 dependencies {
     implementation dependenciesExt.appcompat
+    implementation project(':core-api')
 }
