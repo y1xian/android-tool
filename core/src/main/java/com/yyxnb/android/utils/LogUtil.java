@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RestrictTo;
 
-import com.yyxnb.android.api.BuildConfig;
+import com.yyxnb.android.BuildConfig;
 
 import java.util.regex.Pattern;
 

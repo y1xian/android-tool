@@ -1,8 +1,8 @@
 rootProject.name = 'android-tool'
 
 // 核心tool
-include ':core-api'
 include ':core'
+include ':utils'
 
 // 扩展tool
 include ':expand-tool',
