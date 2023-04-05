@@ -2,7 +2,6 @@ package com.yyxnb.android.utils;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.util.SparseArray;
 
 import androidx.annotation.CallSuper;

@@ -41,7 +41,6 @@ final class ModuleLoader {
 	 */
 	private final Map<Class<? extends IModule>, IModule> mModuleInstances = new HashMap<>();
 	private final Context mContext;
-	private static long initTime;
 
 	public ModuleLoader(Context mContext) {
 		this.mContext = mContext;
