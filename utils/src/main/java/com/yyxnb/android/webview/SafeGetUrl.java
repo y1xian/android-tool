@@ -19,6 +19,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class SafeGetUrl {
 	private static final String TAG = SafeGetUrl.class.getSimpleName();
+
 	private static final long TIME_OUT = 200L;
 	private String url;
 	private WebView webView;
