@@ -17,7 +17,7 @@ import com.yyxnb.android.utils.LogUtil;
  * @author yyx
  * @date 2022/12/2
  */
-@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public class LogImpl implements ILog {
 
 	private static final String TAG = LogImpl.class.getSimpleName();
