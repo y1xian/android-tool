@@ -2,7 +2,7 @@ rootProject.name = 'android-tool'
 
 // 核心tool
 include ':core'
-include ':utils'
+include ':core-business'
 
 // 扩展tool
 include ':expand-tool',

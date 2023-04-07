@@ -1,6 +1,19 @@
 // 全局配置
-
+// 先加载local.properties文件
+Properties localProperties = new Properties()
+try {
+    def localFile = project.rootProject.file('local.properties')
+    if (localFile != null && localFile.exists()) {
+        localProperties.load(localFile.newDataInputStream())
+    }
+} catch (Exception ignored) {
+    println("local.properties not found")
+}
 ext {
+    POM_LOCAL_PATH = null
+    if (!localProperties.isEmpty() && localProperties.containsKey("POM_LOCAL_PATH")) {
+        POM_LOCAL_PATH = localProperties.getProperty("POM_LOCAL_PATH", null)
+    }
     // 统一仓库
     repositoriesExt = {
         maven { url 'https://maven.aliyun.com/repository/central' }
@@ -10,7 +23,7 @@ ext {
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url "https://jitpack.io" }
         mavenCentral()
-        if (hasProperty('POM_LOCAL_PATH')) {
+        if (POM_LOCAL_PATH != null) {
             // 本地仓库
             maven { url uri(POM_LOCAL_PATH) }
         }
