@@ -79,11 +79,11 @@ public class ObjectUtil {
 
 		int count;
 		if (obj instanceof Iterator) {
-			Iterator<?> iter = (Iterator<?>) obj;
+			Iterator<?> item = (Iterator<?>) obj;
 			count = 0;
-			while (iter.hasNext()) {
+			while (item.hasNext()) {
 				count++;
-				iter.next();
+				item.next();
 			}
 			return count;
 		}
@@ -186,8 +186,8 @@ public class ObjectUtil {
 			return true;
 		} else if (obj.getClass().isArray() && Array.getLength(obj) == 0) {
 			return true;
-		} else if (obj instanceof CharSequence) {
-			return isBlank((CharSequence) obj);
+		} else if (obj instanceof CharSequence && obj.toString().length() == 0) {
+			return true;
 		} else if (obj instanceof Collection && ((Collection<?>) obj).isEmpty()) {
 			return true;
 		} else if (obj instanceof Map && ((Map<?, ?>) obj).isEmpty()) {
@@ -207,8 +207,8 @@ public class ObjectUtil {
 		} else if (obj instanceof Enumeration && !((Enumeration<?>) obj).hasMoreElements()) {
 			return true;
 		}
-		LogUtil.d(TAG, "未匹配的类型：" + obj.getClass());
-		return true;
+		LogUtil.d(TAG, String.format("未匹配：%s，%s", obj, obj.getClass()));
+		return false;
 	}
 
 	/**

@@ -21,7 +21,7 @@
                 android:name="com.yyxnb.android.CoreInitializer"
                 android:value="@string/androidx_startup" />
             <meta-data
-                android:name="com.yyxnb.android.CoreBusinessInitializer"
+                android:name="com.yyxnb.android.core.CoreBusinessInitializer"
                 android:value="@string/androidx_startup" />
         </provider>
     </application>

@@ -38,7 +38,7 @@ public class ModuleManager {
 		// 初始化ModuleLoader
 		sModuleLoader = new ModuleLoader(context);
 		// 先注册本地，最低优先级
-		sModuleLoader.registerMetaModule(ILog.class, DefaultConfigImpl.class);
+		sModuleLoader.registerMetaModule(IConfig.class, DefaultConfigImpl.class);
 		sModuleLoader.registerMetaModule(ILog.class, DefaultLogImpl.class);
 		// 再注册meta下的，第二优先级
 		sModuleLoader.initMeta();

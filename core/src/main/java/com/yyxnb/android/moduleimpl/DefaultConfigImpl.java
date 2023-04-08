@@ -2,6 +2,7 @@ package com.yyxnb.android.moduleimpl;
 
 import android.util.Log;
 
+import com.yyxnb.android.BuildConfig;
 import com.yyxnb.android.modules.IConfig;
 
 /**
@@ -22,7 +23,7 @@ public class DefaultConfigImpl implements IConfig {
 	 */
 	@Override
 	public boolean isDebug() {
-		return true;
+		return BuildConfig.DEBUG;
 	}
 
 	/**
