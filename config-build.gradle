@@ -80,6 +80,7 @@ ext {
 
     versions = [
             android_plugin: '7.3.0',
+            startup       : "1.0.0",
 
             appcompat     : "1.4.0",
 
@@ -93,11 +94,8 @@ ext {
 
     dependenciesExt = [
             appcompat: [group: 'androidx.appcompat', name: 'appcompat', version: versions.appcompat],
+            startup  : [group: 'androidx.startup', name: 'startup-runtime', version: versions.startup],
 
             multidex : [group: 'androidx.multidex', name: 'multidex', version: versions.multidex],
-
-            core     : 'com.github.y1xian.android-tool:core:' + POM_VERSION,
-            utils    : 'com.github.y1xian.android-tool:core-api:' + POM_VERSION,
-
     ]
 }

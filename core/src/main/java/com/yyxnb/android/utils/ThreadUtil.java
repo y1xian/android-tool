@@ -43,6 +43,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ThreadUtil {
 
+	private static final String TAG = ThreadUtil.class.getSimpleName();
+
 	private static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
 
 	private static final SparseArray<SparseArray<ExecutorService>> TYPE_PRIORITY_POOLS = new SparseArray<>();
@@ -354,7 +356,7 @@ public class ThreadUtil {
 				}
 			}
 		} else {
-			UtilInner.e("ThreadUtil", "The executorService is not ThreadUtil's pool.");
+			ModuleManager.log().e(TAG, "The executorService is not ThreadUtil's pool.");
 		}
 	}
 
@@ -383,7 +385,7 @@ public class ThreadUtil {
 									long delay, final long period, final TimeUnit unit) {
 		synchronized (TASK_POOL_MAP) {
 			if (TASK_POOL_MAP.get(task) != null) {
-				UtilInner.e("ThreadUtils", "Task can only be executed once.");
+				ModuleManager.log().e(TAG, "Task can only be executed once.");
 				return;
 			}
 			TASK_POOL_MAP.put(task, pool);
@@ -507,7 +509,7 @@ public class ThreadUtil {
 			try {
 				super.execute(command);
 			} catch (RejectedExecutionException ignore) {
-				UtilInner.e("ThreadUtils", "This will not happen!");
+				ModuleManager.log().e(TAG, "This will not happen!");
 				mWorkQueue.offer(command);
 			} catch (Throwable t) {
 				mSubmittedCount.decrementAndGet();
@@ -576,7 +578,7 @@ public class ThreadUtil {
 					try {
 						super.run();
 					} catch (Throwable t) {
-						UtilInner.e("ThreadUtil", "Request threw uncaught throwable", t);
+						ModuleManager.log().e(TAG, "Request threw uncaught throwable", t);
 					}
 				}
 			};
@@ -591,12 +593,12 @@ public class ThreadUtil {
 
 		@Override
 		public void onCancel() {
-			UtilInner.e("ThreadUtil", "onCancel: " + Thread.currentThread());
+			ModuleManager.log().e(TAG, "onCancel: " + Thread.currentThread());
 		}
 
 		@Override
 		public void onFail(Throwable t) {
-			UtilInner.e("ThreadUtil", "onFail: ", t);
+			ModuleManager.log().e(TAG, "onFail: ", t);
 		}
 
 	}
@@ -639,7 +641,7 @@ public class ThreadUtil {
 					}
 					runner = Thread.currentThread();
 					if (mTimeoutListener != null) {
-						UtilInner.d("ThreadUtil", "Scheduled task doesn't support timeout.");
+						ModuleManager.log().d(TAG, "Scheduled task doesn't support timeout.");
 					}
 				} else {
 					if (state.get() != RUNNING) {
@@ -817,7 +819,7 @@ public class ThreadUtil {
 				try {
 					mLatch.await();
 				} catch (InterruptedException e) {
-					UtilInner.e(e);
+					ModuleManager.log().e(e);
 				}
 			}
 			return mValue;
@@ -828,7 +830,7 @@ public class ThreadUtil {
 				try {
 					mLatch.await(timeout, unit);
 				} catch (InterruptedException e) {
-					UtilInner.e(e);
+					ModuleManager.log().e(e);
 					return defaultValue;
 				}
 			}

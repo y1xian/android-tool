@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RestrictTo;
 
-import com.yyxnb.android.BuildConfig;
+import com.yyxnb.android.ModuleManager;
 
 import java.util.regex.Pattern;
 
@@ -46,7 +46,7 @@ public class LogUtil {
 	 */
 	private static String getLogMsg(String msg, boolean isNeedProguard) {
 		// 非debug直接匿名
-		if (!BuildConfig.DEBUG) {
+		if (!ModuleManager.config().isDebug()) {
 			return getLogMsg(null, msg);
 		}
 		StringBuilder retStr = new StringBuilder(512);
@@ -458,7 +458,7 @@ public class LogUtil {
 	 * @return Throwable
 	 */
 	private static Throwable getNewThrowable(Throwable e) {
-		if (BuildConfig.DEBUG) {
+		if (ModuleManager.config().isDebug()) {
 			return e;
 		}
 		if (e == null) {

@@ -1,9 +1,8 @@
-package com.yyxnb.android.log;
+package com.yyxnb.android.moduleimpl;
 
 import android.util.Log;
 
-import androidx.annotation.RestrictTo;
-
+import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.constant.StringConstants;
 import com.yyxnb.android.modules.ILog;
 import com.yyxnb.android.utils.LogUtil;
@@ -17,10 +16,9 @@ import com.yyxnb.android.utils.LogUtil;
  * @author yyx
  * @date 2022/12/2
  */
-@RestrictTo(RestrictTo.Scope.LIBRARY)
-public class LogImpl implements ILog {
+public class DefaultLogImpl implements ILog {
 
-	private static final String TAG = LogImpl.class.getSimpleName();
+	private static final String TAG = DefaultLogImpl.class.getSimpleName();
 	private static final String DOUBLE_DIVIDER = "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
 	private static final String SINGLE_DIVIDER = "──────────────────────────────────────────────";
 	public static String LINE_SEPARATOR = StringConstants.CRLF;
@@ -131,6 +129,9 @@ public class LogImpl implements ILog {
 	}
 
 	private synchronized void log(int priority, String tag, Object... contents) {
+		if (!ModuleManager.config().enableLog(priority)) {
+			return;
+		}
 		StringBuilder sb = new StringBuilder();
 		sb.append(getStackInfo());
 		String body;

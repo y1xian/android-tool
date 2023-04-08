@@ -11,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.Lifecycle;
 
-import com.yyxnb.android.ModuleManager;
-
 /**
  * AppUtil
  *
@@ -206,8 +204,6 @@ public final class AppUtil {
 	public static final class FileProviderAndroidUtil extends FileProvider {
 		@Override
 		public boolean onCreate() {
-			AppUtil.init((Application) getContext().getApplicationContext());
-			ModuleManager.init(AppUtil.getApp());
 			return true;
 		}
 	}

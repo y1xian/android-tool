@@ -6,4 +6,5 @@ android {
 
 dependencies {
     implementation dependenciesExt.appcompat
+    api dependenciesExt.startup
 }

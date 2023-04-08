@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.yyxnb.android.constant.BuildVersion;
 import com.yyxnb.android.modules.IModule;
-import com.yyxnb.android.utils.StrUtil;
+import com.yyxnb.android.utils.ObjectUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -42,8 +42,8 @@ final class ModuleLoader {
 	private final Map<Class<? extends IModule>, IModule> mModuleInstances = new HashMap<>();
 	private final Context mContext;
 
-	public ModuleLoader(Context mContext) {
-		this.mContext = mContext;
+	public ModuleLoader(Context context) {
+		this.mContext = context;
 	}
 
 	public synchronized void initMeta() {
@@ -70,6 +70,9 @@ final class ModuleLoader {
 	 */
 	private synchronized void metaModuleConfigs(Context context) {
 		try {
+			if (context == null) {
+				return;
+			}
 			Bundle bundle;
 			if (BuildVersion.isOver13()) {
 				bundle = context.getPackageManager().getApplicationInfo(context.getPackageName(),
@@ -112,7 +115,7 @@ final class ModuleLoader {
 	 * @param impl   实现类
 	 */
 	private synchronized void registerMetaModule(@NonNull String module, @NonNull String impl) {
-		if (!StrUtil.isAllBlank(module, impl)) {
+		if (!ObjectUtil.isBlank(module) && !ObjectUtil.isBlank(impl)) {
 			try {
 				Class moduleClass = Class.forName(module);
 				if (IModule.class.isAssignableFrom(moduleClass)) {
