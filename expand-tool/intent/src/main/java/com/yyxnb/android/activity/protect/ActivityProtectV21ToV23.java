@@ -72,7 +72,7 @@ public class ActivityProtectV21ToV23 implements IActivityProtect {
 	private void finish(IBinder binder) throws Exception {
 
 		// http://androidxref.com/5.1.0_r1/xref/frameworks/base/core/java/android/app/ActivityManagerNative.java
-		Class activityManagerNativeClass = Class.forName("android.app.ActivityManagerNative");
+		Class<?> activityManagerNativeClass = Class.forName("android.app.ActivityManagerNative");
 		Method getDefaultMethod = activityManagerNativeClass.getDeclaredMethod("getDefault");
 		Object activityManager = getDefaultMethod.invoke(null);
 

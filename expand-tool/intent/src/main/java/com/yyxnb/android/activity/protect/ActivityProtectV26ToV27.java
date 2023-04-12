@@ -76,6 +76,7 @@ public class ActivityProtectV26ToV27 implements IActivityProtect {
 		// http://androidxref.com/8.1.0_r33/xref/frameworks/base/core/java/android/app/ActivityManager.java#getService
 		Method getServiceMethod = ActivityManager.class.getDeclaredMethod("getService");
 		Object activityManager = getServiceMethod.invoke(null);
+		// http://androidxref.com/8.1.0_r33/xref/frameworks/base/core/java/android/app/ActivityManager.java#finishActivity
 		Method finishActivityMethod = activityManager.getClass().getDeclaredMethod("finishActivity", IBinder.class, int.class, Intent.class, int.class);
 		finishActivityMethod.setAccessible(true);
 		int dontFinishTaskWithActivity = 0;
