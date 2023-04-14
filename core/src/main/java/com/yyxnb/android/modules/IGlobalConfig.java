@@ -9,7 +9,7 @@ package com.yyxnb.android.modules;
  * @author yyx
  * @date 2023/4/7
  */
-public interface IConfig extends IModule {
+public interface IGlobalConfig extends IModule {
 
 	/**
 	 * 是否debug模式
@@ -25,6 +25,5 @@ public interface IConfig extends IModule {
 	 * @return {@code true or false}
 	 */
 	boolean enableLog(int priority);
-
 
 }

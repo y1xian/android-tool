@@ -3,7 +3,7 @@ package com.yyxnb.android.moduleimpl;
 import android.util.Log;
 
 import com.yyxnb.android.BuildConfig;
-import com.yyxnb.android.modules.IConfig;
+import com.yyxnb.android.modules.IGlobalConfig;
 
 /**
  * DefaultConfig
@@ -14,7 +14,7 @@ import com.yyxnb.android.modules.IConfig;
  * @author yyx
  * @date 2023/4/8
  */
-public class DefaultConfigImpl implements IConfig {
+public class DefaultGlobalConfigImpl implements IGlobalConfig {
 
 	/**
 	 * 是否debug模式
