@@ -245,11 +245,6 @@ public final class ActivityProtect {
 		}
 	}
 
-	/**
-	 * https://dts-szv.clouddragon.huawei.com/DTSPortal/ticket/DTS2020072905309
-	 *
-	 * @param e
-	 */
 	private static void isThreadGroupUncaughtException(Throwable e) {
 		if (e == null || sExceptionHandler == null) {
 			return;

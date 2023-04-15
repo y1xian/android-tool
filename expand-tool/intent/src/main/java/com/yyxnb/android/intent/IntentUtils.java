@@ -584,7 +584,7 @@ public class IntentUtils {
 	}
 
 	/**
-	 * 过滤intent，对应测试指导：http://wisebox.cloud.huawei.com/auto_measure/auto_info_desc/?pk=40&type=subcategory
+	 * 过滤intent
 	 *
 	 * @param intent intent
 	 */
@@ -619,7 +619,7 @@ public class IntentUtils {
 	}
 
 	/**
-	 * 安全转换uri为intent。对应测试指导：http://wisebox.cloud.huawei.com/auto_measure/auto_info_desc/?pk=40&type=subcategory
+	 * 安全转换uri为intent。
 	 *
 	 * @param uri uri
 	 * @return Intent
