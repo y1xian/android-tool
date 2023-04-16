@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.yyxnb.android.activity.SafeAppCompatActivity;
+import com.yyxnb.android.core.utils.BarUtil;
 import com.yyxnb.android.intent.SafeBundle;
 import com.yyxnb.android.intent.SafeIntent;
 import com.yyxnb.android.skin.SkinResource;
@@ -42,6 +43,8 @@ public class ContainerActivity extends SafeAppCompatActivity implements OnSkinCh
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		mSkinCompat = new SkinCompat(this, this);
 		super.onCreate(savedInstanceState);
+		BarUtil.setStatusBarTranslucent(getWindow(), true, false);
+		BarUtil.setStatusBarStyle(getWindow(), true);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		final FrameLayout mFrameLayout = new FrameLayout(this);

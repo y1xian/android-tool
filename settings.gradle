@@ -14,5 +14,6 @@ include ':expand-tool',
         ':expand-tool:skin'
 
 // 实现module
-include 'modules'
+include ':modules',
+        ':modules:page'
 

@@ -4,13 +4,13 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.yyxnb.android.moduleimpl.DefaultConfigImpl;
+import com.yyxnb.android.moduleimpl.DefaultGlobalConfigImpl;
 import com.yyxnb.android.moduleimpl.DefaultLogImpl;
-import com.yyxnb.android.modules.IConfig;
+import com.yyxnb.android.modules.IGlobalConfig;
 import com.yyxnb.android.modules.ILog;
 import com.yyxnb.android.modules.IModule;
+import com.yyxnb.android.modules.IPage;
 import com.yyxnb.android.modules.IPermission;
-import com.yyxnb.android.modules.ITask;
 
 /**
  * ModuleManager
@@ -38,7 +38,7 @@ public class ModuleManager {
 		// 初始化ModuleLoader
 		sModuleLoader = new ModuleLoader(context);
 		// 先注册本地，最低优先级
-		sModuleLoader.registerMetaModule(IConfig.class, DefaultConfigImpl.class);
+		sModuleLoader.registerMetaModule(IGlobalConfig.class, DefaultGlobalConfigImpl.class);
 		sModuleLoader.registerMetaModule(ILog.class, DefaultLogImpl.class);
 		// 再注册meta下的，第二优先级
 		sModuleLoader.initMeta();
@@ -78,8 +78,8 @@ public class ModuleManager {
 	 *
 	 * @return IConfig
 	 */
-	public static IConfig config() {
-		return module(IConfig.class);
+	public static IGlobalConfig config() {
+		return module(IGlobalConfig.class);
 	}
 
 	/**
@@ -109,12 +109,12 @@ public class ModuleManager {
 	}
 
 	/**
-	 * 任务
+	 * 页面
 	 *
-	 * @return ITask
+	 * @return IPage
 	 */
-	public static ITask task() {
-		return module(ITask.class);
+	public static IPage page() {
+		return module(IPage.class);
 	}
 
 }

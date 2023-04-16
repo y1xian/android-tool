@@ -8,7 +8,7 @@
             android:exported="false"
             android:label="盛装Fragment的一个容器(代理)Activity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/PageTheme">
             <intent-filter>
                 <action android:name="com.yyxnb.what.page.ContainerActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
