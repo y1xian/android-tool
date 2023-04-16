@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.skin.SkinManager;
 import com.yyxnb.android.skin.attr.ISkinType;
 import com.yyxnb.android.skin.attr.SkinAttr;
@@ -54,13 +55,18 @@ public class SkinAttrSupport {
 				try {
 					resId = Integer.parseInt(attrValue.substring(1));
 				} catch (Exception ex) {
-					Log.e(TAG, ex.getMessage());
+					ModuleManager.log().e("异常:resId:", ex.getMessage());
 				}
 				if (resId == -1) {
 					continue;
 				}
 				// 根据id获取资源的名称，如R.color.XX，则此值为"XX"
-				String resName = context.getResources().getResourceEntryName(resId);
+				String resName = null;
+				try {
+					resName = context.getResources().getResourceEntryName(resId);
+				} catch (Exception ex) {
+					ModuleManager.log().e("异常:resName:", ex.getMessage());
+				}
 				if (TextUtils.isEmpty(resName)) {
 					continue;
 				}
@@ -70,10 +76,18 @@ public class SkinAttrSupport {
 						!resName.toLowerCase(Locale.ROOT).startsWith(skinPrefix.toLowerCase(Locale.ROOT))) {
 					continue;
 				}
-				// 根据id获取资源的类型，如R.color.XX，则此值为"color"
-				String attrValueType = context.getResources().getResourceTypeName(resId);
+				String attrValueTypeName = null;
+				try {
+					// 根据id获取资源的类型，如R.color.XX，则此值为"color"
+					attrValueTypeName = context.getResources().getResourceTypeName(resId);
+				} catch (Exception ex) {
+					ModuleManager.log().e("异常:attrValueTypeName:", ex.getMessage());
+				}
+				if (TextUtils.isEmpty(attrValueTypeName)) {
+					continue;
+				}
 				// 封装属性
-				SkinAttr skinAttr = new SkinAttr(attrName, resId, resName, attrValueType, skinType, attrs);
+				SkinAttr skinAttr = new SkinAttr(attrName, resId, resName, attrValueTypeName, skinType, attrs);
 				skinAttrs.add(skinAttr);
 			}
 		}
