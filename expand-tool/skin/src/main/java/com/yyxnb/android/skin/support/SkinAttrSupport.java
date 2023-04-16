@@ -11,6 +11,7 @@ import com.yyxnb.android.skin.attr.SkinAttr;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * SkinAttrSupport
@@ -65,7 +66,8 @@ public class SkinAttrSupport {
 				}
 				// 判断资源名称是否符合配置的前缀值
 				String skinPrefix = SkinManager.getInstance().getSkinPrefix();
-				if (!TextUtils.isEmpty(skinPrefix) && !resName.startsWith(skinPrefix)) {
+				if (!TextUtils.isEmpty(skinPrefix) &&
+						!resName.toLowerCase(Locale.ROOT).startsWith(skinPrefix.toLowerCase(Locale.ROOT))) {
 					continue;
 				}
 				// 根据id获取资源的类型，如R.color.XX，则此值为"color"
