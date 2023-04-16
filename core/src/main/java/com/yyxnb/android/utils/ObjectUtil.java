@@ -207,8 +207,7 @@ public class ObjectUtil {
 		} else if (obj instanceof Enumeration && !((Enumeration<?>) obj).hasMoreElements()) {
 			return true;
 		}
-		LogUtil.d(TAG, String.format("未匹配：%s，%s", obj, obj.getClass()));
-		return false;
+		return true;
 	}
 
 	/**
