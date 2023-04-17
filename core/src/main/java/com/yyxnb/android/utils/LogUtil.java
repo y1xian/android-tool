@@ -458,7 +458,7 @@ public class LogUtil {
 	 * @return Throwable
 	 */
 	private static Throwable getNewThrowable(Throwable e) {
-		if (ModuleManager.config().isDebug()) {
+		if (!ModuleManager.config().isDebug()) {
 			return e;
 		}
 		if (e == null) {
