@@ -6,9 +6,9 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 
+import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.intent.IntentUtils;
 import com.yyxnb.android.intent.SafeIntent;
-import com.yyxnb.android.utils.LogUtil;
 
 /**
  * SafeService
@@ -27,19 +27,19 @@ public abstract class SafeService extends Service {
 		try {
 			super.onCreate();
 		} catch (Exception e) {
-			LogUtil.e(TAG, "onCreate: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "onCreate: " + e.getMessage());
 		}
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		if (IntentUtils.hasIntentBomb(intent)) {
-			LogUtil.e(TAG, "onStartCommand : hasIntentBomb");
+			ModuleManager.log().eTag(TAG, "onStartCommand : hasIntentBomb");
 		}
 		try {
 			return super.onStartCommand(new SafeIntent(intent), flags, startId);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "onStartCommand: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "onStartCommand: " + e.getMessage());
 		}
 		return START_STICKY_COMPATIBILITY;
 	}
@@ -48,12 +48,12 @@ public abstract class SafeService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		if (IntentUtils.hasIntentBomb(intent)) {
-			LogUtil.e(TAG, "onStart : hasIntentBomb");
+			ModuleManager.log().eTag(TAG, "onStart : hasIntentBomb");
 		}
 		try {
 			super.onStart(new SafeIntent(intent), startId);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "onStart: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "onStart: " + e.getMessage());
 		}
 	}
 
@@ -62,7 +62,7 @@ public abstract class SafeService extends Service {
 		try {
 			super.onDestroy();
 		} catch (Exception e) {
-			LogUtil.e(TAG, "onDestroy: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "onDestroy: " + e.getMessage());
 		}
 	}
 
@@ -71,7 +71,7 @@ public abstract class SafeService extends Service {
 		try {
 			return super.onUnbind(new SafeIntent(intent));
 		} catch (Exception e) {
-			LogUtil.e(TAG, "onUnbind: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "onUnbind: " + e.getMessage());
 		}
 		return false;
 	}
@@ -81,7 +81,7 @@ public abstract class SafeService extends Service {
 		try {
 			super.onRebind(new SafeIntent(intent));
 		} catch (Exception e) {
-			LogUtil.e(TAG, "onRebind: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "onRebind: " + e.getMessage());
 		}
 	}
 
@@ -90,7 +90,7 @@ public abstract class SafeService extends Service {
 		try {
 			return super.startForegroundService(new SafeIntent(service));
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startForegroundService: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "startForegroundService: " + e.getMessage());
 		}
 		return null;
 	}
@@ -100,7 +100,7 @@ public abstract class SafeService extends Service {
 		try {
 			super.startActivity(new SafeIntent(intent));
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startActivity: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "startActivity: " + e.getMessage());
 		}
 	}
 
@@ -109,7 +109,7 @@ public abstract class SafeService extends Service {
 		try {
 			super.startActivities(intents);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startActivities: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "startActivities: " + e.getMessage());
 		}
 	}
 
@@ -118,7 +118,7 @@ public abstract class SafeService extends Service {
 		try {
 			return super.bindService(service, conn, flags);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "bindService: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "bindService: " + e.getMessage());
 		}
 		return false;
 
@@ -129,7 +129,7 @@ public abstract class SafeService extends Service {
 		try {
 			return super.startService(service);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startService: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "startService: " + e.getMessage());
 		}
 		return null;
 	}
@@ -139,7 +139,7 @@ public abstract class SafeService extends Service {
 		try {
 			return super.stopService(name);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "stopService: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "stopService: " + e.getMessage());
 		}
 		return false;
 	}
@@ -150,7 +150,7 @@ public abstract class SafeService extends Service {
 		try {
 			super.unbindService(conn);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "unbindService: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "unbindService: " + e.getMessage());
 		}
 	}
 
@@ -159,7 +159,7 @@ public abstract class SafeService extends Service {
 		try {
 			super.unregisterReceiver(receiver);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "unregisterReceiver: " + e.getMessage(), true);
+			ModuleManager.log().eTag(TAG, "unregisterReceiver: " + e.getMessage());
 		}
 	}
 }

@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.yyxnb.android.ModuleManager;
 import com.yyxnb.android.intent.IntentUtils;
 import com.yyxnb.android.intent.SafeIntent;
-import com.yyxnb.android.utils.LogUtil;
 
 /**
  * 捕获相关回调中抛出的异常，防止应用crash
@@ -27,7 +27,7 @@ public class SafeActivity extends Activity {
 		try {
 			return new SafeIntent(super.getIntent());
 		} catch (Exception e) {
-			LogUtil.e(TAG, "getIntent: " + e.getMessage());
+			ModuleManager.log().eTag(TAG, "getIntent: " + e.getMessage());
 		}
 		return new SafeIntent(new Intent());
 	}
@@ -37,7 +37,7 @@ public class SafeActivity extends Activity {
 		try {
 			super.startActivityForResult(intent, requestCode);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startActivity: " + e.getMessage(), e);
+			ModuleManager.log().eTag(TAG, "startActivity: " + e.getMessage(), e);
 		}
 	}
 
@@ -46,7 +46,7 @@ public class SafeActivity extends Activity {
 		try {
 			super.startActivityForResult(intent, requestCode, options);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startActivity: " + e.getMessage(), e);
+			ModuleManager.log().eTag(TAG, "startActivity: " + e.getMessage(), e);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class SafeActivity extends Activity {
 		try {
 			super.startActivity(intent);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startActivity Exception : " + e.getMessage());
+			ModuleManager.log().eTag(TAG, "startActivity Exception : " + e.getMessage());
 		}
 	}
 
@@ -64,7 +64,7 @@ public class SafeActivity extends Activity {
 		try {
 			super.startActivity(intent, options);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startActivity: " + e.getMessage(), e);
+			ModuleManager.log().eTag(TAG, "startActivity: " + e.getMessage(), e);
 		}
 	}
 
@@ -73,7 +73,7 @@ public class SafeActivity extends Activity {
 		try {
 			super.startActivities(intents);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startActivities: " + e.getMessage());
+			ModuleManager.log().eTag(TAG, "startActivities: " + e.getMessage());
 		}
 	}
 
@@ -82,7 +82,7 @@ public class SafeActivity extends Activity {
 		try {
 			super.startActivities(intents, options);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startActivities: " + e.getMessage(), e);
+			ModuleManager.log().eTag(TAG, "startActivities: " + e.getMessage(), e);
 		}
 	}
 
@@ -91,7 +91,7 @@ public class SafeActivity extends Activity {
 		try {
 			return super.startActivityIfNeeded(intent, requestCode);
 		} catch (Exception e) {
-			LogUtil.e(TAG, "startActivityIfNeeded: " + e.getMessage(), e);
+			ModuleManager.log().eTag(TAG, "startActivityIfNeeded: " + e.getMessage(), e);
 		}
 		return false;
 	}
@@ -101,7 +101,7 @@ public class SafeActivity extends Activity {
 		try {
 			super.finishAffinity();
 		} catch (Exception e) {
-			LogUtil.e(TAG, "finishAffinity: " + e.getMessage(), e);
+			ModuleManager.log().eTag(TAG, "finishAffinity: " + e.getMessage(), e);
 		}
 	}
 
@@ -117,7 +117,7 @@ public class SafeActivity extends Activity {
 	@Override
 	protected void onStart() {
 		if (IntentUtils.hasIntentBomb(super.getIntent())) {
-			LogUtil.e(TAG, "onStart : hasIntentBomb");
+			ModuleManager.log().eTag(TAG, "onStart : hasIntentBomb");
 		}
 		super.onStart();
 
@@ -126,7 +126,7 @@ public class SafeActivity extends Activity {
 	@Override
 	protected void onRestart() {
 		if (IntentUtils.hasIntentBomb(super.getIntent())) {
-			LogUtil.e(TAG, "onRestart : hasIntentBomb");
+			ModuleManager.log().eTag(TAG, "onRestart : hasIntentBomb");
 		}
 		super.onRestart();
 	}
@@ -134,7 +134,7 @@ public class SafeActivity extends Activity {
 	@Override
 	protected void onResume() {
 		if (IntentUtils.hasIntentBomb(super.getIntent())) {
-			LogUtil.e(TAG, "onResume : hasIntentBomb");
+			ModuleManager.log().eTag(TAG, "onResume : hasIntentBomb");
 		}
 		super.onResume();
 	}
@@ -142,7 +142,7 @@ public class SafeActivity extends Activity {
 	@Override
 	protected void onStop() {
 		if (IntentUtils.hasIntentBomb(super.getIntent())) {
-			LogUtil.e(TAG, "onStop : hasIntentBomb");
+			ModuleManager.log().eTag(TAG, "onStop : hasIntentBomb");
 		}
 		super.onStop();
 
@@ -153,7 +153,7 @@ public class SafeActivity extends Activity {
 		try {
 			super.onDestroy();
 		} catch (Exception e) {
-			LogUtil.e(TAG, "onDestroy exception : " + e.getMessage());
+			ModuleManager.log().eTag(TAG, "onDestroy exception : " + e.getMessage());
 		}
 	}
 
@@ -162,7 +162,7 @@ public class SafeActivity extends Activity {
 		try {
 			super.finish();
 		} catch (Exception e) {
-			LogUtil.e(TAG, "finish exception : " + e.getMessage());
+			ModuleManager.log().eTag(TAG, "finish exception : " + e.getMessage());
 		}
 	}
 
@@ -171,7 +171,7 @@ public class SafeActivity extends Activity {
 		try {
 			super.onActivityResult(requestCode, resultCode, new SafeIntent(data));
 		} catch (Exception e) {
-			LogUtil.e(TAG, "onActivityResult exception : " + e.getMessage(), e);
+			ModuleManager.log().eTag(TAG, "onActivityResult exception : " + e.getMessage(), e);
 		}
 	}
 
@@ -180,7 +180,7 @@ public class SafeActivity extends Activity {
 		try {
 			return super.getReferrer();
 		} catch (Exception e) {
-			LogUtil.e(TAG, "getReferrer: " + e.getMessage());
+			ModuleManager.log().eTag(TAG, "getReferrer: " + e.getMessage());
 		}
 		return null;
 	}
