@@ -64,7 +64,7 @@ public class SafeBundle {
 		try {
 			return bundle.getBoolean(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getBoolean exception : " + e.getMessage(), true);
+			LogUtil.e(TAG, "getBoolean exception : " + e.getMessage());
 			return defaultValue;
 		}
 	}
@@ -73,7 +73,7 @@ public class SafeBundle {
 		try {
 			return bundle.getBooleanArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getBooleanArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getBooleanArray exception: " + e.getMessage());
 			return new boolean[0];
 		}
 	}
@@ -83,7 +83,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getBooleanArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getBooleanArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getBooleanArray exception: " + e.getMessage());
 			return new boolean[0];
 		}
 		if (result == null) {
@@ -104,7 +104,7 @@ public class SafeBundle {
 		try {
 			return bundle.getByte(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getByte exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getByte exception: " + e.getMessage());
 			return defaultValue;
 		}
 	}
@@ -113,7 +113,7 @@ public class SafeBundle {
 		try {
 			return bundle.getByteArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getByteArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getByteArray exception: " + e.getMessage());
 			return new byte[0];
 		}
 	}
@@ -123,7 +123,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getByteArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getByteArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getByteArray exception: " + e.getMessage());
 			return new byte[0];
 		}
 		if (result == null) {
@@ -144,7 +144,7 @@ public class SafeBundle {
 		try {
 			return bundle.getChar(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getChar exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getChar exception: " + e.getMessage());
 			return defaultValue;
 		}
 	}
@@ -153,7 +153,7 @@ public class SafeBundle {
 		try {
 			return bundle.getCharArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getCharArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getCharArray exception: " + e.getMessage());
 			return new char[0];
 		}
 	}
@@ -163,7 +163,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getCharArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getCharArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getCharArray exception: " + e.getMessage());
 			return new char[0];
 		}
 		if (result == null) {
@@ -184,7 +184,7 @@ public class SafeBundle {
 		try {
 			return bundle.getShort(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getShort exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getShort exception: " + e.getMessage());
 			return defaultValue;
 		}
 	}
@@ -193,7 +193,7 @@ public class SafeBundle {
 		try {
 			return bundle.getShortArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getShortArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getShortArray exception: " + e.getMessage());
 			return new short[0];
 		}
 	}
@@ -203,7 +203,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getShortArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getShortArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getShortArray exception: " + e.getMessage());
 			return new short[0];
 		}
 		if (result == null) {
@@ -226,7 +226,7 @@ public class SafeBundle {
 		try {
 			charSequence = bundle.getCharSequence(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getCharSequenceReturnNotNull exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getCharSequenceReturnNotNull exception: " + e.getMessage());
 		}
 		if (TextUtils.isEmpty(charSequence)) {
 			return EMPTY;
@@ -239,7 +239,7 @@ public class SafeBundle {
 		try {
 			return bundle.getCharSequence(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getCharSequence exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getCharSequence exception: " + e.getMessage());
 			return defaultValue;
 		}
 	}
@@ -250,7 +250,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getCharSequence(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getCharSequence exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getCharSequence exception: " + e.getMessage());
 			return defaultValue;
 		}
 		if (result == null) {
@@ -263,7 +263,7 @@ public class SafeBundle {
 		try {
 			return bundle.getCharSequenceArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getCharSequenceArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getCharSequenceArray exception: " + e.getMessage());
 			return new CharSequence[0];
 		}
 	}
@@ -273,7 +273,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getCharSequenceArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getCharSequenceArrayReturnNotNull exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getCharSequenceArrayReturnNotNull exception: " + e.getMessage());
 			return new CharSequence[0];
 		}
 		if (result == null) {
@@ -286,7 +286,7 @@ public class SafeBundle {
 		try {
 			return bundle.getCharSequenceArrayList(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getCharSequenceArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getCharSequenceArrayList exception: " + e.getMessage());
 			return new ArrayList<>();
 		}
 	}
@@ -296,7 +296,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getCharSequenceArrayList(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getCharSequenceArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getCharSequenceArrayList exception: " + e.getMessage());
 			return new ArrayList<>();
 		}
 		if (result == null) {
@@ -313,7 +313,7 @@ public class SafeBundle {
 		try {
 			return bundle.getInt(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getInt exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getInt exception: " + e.getMessage());
 			return defaultValue;
 		}
 	}
@@ -322,7 +322,7 @@ public class SafeBundle {
 		try {
 			return bundle.getIntArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getIntArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getIntArray exception: " + e.getMessage());
 			return new int[0];
 		}
 	}
@@ -332,7 +332,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getIntArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getIntArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getIntArray exception: " + e.getMessage());
 			return new int[0];
 		}
 		if (result == null) {
@@ -345,7 +345,7 @@ public class SafeBundle {
 		try {
 			return bundle.getIntegerArrayList(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getIntegerArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getIntegerArrayList exception: " + e.getMessage());
 			return new ArrayList<>();
 		}
 	}
@@ -355,7 +355,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getIntegerArrayList(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getIntegerArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getIntegerArrayList exception: " + e.getMessage());
 			return new ArrayList<>();
 		}
 		if (result == null) {
@@ -372,7 +372,7 @@ public class SafeBundle {
 		try {
 			return bundle.getFloat(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getFloat exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getFloat exception: " + e.getMessage());
 			return defaultValue;
 		}
 	}
@@ -381,7 +381,7 @@ public class SafeBundle {
 		try {
 			return bundle.getFloatArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getFloatArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getFloatArray exception: " + e.getMessage());
 			return new float[0];
 		}
 	}
@@ -391,7 +391,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getFloatArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getFloatArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getFloatArray exception: " + e.getMessage());
 			return new float[0];
 		}
 		if (result == null) {
@@ -408,7 +408,7 @@ public class SafeBundle {
 		try {
 			return bundle.getLong(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getLong exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getLong exception: " + e.getMessage());
 			return defaultValue;
 		}
 	}
@@ -417,7 +417,7 @@ public class SafeBundle {
 		try {
 			return bundle.getLongArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getLongArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getLongArray exception: " + e.getMessage());
 			return new long[0];
 		}
 	}
@@ -427,7 +427,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getLongArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getLongArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getLongArray exception: " + e.getMessage());
 			return new long[0];
 		}
 		if (result == null) {
@@ -444,7 +444,7 @@ public class SafeBundle {
 		try {
 			return bundle.getDouble(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getDouble exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getDouble exception: " + e.getMessage());
 			return defaultValue;
 		}
 	}
@@ -453,7 +453,7 @@ public class SafeBundle {
 		try {
 			return bundle.getDoubleArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getDoubleArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getDoubleArray exception: " + e.getMessage());
 			return new double[0];
 		}
 	}
@@ -463,7 +463,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getDoubleArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getDoubleArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getDoubleArray exception: " + e.getMessage());
 			return new double[0];
 		}
 		if (result == null) {
@@ -476,7 +476,7 @@ public class SafeBundle {
 		try {
 			return bundle.getString(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getString exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getString exception: " + e.getMessage());
 			return "";
 		}
 	}
@@ -486,7 +486,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getString(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getString exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getString exception: " + e.getMessage());
 		}
 		if (TextUtils.isEmpty(result)) {
 			return EMPTY;
@@ -500,7 +500,7 @@ public class SafeBundle {
 		try {
 			return bundle.getString(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getString exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getString exception: " + e.getMessage());
 			return defaultValue;
 		}
 	}
@@ -512,7 +512,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getString(key, defaultValue);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getString exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getString exception: " + e.getMessage());
 			return defaultValue;
 		}
 		if (result == null) {
@@ -525,7 +525,7 @@ public class SafeBundle {
 		try {
 			return bundle.getStringArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getStringArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getStringArray exception: " + e.getMessage());
 			return new String[0];
 		}
 	}
@@ -535,7 +535,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getStringArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getStringArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getStringArray exception: " + e.getMessage());
 			return new String[0];
 		}
 		if (result == null) {
@@ -548,7 +548,7 @@ public class SafeBundle {
 		try {
 			return bundle.getStringArrayList(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getStringArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getStringArrayList exception: " + e.getMessage());
 			return new ArrayList<>();
 		}
 	}
@@ -558,7 +558,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getStringArrayList(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getStringArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getStringArrayList exception: " + e.getMessage());
 			return new ArrayList<>();
 		}
 		if (result == null) {
@@ -575,7 +575,7 @@ public class SafeBundle {
 				return null;
 			}
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getSize exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getSize exception: " + e.getMessage());
 			return null;
 		}
 	}
@@ -588,7 +588,7 @@ public class SafeBundle {
 				return null;
 			}
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getSizeF exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getSizeF exception: " + e.getMessage());
 			return null;
 		}
 	}
@@ -597,7 +597,7 @@ public class SafeBundle {
 		try {
 			return bundle.getParcelable(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getParcelable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getParcelable exception: " + e.getMessage());
 			return null;
 		}
 	}
@@ -609,7 +609,7 @@ public class SafeBundle {
 				return tClass.cast(parcelable);
 			}
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getParcelable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getParcelable exception: " + e.getMessage());
 		}
 		return null;
 	}
@@ -618,7 +618,7 @@ public class SafeBundle {
 		try {
 			return bundle.getParcelableArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getParcelableArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getParcelableArray exception: " + e.getMessage());
 			return new Parcelable[0];
 		}
 	}
@@ -628,7 +628,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getParcelableArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getParcelableArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getParcelableArray exception: " + e.getMessage());
 			return new Parcelable[0];
 		}
 		if (result == null) {
@@ -641,7 +641,7 @@ public class SafeBundle {
 		try {
 			return bundle.getParcelableArrayList(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getParcelableArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getParcelableArrayList exception: " + e.getMessage());
 			return null;
 		}
 	}
@@ -650,7 +650,7 @@ public class SafeBundle {
 		try {
 			return bundle.getSparseParcelableArray(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getSparseParcelableArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getSparseParcelableArray exception: " + e.getMessage());
 			return null;
 		}
 	}
@@ -659,7 +659,7 @@ public class SafeBundle {
 		try {
 			return bundle.getSerializable(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage());
 			return null;
 		}
 	}
@@ -671,7 +671,7 @@ public class SafeBundle {
 				return tClass.cast(serializable);
 			}
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage());
 		}
 		return null;
 	}
@@ -681,7 +681,7 @@ public class SafeBundle {
 		try {
 			return bundle.getBinder(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getBinder exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getBinder exception: " + e.getMessage());
 			return null;
 		}
 	}
@@ -690,7 +690,7 @@ public class SafeBundle {
 		try {
 			return bundle.getBundle(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getBundle exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getBundle exception: " + e.getMessage());
 			return null;
 		}
 	}
@@ -700,7 +700,7 @@ public class SafeBundle {
 		try {
 			result = bundle.getBundle(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getBundle exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getBundle exception: " + e.getMessage());
 			return new Bundle();
 		}
 		if (result == null) {
@@ -713,7 +713,7 @@ public class SafeBundle {
 		try {
 			return bundle.get(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "get exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "get exception: " + e.getMessage());
 			return null;
 		}
 	}
@@ -723,7 +723,7 @@ public class SafeBundle {
 		try {
 			result = bundle.get(key);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "get exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "get exception: " + e.getMessage());
 			return new Object();
 		}
 		if (result == null) {
@@ -736,7 +736,7 @@ public class SafeBundle {
 		try {
 			bundle.putBoolean(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putBoolean exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putBoolean exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -745,7 +745,7 @@ public class SafeBundle {
 		try {
 			bundle.putInt(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putInt exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putInt exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -754,7 +754,7 @@ public class SafeBundle {
 		try {
 			bundle.putLong(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putLong exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putLong exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -763,7 +763,7 @@ public class SafeBundle {
 		try {
 			bundle.putDouble(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putDouble exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putDouble exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -772,7 +772,7 @@ public class SafeBundle {
 		try {
 			bundle.putString(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putString exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putString exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -781,7 +781,7 @@ public class SafeBundle {
 		try {
 			bundle.putBooleanArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putBooleanArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putBooleanArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -790,7 +790,7 @@ public class SafeBundle {
 		try {
 			bundle.putIntArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putIntArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putIntArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -799,7 +799,7 @@ public class SafeBundle {
 		try {
 			bundle.putLongArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putLongArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putLongArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -808,7 +808,7 @@ public class SafeBundle {
 		try {
 			bundle.putDoubleArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putDoubleArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putDoubleArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -817,7 +817,7 @@ public class SafeBundle {
 		try {
 			bundle.putStringArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putStringArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putStringArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -837,7 +837,7 @@ public class SafeBundle {
 		try {
 			bundle.putByte(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putByte exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putByte exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -846,7 +846,7 @@ public class SafeBundle {
 		try {
 			bundle.putChar(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putChar exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putChar exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -855,7 +855,7 @@ public class SafeBundle {
 		try {
 			bundle.putShort(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putShort exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putShort exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -864,7 +864,7 @@ public class SafeBundle {
 		try {
 			bundle.putFloat(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putFloat exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putFloat exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -873,7 +873,7 @@ public class SafeBundle {
 		try {
 			bundle.putCharSequence(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putCharSequence exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putCharSequence exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -882,7 +882,7 @@ public class SafeBundle {
 		try {
 			bundle.putParcelable(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putParcelable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putParcelable exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -892,7 +892,7 @@ public class SafeBundle {
 		try {
 			bundle.putSize(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putSize exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putSize exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -902,7 +902,7 @@ public class SafeBundle {
 		try {
 			bundle.putSizeF(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putSizeF exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putSizeF exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -911,7 +911,7 @@ public class SafeBundle {
 		try {
 			bundle.putParcelableArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putParcelableArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putParcelableArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -920,7 +920,7 @@ public class SafeBundle {
 		try {
 			bundle.putParcelableArrayList(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putParcelableArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putParcelableArrayList exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -929,7 +929,7 @@ public class SafeBundle {
 		try {
 			bundle.putSparseParcelableArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putSparseParcelableArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putSparseParcelableArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -938,7 +938,7 @@ public class SafeBundle {
 		try {
 			bundle.putIntegerArrayList(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putIntegerArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putIntegerArrayList exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -947,7 +947,7 @@ public class SafeBundle {
 		try {
 			bundle.putStringArrayList(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putStringArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putStringArrayList exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -956,7 +956,7 @@ public class SafeBundle {
 		try {
 			bundle.putCharSequenceArrayList(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putCharSequenceArrayList exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putCharSequenceArrayList exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -965,7 +965,7 @@ public class SafeBundle {
 		try {
 			bundle.putSerializable(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putSerializable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putSerializable exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -974,7 +974,7 @@ public class SafeBundle {
 		try {
 			bundle.putByteArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putByteArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putByteArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -983,7 +983,7 @@ public class SafeBundle {
 		try {
 			bundle.putShortArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putShortArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putShortArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -992,7 +992,7 @@ public class SafeBundle {
 		try {
 			bundle.putCharArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putCharArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putCharArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -1001,7 +1001,7 @@ public class SafeBundle {
 		try {
 			bundle.putFloatArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putFloatArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putFloatArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -1010,7 +1010,7 @@ public class SafeBundle {
 		try {
 			bundle.putCharSequenceArray(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putCharSequenceArray exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putCharSequenceArray exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -1019,7 +1019,7 @@ public class SafeBundle {
 		try {
 			bundle.putBundle(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putBundle exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putBundle exception: " + e.getMessage());
 		}
 		return this;
 	}
@@ -1030,7 +1030,7 @@ public class SafeBundle {
 		try {
 			bundle.putBinder(key, value);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "putBundle exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "putBundle exception: " + e.getMessage());
 		}
 		return this;
 	}

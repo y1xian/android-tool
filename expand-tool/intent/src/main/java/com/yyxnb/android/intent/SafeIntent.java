@@ -85,7 +85,7 @@ public class SafeIntent extends Intent {
 		try {
 			super.setSelector(selector);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "setSelector: " + e.getMessage(), true);
+			LogUtil.e(TAG, "setSelector: " + e.getMessage());
 		}
 	}
 
@@ -94,7 +94,7 @@ public class SafeIntent extends Intent {
 		try {
 			return super.toUri(flags);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "toUri: " + e.getMessage(), true);
+			LogUtil.e(TAG, "toUri: " + e.getMessage());
 			return "";
 		}
 	}
@@ -104,7 +104,7 @@ public class SafeIntent extends Intent {
 		try {
 			result = super.toUri(flags);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "toUri: " + e.getMessage(), true);
+			LogUtil.e(TAG, "toUri: " + e.getMessage());
 		}
 		if (result == null) {
 			return EMPTY;
@@ -163,7 +163,7 @@ public class SafeIntent extends Intent {
 		try {
 			super.removeExtra(name);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "removeExtra: " + e.getMessage(), true);
+			LogUtil.e(TAG, "removeExtra: " + e.getMessage());
 		}
 	}
 
@@ -369,7 +369,7 @@ public class SafeIntent extends Intent {
 				return tClass.cast(serializable);
 			}
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage());
 		}
 		return null;
 	}
@@ -771,7 +771,7 @@ public class SafeIntent extends Intent {
 		try {
 			return super.toURI();
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "toURI: exception " + e.getMessage(), true);
+			LogUtil.e(TAG, "toURI: exception " + e.getMessage());
 			return "";
 		}
 	}
@@ -802,7 +802,7 @@ public class SafeIntent extends Intent {
 		try {
 			result = super.toURI();
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "toURI: exception " + e.getMessage(), true);
+			LogUtil.e(TAG, "toURI: exception " + e.getMessage());
 		}
 		if (TextUtils.isEmpty(result)) {
 			return EMPTY;

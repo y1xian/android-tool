@@ -35,7 +35,7 @@ public final class SafePendingIntent {
 		try {
 			return PendingIntent.getActivity(context, requestCode, intent, flag | PendingIntent.FLAG_IMMUTABLE);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "PendingIntent getSafeActivity: " + e.getMessage(), true);
+			LogUtil.e(TAG, "PendingIntent getSafeActivity: " + e.getMessage());
 			return null;
 		}
 	}
@@ -56,7 +56,7 @@ public final class SafePendingIntent {
 			return PendingIntent.getActivity(context, requestCode, intent, flag | PendingIntent.FLAG_IMMUTABLE,
 					options);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "PendingIntent getSafeActivity: " + e.getMessage(), true);
+			LogUtil.e(TAG, "PendingIntent getSafeActivity: " + e.getMessage());
 			return null;
 		}
 	}
@@ -74,7 +74,7 @@ public final class SafePendingIntent {
 		try {
 			return PendingIntent.getService(context, requestCode, intent, flag | PendingIntent.FLAG_IMMUTABLE);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "PendingIntent getSafeService: " + e.getMessage(), true);
+			LogUtil.e(TAG, "PendingIntent getSafeService: " + e.getMessage());
 			return null;
 		}
 
@@ -93,7 +93,7 @@ public final class SafePendingIntent {
 		try {
 			return PendingIntent.getBroadcast(context, requestCode, intent, flag | PendingIntent.FLAG_IMMUTABLE);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "PendingIntent getSafeBroadcast: " + e.getMessage(), true);
+			LogUtil.e(TAG, "PendingIntent getSafeBroadcast: " + e.getMessage());
 			return null;
 		}
 
@@ -112,7 +112,7 @@ public final class SafePendingIntent {
 		try {
 			return PendingIntent.getActivities(context, requestCode, intents, flag | PendingIntent.FLAG_IMMUTABLE);
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "PendingIntent getSafeActivities: " + e.getMessage(), true);
+			LogUtil.e(TAG, "PendingIntent getSafeActivities: " + e.getMessage());
 			return null;
 		}
 	}

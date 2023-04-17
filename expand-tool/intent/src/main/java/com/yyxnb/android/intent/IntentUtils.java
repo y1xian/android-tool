@@ -58,7 +58,7 @@ public class IntentUtils {
 			intent.removeExtra(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "removeExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "removeExtra failed on intent " + t.getMessage());
 		}
 	}
 
@@ -101,7 +101,7 @@ public class IntentUtils {
 			return intent.getBooleanExtra(name, defaultValue);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getBooleanExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getBooleanExtra failed on intent " + t.getMessage());
 			return defaultValue;
 		}
 	}
@@ -115,7 +115,7 @@ public class IntentUtils {
 			return intent.getIntExtra(name, defaultValue);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getIntExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getIntExtra failed on intent " + t.getMessage());
 			return defaultValue;
 		}
 	}
@@ -128,7 +128,7 @@ public class IntentUtils {
 			return bundle.getInt(name, defaultValue);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getInt failed on bundle " + t.getMessage(), true);
+			LogUtil.e(TAG, "getInt failed on bundle " + t.getMessage());
 			return defaultValue;
 		}
 	}
@@ -142,7 +142,7 @@ public class IntentUtils {
 			return intent.getIntArrayExtra(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getIntArrayExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getIntArrayExtra failed on intent " + t.getMessage());
 			return new int[0];
 		}
 	}
@@ -155,7 +155,7 @@ public class IntentUtils {
 			return bundle.getIntArray(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getIntArray failed on bundle " + t.getMessage(), true);
+			LogUtil.e(TAG, "getIntArray failed on bundle " + t.getMessage());
 			return new int[0];
 		}
 	}
@@ -169,7 +169,7 @@ public class IntentUtils {
 			return intent.getLongExtra(name, defaultValue);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getLongExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getLongExtra failed on intent " + t.getMessage());
 			return defaultValue;
 		}
 	}
@@ -182,7 +182,7 @@ public class IntentUtils {
 			return intent.getStringExtra(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getStringExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getStringExtra failed on intent " + t.getMessage());
 			return "";
 		}
 	}
@@ -195,7 +195,7 @@ public class IntentUtils {
 			return bundle.getString(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getString failed on bundle " + t.getMessage(), true);
+			LogUtil.e(TAG, "getString failed on bundle " + t.getMessage());
 			return "";
 		}
 	}
@@ -208,7 +208,7 @@ public class IntentUtils {
 			return intent.getBundleExtra(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getBundleExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getBundleExtra failed on intent " + t.getMessage());
 			return new Bundle();
 		}
 	}
@@ -221,7 +221,7 @@ public class IntentUtils {
 			return bundle.getBundle(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getBundle failed on bundle " + t.getMessage(), true);
+			LogUtil.e(TAG, "getBundle failed on bundle " + t.getMessage());
 			return new Bundle();
 		}
 	}
@@ -236,7 +236,7 @@ public class IntentUtils {
 			return bundle.getParcelable(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getParcelable failed on bundle " + t.getMessage(), true);
+			LogUtil.e(TAG, "getParcelable failed on bundle " + t.getMessage());
 			return null;
 		}
 	}
@@ -251,7 +251,7 @@ public class IntentUtils {
 			return intent.getParcelableExtra(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getParcelableExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getParcelableExtra failed on intent " + t.getMessage());
 			return null;
 		}
 	}
@@ -265,7 +265,7 @@ public class IntentUtils {
 			return intent.getParcelableArrayListExtra(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getParcelableArrayListExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getParcelableArrayListExtra failed on intent " + t.getMessage());
 			return null;
 		}
 	}
@@ -278,7 +278,7 @@ public class IntentUtils {
 		try {
 			return intent.getParcelableArrayExtra(name);
 		} catch (Throwable t) {
-			LogUtil.e(TAG, "getParcelableArrayExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getParcelableArrayExtra failed on intent " + t.getMessage());
 			return new Parcelable[0];
 		}
 	}
@@ -292,7 +292,7 @@ public class IntentUtils {
 			return intent.getStringArrayListExtra(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getStringArrayListExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getStringArrayListExtra failed on intent " + t.getMessage());
 			return new ArrayList<>();
 		}
 	}
@@ -306,7 +306,7 @@ public class IntentUtils {
 			return intent.getByteArrayExtra(name);
 		} catch (Throwable t) {
 			// Catches un-parceling exceptions.
-			LogUtil.e(TAG, "getByteArrayExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getByteArrayExtra failed on intent " + t.getMessage());
 			return new byte[0];
 		}
 	}
@@ -321,11 +321,11 @@ public class IntentUtils {
 		try {
 			return (T) intent.getSerializableExtra(name);
 		} catch (ClassCastException ex) {
-			LogUtil.e(TAG, "Invalide class for Serializable: " + ex.getMessage(), true);
+			LogUtil.e(TAG, "Invalide class for Serializable: " + ex.getMessage());
 			return null;
 		} catch (Throwable t) {
 			// Catches un-serializable exceptions.
-			LogUtil.e(TAG, "getSerializableExtra failed on intent " + t.getMessage(), true);
+			LogUtil.e(TAG, "getSerializableExtra failed on intent " + t.getMessage());
 			return null;
 		}
 	}
@@ -459,7 +459,7 @@ public class IntentUtils {
 		try {
 			return activity.getReferrer();
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getReferrer: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getReferrer: " + e.getMessage());
 			return null;
 		}
 	}
@@ -512,7 +512,7 @@ public class IntentUtils {
 				return tClass.cast(parcelable);
 			}
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getParcelable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getParcelable exception: " + e.getMessage());
 		}
 		return null;
 	}
@@ -534,7 +534,7 @@ public class IntentUtils {
 				return tClass.cast(serializable);
 			}
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage());
 		}
 		return null;
 	}
@@ -556,7 +556,7 @@ public class IntentUtils {
 				return tClass.cast(parcelable);
 			}
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getParcelable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getParcelable exception: " + e.getMessage());
 		}
 		return null;
 	}
@@ -578,7 +578,7 @@ public class IntentUtils {
 				return tClass.cast(serializable);
 			}
 		} catch (Throwable e) {
-			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getSerializable exception: " + e.getMessage());
 		}
 		return null;
 	}
@@ -667,7 +667,7 @@ public class IntentUtils {
 			LogUtil.i(TAG, "getCallerPackage, package is: " + packageName);
 			return packageName;
 		} catch (Exception e) {
-			LogUtil.e(TAG, "getCallerPackage exception: " + e.getMessage(), true);
+			LogUtil.e(TAG, "getCallerPackage exception: " + e.getMessage());
 		}
 		return "";
 	}
