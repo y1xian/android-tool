@@ -211,14 +211,14 @@ public class LogUtil {
 		if (e == null) {
 			return null;
 		} else {
-			ThrowableWrapper retWrapper = new ThrowableWrapper(e);
+			ThrowableWrapperException retWrapper = new ThrowableWrapperException(e);
 			retWrapper.setStackTrace(e.getStackTrace());
 			retWrapper.setMessage(modifyExceptionMessage(e.getMessage()));
-			ThrowableWrapper preWrapper = retWrapper;
+			ThrowableWrapperException preWrapper = retWrapper;
 			// 递归修改cause的message消息
 			for (Throwable currThrowable = e.getCause(); currThrowable != null; currThrowable = currThrowable
 					.getCause()) {
-				ThrowableWrapper currWrapper = new ThrowableWrapper(currThrowable);
+				ThrowableWrapperException currWrapper = new ThrowableWrapperException(currThrowable);
 				currWrapper.setStackTrace(currThrowable.getStackTrace());
 				currWrapper.setMessage(modifyExceptionMessage(currThrowable.getMessage()));
 				preWrapper.setCause(currWrapper);
@@ -251,7 +251,7 @@ public class LogUtil {
 	/**
 	 * 异常包装对象
 	 */
-	private static class ThrowableWrapper extends Throwable {
+	private static class ThrowableWrapperException extends Throwable {
 		/**
 		 * 序列化id
 		 */
@@ -272,7 +272,7 @@ public class LogUtil {
 		 */
 		private final Throwable ownerThrowable;
 
-		public ThrowableWrapper(Throwable t) {
+		public ThrowableWrapperException(Throwable t) {
 			this.ownerThrowable = t;
 		}
 
