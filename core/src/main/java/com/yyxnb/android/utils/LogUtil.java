@@ -38,87 +38,22 @@ public class LogUtil {
 	private static final int LEN_CONST = 2;
 
 	/**
-	 * 对日志进行封装.
+	 * 对要打印的日志进行处理
 	 *
-	 * @param msg            消息体.
-	 * @param isNeedProguard 是否需要混淆,特指msg.
-	 * @return String
+	 * @param msg 需要匿名化的信息
+	 * @return 匿名化后的信息
 	 */
-	private static String getLogMsg(String msg, boolean isNeedProguard) {
-		// 非debug直接匿名
-		if (!ModuleManager.config().isDebug()) {
-			return getLogMsg(null, msg);
-		}
+	private static String getLogMsg(String msg) {
 		StringBuilder retStr = new StringBuilder(512);
 		if (!TextUtils.isEmpty(msg)) {
-			if (isNeedProguard) {
+			// 非debug直接匿名
+			if (!ModuleManager.config().isDebug()) {
 				retStr.append(formatLogWithStar(msg));
 			} else {
 				retStr.append(msg);
 			}
 		}
 		return retStr.toString();
-	}
-
-	/**
-	 * 对要打印的日志进行处理
-	 *
-	 * @param noProguardMsg 不需要匿名化的信息
-	 * @param msg           需要匿名化的信息
-	 * @return 匿名化后的信息
-	 */
-	private static String getLogMsg(String noProguardMsg, String msg) {
-		StringBuilder retStr = new StringBuilder(512);
-		if (!TextUtils.isEmpty(noProguardMsg)) {
-			retStr.append(noProguardMsg);
-		}
-		if (!TextUtils.isEmpty(msg)) {
-			retStr.append(formatLogWithStar(msg));
-		}
-		return retStr.toString();
-	}
-
-	/**
-	 * DEBUG级别日志输出函数
-	 *
-	 * @param tag            需输出的tag.
-	 * @param msg            需输出的消息,允许为null.
-	 * @param isNeedProguard 日志是否要扰码。 如果包含敏感信息，则本参数必须传递为true，否则，可传递为false.
-	 */
-	public static void d(String tag, String msg, boolean isNeedProguard) {
-		if (TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.d(tag, getLogMsg(msg, isNeedProguard));
-	}
-
-	/**
-	 * DEBUG级别日志输出函数
-	 *
-	 * @param tag           需输出的tag.
-	 * @param noProguardMsg 不需要匿名化的信息
-	 * @param msg           需要匿名化的信息
-	 */
-	public static void d(String tag, String noProguardMsg, String msg) {
-		if (TextUtils.isEmpty(noProguardMsg) && TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.d(tag, getLogMsg(noProguardMsg, msg));
-	}
-
-	/**
-	 * DEBUG级别日志输出函数
-	 *
-	 * @param tag           需输出的tag.
-	 * @param noProguardMsg 不需要匿名化的信息
-	 * @param msg           需要匿名化的信息
-	 * @param e             需要输出的异常堆栈,允许为null.
-	 */
-	public static void d(String tag, String noProguardMsg, String msg, Throwable e) {
-		if (TextUtils.isEmpty(noProguardMsg) && TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.d(tag, getLogMsg(noProguardMsg, msg), getNewThrowable(e));
 	}
 
 	/**
@@ -131,22 +66,7 @@ public class LogUtil {
 		if (TextUtils.isEmpty(msg)) {
 			return;
 		}
-		Log.d(tag, getLogMsg(msg, false));
-	}
-
-	/**
-	 * DEBUG级别日志输出函数（带异常打印）
-	 *
-	 * @param tag            需输出的tag.
-	 * @param msg            需输出的消息,允许为null.
-	 * @param e              需要输出的异常堆栈,允许为null.
-	 * @param isNeedProguard 日志是否要扰码。 如果包含敏感信息，则本参数必须传递为true，否则，可传递为false.
-	 */
-	public static void d(String tag, String msg, Throwable e, boolean isNeedProguard) {
-		if (TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.d(tag, getLogMsg(msg, isNeedProguard), getNewThrowable(e));
+		Log.d(tag, getLogMsg(msg));
 	}
 
 	/**
@@ -160,50 +80,7 @@ public class LogUtil {
 		if (TextUtils.isEmpty(msg) && (null == e)) {
 			return;
 		}
-		Log.d(tag, getLogMsg(msg, false), getNewThrowable(e));
-	}
-
-	/**
-	 * INFO级别日志输出函数
-	 *
-	 * @param tag            需输出的tag.
-	 * @param msg            需输出的消息,允许为null.
-	 * @param isNeedProguard 日志是否要扰码。 如果包含敏感信息，则本参数必须传递为true，否则，可传递为false
-	 */
-	public static void i(String tag, String msg, boolean isNeedProguard) {
-		if (TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.i(tag, getLogMsg(msg, isNeedProguard));
-	}
-
-	/**
-	 * INFO 级别日志输出函数
-	 *
-	 * @param tag           需输出的tag.
-	 * @param noProguardMsg 不需要匿名化的信息
-	 * @param msg           需要匿名化的信息
-	 */
-	public static void i(String tag, String noProguardMsg, String msg) {
-		if (TextUtils.isEmpty(noProguardMsg) && TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.i(tag, getLogMsg(noProguardMsg, msg));
-	}
-
-	/**
-	 * INFO 级别日志输出函数
-	 *
-	 * @param tag           需输出的tag.
-	 * @param noProguardMsg 不需要匿名化的信息
-	 * @param msg           需要匿名化的信息
-	 * @param e             需要输出的异常堆栈,允许为null.
-	 */
-	public static void i(String tag, String noProguardMsg, String msg, Throwable e) {
-		if (TextUtils.isEmpty(noProguardMsg) && TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.i(tag, getLogMsg(noProguardMsg, msg), getNewThrowable(e));
+		Log.d(tag, getLogMsg(msg), getNewThrowable(e));
 	}
 
 	/**
@@ -216,21 +93,7 @@ public class LogUtil {
 		if (TextUtils.isEmpty(msg)) {
 			return;
 		}
-		Log.i(tag, getLogMsg(msg, false));
-	}
-
-	/**
-	 * INFO级别日志输出函数（含异常打印）
-	 *
-	 * @param tag            需输出的tag.
-	 * @param msg            需输出的消息,允许为null.
-	 * @param isNeedProguard 日志是否要扰码。 如果包含敏感信息，则本参数必须传递为true，否则，可传递为false
-	 */
-	public static void i(String tag, String msg, Throwable e, boolean isNeedProguard) {
-		if (TextUtils.isEmpty(msg) && (null == e)) {
-			return;
-		}
-		Log.i(tag, getLogMsg(msg, isNeedProguard), getNewThrowable(e));
+		Log.i(tag, getLogMsg(msg));
 	}
 
 	/**
@@ -244,50 +107,7 @@ public class LogUtil {
 		if (TextUtils.isEmpty(msg) && (null == e)) {
 			return;
 		}
-		Log.i(tag, getLogMsg(msg, false), getNewThrowable(e));
-	}
-
-	/**
-	 * warn级别日志输出函数
-	 *
-	 * @param tag            需输出的tag.
-	 * @param msg            需输出的消息,允许为null.
-	 * @param isNeedProguard 日志是否要扰码。 如果包含敏感信息，则本参数必须传递为true，否则，可传递为false
-	 */
-	public static void w(String tag, String msg, boolean isNeedProguard) {
-		if (TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.w(tag, getLogMsg(msg, isNeedProguard));
-	}
-
-	/**
-	 * WARN 级别日志输出函数
-	 *
-	 * @param tag           需输出的tag.
-	 * @param noProguardMsg 不需要匿名化的信息
-	 * @param msg           需要匿名化的信息
-	 */
-	public static void w(String tag, String noProguardMsg, String msg) {
-		if (TextUtils.isEmpty(noProguardMsg) && TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.w(tag, getLogMsg(noProguardMsg, msg));
-	}
-
-	/**
-	 * WARN 级别日志输出函数
-	 *
-	 * @param tag           需输出的tag.
-	 * @param noProguardMsg 不需要匿名化的信息
-	 * @param msg           需要匿名化的信息
-	 * @param e             需要输出的异常堆栈,允许为null.
-	 */
-	public static void w(String tag, String noProguardMsg, String msg, Throwable e) {
-		if (TextUtils.isEmpty(noProguardMsg) && TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.w(tag, getLogMsg(noProguardMsg, msg), getNewThrowable(e));
+		Log.i(tag, getLogMsg(msg), getNewThrowable(e));
 	}
 
 	/**
@@ -300,22 +120,7 @@ public class LogUtil {
 		if (TextUtils.isEmpty(msg)) {
 			return;
 		}
-		Log.w(tag, getLogMsg(msg, false));
-	}
-
-	/**
-	 * warn级别日志输出函数
-	 *
-	 * @param tag            需输出的tag.
-	 * @param msg            需输出的消息,允许为null.
-	 * @param isNeedProguard 日志是否要扰码。 如果包含敏感信息，则本参数必须传递为true，否则，可传递为false
-	 * @param e              需要输出的异常堆栈,允许为null.
-	 */
-	public static void w(String tag, String msg, Throwable e, boolean isNeedProguard) {
-		if (TextUtils.isEmpty(msg) && (null == e)) {
-			return;
-		}
-		Log.w(tag, getLogMsg(msg, isNeedProguard), getNewThrowable(e));
+		Log.w(tag, getLogMsg(msg));
 	}
 
 	/**
@@ -329,50 +134,7 @@ public class LogUtil {
 		if (TextUtils.isEmpty(msg) && (null == e)) {
 			return;
 		}
-		Log.w(tag, getLogMsg(msg, false), getNewThrowable(e));
-	}
-
-	/**
-	 * ERROR 级别日志输出函数
-	 *
-	 * @param tag            需输出的tag.
-	 * @param msg            需输出的消息,允许为null.
-	 * @param isNeedProguard 日志是否要扰码。 如果包含敏感信息，则本参数必须传递为true，否则，可传递为false
-	 */
-	public static void e(String tag, String msg, boolean isNeedProguard) {
-		if (TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.e(tag, getLogMsg(msg, isNeedProguard));
-	}
-
-	/**
-	 * ERROR 级别日志输出函数
-	 *
-	 * @param tag           需输出的tag.
-	 * @param noProguardMsg 不需要匿名化的信息
-	 * @param msg           需要匿名化的信息
-	 */
-	public static void e(String tag, String noProguardMsg, String msg) {
-		if (TextUtils.isEmpty(noProguardMsg) && TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.e(tag, getLogMsg(noProguardMsg, msg));
-	}
-
-	/**
-	 * ERROR 级别日志输出函数
-	 *
-	 * @param tag           需输出的tag.
-	 * @param noProguardMsg 不需要匿名化的信息
-	 * @param msg           需要匿名化的信息
-	 * @param e             需要输出的异常堆栈,允许为null.
-	 */
-	public static void e(String tag, String noProguardMsg, String msg, Throwable e) {
-		if (TextUtils.isEmpty(noProguardMsg) && TextUtils.isEmpty(msg)) {
-			return;
-		}
-		Log.e(tag, getLogMsg(noProguardMsg, msg), getNewThrowable(e));
+		Log.w(tag, getLogMsg(msg), getNewThrowable(e));
 	}
 
 	/**
@@ -385,22 +147,7 @@ public class LogUtil {
 		if (TextUtils.isEmpty(msg)) {
 			return;
 		}
-		Log.e(tag, getLogMsg(msg, false));
-	}
-
-	/**
-	 * error级别日志输出函数
-	 *
-	 * @param tag            需输出的tag.
-	 * @param msg            需输出的消息,允许为null.
-	 * @param e              需要输出的异常堆栈,允许为null.
-	 * @param isNeedProguard 日志是否要扰码。 如果包含敏感信息，则本参数必须传递为true，否则，可传递为false
-	 */
-	public static void e(String tag, String msg, Throwable e, boolean isNeedProguard) {
-		if (TextUtils.isEmpty(msg) && (null == e)) {
-			return;
-		}
-		Log.e(tag, getLogMsg(msg, isNeedProguard), getNewThrowable(e));
+		Log.e(tag, getLogMsg(msg));
 	}
 
 	/**
@@ -414,7 +161,7 @@ public class LogUtil {
 		if (TextUtils.isEmpty(msg) && (null == e)) {
 			return;
 		}
-		Log.e(tag, getLogMsg(msg, false), getNewThrowable(e));
+		Log.e(tag, getLogMsg(msg), getNewThrowable(e));
 	}
 
 	/**
