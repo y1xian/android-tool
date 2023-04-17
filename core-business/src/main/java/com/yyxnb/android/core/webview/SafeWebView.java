@@ -410,7 +410,7 @@ public class SafeWebView extends WebView {
 	}
 
 	final public void onCheckError(WebView view, String url) {
-		LogUtil.e(TAG, "onCheckError url is not in white list ", url);
+		LogUtil.e(TAG, "onCheckError url is not in white list " + url);
 		view.stopLoading();
 		String defaultUrl = getDefaultErrorPage();
 		if (!TextUtils.isEmpty(defaultUrl)) {
