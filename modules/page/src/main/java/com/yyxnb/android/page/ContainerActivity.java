@@ -15,14 +15,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.yyxnb.android.activity.SafeAppCompatActivity;
 import com.yyxnb.android.core.utils.BarUtil;
-import com.yyxnb.android.intent.SafeBundle;
 import com.yyxnb.android.intent.SafeIntent;
 import com.yyxnb.android.skin.SkinResource;
 import com.yyxnb.android.skin.callback.OnSkinChangeCallback;
 import com.yyxnb.android.skin.support.SkinCompat;
 import com.yyxnb.android.utils.LogUtil;
-
-import java.lang.ref.WeakReference;
 
 /**
  * Description: 盛装Fragment的一个容器(代理)Activity
@@ -31,11 +28,9 @@ import java.lang.ref.WeakReference;
  * @author : yyx
  * @date ：2018/6/9
  */
-public class ContainerActivity extends SafeAppCompatActivity implements OnSkinChangeCallback, ILifecycle {
+public class ContainerActivity extends SafeAppCompatActivity implements OnSkinChangeCallback {
 
 	private static final String TAG = ContainerActivity.class.getSimpleName();
-
-	private WeakReference<Fragment> mFragment;
 
 	private SkinCompat mSkinCompat;
 
@@ -50,7 +45,7 @@ public class ContainerActivity extends SafeAppCompatActivity implements OnSkinCh
 		final FrameLayout mFrameLayout = new FrameLayout(this);
 		mFrameLayout.setId(android.R.id.content);
 		setContentView(mFrameLayout);
-		initView(new SafeBundle(savedInstanceState).getBundle());
+		initView();
 	}
 
 	@Override
@@ -66,15 +61,15 @@ public class ContainerActivity extends SafeAppCompatActivity implements OnSkinCh
 		return null;
 	}
 
-	public void initView(Bundle savedInstanceState) {
+	public void initView() {
 		try {
 			SafeIntent intent = new SafeIntent(getIntent());
-			mFragment = new WeakReference<>(initBaseFragment());
-			if (mFragment.get() != null) {
+			final Fragment mFragment = initBaseFragment();
+			if (mFragment != null) {
 				if (intent.getBundleExtra(ArgumentKeys.BUNDLE) != null) {
-					mFragment.get().setArguments(intent.getBundleExtra(ArgumentKeys.BUNDLE));
+					mFragment.setArguments(intent.getBundleExtra(ArgumentKeys.BUNDLE));
 				}
-				setRootFragment(mFragment.get(), android.R.id.content);
+				setRootFragment(mFragment, android.R.id.content);
 				return;
 			}
 
@@ -101,10 +96,14 @@ public class ContainerActivity extends SafeAppCompatActivity implements OnSkinCh
 		super.onDestroy();
 	}
 
+	/**
+	 * 换肤的回调,用于扩展自定义View的换肤功能
+	 *
+	 * @param view         view
+	 * @param skinResource skinResource
+	 */
 	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-		mFragment.clear();
+	public void onSkinChange(View view, SkinResource skinResource) {
 	}
 
 	public <T extends Fragment> void setRootFragment(T fragment, int containerId) {
@@ -116,15 +115,5 @@ public class ContainerActivity extends SafeAppCompatActivity implements OnSkinCh
 		} catch (Exception e) {
 			LogUtil.e(TAG, e.getMessage());
 		}
-	}
-
-	/**
-	 * 换肤的回调,用于扩展自定义View的换肤功能
-	 *
-	 * @param view         view
-	 * @param skinResource skinResource
-	 */
-	@Override
-	public void onSkinChange(View view, SkinResource skinResource) {
 	}
 }
