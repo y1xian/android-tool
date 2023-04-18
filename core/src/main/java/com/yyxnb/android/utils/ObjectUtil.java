@@ -207,7 +207,7 @@ public class ObjectUtil {
 		} else if (obj instanceof Enumeration && !((Enumeration<?>) obj).hasMoreElements()) {
 			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
