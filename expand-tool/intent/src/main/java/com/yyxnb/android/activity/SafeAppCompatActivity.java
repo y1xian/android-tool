@@ -1,9 +1,16 @@
 package com.yyxnb.android.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.yyxnb.android.ModuleManager;
@@ -114,6 +121,16 @@ public class SafeAppCompatActivity extends AppCompatActivity {
 		}
 	}
 
+	@Nullable
+	@Override
+	public View onCreateView(@Nullable View parent, @NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+		try {
+			return super.onCreateView(parent, name, context, attrs);
+		} catch (Exception e) {
+			ModuleManager.log().eTag(TAG, "onCreateView: " + e.getMessage());
+		}
+		return null;
+	}
 
 	@Override
 	protected void onStart() {
@@ -182,5 +199,34 @@ public class SafeAppCompatActivity extends AppCompatActivity {
 			ModuleManager.log().eTag(TAG, "getReferrer: " + e.getMessage());
 		}
 		return null;
+	}
+
+	@Override
+	public void onBackPressed() {
+		try {
+			super.onBackPressed();
+		} catch (Exception e) {
+			ModuleManager.log().eTag(TAG, "onBackPressed exception : " + e.getMessage());
+		}
+	}
+
+	@Override
+	public Resources getResources() {
+		try {
+			return super.getResources();
+		} catch (Exception e) {
+			ModuleManager.log().eTag(TAG, "getResources exception : " + e.getMessage());
+		}
+		return null;
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		try {
+			return super.onTouchEvent(event);
+		} catch (Exception e) {
+			ModuleManager.log().eTag(TAG, "onTouchEvent exception : " + e.getMessage());
+		}
+		return false;
 	}
 }
