@@ -10,10 +10,10 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.yyxnb.android.activity.SafeAppCompatActivity;
 import com.yyxnb.android.core.utils.BarUtil;
 import com.yyxnb.android.intent.SafeIntent;
 import com.yyxnb.android.skin.SkinResource;
@@ -28,7 +28,7 @@ import com.yyxnb.android.utils.LogUtil;
  * @author : yyx
  * @date ：2018/6/9
  */
-public class ContainerActivity extends SafeAppCompatActivity implements OnSkinChangeCallback {
+public class ContainerActivity extends AppCompatActivity implements OnSkinChangeCallback {
 
 	private static final String TAG = ContainerActivity.class.getSimpleName();
 
@@ -42,7 +42,7 @@ public class ContainerActivity extends SafeAppCompatActivity implements OnSkinCh
 		BarUtil.setStatusBarStyle(getWindow(), true);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		final FrameLayout mFrameLayout = new FrameLayout(this);
+		FrameLayout mFrameLayout = new FrameLayout(this);
 		mFrameLayout.setId(android.R.id.content);
 		setContentView(mFrameLayout);
 		initView();
