@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 
 import com.yyxnb.android.utils.LogUtil;
 
@@ -46,18 +45,15 @@ public final class ActivityProtect {
 		sExceptionHandler = exceptionHandler;
 
 		initActivityProtect();
-		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-			@Override
-			public void uncaughtException(Thread thread, Throwable throwable) {
-				if (sExceptionHandler != null) {
-					sExceptionHandler.uncaughtExceptionHappened(thread, throwable);
-				}
+		Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+			if (sExceptionHandler != null) {
+				sExceptionHandler.uncaughtExceptionHappened(thread, throwable);
+			}
 
-				if (thread == Looper.getMainLooper().getThread()) {
-					isChoreographerException(throwable);
-					isThreadGroupUncaughtException(throwable);
-					safeMode();
-				}
+			if (thread == Looper.getMainLooper().getThread()) {
+				isChoreographerException(throwable);
+				isThreadGroupUncaughtException(throwable);
+				safeMode();
 			}
 		});
 	}
@@ -100,7 +96,7 @@ public final class ActivityProtect {
 		final int destoryActivity = 109;
 		final int newIntent = 112;
 		final int relaunchActivity = 126;
-		Class activityThreadClass = Class.forName("android.app.ActivityThread");
+		Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
 		Object activityThread = activityThreadClass.getDeclaredMethod("currentActivityThread").invoke(null);
 
 		Field mhField = activityThreadClass.getDeclaredField("mH");
@@ -110,77 +106,79 @@ public final class ActivityProtect {
 		final Handler mhHandler = (Handler) mhField.get(activityThread);
 		Field callbackField = Handler.class.getDeclaredField("mCallback");
 		callbackField.setAccessible(true);
-		callbackField.set(mhHandler, new Handler.Callback() {
-			@Override
-			public boolean handleMessage(Message msg) {
-				if (Build.VERSION.SDK_INT >= 28) {
-					if (!isShowLog) {
-						LogUtil.i(TAG, "handleMessage: >= 28");
-						isShowLog = true;
-					}
-					final int executeTransaction = 159;
-					if (msg.what == executeTransaction) {
-						try {
-							mhHandler.handleMessage(msg);
-						} catch (Throwable throwable) {
-							iActivityProtect.finishLaunchActivity(msg);
-							notifyException(throwable);
-						}
-						return true;
-					}
-					return false;
-				}
+		callbackField.set(mhHandler, (Handler.Callback) msg -> {
+			if (Build.VERSION.SDK_INT >= 28) {
 				if (!isShowLog) {
-					LogUtil.i(TAG, "handleMessage: < 28");
+					LogUtil.i(TAG, "handleMessage: >= 28");
 					isShowLog = true;
 				}
-				switch (msg.what) {
-					case launchActivity: // startActivity--> activity.attach activity.onCreate r.activity!=null activity.onStart activity.onResume
-						try {
-							mhHandler.handleMessage(msg);
-						} catch (Throwable throwable) {
-							iActivityProtect.finishLaunchActivity(msg);
-							notifyException(throwable);
-						}
-						return true;
-					case resumeActivity: // 回到activity onRestart onStart onResume
-						try {
-							mhHandler.handleMessage(msg);
-						} catch (Throwable throwable) {
-							iActivityProtect.finishResumeActivity(msg);
-							notifyException(throwable);
-						}
-						return true;
-					case pauseActivityFinishing: // 按返回键 onPause
-
-					case pauseActivity: // 开启新页面时，旧页面执行 activity.onPause
-						try {
-							mhHandler.handleMessage(msg);
-						} catch (Throwable throwable) {
-							iActivityProtect.finishPauseActivity(msg);
-							notifyException(throwable);
-						}
-						return true;
-					case stopActivityHide: // 开启新页面时，旧页面执行 activity.onStop
-						try {
-							mhHandler.handleMessage(msg);
-						} catch (Throwable throwable) {
-							iActivityProtect.finishStopActivity(msg);
-							notifyException(throwable);
-						}
-						return true;
-					case destoryActivity: // 关闭activity onStop onDestroy
-						try {
-							mhHandler.handleMessage(msg);
-						} catch (Throwable throwable) {
-							notifyException(throwable);
-						}
-						return true;
-					default:
-						break;
+				final int executeTransaction = 159;
+				if (msg.what == executeTransaction) {
+					try {
+						mhHandler.handleMessage(msg);
+					} catch (Throwable throwable) {
+						iActivityProtect.finishLaunchActivity(msg);
+						notifyException(throwable);
+					}
+					return true;
 				}
 				return false;
 			}
+			if (!isShowLog) {
+				LogUtil.i(TAG, "handleMessage: < 28");
+				isShowLog = true;
+			}
+			switch (msg.what) {
+				case launchActivity:
+					// startActivity--> activity.attach activity.onCreate r.activity!=null activity.onStart activity.onResume
+					try {
+						mhHandler.handleMessage(msg);
+					} catch (Throwable throwable) {
+						iActivityProtect.finishLaunchActivity(msg);
+						notifyException(throwable);
+					}
+					return true;
+				case resumeActivity:
+					// 回到activity onRestart onStart onResume
+					try {
+						mhHandler.handleMessage(msg);
+					} catch (Throwable throwable) {
+						iActivityProtect.finishResumeActivity(msg);
+						notifyException(throwable);
+					}
+					return true;
+				case pauseActivityFinishing:
+					// 按返回键 onPause
+				case pauseActivity:
+					// 开启新页面时，旧页面执行 activity.onPause
+					try {
+						mhHandler.handleMessage(msg);
+					} catch (Throwable throwable) {
+						iActivityProtect.finishPauseActivity(msg);
+						notifyException(throwable);
+					}
+					return true;
+				case stopActivityHide:
+					// 开启新页面时，旧页面执行 activity.onStop
+					try {
+						mhHandler.handleMessage(msg);
+					} catch (Throwable throwable) {
+						iActivityProtect.finishStopActivity(msg);
+						notifyException(throwable);
+					}
+					return true;
+				case destoryActivity:
+					// 关闭activity onStop onDestroy
+					try {
+						mhHandler.handleMessage(msg);
+					} catch (Throwable throwable) {
+						notifyException(throwable);
+					}
+					return true;
+				default:
+					break;
+			}
+			return false;
 		});
 	}
 
