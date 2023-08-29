@@ -85,6 +85,8 @@ ext {
             appcompat     : "1.4.0",
 
             multidex      : '2.0.1',
+
+            safe_android  : '1.0.1',
     ]
 
     classpathExt = [
@@ -93,9 +95,12 @@ ext {
 
 
     dependenciesExt = [
-            appcompat: [group: 'androidx.appcompat', name: 'appcompat', version: versions.appcompat],
-            startup  : [group: 'androidx.startup', name: 'startup-runtime', version: versions.startup],
+            appcompat       : [group: 'androidx.appcompat', name: 'appcompat', version: versions.appcompat],
+            startup         : [group: 'androidx.startup', name: 'startup-runtime', version: versions.startup],
 
-            multidex : [group: 'androidx.multidex', name: 'multidex', version: versions.multidex],
+            multidex        : [group: 'androidx.multidex', name: 'multidex', version: versions.multidex],
+
+            security_app    : "com.github.y1xian.safe-android:security-app:${versions.safe_android}",
+            security_encrypt: "com.github.y1xian.safe-android:security-encrypt:${versions.safe_android}",
     ]
 }

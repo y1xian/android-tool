@@ -6,10 +6,6 @@ include ':core-business'
 
 // 扩展tool
 include ':expand-tool',
-        // 安全加密
-        ':expand-tool:encrypt',
-        // 安全intent
-        ':expand-tool:intent',
         // 换肤
         ':expand-tool:skin'
 

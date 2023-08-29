@@ -11,7 +11,8 @@ apply plugin: 'com.android.library'
 
 // 发布
 if (isPublish) {
-    apply from: 'https://raw.githubusercontent.com/y1xian/y1xian/main/maven-publish-jitpack.gradle'
+//    apply from: 'https://raw.githubusercontent.com/y1xian/y1xian/main/maven-publish-jitpack.gradle'
+    apply from: rootProject.file('maven-publish-jitpack.gradle')
 }
 
 android {
